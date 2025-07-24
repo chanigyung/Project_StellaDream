@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 1557
   characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
-  visualData: {fileID: 11400000, guid: be6863c27d0097042aadb0c3e43d936e, type: 2}
+  visualData: {fileID: 11400000, guid: 0b3bb4ae8e5112c4ebf9c4e0ef195ce5, type: 2}
   maxHealth: 100
   moveSpeed: 4
   jumpPower: 16

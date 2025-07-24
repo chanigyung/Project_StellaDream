@@ -15,7 +15,7 @@ MonoBehaviour:
   characterID: 
   head: {fileID: 5612906371308528746, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}
   face: {fileID: -929721679315647133, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}
-  hair0: {fileID: 7415561759615660428, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}
+  hair0: {fileID: 7049655812289090619, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}
   hair1: {fileID: 2395262887834137859, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}
   hair2: {fileID: -6407757871451205396, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}
   body: {fileID: 3610251193262058524, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}

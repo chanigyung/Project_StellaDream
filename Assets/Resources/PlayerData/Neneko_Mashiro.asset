@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
+  m_Name: Neneko_Mashiro
+  m_EditorClassIdentifier: 
+  characterID: 
+  head: {fileID: 1986247122631507096, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  face: {fileID: -5373927218930336228, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  hair0: {fileID: -1835749722497763456, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  hair1: {fileID: -672607630048097272, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  hair2: {fileID: -4120822623862302768, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  body: {fileID: 2812049394599708055, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  leftArm: {fileID: 6974129185747865256, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  leftHand: {fileID: -5836831945566899126, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  rightArm: {fileID: 3767553161763665440, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  rightHand: {fileID: -1243963880619585764, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  leftLeg: {fileID: -694704093043110502, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  leftFoot: {fileID: 2005933099430955042, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  rightLeg: {fileID: -7238110123792381626, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
+  rightFoot: {fileID: 6983052468280199062, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}
