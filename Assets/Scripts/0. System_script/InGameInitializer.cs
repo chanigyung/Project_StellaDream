@@ -18,14 +18,16 @@ public class InGameInitializer : MonoBehaviour
             return;
         }
 
-        //플레이어 생성
+        //플레이어 프리팹 오브젝트 생성
         GameObject player = Instantiate(data.characterPrefab, spawnPoint.position, Quaternion.identity);
-        //데이터 적용
+        //playerController 초기화
         var controller = player.GetComponent<PlayerController>();
-        controller.playerData = data;
+        //playerInstance(데이터, 스텟) 생성
+        controller.Init(data);
 
         //캐릭터 외형 적용
         player.GetComponent<PlayerVisualApplier>()?.ApplyVisual(data.visualData);
+
         //카메라 플레이어 추적
         Camera.main.GetComponent<CameraFollow>()?.SetTarget(player.transform);
         //게임 상태 변경

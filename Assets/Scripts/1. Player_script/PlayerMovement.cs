@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour, IMovementController
 
     void Update()
     {
-        if (playerController == null) return;
+        if (playerController == null || playerInstance == null) return;
 
         if (playerController.jumpPressed && isGrounded)
         { //점프 시작, 점프 구현은 뒤에

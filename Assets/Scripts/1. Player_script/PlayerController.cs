@@ -13,15 +13,17 @@ public class PlayerController : UnitController
     public KeyCode jumpKey = KeyCode.W;
     public KeyCode actionKey = KeyCode.F;
 
-    private void Awake()
+    public void Init(PlayerData data)
     {
-        if (playerData == null)
+        if (data == null)
         {
-            Debug.LogError("PlayerData가 할당되지 않았습니다!");
+            Debug.LogError("PlayerData가 Init에 전달되지 않았습니다!");
             return;
         }
 
-        PlayerInstance instance = new PlayerInstance(playerData);
+        this.playerData = data;
+
+        PlayerInstance instance = new PlayerInstance(data);
         Initialize(instance);
     }
 
