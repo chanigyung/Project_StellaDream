@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
+  m_Name: Arahashi_Tabi
+  m_EditorClassIdentifier: 
+  characterID: 
+  head: {fileID: 4373439063149399481, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  face: {fileID: 290126905849316296, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  hair0: {fileID: -1843187020680401269, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  hair1: {fileID: 1288540629040903604, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  hair2: {fileID: 5315005248689101403, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  body: {fileID: -5830631388708002018, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  leftArm: {fileID: -58881782793761478, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  leftHand: {fileID: -2248623353357384765, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  rightArm: {fileID: 5514277014997714449, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  rightHand: {fileID: 7903435336913388147, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  leftLeg: {fileID: -5706424364640753645, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  leftFoot: {fileID: -2873644964036644654, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  rightLeg: {fileID: 6696200713080466053, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  rightFoot: {fileID: 3674586440780904028, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}

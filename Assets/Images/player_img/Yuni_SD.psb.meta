@@ -136,7 +136,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 18, y: 100}
     spritePosition: {x: 35, y: 25}
-  - name: Yuni_Hair2
+  - name: Yuni_Acce
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -157,7 +157,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 59, y: 100}
     spritePosition: {x: 0, y: 64}
-  - name: Yuni_Hair1
+  - name: Yuni_frontHair
     originalName: 
     pivot: {x: 0.56060606, y: 0.5416667}
     alignment: 9
@@ -367,7 +367,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 4, y: 117}
     spritePosition: {x: 20, y: 25}
-  - name: Yuni_Hair0
+  - name: Yuni_backHair
     originalName: 
     pivot: {x: 0.47142857, y: 0.6730769}
     alignment: 9
@@ -478,8 +478,8 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Yuni_Hair2
-    spriteName: Yuni_Hair2
+  - name: Yuni_Acce
+    spriteName: Yuni_Acce
     isGroup: 0
     parentIndex: -1
     spriteID: 9e80436b7ad6fb0479193d1e32efde31
@@ -488,8 +488,8 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Yuni_Hair1
-    spriteName: Yuni_Hair1
+  - name: Yuni_frontHair
+    spriteName: Yuni_frontHair
     isGroup: 0
     parentIndex: -1
     spriteID: 9de707c77f6bc9a47b3112521e8c5cc1
@@ -588,8 +588,8 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Yuni_Hair0
-    spriteName: Yuni_Hair0
+  - name: Yuni_backHair
+    spriteName: Yuni_backHair
     isGroup: 0
     parentIndex: -1
     spriteID: 325bb432359da6e48ab62e4012d5b061

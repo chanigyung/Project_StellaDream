@@ -115,7 +115,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 39, y: 51}
     spritePosition: {x: 39, y: 25}
-  - name: Shiro_Hair2
+  - name: Shiro_Acce
     originalName: 
     pivot: {x: 0.5, y: 0.037037037}
     alignment: 9
@@ -157,7 +157,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 39, y: 111}
     spritePosition: {x: 35, y: 25}
-  - name: Shiro_Hair1
+  - name: Shiro_frontHair
     originalName: 
     pivot: {x: 0.5740741, y: 0.55172414}
     alignment: 9
@@ -367,7 +367,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 72, y: 4}
     spritePosition: {x: 19, y: 25}
-  - name: Shiro_Hair0
+  - name: Shiro_backHair
     originalName: 
     pivot: {x: 0.5555556, y: -0.22727273}
     alignment: 9
@@ -468,8 +468,8 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Shiro_Hair2
-    spriteName: Shiro_Hair2
+  - name: Shiro_Acce
+    spriteName: Shiro_Acce
     isGroup: 0
     parentIndex: -1
     spriteID: 0ebc59bc31367184b8c5161a5c8efe36
@@ -488,8 +488,8 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Shiro_Hair1
-    spriteName: Shiro_Hair1
+  - name: Shiro_frontHair
+    spriteName: Shiro_frontHair
     isGroup: 0
     parentIndex: -1
     spriteID: 1050f53bed43c6649ab110138966d83f
@@ -588,8 +588,8 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Shiro_Hair0
-    spriteName: Shiro_Hair0
+  - name: Shiro_backHair
+    spriteName: Shiro_backHair
     isGroup: 0
     parentIndex: -1
     spriteID: 6c3551c626109d74c82dfca9884fda38
