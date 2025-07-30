@@ -7,7 +7,7 @@ public class CharacterSelectUI : MonoBehaviour
     public static CharacterSelectUI Instance { get; private set; }
 
     public Transform buttonParent;
-    public GameObject buttonPrefab;
+    public GameObject charButtonPrefab;
 
     public PlayerData[] availableCharacters;
 
@@ -26,7 +26,7 @@ public class CharacterSelectUI : MonoBehaviour
     {
         foreach (var data in availableCharacters)
         {
-            GameObject obj = Instantiate(buttonPrefab, buttonParent);
+            GameObject obj = Instantiate(charButtonPrefab, buttonParent);
             CharacterSelectButton button = obj.GetComponent<CharacterSelectButton>();
             button.Init(data);
         }

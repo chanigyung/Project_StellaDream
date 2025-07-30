@@ -8,6 +8,9 @@ public class InGameInitializer : MonoBehaviour
     [Header("기본 카메라 오프셋")]
     public Vector3 cameraOffset = new Vector3(0, 0, -10f);
 
+    [Header("인게임 UI")]
+    [SerializeField] private GameObject inGameUIPrefab;
+
     private void Start()
     {
         var data = GameController.Instance.selectedPlayerData;
@@ -30,6 +33,16 @@ public class InGameInitializer : MonoBehaviour
 
         //카메라 플레이어 추적
         Camera.main.GetComponent<CameraFollow>()?.SetTarget(player.transform);
+
+        //인게임 UI 프리팹 생성
+        GameObject ui = Instantiate(inGameUIPrefab);
+        PlayerWeaponManager weaponManager = player.GetComponent<PlayerWeaponManager>();
+
+        if (HotbarController.Instance != null) //플레이어 연결
+        {
+            HotbarController.Instance.weaponManager = weaponManager;
+        }
+
         //게임 상태 변경
         GameController.Instance.ChangeState(GameState.Playing);
     }

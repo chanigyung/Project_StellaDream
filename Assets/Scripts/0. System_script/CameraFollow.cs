@@ -11,6 +11,10 @@ public class CameraFollow : MonoBehaviour
         if (target == null) return;
 
         Vector3 targetPos = target.position + offset;
+
+        targetPos.x = Mathf.Round(targetPos.x * 100f) / 100f;
+        targetPos.y = Mathf.Round(targetPos.y * 100f) / 100f;
+        
         transform.position = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
     }
 

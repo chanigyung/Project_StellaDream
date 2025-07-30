@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
-  m_Name: Neneko_Mashiro
+  m_Name: Siro_Visual
   m_EditorClassIdentifier: 
   characterID: 
   head: {fileID: 1986247122631507096, guid: e5224d7b76c94194f8322287f50d4d04, type: 3}

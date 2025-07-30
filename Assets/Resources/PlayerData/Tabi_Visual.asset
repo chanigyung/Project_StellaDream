@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
-  m_Name: Arahashi_Tabi
+  m_Name: Tabi_Visual
   m_EditorClassIdentifier: 
   characterID: 
   head: {fileID: 4373439063149399481, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}

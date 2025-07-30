@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
-  m_Name: Ayatsuno_Yuni
+  m_Name: Yuni_Visual
   m_EditorClassIdentifier: 
   characterID: 
   head: {fileID: -1231014058971558492, guid: be42ff89d022afc4aaf3f8d337d7ea72, type: 3}

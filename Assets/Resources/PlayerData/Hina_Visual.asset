@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
-  m_Name: Sirayuki_Hina
+  m_Name: Hina_Visual
   m_EditorClassIdentifier: 
   characterID: 
   head: {fileID: 5612906371308528746, guid: 11a2e608ac9186143aaaaabe2ce3f413, type: 3}

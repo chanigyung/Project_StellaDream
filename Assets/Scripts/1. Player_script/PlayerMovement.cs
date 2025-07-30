@@ -58,29 +58,57 @@ public class PlayerMovement : MonoBehaviour, IMovementController
         Jump();
     }
 
+    // void Move()
+    // {
+    //     float inputX = playerController.moveInput.x;
+    //     float moveSpeed = playerInstance.GetCurrentMoveSpeed();
+    //     Vector2 velocity = rigid.velocity;
+    //     velocity.x = inputX * moveSpeed;
+    //     rigid.velocity = velocity;
+
+    //     // 애니메이션 처리만 유지
+    //     if (inputX == 0)
+    //         animator.PlayMove(0);
+    //     else
+    //     {
+    //         bool isMovingLeft = inputX < 0;
+    //         bool isFacingLeft = playerAC != null && playerAC.isFacingLeft;
+    //         animator.PlayMove(isMovingLeft != isFacingLeft ? 2 : 1);
+    //     }
+    // }
+
     void Move()
     {
-        float inputX = playerController.moveInput.x; // 바라보는 X축 방향 변수.
-        Vector3 moveVelocity = Vector3.zero; //움직임 벡터값 초기화
+        float inputX = playerController.moveInput.x;
+        float moveSpeed = playerInstance.GetCurrentMoveSpeed();
+
+        Vector2 velocity = rigid.velocity;
+
+        if (isGrounded)
+        {
+            // ✅ 땅 위에서는 즉각 반응
+            velocity.x = inputX * moveSpeed;
+        }
+        else
+        {
+            // ✅ 공중에서는 부드럽게 보간 (자연스러운 공중 제어감 유지)
+            float targetX = inputX * moveSpeed;
+            velocity.x = Mathf.Lerp(velocity.x, targetX, 0.1f); // Lerp 비율은 취향에 맞게 조절
+        }
+
+        rigid.velocity = velocity;
+
+        // 애니메이션 처리 (기존 코드 유지)
         if (inputX == 0)
         {
             animator.PlayMove(0); // Idle
         }
         else
         {
-            moveVelocity = inputX < 0 ? Vector3.left : Vector3.right; //걸어가는 방향 왼쪽이면 left반환 오른쪽이면 right반환
-
-            bool isMovingLeft = inputX < 0; //왼쪽으로 움직이면 true, 오른쪽이면 false
-            bool isFacingLeft = playerAC != null && playerAC.isFacingLeft; //playerArmControl에서 가져온 바라보는(마우스)방향, 왼쪽이면 true 오른쪽이면 false
-
-            // 방향이 다르면 moonwalk, 같으면 walk
-            if (isMovingLeft != isFacingLeft) //보는방향 걷는방향이 다르면
-                animator.PlayMove(2); // Moonwalk
-            else //보는방향 걷는방향이 같으면
-                animator.PlayMove(1); // Walk
+            bool isMovingLeft = inputX < 0;
+            bool isFacingLeft = playerAC != null && playerAC.isFacingLeft;
+            animator.PlayMove(isMovingLeft != isFacingLeft ? 2 : 1);
         }
-        float moveSpeed = playerInstance.GetCurrentMoveSpeed();
-        transform.position += moveVelocity * moveSpeed * Time.deltaTime; //이동 계산식
     }
 
     //점프 작동
@@ -90,37 +118,52 @@ public class PlayerMovement : MonoBehaviour, IMovementController
             return; //점프중이 아닐경우 탈출
 
         float jumpPower = playerInstance.GetCurrentJumpPower();
-        rigid.velocity = Vector2.zero;
-
         Vector2 jumpVelocity = new Vector2(0, jumpPower);
+
+        rigid.velocity = new Vector2(rigid.velocity.x, 0);
         rigid.AddForce(jumpVelocity, ForceMode2D.Impulse); //y축 방향으로만 힘 주기
 
         isJumping = false; //점프 한번 완료
         isGrounded = false;
     }
 
+    private int groundContactCount = 0;
+
     void OnTriggerEnter2D(Collider2D other) //발 콜라이더 바닥에 닿는 트리거 켜질때
     {
-        if ((other.gameObject.layer == 6 || other.gameObject.layer == 7) && rigid.velocity.y < 0.01f) //바닥에 닿아있고 점프 힘 0일때 점프 애니메이션 종료시키기
+        if (IsGroundLayer(other))
         {
-            isGrounded = true; //바닥과 닿았음
-            animator.ExitJump(); //점프애니메이션 끄기
+            groundContactCount++;
+            if (rigid.velocity.y <= 0f)
+            {
+                isGrounded = true;
+                jumpedBefore = false;
+                animator.ExitJump();
+            }
         }
-        // else if (other.gameObject.layer == 12)
-        // {
-
-        // }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.layer == 6 || other.gameObject.layer == 7)
+        if (IsGroundLayer(other))
         {
-            isGrounded = false; //바닥에서 떨어짐
+            groundContactCount = Mathf.Max(groundContactCount - 1, 0);
+
+            // 발 아래에 더 이상 땅이 없다면 착지 해제
+            if (groundContactCount == 0)
+            {
+                isGrounded = false;
+                Debug.Log("모든 바닥 이탈 → isGrounded = false");
+            }
         }
+    }
+    
+    bool IsGroundLayer(Collider2D other)
+    {
+        return other.gameObject.layer == 6 || other.gameObject.layer == 7;
     }
 
     /*----------------------------------------상태이상 관리 로직-------------------------------------*/
-    
+
     public void SetRooted(bool val) => isRooted = val;
     public void SetStunned(bool val) => isStunned = val;
     public void SetPowerKnockbacked(bool val) => isPowerKnockbacked = val;
