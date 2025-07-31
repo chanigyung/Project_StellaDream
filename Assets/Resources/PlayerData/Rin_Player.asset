@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3dd85dcd0fb6641ae2f71adbc64f06, type: 3}
   m_Name: Rin_Player
   m_EditorClassIdentifier: 
-  characterID: 1_1
+  characterName: "\uC544\uC624\uCFE0\uBAA8 \uB9B0"
   characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
   visualData: {fileID: 11400000, guid: aea5824ba743d1c4384faa8731028be0, type: 2}
   maxHealth: 100

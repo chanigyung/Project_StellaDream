@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3dd85dcd0fb6641ae2f71adbc64f06, type: 3}
   m_Name: Siro_Player
   m_EditorClassIdentifier: 
-  characterID: 1_1
+  characterName: "\uB124\uB124\uCF54 \uB9C8\uC2DC\uB85C"
   characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
   visualData: {fileID: 11400000, guid: a1fd1f412178a934eb39fac1270d5596, type: 2}
   maxHealth: 100

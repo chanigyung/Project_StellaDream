@@ -13,8 +13,8 @@ public class WeaponData : ItemData
     //외형 및 UI에 쓰일 데이터들
     public Sprite weaponSprite;
     
-    public float mainRotationOffsetZ = -90f; // 주무기(RightArm)일 때 회전 Z값
-    public float subRotationOffsetZ = -45f;  // 보조무기(LeftArm)일 때 회전 Z값 (한손무기만 사용)
+    public float mainRotationOffsetZ = -135f; //왼손일때 회전 Z값
+    public float subRotationOffsetZ = 45f;  // 오른손일 때 회전 Z값 (한손무기만 사용)
 
     //스킬 데이터
     public SkillData mainSkill;

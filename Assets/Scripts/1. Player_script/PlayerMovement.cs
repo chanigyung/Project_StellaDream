@@ -23,8 +23,6 @@ public class PlayerMovement : MonoBehaviour, IMovementController
         rigid = gameObject.GetComponent<Rigidbody2D>();
         animator = GetComponent<PlayerAnimator>(); //playerSprite에서 가져오기
         playerAC = GetComponent<PlayerArmControl>(); //playerAttack 컴포넌트
-
-        playerInstance = playerController?.instance as PlayerInstance;
     }
 
     void Awake()
@@ -34,7 +32,13 @@ public class PlayerMovement : MonoBehaviour, IMovementController
 
     void Update()
     {
-        if (playerController == null || playerInstance == null) return;
+        if (playerController == null) return;
+
+        if (playerInstance == null)
+        {
+            playerInstance = playerController.instance as PlayerInstance;
+            if (playerInstance == null) return;
+        }
 
         if (playerController.jumpPressed && isGrounded)
         { //점프 시작, 점프 구현은 뒤에
@@ -54,28 +58,10 @@ public class PlayerMovement : MonoBehaviour, IMovementController
     {
         if (isRooted || isStunned || isPowerKnockbacked)
             return;
+        
         Move();
         Jump();
     }
-
-    // void Move()
-    // {
-    //     float inputX = playerController.moveInput.x;
-    //     float moveSpeed = playerInstance.GetCurrentMoveSpeed();
-    //     Vector2 velocity = rigid.velocity;
-    //     velocity.x = inputX * moveSpeed;
-    //     rigid.velocity = velocity;
-
-    //     // 애니메이션 처리만 유지
-    //     if (inputX == 0)
-    //         animator.PlayMove(0);
-    //     else
-    //     {
-    //         bool isMovingLeft = inputX < 0;
-    //         bool isFacingLeft = playerAC != null && playerAC.isFacingLeft;
-    //         animator.PlayMove(isMovingLeft != isFacingLeft ? 2 : 1);
-    //     }
-    // }
 
     void Move()
     {
@@ -86,12 +72,12 @@ public class PlayerMovement : MonoBehaviour, IMovementController
 
         if (isGrounded)
         {
-            // ✅ 땅 위에서는 즉각 반응
+            //  땅 위에서는 즉각 반응
             velocity.x = inputX * moveSpeed;
         }
         else
         {
-            // ✅ 공중에서는 부드럽게 보간 (자연스러운 공중 제어감 유지)
+            //  공중에서는 부드럽게 보간 (자연스러운 공중 제어감 유지)
             float targetX = inputX * moveSpeed;
             velocity.x = Mathf.Lerp(velocity.x, targetX, 0.1f); // Lerp 비율은 취향에 맞게 조절
         }
@@ -152,7 +138,6 @@ public class PlayerMovement : MonoBehaviour, IMovementController
             if (groundContactCount == 0)
             {
                 isGrounded = false;
-                Debug.Log("모든 바닥 이탈 → isGrounded = false");
             }
         }
     }

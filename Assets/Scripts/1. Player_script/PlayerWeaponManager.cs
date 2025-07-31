@@ -8,8 +8,8 @@ public class PlayerWeaponManager : MonoBehaviour
     public WeaponInstance mainWeaponInstance;
     public WeaponInstance subWeaponInstance;
 
-    public SpriteRenderer mainWeaponRenderer; // 오른손 무기 SpriteRenderer
-    public SpriteRenderer subWeaponRenderer;  // 왼손 무기 SpriteRenderer
+    public SpriteRenderer mainWeaponRenderer;
+    public SpriteRenderer subWeaponRenderer;
 
     public void EquipMainWeapon(WeaponInstance weaponInstance)
     {

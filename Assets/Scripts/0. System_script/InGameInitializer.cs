@@ -43,7 +43,7 @@ public class InGameInitializer : MonoBehaviour
             HotbarController.Instance.weaponManager = weaponManager;
         }
 
-        //게임 상태 변경
+        //게임 상태를 Playing으로 전환 (로딩 완료 후 최초 진입 시점)
         GameController.Instance.ChangeState(GameState.Playing);
     }
 }

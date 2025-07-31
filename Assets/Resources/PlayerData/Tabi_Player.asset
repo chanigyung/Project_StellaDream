@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3dd85dcd0fb6641ae2f71adbc64f06, type: 3}
   m_Name: Tabi_Player
   m_EditorClassIdentifier: 
-  characterID: 1_1
+  characterName: "\uC544\uD0C0\uB77C\uC2DC \uB274\uBE44"
   characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
   visualData: {fileID: 11400000, guid: 21d880590c9dbf741bf6796bc473e2bc, type: 2}
   maxHealth: 100
