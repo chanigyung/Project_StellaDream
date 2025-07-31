@@ -11,12 +11,15 @@ public enum GameState
     Cutscene
 }
 
-public class GameController : MonoBehaviour
+public partial class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     public GameState CurrentState { get; private set; }
     public SelectedCharacterData selectedCharacterData { get; private set; }
     public PlayerData selectedPlayerData;
+
+    [Header("전역 UI 프리팹")]
+    [SerializeField] private GameObject loadingUIPrefab;
 
     void Awake()
     {
@@ -27,6 +30,12 @@ public class GameController : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        if (LoadingUI.Instance == null && loadingUIPrefab != null)
+        {
+            GameObject ui = Instantiate(loadingUIPrefab);
+            DontDestroyOnLoad(ui);
+        }
     }
 
     public void ChangeState(GameState newState) //게임 상태 전환용 함수
@@ -37,13 +46,9 @@ public class GameController : MonoBehaviour
 
         Debug.Log($"[GameController] 상태 전환: {CurrentState} → {newState}");
 
-        // 이전 상태에서 필요한 종료 처리
-        HandleStateExit(CurrentState);
-
+        HandleStateExit(CurrentState); // 이전 상태에서 필요한 종료 처리
         CurrentState = newState;
-
-        // 새로운 상태에 대한 초기화 처리
-        HandleStateEnter(newState);
+        HandleStateEnter(newState); // 새로운 상태에 대한 초기화 처리
     }
  
     private void HandleStateExit(GameState state) //특정 상태 퇴장시

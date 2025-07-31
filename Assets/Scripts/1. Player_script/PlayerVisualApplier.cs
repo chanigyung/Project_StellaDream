@@ -26,6 +26,7 @@ public class PlayerVisualApplier : MonoBehaviour
 
     public void ApplyVisual(PlayerVisualData visual)
     {
+        head.sprite      = visual.head;
         face.sprite      = visual.face;
         hair0.sprite     = visual.hair0;
         hair1.sprite     = visual.hair1;
