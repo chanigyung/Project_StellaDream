@@ -118,7 +118,7 @@ ScriptedImporter:
   - name: Hina_Acce
     originalName: 
     pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
@@ -159,15 +159,15 @@ ScriptedImporter:
     spritePosition: {x: 35, y: 25}
   - name: Hina_frontHair
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.5, y: 0.53333336}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
       width: 31
-      height: 28
+      height: 30
     spriteID: 70ef5c6769820c346810d5e00e77509f
     spriteBone: []
     spriteOutline: []

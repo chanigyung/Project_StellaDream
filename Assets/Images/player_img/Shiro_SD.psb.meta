@@ -117,7 +117,7 @@ ScriptedImporter:
     spritePosition: {x: 39, y: 25}
   - name: Shiro_Acce
     originalName: 
-    pivot: {x: 0.5, y: 0.037037037}
+    pivot: {x: 0.5, y: -0.25925925}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
