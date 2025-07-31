@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 290126905849316296, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: 2974538831401086527, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1670238080488403848}
   - component: {fileID: 4816839049448352503}
   m_Layer: 9
-  m_Name: Hair1
+  m_Name: FrontHair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 1288540629040903604, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -6952339606831426529, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -241,7 +241,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -2873644964036644654, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: 4205240459013480037, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: -5706424364640753645, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -8780524480401457279, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -410,7 +410,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 13
-  m_Sprite: {fileID: -2248623353357384765, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -2789466718906695224, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -649,7 +649,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 6696200713080466053, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: 5263543703670686019, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -733,7 +733,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 7903435336913388147, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -3211372497679083970, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -821,7 +821,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 8
-  m_Sprite: {fileID: 4373439063149399481, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -7233814028796474653, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1255,7 +1255,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 3674586440780904028, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: 7766027383708702632, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1354,7 +1354,7 @@ GameObject:
   - component: {fileID: 4132535741621170087}
   - component: {fileID: 5210546177587586240}
   m_Layer: 9
-  m_Name: Hair0
+  m_Name: BackHair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1416,7 +1416,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1843187020680401269, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -425454428819782067, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1503,7 +1503,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 12
-  m_Sprite: {fileID: -58881782793761478, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -1005957146964133118, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1630,7 +1630,7 @@ GameObject:
   - component: {fileID: 3876800210267831397}
   - component: {fileID: 5019074035466478866}
   m_Layer: 9
-  m_Name: Hair2
+  m_Name: Acce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1692,7 +1692,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 11
-  m_Sprite: {fileID: 5315005248689101403, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -3499515871971709126, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1779,7 +1779,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 5514277014997714449, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: 3661007306306815765, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1943,7 +1943,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: -5830631388708002018, guid: 74311c1006e786c4c8aea882ae42f5b3, type: 3}
+  m_Sprite: {fileID: -3315822625570426926, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

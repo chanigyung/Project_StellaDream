@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
+  m_Name: Lize_Visual
+  m_EditorClassIdentifier: 
+  characterID: 
+  head: {fileID: -6150437811511772463, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  face: {fileID: -6433477805356720075, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  hair0: {fileID: 8353131478864390434, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  hair1: {fileID: 4101060855837122037, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  hair2: {fileID: -6262412618162755019, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  body: {fileID: -5356028878324092011, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  leftArm: {fileID: -1947279716705552397, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  leftHand: {fileID: -6158165177418409020, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  rightArm: {fileID: -3893875836605201658, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  rightHand: {fileID: 5567930726073175417, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  leftLeg: {fileID: 3043663911272044543, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  leftFoot: {fileID: -7337051119654294722, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  rightLeg: {fileID: 2040773060043408996, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}
+  rightFoot: {fileID: -6210866801308743741, guid: fa90d1ad1dd4fb44ba1fb5c6234bc2a1, type: 3}

@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: 4b2205bc11bf6874ebaf55eb7e602e7c
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 32
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Nana_L_hand
+    originalName: 
+    pivot: {x: 0.18181819, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 98
+      y: 36
+      width: 11
+      height: 5
+    spriteID: 8c4dac94751adab458d2ce020eb95d6c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 98, y: 36}
+    spritePosition: {x: 39, y: 25}
+  - name: Nana_acce
+    originalName: 
+    pivot: {x: 0.3275862, y: -0.125}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 41
+      y: 4
+      width: 29
+      height: 24
+    spriteID: e6dec58129e12464aa2309e9096fd705
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 41, y: 4}
+    spritePosition: {x: 18, y: 36}
+  - name: Nana_L_arm
+    originalName: 
+    pivot: {x: 0.14285715, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 53
+      width: 7
+      height: 5
+    spriteID: 885842c15de7ec440b7761a63b71c282
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 53}
+    spritePosition: {x: 35, y: 25}
+  - name: Nana_frontHair
+    originalName: 
+    pivot: {x: 0.5689655, y: 0.5925926}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 29
+      height: 27
+    spriteID: 4628906eb1fa53d4fab8e1ff63f8a91a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 17, y: 29}
+  - name: Nana_Face
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 74
+      y: 36
+      width: 16
+      height: 9
+    spriteID: 4d4d101b83106f34d9c6ba6687115d83
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 74, y: 36}
+    spritePosition: {x: 20, y: 32}
+  - name: Nana_Head
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 41
+      y: 36
+      width: 25
+      height: 22
+    spriteID: 7d26809fc16a57949bc105bcf977260f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 41, y: 36}
+    spritePosition: {x: 19, y: 30}
+  - name: Nana_Body
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 39
+      width: 17
+      height: 15
+    spriteID: 483b3c8a48dea5341afaa78f7b22f6a5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 39}
+    spritePosition: {x: 23, y: 16}
+  - name: Nana_R_leg
+    originalName: 
+    pivot: {x: 0.5, y: 0.8888889}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 117
+      y: 36
+      width: 6
+      height: 9
+    spriteID: 8368d090cf9edfa489def899c0a4b124
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 117, y: 36}
+    spritePosition: {x: 25, y: 10}
+  - name: Nana_R_foot
+    originalName: 
+    pivot: {x: 0.5, y: 1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 89
+      y: 53
+      width: 5
+      height: 7
+    spriteID: 28e299754f00c8f488262257ffa2aaa0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 89, y: 53}
+    spritePosition: {x: 26, y: 5}
+  - name: Nana_L_leg
+    originalName: 
+    pivot: {x: 0.5, y: 0.8888889}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 112
+      y: 17
+      width: 6
+      height: 9
+    spriteID: 897ebf2c94cd9e04c9ab8d64f59f247d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 112, y: 17}
+    spritePosition: {x: 32, y: 10}
+  - name: Nana_L_foot
+    originalName: 
+    pivot: {x: 0.5, y: 1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 102
+      y: 53
+      width: 5
+      height: 7
+    spriteID: 9c8f1d91cc447bd4d929878b4bb84cff
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 102, y: 53}
+    spritePosition: {x: 33, y: 5}
+  - name: Nana_R_hand
+    originalName: 
+    pivot: {x: 0.8181819, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 112
+      y: 4
+      width: 11
+      height: 5
+    spriteID: 58fa0266f5af6cc439e7ebee70a6ff10
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 112, y: 4}
+    spritePosition: {x: 11, y: 25}
+  - name: Nana_R_arm
+    originalName: 
+    pivot: {x: 0.8571429, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 115
+      y: 53
+      width: 7
+      height: 5
+    spriteID: 978e1ed692f98e54db6bf2bdf47d9ea2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 115, y: 53}
+    spritePosition: {x: 19, y: 25}
+  - name: Nana_backHair
+    originalName: 
+    pivot: {x: 0.48076922, y: 0.45652175}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 78
+      y: 4
+      width: 26
+      height: 23
+    spriteID: 2178e5c8b28a6d94eb9037c0052433f5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 78, y: 4}
+    spritePosition: {x: 20, y: 15}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  sharedRigSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  mosaicLayers: 1
+  characterMode: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 0
+  importHiddenLayers: 0
+  layerMappingOption: 2
+  generatePhysicsShape: 0
+  paperDollMode: 0
+  keepDupilcateSpriteName: 1
+  skeletonAssetReferenceID: 
+  padding: 4
+  spriteSizeExpand: 0
+  spriteCategoryList:
+    categories: []
+  spritePackingTag: 
+  resliceFromLayer: 0
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: Nana_L_hand
+    spriteName: Nana_L_hand
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8c4dac94751adab458d2ce020eb95d6c
+    layerID: 29
+    mosaicPosition: {x: 98, y: 36}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_acce
+    spriteName: Nana_acce
+    isGroup: 0
+    parentIndex: -1
+    spriteID: e6dec58129e12464aa2309e9096fd705
+    layerID: 36
+    mosaicPosition: {x: 41, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_L_arm
+    spriteName: Nana_L_arm
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 885842c15de7ec440b7761a63b71c282
+    layerID: 28
+    mosaicPosition: {x: 74, y: 53}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_frontHair
+    spriteName: Nana_frontHair
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 4628906eb1fa53d4fab8e1ff63f8a91a
+    layerID: 19
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_Face
+    spriteName: Nana_Face
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 4d4d101b83106f34d9c6ba6687115d83
+    layerID: 32
+    mosaicPosition: {x: 74, y: 36}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_Head
+    spriteName: Nana_Head
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 7d26809fc16a57949bc105bcf977260f
+    layerID: 17
+    mosaicPosition: {x: 41, y: 36}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_Body
+    spriteName: Nana_Body
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 483b3c8a48dea5341afaa78f7b22f6a5
+    layerID: 20
+    mosaicPosition: {x: 4, y: 39}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_R_leg
+    spriteName: Nana_R_leg
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 8368d090cf9edfa489def899c0a4b124
+    layerID: 23
+    mosaicPosition: {x: 117, y: 36}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_R_foot
+    spriteName: Nana_R_foot
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 28e299754f00c8f488262257ffa2aaa0
+    layerID: 24
+    mosaicPosition: {x: 89, y: 53}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_L_leg
+    spriteName: Nana_L_leg
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 897ebf2c94cd9e04c9ab8d64f59f247d
+    layerID: 21
+    mosaicPosition: {x: 112, y: 17}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_L_foot
+    spriteName: Nana_L_foot
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9c8f1d91cc447bd4d929878b4bb84cff
+    layerID: 22
+    mosaicPosition: {x: 102, y: 53}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_R_hand
+    spriteName: Nana_R_hand
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 58fa0266f5af6cc439e7ebee70a6ff10
+    layerID: 27
+    mosaicPosition: {x: 112, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_R_arm
+    spriteName: Nana_R_arm
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 978e1ed692f98e54db6bf2bdf47d9ea2
+    layerID: 25
+    mosaicPosition: {x: 115, y: 53}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Nana_backHair
+    spriteName: Nana_backHair
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 2178e5c8b28a6d94eb9037c0052433f5
+    layerID: 16
+    mosaicPosition: {x: 78, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  sharedRigPSDLayers: []
+  pSDLayerImportSetting: []
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 638895751317155116
+  spriteSizeExpandChanged: 0
+  generateGOHierarchy: 0
+  textureAssetName: 
+  prefabAssetName: 
+  spriteLibAssetName: 
+  skeletonAssetName: 
+  secondarySpriteTextures: []

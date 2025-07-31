@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f3dd85dcd0fb6641ae2f71adbc64f06, type: 3}
+  m_Name: Buki_Player
+  m_EditorClassIdentifier: 
+  characterID: 1_1
+  characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
+  visualData: {fileID: 11400000, guid: 14e717aadbe7aab4483d8cc87251d4a7, type: 2}
+  maxHealth: 100
+  moveSpeed: 4
+  jumpPower: 16
+  knockbackImmune: 0
+  knockbackResistance: 0

@@ -101,7 +101,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 65
+      x: 67
       y: 34
       width: 11
       height: 5
@@ -113,7 +113,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 65, y: 34}
+    uvTransform: {x: 67, y: 34}
     spritePosition: {x: 39, y: 25}
   - name: Hina_Acce
     originalName: 
@@ -143,7 +143,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 43
+      x: 57
       y: 51
       width: 7
       height: 5
@@ -155,7 +155,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 43, y: 51}
+    uvTransform: {x: 57, y: 51}
     spritePosition: {x: 35, y: 25}
   - name: Hina_frontHair
     originalName: 
@@ -177,7 +177,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-    spritePosition: {x: 18, y: 31}
+    spritePosition: {x: 18, y: 29}
   - name: Hina_Face
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -241,27 +241,6 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 103, y: 4}
     spritePosition: {x: 23, y: 16}
-  - name: Hina_R_foot
-    originalName: 
-    pivot: {x: 0.5, y: 1}
-    alignment: 2
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 58
-      y: 51
-      width: 5
-      height: 7
-    spriteID: f2309c967ed1a53408a90aed785fbdcd
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 58, y: 51}
-    spritePosition: {x: 26, y: 5}
   - name: Hina_R_leg
     originalName: 
     pivot: {x: 0.5, y: 0.8888889}
@@ -269,7 +248,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 103
+      x: 105
       y: 34
       width: 6
       height: 9
@@ -281,8 +260,50 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 103, y: 34}
+    uvTransform: {x: 105, y: 34}
     spritePosition: {x: 25, y: 10}
+  - name: Hina_R_foot
+    originalName: 
+    pivot: {x: 0.5, y: 1}
+    alignment: 2
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 34
+      width: 5
+      height: 7
+    spriteID: f2309c967ed1a53408a90aed785fbdcd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 119, y: 34}
+    spritePosition: {x: 26, y: 5}
+  - name: Hina_L_leg
+    originalName: 
+    pivot: {x: 0.5, y: 0.8888889}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 43
+      y: 51
+      width: 6
+      height: 9
+    spriteID: c45f2f3337911c04188225cfa1b2a25c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 43, y: 51}
+    spritePosition: {x: 32, y: 10}
   - name: Hina_L_foot
     originalName: 
     pivot: {x: 0.48000002, y: 1}
@@ -290,7 +311,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 71
+      x: 72
       y: 51
       width: 5
       height: 7
@@ -302,29 +323,8 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 71, y: 51}
+    uvTransform: {x: 72, y: 51}
     spritePosition: {x: 33, y: 5}
-  - name: Hina_L_leg
-    originalName: 
-    pivot: {x: 0.5, y: 0.8888889}
-    alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 117
-      y: 34
-      width: 6
-      height: 9
-    spriteID: c45f2f3337911c04188225cfa1b2a25c
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 117, y: 34}
-    spritePosition: {x: 32, y: 10}
   - name: Hina_R_hand
     originalName: 
     pivot: {x: 0.90909094, y: 0.5}
@@ -332,7 +332,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 84
+      x: 86
       y: 34
       width: 11
       height: 5
@@ -344,7 +344,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 84, y: 34}
+    uvTransform: {x: 86, y: 34}
     spritePosition: {x: 11, y: 25}
   - name: Hina_R_arm
     originalName: 
@@ -353,7 +353,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 84
+      x: 85
       y: 51
       width: 7
       height: 5
@@ -365,20 +365,20 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 84, y: 51}
+    uvTransform: {x: 85, y: 51}
     spritePosition: {x: 19, y: 25}
   - name: Hina_backHair
     originalName: 
-    pivot: {x: 0.4516129, y: 0.5}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 40
-      width: 31
-      height: 16
-    spriteID: fa1ae0f0feda29445b1cb66b04b1ca42
+      y: 42
+      width: 27
+      height: 17
+    spriteID: b0858753f0f116f42b8b36c3a2d11426
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -386,7 +386,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 40}
+    uvTransform: {x: 4, y: 42}
     spritePosition: {x: 19, y: 17}
   characterData:
     bones: []
@@ -443,7 +443,7 @@ ScriptedImporter:
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
-  documentAlignment: 7
+  documentAlignment: 0
   importHiddenLayers: 0
   layerMappingOption: 2
   generatePhysicsShape: 0
@@ -464,7 +464,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: faca437b93aeea34595e82c04862c246
     layerID: 29
-    mosaicPosition: {x: 65, y: 34}
+    mosaicPosition: {x: 67, y: 34}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -484,7 +484,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: b8b0c246596459948bee6c43f192f3d4
     layerID: 28
-    mosaicPosition: {x: 43, y: 51}
+    mosaicPosition: {x: 57, y: 51}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -528,33 +528,23 @@ ScriptedImporter:
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Hina_R_foot
-    spriteName: Hina_R_foot
-    isGroup: 0
-    parentIndex: -1
-    spriteID: f2309c967ed1a53408a90aed785fbdcd
-    layerID: 24
-    mosaicPosition: {x: 58, y: 51}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
   - name: Hina_R_leg
     spriteName: Hina_R_leg
     isGroup: 0
     parentIndex: -1
     spriteID: 75070b0ecf815334ca634a65552361c7
     layerID: 23
-    mosaicPosition: {x: 103, y: 34}
+    mosaicPosition: {x: 105, y: 34}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Hina_L_foot
-    spriteName: Hina_L_foot
+  - name: Hina_R_foot
+    spriteName: Hina_R_foot
     isGroup: 0
     parentIndex: -1
-    spriteID: 9f23f57d2cc62be41af6c6146b2ed3d6
-    layerID: 22
-    mosaicPosition: {x: 71, y: 51}
+    spriteID: f2309c967ed1a53408a90aed785fbdcd
+    layerID: 24
+    mosaicPosition: {x: 119, y: 34}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -564,7 +554,17 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: c45f2f3337911c04188225cfa1b2a25c
     layerID: 21
-    mosaicPosition: {x: 117, y: 34}
+    mosaicPosition: {x: 43, y: 51}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Hina_L_foot
+    spriteName: Hina_L_foot
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9f23f57d2cc62be41af6c6146b2ed3d6
+    layerID: 22
+    mosaicPosition: {x: 72, y: 51}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -574,7 +574,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: b1776f98168afa443ab8d0ffcf09c9db
     layerID: 27
-    mosaicPosition: {x: 84, y: 34}
+    mosaicPosition: {x: 86, y: 34}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -584,7 +584,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: ab6a011ed68f6bd448d3aa1f9e729124
     layerID: 25
-    mosaicPosition: {x: 84, y: 51}
+    mosaicPosition: {x: 85, y: 51}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -592,16 +592,16 @@ ScriptedImporter:
     spriteName: Hina_backHair
     isGroup: 0
     parentIndex: -1
-    spriteID: fa1ae0f0feda29445b1cb66b04b1ca42
-    layerID: 34
-    mosaicPosition: {x: 4, y: 40}
+    spriteID: b0858753f0f116f42b8b36c3a2d11426
+    layerID: 16
+    mosaicPosition: {x: 4, y: 42}
     flatten: 0
     isImported: 1
     isVisible: 1
   sharedRigPSDLayers: []
   pSDLayerImportSetting: []
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638888981426126768
+  platformSettingsDirtyTick: 638895751317145112
   spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 
