@@ -222,14 +222,14 @@ ScriptedImporter:
     spritePosition: {x: 19, y: 30}
   - name: Shiro_Body
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.25925925, y: 0.5}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 39
       y: 4
-      width: 14
+      width: 27
       height: 15
     spriteID: 4f84b87cd109def48926d3a8b595c806
     spriteBone: []
