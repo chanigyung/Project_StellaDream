@@ -38,6 +38,12 @@ public partial class GameController : MonoBehaviour
         }
     }
 
+    public void RequestSceneLoad(string sceneName)
+    {
+        GameSceneLoader.Instance.LoadScene(sceneName, () => { ChangeState(GameState.Playing); });
+        //sceneName의 씬을 로드한 후 매개변수 없이도 ChangeState(GameState.Playing);를 실행
+    }
+
     public void ChangeState(GameState newState) //게임 상태 전환용 함수
     {
         // 같은 상태로 전환할 경우 무시
@@ -86,7 +92,6 @@ public partial class GameController : MonoBehaviour
                 break;
 
             case GameState.Loading:
-                UIManager.Instance?.HideAll(); 
                 break;
 
             case GameState.Cutscene:

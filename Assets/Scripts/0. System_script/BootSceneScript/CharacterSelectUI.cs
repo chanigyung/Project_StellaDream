@@ -31,6 +31,6 @@ public class CharacterSelectUI : MonoBehaviour
         if (selectedData == null) return;
 
         GameController.Instance.SetSelectedCharacter(selectedData);
-        GameController.Instance.LoadSceneWithLoading("SampleScene");
+        GameController.Instance.RequestSceneLoad("SampleScene");
     }
 }
