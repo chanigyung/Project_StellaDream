@@ -66,31 +66,31 @@ public partial class GameController : MonoBehaviour
         switch (state)
         {
             case GameState.Home:
-                // 홈 화면 UI 활성화 등
+                UIManager.Instance?.HideAll();
                 break;
 
             case GameState.Playing:
-                // 게임 플레이 시작 처리 (타임스케일 등)
+                UIManager.Instance?.HideAll();
                 break;
 
             case GameState.Paused:
-                // 일시정지 UI 출력
+                UIManager.Instance?.ShowPause();
                 break;
 
             case GameState.GameOver:
-                // 게임 오버 처리
+                UIManager.Instance?.ShowGameOver();
                 break;
 
             case GameState.Victory:
-                // 클리어 처리
+                UIManager.Instance?.ShowVictory();
                 break;
 
             case GameState.Loading:
-                // 로딩 화면 출력
+                UIManager.Instance?.HideAll(); 
                 break;
 
             case GameState.Cutscene:
-                // 컷씬 재생 등
+                UIManager.Instance?.HideAll();
                 break;
         }
     }

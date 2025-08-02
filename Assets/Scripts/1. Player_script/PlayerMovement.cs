@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour, IMovementController
 
     private int groundContactCount = 0;
 
-    void OnTriggerEnter2D(Collider2D other) //발 콜라이더 바닥에 닿는 트리거 켜질때
+    void OnTriggerEnter2D(Collider2D other) //땅에 닿을때
     {
         if (IsGroundLayer(other))
         {
@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour, IMovementController
             }
         }
     }
-    void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit2D(Collider2D other) //땅에서 벗어날때
     {
         if (IsGroundLayer(other))
         {

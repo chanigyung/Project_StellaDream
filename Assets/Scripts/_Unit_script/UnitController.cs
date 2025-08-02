@@ -67,7 +67,7 @@ public class UnitController : MonoBehaviour, IDamageable, IKnockbackable
             force.y
         );
 
-        rigid.velocity = Vector2.zero;
+        rigid.velocity = new Vector2(0, rigid.velocity.y);
         rigid.AddForce(finalForce, ForceMode2D.Impulse);
 
         instance.IsKnockbackActive = true;
