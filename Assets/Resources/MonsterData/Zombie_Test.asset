@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zombie_Test
   m_EditorClassIdentifier: 
   monsterName: 
-  maxHealth: 100000
+  maxHealth: 100
   moveSpeed: 1
   jumpPower: 0
   knockbackImmune: 0
