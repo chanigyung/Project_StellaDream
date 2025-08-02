@@ -428,7 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 704438288}
   cameraOffset: {x: 0, y: 0, z: -10}
-  inGameUIPrefab: {fileID: 8778927862396764980, guid: 58256b467c8ce34429dd3427ce04a28b, type: 3}
+  inGameUIPrefab: {fileID: 8778927862396764980, guid: 0f832d748aff20a4d9bcfe3bf0735566, type: 3}
 --- !u!1 &1033256678
 GameObject:
   m_ObjectHideFlags: 0
