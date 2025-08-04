@@ -15,18 +15,17 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         mainWeaponInstance = weaponInstance;
 
-        if (mainWeaponInstance != null)
+        if (mainWeaponInstance != null && mainWeaponInstance.data != null)
         {
             ShowWeapon(mainWeaponRenderer, mainWeaponInstance.data.weaponSprite, mainWeaponInstance.data.mainRotationOffsetZ);
+            // 양손 무기일 경우 왼손 해제
+            if (mainWeaponInstance.data.weaponType == WeaponType.TwoHanded)
+                UnequipSubWeapon();
         }
         else
         {
             HideWeapon(mainWeaponRenderer);
         }
-
-        // 양손 무기일 경우 왼손 해제
-        if (mainWeaponInstance.data.weaponType == WeaponType.TwoHanded)
-            UnequipSubWeapon();
     }
 
     public bool EquipSubWeapon(WeaponInstance weaponInstance)

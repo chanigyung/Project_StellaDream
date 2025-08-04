@@ -14,7 +14,7 @@ public class EquippedSlotDisplay : MonoBehaviour
 
     public void UpdateMainSlot(WeaponInstance instance)
     {
-        if (instance != null && instance.data.icon != null)
+        if (instance != null && instance.data != null)
         {
             mainSlotImage.sprite = instance.data.icon;
             mainSlotImage.color = Color.white;
@@ -28,7 +28,7 @@ public class EquippedSlotDisplay : MonoBehaviour
 
     public void UpdateSubSlot(WeaponInstance instance)
     {
-        if (instance != null && instance.data.icon != null)
+        if (instance != null && instance.data != null)
         {
             subSlotImage.sprite = instance.data.icon;
             subSlotImage.color = Color.white;

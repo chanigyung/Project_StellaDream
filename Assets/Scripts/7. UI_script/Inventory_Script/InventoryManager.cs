@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -34,10 +35,10 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log($"[InventoryManager] 무기 등록 완료: {instance.data.itemName}");
                 return true;
             }
-    }
+        }
 
-    Debug.Log("인벤토리가 가득 찼습니다.");
-    return false;
+        Debug.Log("인벤토리가 가득 찼습니다.");
+        return false;
     }
 
     public void RemoveWeaponFromInventory(WeaponInstance instance)
@@ -55,5 +56,27 @@ public class InventoryManager : MonoBehaviour
     public void SetInventorySlots(InventorySlot[] slots)
     {
         inventorySlots = slots;
+    }
+    
+    // 로드 및 씬전환시 인벤토리 복구용
+    public void LoadInventoryFromData(List<WeaponInstance> weaponList)
+    {
+        if (inventorySlots == null || inventorySlots.Length == 0)
+        {
+            Debug.LogError("[InventoryManager] inventorySlots가 초기화되지 않았습니다.");
+            return;
+        }
+
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (i < weaponList.Count)
+            {
+                inventorySlots[i].SetWeaponInstance(weaponList[i]);
+            }
+            else
+            {
+                inventorySlots[i].ClearSlot();
+            }
+        }
     }
 }

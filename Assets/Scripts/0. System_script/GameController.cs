@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState
@@ -11,12 +12,22 @@ public enum GameState
     Cutscene
 }
 
-public partial class GameController : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
+
+    //게임 상태
     public GameState CurrentState { get; private set; }
-    public SelectedCharacterData selectedCharacterData { get; private set; }
-    public PlayerData selectedPlayerData;
+
+    public PlayerData mainPlayerData;
+    public PlayerData subPlayerData;
+
+    //플레이어 관련 정보
+    public PlayerInstance currentPlayerInstance;
+    public WeaponInstance mainWeaponInstance;
+    public WeaponInstance subWeaponInstance;
+    public List<WeaponInstance> inventoryWeapons = new(); //인벤토리 정보
+    public List<WeaponInstance> hotbarWeapons = new(); //핫바 정보
 
     [Header("전역 UI 프리팹")]
     [SerializeField] private GameObject loadingUIPrefab;
@@ -56,7 +67,7 @@ public partial class GameController : MonoBehaviour
         CurrentState = newState;
         HandleStateEnter(newState); // 새로운 상태에 대한 초기화 처리
     }
- 
+
     private void HandleStateExit(GameState state) //특정 상태 퇴장시
     {
         switch (state)
@@ -100,8 +111,23 @@ public partial class GameController : MonoBehaviour
         }
     }
 
-    public void SetSelectedCharacter(PlayerData data)
+    //메인캐릭터 데이터 가져오기
+    public void SetMainPlayer(PlayerData data)
     {
-        selectedPlayerData = data;
+        mainPlayerData = data;
+        currentPlayerInstance = new PlayerInstance(data); // 여기서 인스턴스 생성
+    }
+
+    //서브캐릭터 데이터 가져오기, 서브캐릭터 구현 후 이어서 구현
+    public void SetSubPlayer(PlayerData data)
+    {
+        subPlayerData = data;
+    }
+
+    //핫바 및 인벤토리 정보 컨트롤러에 저장하기
+    public void SetInitialWeapons(List<WeaponInstance> hotbar, List<WeaponInstance> inventory)
+    {
+        hotbarWeapons = new List<WeaponInstance>(hotbar);
+        inventoryWeapons = new List<WeaponInstance>(inventory);
     }
 }
