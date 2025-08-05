@@ -13,6 +13,7 @@ public class PlayerController : UnitController
     public KeyCode jumpKey = KeyCode.W;
     public KeyCode actionKey = KeyCode.F;
 
+    //데이터 기반, 최초 실행시
     public void Init(PlayerData data)
     {
         if (data == null)
@@ -24,6 +25,19 @@ public class PlayerController : UnitController
         this.playerData = data;
 
         PlayerInstance instance = new PlayerInstance(data);
+        Initialize(instance);
+    }
+     
+    //인스턴스 기반, 일반적인 상황에서(씬 전환 등)
+    public void Init(PlayerInstance instance)
+    {
+        if (instance == null || instance.data == null)
+        {
+            Debug.LogError("PlayerInstance가 Init에 전달되지 않았습니다!");
+            return;
+        }
+
+        this.playerData = instance.data;
         Initialize(instance);
     }
 

@@ -30,7 +30,7 @@ public class CharacterSelectUI : MonoBehaviour
     {
         if (selectedData == null) return;
 
-        GameController.Instance.SetSelectedCharacter(selectedData);
-        GameController.Instance.LoadSceneWithLoading("SampleScene");
+        GameController.Instance.SetMainPlayer(selectedData);
+        GameController.Instance.RequestSceneLoad("SampleScene");
     }
 }

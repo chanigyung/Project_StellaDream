@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -81,7 +82,7 @@ public class HotbarController : MonoBehaviour
     {
         if (index < 0 || index >= slots.Length) return; //시스템 오류 방지용
         WeaponInstance instance = slots[index].weaponInstance;
-        if(instance == null) return;
+        if (instance == null) return;
 
         if (weaponManager.mainWeaponInstance == instance)
         {
@@ -90,7 +91,7 @@ public class HotbarController : MonoBehaviour
         }
 
         bool equipped = weaponManager.EquipSubWeapon(instance);
-        if(equipped)
+        if (equipped)
         {
             UpdateSlotHighlights();
             equippedSlotDisplay.UpdateSubSlot(instance);
@@ -110,18 +111,18 @@ public class HotbarController : MonoBehaviour
                 slots[i].SetHighlight(false, false);
                 continue;
             }
-        if (weaponManager.mainWeaponInstance == instance)
-        {
-            slots[i].SetHighlight(true, true); // 주무기 하이라이트
-        }
-        else if (weaponManager.subWeaponInstance == instance)
-        {
-            slots[i].SetHighlight(false, true); // 보조무기 하이라이트
-        }
-        else
-        {
-            slots[i].SetHighlight(false, false); // 아무것도 아님
-        }
+            if (weaponManager.mainWeaponInstance == instance)
+            {
+                slots[i].SetHighlight(true, true); // 주무기 하이라이트
+            }
+            else if (weaponManager.subWeaponInstance == instance)
+            {
+                slots[i].SetHighlight(false, true); // 보조무기 하이라이트
+            }
+            else
+            {
+                slots[i].SetHighlight(false, false); // 아무것도 아님
+            }
         }
     }
 
@@ -152,7 +153,7 @@ public class HotbarController : MonoBehaviour
         }
 
         var weaponManager = HotbarController.Instance.weaponManager;
-        if(weaponManager == null) return;
+        if (weaponManager == null) return;
 
         if (weaponManager.mainWeaponInstance == weaponInstance)
         {
@@ -174,5 +175,23 @@ public class HotbarController : MonoBehaviour
                 return i;
 
         return -1;
+    }
+    
+    // 로드 및 씬전환시 핫바 슬롯 복구용
+    public void LoadHotbarFromData(List<WeaponInstance> weaponList)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (i < weaponList.Count)
+            {
+                slots[i].SetSlot(weaponList[i], i);
+            }
+            else
+            {
+                slots[i].SetSlot(null, i);
+            }
+        }
+
+        UpdateSlotHighlights(); // 장착 무기 하이라이트 표시 갱신
     }
 }

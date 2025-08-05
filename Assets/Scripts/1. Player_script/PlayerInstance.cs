@@ -1,19 +1,18 @@
+using System.Collections.Generic;
+
 public class PlayerInstance : BaseUnitInstance
 {
     public PlayerData data { get; private set; }
 
     public override float MaxHealth => data.maxHealth;
 
-    // 확장: 추후 장비, 스킬, 경험치, 상태이상 등
-    // public WeaponManager weaponManager;
-    // public int level;
-    // public float experience;
+    // 추후 버프 만들면 구현
+    // public List<BuffInstance> activeBuffs = new();
 
     public PlayerInstance(PlayerData data)
     {
         this.data = data;
         currentHealth = data.maxHealth;
-
         baseMoveSpeed = data.moveSpeed;
         baseJumpPower = data.jumpPower;
     }
