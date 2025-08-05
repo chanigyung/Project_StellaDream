@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f36cee8e1aecc44a280c6938524f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 8636453946240967842, guid: 169774ed8de90e746a8b678f871a572c, type: 3}
+  monsterPrefab: {fileID: 8636453946240967842, guid: f3bdd77b1bfbb50428071a09c5724281, type: 3}
   monsterData: {fileID: 11400000, guid: 897868eb062d2c7469fe7fd3c8630934, type: 2}
   spawnPosition: {x: 0, y: 0}
 --- !u!4 &792646208
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38f36cee8e1aecc44a280c6938524f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 8636453946240967842, guid: 169774ed8de90e746a8b678f871a572c, type: 3}
+  monsterPrefab: {fileID: 8636453946240967842, guid: 76102065e78318e418aa42b9812bc4f0, type: 3}
   monsterData: {fileID: 11400000, guid: 897868eb062d2c7469fe7fd3c8630934, type: 2}
   spawnPosition: {x: 0, y: 0}
 --- !u!4 &943111509
