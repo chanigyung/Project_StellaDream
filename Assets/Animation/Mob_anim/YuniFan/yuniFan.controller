@@ -41,12 +41,6 @@ AnimatorStateMachine:
     m_State: {fileID: -3926173179094437045}
     m_Position: {x: 250, y: 110, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -588613340398822648}
-    m_Position: {x: 350, y: 510, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 6175646962897107083}
-    m_Position: {x: 120, y: 510, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 2072421508758663533}
     m_Position: {x: 490, y: 210, z: 0}
   - serializedVersion: 1
@@ -113,7 +107,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 9b49f94e9325454478bfa021c5c337f6, type: 2}
+  m_Motion: {fileID: 7400000, guid: acb8c9c9cd57dfa4693b1858cfa835ca, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -220,32 +214,6 @@ AnimatorStateMachine:
   m_ExitPosition: {x: 630, y: 150, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -8342932106109583050}
---- !u!1102 &-588613340398822648
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: zombie_atk
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6d5d28e9b3e8e0f4db2e1f6850e6260c, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &-29335341986060119
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -503,32 +471,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &6175646962897107083
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: zombie_jump
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 33e7bb184f83fe145897e2cabc6c3d8c, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &6739211029511337170
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -575,7 +517,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5fccb08a32c53a641b712f0c25493624, type: 2}
+  m_Motion: {fileID: 7400000, guid: acb8c9c9cd57dfa4693b1858cfa835ca, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
