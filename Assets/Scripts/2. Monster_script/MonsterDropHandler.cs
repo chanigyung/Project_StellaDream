@@ -28,7 +28,7 @@ public class MonsterDropHandler : MonoBehaviour
             WeaponInstance instance = new WeaponInstance(selected, true);
             
             GameObject dropObj = Instantiate(dropItemPrefab, transform.position, Quaternion.identity);
-            dropObj.GetComponent<WeaponDrop>().Initialize(instance);
+            dropObj.GetComponent<ItemDrop>().Initialize(instance);
         }
         // else if(filtered.Count == 0)
         // {

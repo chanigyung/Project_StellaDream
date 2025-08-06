@@ -1014,7 +1014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 2067049299834656840}
   interactRange: 1.2
-  itemLayer:
+  interactLayer:
     serializedVersion: 2
     m_Bits: 1048576
 --- !u!114 &7589833968211789952
