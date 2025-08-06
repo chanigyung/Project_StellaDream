@@ -8,15 +8,15 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Transform inventoryPanel;
     [SerializeField] private InventorySlot[] inventorySlots;
 
-    private void Start()
-    {
-        inventorySlots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
-    }
-
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
+    }
+
+    public void Init()
+    {
+        inventorySlots = inventoryPanel.GetComponentsInChildren<InventorySlot>();
     }
 
     public bool AddWeaponToInventory(WeaponInstance instance)
@@ -57,13 +57,13 @@ public class InventoryManager : MonoBehaviour
     {
         inventorySlots = slots;
     }
-    
+
     // 로드 및 씬전환시 인벤토리 복구용
     public void LoadInventoryFromData(List<WeaponInstance> weaponList)
     {
         if (inventorySlots == null || inventorySlots.Length == 0)
         {
-            Debug.LogError("[InventoryManager] inventorySlots가 초기화되지 않았습니다.");
+            Debug.Log("[InventoryManager] inventorySlots가 초기화되지 않았습니다.");
             return;
         }
 
@@ -78,5 +78,18 @@ public class InventoryManager : MonoBehaviour
                 inventorySlots[i].ClearSlot();
             }
         }
+    }
+
+    //현재 인벤토리 목록 반환하기
+    public List<WeaponInstance> GetWeaponList()
+    {
+        List<WeaponInstance> result = new();
+        foreach (var slot in inventorySlots)
+        {
+            var weapon = slot.GetWeaponInstance();
+            if (weapon != null)
+                result.Add(weapon);
+        }
+        return result;
     }
 }

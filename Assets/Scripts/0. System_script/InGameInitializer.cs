@@ -13,16 +13,14 @@ public class InGameInitializer : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("✅ InGameInitializer.Start() 호출");
-
         var playerInstance = GameController.Instance.currentPlayerInstance;
         if (playerInstance == null)
         {
-            Debug.LogError("❌ currentPlayerInstance가 null임");
+            Debug.LogError("currentPlayerInstance가 null임");
         }
         else
         {
-            Debug.Log("✅ currentPlayerInstance 있음: " + playerInstance.data?.characterName);
+            Debug.Log("currentPlayerInstance 있음: " + playerInstance.data?.characterName);
         }
 
         if (playerInstance == null || playerInstance.data == null || playerInstance.data.characterPrefab == null)
@@ -58,12 +56,14 @@ public class InGameInitializer : MonoBehaviour
 
         //인게임 UI 프리팹 생성
         GameObject ui = Instantiate(inGameUIPrefab);
+        HotbarController.Instance?.Init();
+        InventoryManager.Instance?.Init();
 
         if (HotbarController.Instance != null) //무기 매니저 연결 및 핫바 데이터 복원
         {
             HotbarController.Instance.weaponManager = weaponManager;
             HotbarController.Instance.LoadHotbarFromData(GameController.Instance.hotbarWeapons);
-
+            //장착 무기 표시
             HotbarController.Instance.equippedSlotDisplay.UpdateMainSlot(main);
             HotbarController.Instance.equippedSlotDisplay.UpdateSubSlot(sub);
         }

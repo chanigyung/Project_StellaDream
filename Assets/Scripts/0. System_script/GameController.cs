@@ -15,7 +15,6 @@ public enum GameState
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
-
     //게임 상태
     public GameState CurrentState { get; private set; }
 
@@ -51,6 +50,15 @@ public class GameController : MonoBehaviour
 
     public void RequestSceneLoad(string sceneName)
     {
+        //현재 인벤토리와 핫바 데이터 가져와서 리스트에 저장
+        var hotbar = HotbarController.Instance?.GetWeaponList() ?? new List<WeaponInstance>();
+        var inventory = InventoryManager.Instance?.GetWeaponList() ?? new List<WeaponInstance>();
+        //인벤토리와 핫바 데이터 다음 씬에 복구시키기
+        SetInitialWeapons(hotbar, inventory);
+        //장착 정보도 복구
+        mainWeaponInstance = HotbarController.Instance?.weaponManager?.mainWeaponInstance;
+        subWeaponInstance = HotbarController.Instance?.weaponManager?.subWeaponInstance;
+
         GameSceneLoader.Instance.LoadScene(sceneName, () => { ChangeState(GameState.Playing); });
         //sceneName의 씬을 로드한 후 매개변수 없이도 ChangeState(GameState.Playing);를 실행
     }

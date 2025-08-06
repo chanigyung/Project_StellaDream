@@ -9,6 +9,7 @@ public class HotbarController : MonoBehaviour
 
     public HotbarSlot[] slots;
     public PlayerWeaponManager weaponManager;
+
     public WeaponInstance[] initialWeaponInstance;
 
     public RectTransform hotbarPanel; //핫바 영역 판단
@@ -21,7 +22,7 @@ public class HotbarController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    void Start()
+    public void Init()
     {
         // Debug.Log($"HotbarController Start() 호출, 슬롯 수: {slots.Length}, 무기 데이터 수: {initialWeaponDatas.Length}");        
         for (int i = 0; i < slots.Length; i++)
@@ -37,6 +38,8 @@ public class HotbarController : MonoBehaviour
                 slots[i].SetSlot(null, i);
             }
         }
+
+        UpdateSlotHighlights();
     }
 
     //메인 무기 장착 함수
@@ -176,7 +179,7 @@ public class HotbarController : MonoBehaviour
 
         return -1;
     }
-    
+
     // 로드 및 씬전환시 핫바 슬롯 복구용
     public void LoadHotbarFromData(List<WeaponInstance> weaponList)
     {
@@ -193,5 +196,17 @@ public class HotbarController : MonoBehaviour
         }
 
         UpdateSlotHighlights(); // 장착 무기 하이라이트 표시 갱신
+    }
+    
+    //현재 핫바 목록 반환하기
+    public List<WeaponInstance> GetWeaponList()
+    {
+        List<WeaponInstance> result = new();
+        foreach (var slot in slots)
+        {
+            if (slot.weaponInstance != null)
+                result.Add(slot.weaponInstance);
+        }
+        return result;
     }
 }

@@ -20,7 +20,7 @@ public class TestDropSpawner : MonoBehaviour
         weapon.ApplyUpgrade(testUpgradeInfo);
 
         // weaponData 세팅
-        WeaponDrop dropScript = drop.GetComponent<WeaponDrop>();
+        ItemDrop dropScript = drop.GetComponent<ItemDrop>();
         dropScript.weaponInstance = weapon;
         dropScript.Initialize(dropScript.weaponInstance);
         // dropScript.iconRenderer = drop.GetComponent<SpriteRenderer>();
