@@ -64,7 +64,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.15}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -75,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.7}
+  m_Size: {x: 0.7, y: 1.47}
   m_EdgeRadius: 0
 --- !u!1 &1098514916370791119
 GameObject:
@@ -270,8 +270,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.1}
+  m_SizeDelta: {x: 1, y: 1.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6270856522031803979
 Canvas:
@@ -623,7 +623,7 @@ Animator:
   m_GameObject: {fileID: 7351842228590775429}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 45947b8a141a5554eb513e4c7ac37c53, type: 2}
+  m_Controller: {fileID: 9100000, guid: d224166418cf67942808adbaad1f6c9f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -747,7 +747,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.15}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -758,7 +758,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.31, y: 0.61}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &1540493808591808802
 MonoBehaviour:
@@ -792,9 +792,10 @@ GameObject:
   - component: {fileID: 2084146490990179791}
   - component: {fileID: 1592050569521716108}
   - component: {fileID: 7985708820985115783}
+  - component: {fileID: 8421598183980992719}
   - component: {fileID: 5694127208388331815}
   m_Layer: 12
-  m_Name: yunifan
+  m_Name: YuniFan_test
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -890,7 +891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropHandler: {fileID: 6303476861000532347}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
-  deathAnimatorController: {fileID: 9100000, guid: 7cc9b37bdd883024b8c74380313b0093, type: 2}
+  deathAnimatorController: {fileID: 9100000, guid: 5a4d4b073ea11e540bc27f4464e2e49f, type: 2}
 --- !u!114 &6303476861000532347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,6 +982,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &8421598183980992719
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.03}
+  m_Size: {x: 0.47, y: 1.38}
+  m_Direction: 0
 --- !u!61 &5694127208388331815
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1013,7 +1049,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.15}
+  m_Offset: {x: 0, y: -0.03}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1024,5 +1060,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.7}
+  m_Size: {x: 0.47, y: 1.38}
   m_EdgeRadius: 0

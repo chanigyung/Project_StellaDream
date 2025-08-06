@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
-  m_Name: Zombie_Test
+  m_Name: hinaFan_Test
   m_EditorClassIdentifier: 
   monsterName: 
-  maxHealth: 100
+  maxHealth: 1000
   moveSpeed: 1
   jumpPower: 0
   knockbackImmune: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
     skillData: {fileID: 11400000, guid: eca7c19e5cfb3f646b3aa6ad0f71f96a, type: 2}
   - maxRange: 8
     skillData: {fileID: 11400000, guid: 9a635c1a231b01f4299256772650eaed, type: 2}
-  deathAnimator: {fileID: 9100000, guid: 7cc9b37bdd883024b8c74380313b0093, type: 2}
+  deathAnimator: {fileID: 9100000, guid: 8959b28ac64d6d043a0c827d197ebc38, type: 2}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
   dropFilters: []

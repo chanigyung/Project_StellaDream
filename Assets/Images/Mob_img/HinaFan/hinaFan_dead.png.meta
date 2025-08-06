@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fa7c38cc2f0f00a44a15ab9891ac898d
+guid: fbcc4c672c8498c48bf0bfb85d32278c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: monster_dead_0
+      name: hinaFan_dead_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,8 +124,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c19dbc06bb4206419bb30c7d0435cec
-      internalID: 1841312814
+      spriteID: 514518660937fd641ac4578db3d3064b
+      internalID: 629774599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hinaFan_dead_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b8ce2ce3e5cd3147b2f9630b1cd5ec1
+      internalID: 1763900083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hinaFan_dead_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b09fafa3a5cfd94f86621128859e526
+      internalID: -1969369339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hinaFan_dead_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5e2665e387d33442a785f6f43ed5c03
+      internalID: 1375809214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hinaFan_dead_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 442c9d1676b9eac41b2a989b309b08e6
+      internalID: 1059473165
       vertices: []
       indices: 
       edges: []
@@ -141,7 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      monster_dead_0: 1841312814
+      hinaFan_dead_0: 629774599
+      hinaFan_dead_1: 1763900083
+      hinaFan_dead_2: -1969369339
+      hinaFan_dead_3: 1375809214
+      hinaFan_dead_4: 1059473165
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
