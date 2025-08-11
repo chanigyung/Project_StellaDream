@@ -29,8 +29,9 @@ public class InGameInitializer : MonoBehaviour
             return;
         }
 
-        //플레이어 프리팹 오브젝트 생성
+        //플레이어, ui 프리팹 생성
         GameObject player = Instantiate(playerInstance.data.characterPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject ui = Instantiate(inGameUIPrefab);
         //playerController 초기화
         var controller = player.GetComponent<PlayerController>();
         //playerInstance(데이터, 스텟) 생성
@@ -47,6 +48,10 @@ public class InGameInitializer : MonoBehaviour
 
         var main = GameController.Instance.mainWeaponInstance;
         var sub = GameController.Instance.subWeaponInstance;
+        var hotbarList = GameController.Instance.hotbarWeapons;
+
+        // 데이터 컨트롤러에 핫바 무기 복원
+        HotbarController.Instance.LoadWeaponList(hotbarList);
         
         if (main != null && main.data != null)
             weaponManager.EquipMainWeapon(main);
@@ -54,18 +59,12 @@ public class InGameInitializer : MonoBehaviour
         if (sub != null && sub.data != null)
             weaponManager.EquipSubWeapon(sub);
 
-        //인게임 UI 프리팹 생성
-        GameObject ui = Instantiate(inGameUIPrefab);
-        HotbarController.Instance?.Init();
-        InventoryManager.Instance?.Init();
-
-        if (HotbarController.Instance != null) //무기 매니저 연결 및 핫바 데이터 복원
+        // UI 초기화는 자동으로 OnHotbarChanged에서 이루어짐
+        if (HotbarUIManager.Instance != null)
         {
-            HotbarController.Instance.weaponManager = weaponManager;
-            HotbarController.Instance.LoadHotbarFromData(GameController.Instance.hotbarWeapons);
-            //장착 무기 표시
-            HotbarController.Instance.equippedSlotDisplay.UpdateMainSlot(main);
-            HotbarController.Instance.equippedSlotDisplay.UpdateSubSlot(sub);
+            // UI 강제 갱신 (첫 프레임에서 보장되도록)
+            HotbarUIManager.Instance.UpdateSlotHighlights();
+            HotbarUIManager.Instance.UpdateEquippedSlotDisplay();
         }
 
         if (InventoryManager.Instance != null) //인벤토리 데이터 복원

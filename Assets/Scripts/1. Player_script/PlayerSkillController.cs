@@ -52,9 +52,9 @@ public class PlayerSkillController : MonoBehaviour
         {
             if (skillExecutor.UseSkill(skillToUse, dir))
             {
-                var inst = weaponManager.GetWeaponBySkill(skillToUse);
-                if (inst != null && inst.isTemporary)
-                    HandleDurabilityAfterSkill(skillToUse);
+                var weapon = weaponManager.GetWeaponBySkill(skillToUse);
+                if (weapon != null && weapon.isTemporary)
+                    HandleDurabilityAfterSkill(weapon);
             }
         }
     }
@@ -66,22 +66,22 @@ public class PlayerSkillController : MonoBehaviour
         return (mouseWorld - transform.position).normalized;
     }
 
-    private void HandleDurabilityAfterSkill(SkillInstance usedSkill) //스킬 사용 후 무기 내구도 1 줄이기
+    private void HandleDurabilityAfterSkill(WeaponInstance weaponInstance) //스킬 사용 후 무기 내구도 1 줄이기
     {
-        WeaponInstance weaponInstance = weaponManager.GetWeaponBySkill(usedSkill); //사용 스킬 기준으로 무기 정보 가져오기
         if (weaponInstance == null || !weaponInstance.isTemporary) return;
 
         bool stillUsable = weaponInstance.UseOnce();
         Debug.Log("현재 내구도 : " + weaponInstance.currentDurability);
 
-        int slotIndex = HotbarController.Instance.GetSlotIndexByWeapon(weaponInstance);
+        int slotIndex = HotbarUIManager.Instance.GetSlotIndexByWeapon(weaponInstance);
         if (slotIndex != -1)
         {
-            HotbarController.Instance.slots[slotIndex].UpdateDurabilityBar();
+            HotbarUIManager.Instance.UpdateDurabilityUI(weaponInstance);
 
             if (!stillUsable)
             {
-                HotbarController.Instance.BreakWeaponInSlot(slotIndex);
+                HotbarController.Instance.RemoveWeapon(weaponInstance); // 데이터 제거
+                HotbarUIManager.Instance.ClearAllSlots();               // 전체 갱신
             }
         }
     }

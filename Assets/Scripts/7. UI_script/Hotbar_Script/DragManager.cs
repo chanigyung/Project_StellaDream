@@ -76,9 +76,10 @@ public class DragManager : MonoBehaviour
     {
         dragIcon.enabled = false;
         IsDragging = false;
-        var wm = HotbarController.Instance.weaponManager;
 
+        var wm = PlayerWeaponManager.Instance;
         Vector2 pointerPos = Input.mousePosition;
+
         bool insideInventoryPanel = inventoryPanel.gameObject.activeInHierarchy &&
             RectTransformUtility.RectangleContainsScreenPoint(inventoryPanel, Input.mousePosition, canvas.worldCamera);
         bool insideHotbarPanel = RectTransformUtility.RectangleContainsScreenPoint(hotbarPanel, pointerPos, canvas.worldCamera);
@@ -86,25 +87,17 @@ public class DragManager : MonoBehaviour
 
         if (!droppedOnSlot && draggingInstance != null)
         {
+            //핫바 -> 인벤토리            
             if (originSlotType == SlotType.Hotbar && insideInventoryPanel)
             {
                 if (draggingInstance == wm.mainWeaponInstance || draggingInstance == wm.subWeaponInstance)
                 {
-                    Debug.Log("장착 중인 무기는 인벤토리 슬롯에 자동 등록할 수 없습니다.");
+                    Debug.Log("장착 중인 무기는 인벤토리 슬롯에 등록할 수 없습니다.");
                 }
                 else
                 {
-                    foreach (var slot in inventorySlots)
-                    {
-                        if (slot.IsEmpty())
-                        {
-                            slot.SetWeaponInstance(draggingInstance);
-                            originSlot?.SetWeaponInstance(null);
-                            Debug.Log("핫바 → 인벤토리 패널: 첫 빈칸에 등록 완료");
-                            goto CLEANUP;
-                        }
-                    }
-                    Debug.Log("인벤토리 가득 참 → 등록 취소됨");
+                    HotbarController.Instance.RemoveWeapon(draggingInstance); // 핫바에서 무기 제거 시 Controller 경유
+                    InventoryManager.Instance.AddWeaponToInventory(draggingInstance);
                 }
             }
             else if (originSlotType == SlotType.Inventory && insideInventoryPanel)
@@ -120,7 +113,7 @@ public class DragManager : MonoBehaviour
                 }
                 else
                 {
-                    originSlot?.SetWeaponInstance(null);
+                    HotbarController.Instance.RemoveWeapon(draggingInstance);
                     Debug.Log("아이템을 버렸습니다.");
                 }
             }
@@ -131,13 +124,12 @@ public class DragManager : MonoBehaviour
             }
         }
 
-        CLEANUP:
-            if (!droppedOnSlot)
-            {
-                originSlot = null;
-                draggingInstance = null;
-            }
-            droppedOnSlot = false;
+        if (!droppedOnSlot)
+        {
+            originSlot = null;
+            draggingInstance = null;
+        }
+        droppedOnSlot = false;
     }
 
     public void TryDropOn(IItemSlot targetSlot) //다른 슬롯 위에 드랍할 경우 처리 함수
@@ -147,7 +139,7 @@ public class DragManager : MonoBehaviour
         var from = originSlot.GetWeaponInstance();
         var to = targetSlot.GetWeaponInstance();
 
-        var wm = HotbarController.Instance.weaponManager;
+        var wm = PlayerWeaponManager.Instance;
         bool fromIsEquipped = (from == wm.mainWeaponInstance || from == wm.subWeaponInstance); //장착된 무기를 드래그하는중?
         bool toIsEquipped = to != null && (to == wm.mainWeaponInstance || to == wm.subWeaponInstance); //장착된 무기로 드래그하는중?
 
@@ -168,6 +160,6 @@ public class DragManager : MonoBehaviour
         targetSlot.SetWeaponInstance(from);
         
         MarkDroppedOnSlot();
-        HotbarController.Instance.UpdateSlotHighlights();
+        HotbarUIManager.Instance.UpdateSlotHighlights();
     }
 }

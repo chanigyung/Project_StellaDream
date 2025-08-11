@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : UnitController
 {
+    public static PlayerController Instance { get; private set;}
     public PlayerData playerData;
 
     public Vector2 moveInput { get; private set; }

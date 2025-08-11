@@ -46,16 +46,16 @@ public class ItemDrop : MonoBehaviour, IInteractable
     {
         var controller = HotbarController.Instance;
 
-        for (int i = 0; i < controller.slots.Length; i++)
+        foreach (var weapon in controller.GetWeaponList())
         {
-            if (controller.slots[i].weaponInstance == null)
+            if (weapon == weaponInstance)
             {
-                controller.slots[i].SetSlot(weaponInstance, i);
-                return true;
+                Debug.Log("이미 핫바에 등록된 무기입니다.");
+                return false;
             }
         }
 
-        Debug.Log("핫 바에 자리 없음. 인벤토리 획득 시도");
-        return false;
+        controller.AddWeapon(weaponInstance); // 🔥 핵심: 데이터만 추가, 나머지는 이벤트로 UI 반영됨
+        return true;
     }
 }

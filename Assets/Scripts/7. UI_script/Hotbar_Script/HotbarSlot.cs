@@ -5,12 +5,12 @@ using System;
 
 public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    [Header("UI References")]
+    [Header("UI 참조")]
     public Image iconImage;
     public Image highlightImage; // 무기 장착 표시 이미지 출력용 image오브젝트
     public Image durabilityBar; //내구도 표시용 바
 
-    [Header("Highlight Sprites")]
+    [Header("주무기 보조무기 장착 표시용 스프라이트")]
     public Sprite mainHighlightSprite; // 주무기 장착 표시
     public Sprite subHighlightSprite; // 보조무기 장착 표시
 
@@ -29,14 +29,20 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
 
     public WeaponInstance GetWeaponInstance() => weaponInstance;
 
-    //-------------------------------------------------------------//
-    public void ClearSlot()
+    //------------------------------  -------------------------------//
+    public void SetSlot(WeaponInstance instance, int index) //슬롯에 무기 설정
+    {
+        slotIndex = index;
+        weaponInstance = instance;
+        UpdateUI();
+    }
+
+    public void ClearSlot() //슬롯 비우기
     {
         weaponInstance = null;
         UpdateUI();
     }
 
-    //-------------------------UI 갱신 함수---------------------------//
     public void UpdateUI() //슬롯 상태에 따른 슬롯UI 갱신
     {
         if (weaponInstance != null && weaponInstance.data.icon != null)
@@ -47,11 +53,11 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
         else
         {
             iconImage.sprite = null;
-            iconImage.color = new Color(1, 1, 1, 0); // 투명 처리
+            iconImage.color = new Color(1, 1, 1, 0); // 투명
         }
 
         UpdateDurabilityBar();
-        SetHighlight(false, false);
+        SetHighlight(false, false); // 기본값
     } 
     
     public void UpdateDurabilityBar() // 내구도 바 갱신 함수
@@ -81,26 +87,17 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
         }
     }
 
-    public void SetSlot(WeaponInstance instance, int index)
-    {
-        slotIndex = index;
-        weaponInstance = instance;
-        UpdateUI();
-    }
-
     public void OnPointerClick(PointerEventData eventData) //클릭해서 무기장착
     {
         if (weaponInstance == null) return;
 
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // 좌클릭 → 주무기 장착
-            HotbarController.Instance.EquipMainWeaponFromSlot(slotIndex);
+            PlayerWeaponManager.Instance.EquipMainWeapon(weaponInstance);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // 우클릭 → 보조무기 장착
-            HotbarController.Instance.EquipSubWeaponFromSlot(slotIndex);
+            PlayerWeaponManager.Instance.EquipSubWeapon(weaponInstance);
         }
     }
 
@@ -130,6 +127,6 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
 
         // 슬롯 간 무기 스왑
         DragManager.Instance.TryDropOn(this); // 슬롯 교환 처리
-        HotbarController.Instance.UpdateSlotHighlights();
+        HotbarUIManager.Instance.UpdateSlotHighlights();
     }
 }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerWeaponManager : MonoBehaviour
 {
+    public static PlayerWeaponManager Instance { get; private set; }
+
     public Transform rightArm;
     public Transform leftArm;
 
@@ -10,6 +12,12 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public SpriteRenderer mainWeaponRenderer;
     public SpriteRenderer subWeaponRenderer;
+
+    void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     public void EquipMainWeapon(WeaponInstance weaponInstance)
     {
