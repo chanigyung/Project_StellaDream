@@ -23,10 +23,6 @@ public class GameController : MonoBehaviour
 
     //플레이어 관련 정보
     public PlayerInstance currentPlayerInstance;
-    public WeaponInstance mainWeaponInstance;
-    public WeaponInstance subWeaponInstance;
-    public List<WeaponInstance> inventoryWeapons = new(); //인벤토리 정보
-    public List<WeaponInstance> hotbarWeapons = new(); //핫바 정보
 
     [Header("전역 UI 프리팹")]
     [SerializeField] private GameObject loadingUIPrefab;
@@ -50,15 +46,6 @@ public class GameController : MonoBehaviour
 
     public void RequestSceneLoad(string sceneName)
     {
-        //현재 인벤토리와 핫바 데이터 가져와서 리스트에 저장
-        var hotbar = HotbarController.Instance?.GetWeaponList() ?? new List<WeaponInstance>();
-        var inventory = InventoryManager.Instance?.GetWeaponList() ?? new List<WeaponInstance>();
-        //인벤토리와 핫바 데이터 다음 씬에 복구시키기
-        SetInitialWeapons(hotbar, inventory);
-        //장착 정보도 복구
-        mainWeaponInstance = HotbarController.Instance.MainWeapon;
-        subWeaponInstance = HotbarController.Instance.SubWeapon;
-
         GameSceneLoader.Instance.LoadScene(sceneName, () => { ChangeState(GameState.Playing); });
         //sceneName의 씬을 로드한 후 매개변수 없이도 ChangeState(GameState.Playing);를 실행
     }
@@ -130,12 +117,5 @@ public class GameController : MonoBehaviour
     public void SetSubPlayer(PlayerData data)
     {
         subPlayerData = data;
-    }
-
-    //핫바 및 인벤토리 정보 컨트롤러에 저장하기
-    public void SetInitialWeapons(List<WeaponInstance> hotbar, List<WeaponInstance> inventory)
-    {
-        hotbarWeapons = new List<WeaponInstance>(hotbar);
-        inventoryWeapons = new List<WeaponInstance>(inventory);
     }
 }

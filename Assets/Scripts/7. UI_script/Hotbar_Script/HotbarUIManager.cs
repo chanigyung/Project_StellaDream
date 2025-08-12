@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class HotbarUIManager : MonoBehaviour
@@ -25,7 +25,13 @@ public class HotbarUIManager : MonoBehaviour
     {
         // 데이터 컨트롤러가 핫바 변경될 때마다 슬롯 UI 업데이트(이벤트 구독)
         HotbarController.Instance.OnHotbarChanged += UpdateAllSlots;
-        UpdateAllSlots(); // 초기 출력
+        StartCoroutine(DelayedInitialUIUpdate());
+    }
+    
+    private IEnumerator DelayedInitialUIUpdate()
+    {
+        yield return null; // 프레임 하나 대기
+        UpdateAllSlots();
     }
 
     private void OnDestroy()
@@ -34,20 +40,16 @@ public class HotbarUIManager : MonoBehaviour
             HotbarController.Instance.OnHotbarChanged -= UpdateAllSlots;
     }
 
-    private void UpdateAllSlots() //슬롯에 무기 출력, 하이라이트 및 장착 UI 표시
+    public void UpdateAllSlots() //슬롯에 무기 출력, 하이라이트 및 장착 UI 표시
     {
-        var weapons = HotbarController.Instance.Weapons;
+        var weaponList = HotbarController.Instance.WeaponList;
 
         for (int i = 0; i < slots.Length; i++)
         {
-            if (i < weapons.Count)
-            {
-                slots[i].SetSlot(weapons[i], i);
-            }
+            if (i < weaponList.Count)
+                slots[i].SetSlot(weaponList[i], i);
             else
-            {
                 slots[i].SetSlot(null, i);
-            }
         }
 
         UpdateSlotHighlights();

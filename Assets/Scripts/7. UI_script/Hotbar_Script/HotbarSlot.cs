@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
 
 public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -20,16 +19,7 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
     public WeaponInstance weaponInstance;
     public bool IsEmpty() => weaponInstance == null; //weaponInstace 비어있는지 체크
 
-    //---------------------------무기 인스턴스 getter setter----------------------------//
-    public void SetWeaponInstance(WeaponInstance instance)
-    {
-        weaponInstance = instance;
-        UpdateUI();
-    }
-
-    public WeaponInstance GetWeaponInstance() => weaponInstance;
-
-    //------------------------------  -------------------------------//
+    //---------------------------슬롯 설정 및 UI갱신----------------------------//
     public void SetSlot(WeaponInstance instance, int index) //슬롯에 무기 설정
     {
         slotIndex = index;
@@ -43,9 +33,18 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
         UpdateUI();
     }
 
+    public WeaponInstance GetWeaponInstance() => weaponInstance;
+
+    public void SetWeaponInstance(WeaponInstance instance)
+    {
+        weaponInstance = instance;
+        HotbarController.Instance.SetWeaponAt(slotIndex, instance);
+        UpdateUI();
+    }
+
     public void UpdateUI() //슬롯 상태에 따른 슬롯UI 갱신
     {
-        if (weaponInstance != null && weaponInstance.data.icon != null)
+        if (weaponInstance?.data?.icon != null)
         {
             iconImage.sprite = weaponInstance.data.icon;
             iconImage.color = Color.white;
@@ -87,17 +86,18 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
         }
     }
 
+    //무기 클릭과 장착
     public void OnPointerClick(PointerEventData eventData) //클릭해서 무기장착
     {
         if (weaponInstance == null) return;
 
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            PlayerWeaponManager.Instance.EquipMainWeapon(weaponInstance);
+            HotbarController.Instance.EquipMain(slotIndex);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            PlayerWeaponManager.Instance.EquipSubWeapon(weaponInstance);
+            HotbarController.Instance.EquipSub(slotIndex);
         }
     }
 

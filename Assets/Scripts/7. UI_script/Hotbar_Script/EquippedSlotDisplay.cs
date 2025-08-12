@@ -12,12 +12,12 @@ public class EquippedSlotDisplay : MonoBehaviour
         subSlotImage.color = new Color(1, 1, 1, 0);
     }
 
-    public void UpdateMainSlot(WeaponInstance instance)
+    public void UpdateMainSlot(WeaponInstance weapon)
     {
-        if (instance != null && instance.data != null)
+        if (weapon != null && weapon.data?.icon != null)
         {
-            mainSlotImage.sprite = instance.data.icon;
-            mainSlotImage.color = Color.white;
+            mainSlotImage.sprite = weapon.data.icon;
+            mainSlotImage.color = new Color(1f,1f,1f,1f);
         }
         else
         {
@@ -26,12 +26,12 @@ public class EquippedSlotDisplay : MonoBehaviour
         }
     }
 
-    public void UpdateSubSlot(WeaponInstance instance)
+    public void UpdateSubSlot(WeaponInstance weapon)
     {
-        if (instance != null && instance.data != null)
+        if (weapon != null && weapon.data?.icon != null)
         {
-            subSlotImage.sprite = instance.data.icon;
-            subSlotImage.color = Color.white;
+            subSlotImage.sprite = weapon.data.icon;
+            subSlotImage.color = new Color(1f,1f,1f,1f);  
         }
         else
         {
