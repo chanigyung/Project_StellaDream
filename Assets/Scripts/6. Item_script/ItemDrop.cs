@@ -46,6 +46,7 @@ public class ItemDrop : MonoBehaviour, IInteractable
     {
         var controller = HotbarController.Instance;
 
+        //중복 확인
         foreach (var weapon in controller.GetWeaponList())
         {
             if (weapon == weaponInstance)
@@ -55,7 +56,14 @@ public class ItemDrop : MonoBehaviour, IInteractable
             }
         }
 
-        controller.AddWeapon(weaponInstance); // 🔥 핵심: 데이터만 추가, 나머지는 이벤트로 UI 반영됨
+        int emptySlot = controller.FindFirstEmptySlot();
+        if (emptySlot == -1)
+        {
+            Debug.Log("빈 핫바 슬롯이 없습니다.");
+            return false;
+        }
+
+        controller.SetWeaponAt(emptySlot, weaponInstance);
         return true;
     }
 }

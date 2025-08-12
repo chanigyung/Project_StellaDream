@@ -6,8 +6,9 @@ public class HotbarController : MonoBehaviour
 {
     public static HotbarController Instance { get; private set; }
 
-    private readonly List<WeaponInstance> weapons = new();
-    public IReadOnlyList<WeaponInstance> Weapons => weapons;
+    [SerializeField] private int hotbarSize = 6; // 슬롯 개수 설정 가능하게
+    private WeaponInstance[] weaponList;
+    public IReadOnlyList<WeaponInstance> WeaponList => weaponList;
 
     public WeaponInstance MainWeapon { get; private set; }
     public WeaponInstance SubWeapon { get; private set; }
@@ -24,68 +25,110 @@ public class HotbarController : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        weaponList = new WeaponInstance[hotbarSize]; // 배열 초기화
     }
 
-    public void LoadWeaponList(List<WeaponInstance> list)
+    // 슬롯에 무기 설정
+    public void SetWeaponAt(int index, WeaponInstance instance)
     {
-        weapons.Clear();
-        weapons.AddRange(list);
+        if (index < 0 || index >= weaponList.Length) return;
+        weaponList[index] = instance;
         OnHotbarChanged?.Invoke();
     }
 
-    public void AddWeapon(WeaponInstance instance)
+    // 슬롯 비우기
+    public void ClearWeaponAt(int index)
     {
-        if (!weapons.Contains(instance))
-        {
-            weapons.Add(instance);
-            OnHotbarChanged?.Invoke();
-        }
-    }
-
-    public void RemoveWeapon(WeaponInstance instance)
-    {
-        if (MainWeapon == instance) MainWeapon = null;
-        if (SubWeapon == instance) SubWeapon = null;
-
-        weapons.Remove(instance);
+        if (index < 0 || index >= weaponList.Length) return;
+        if (weaponList[index] == MainWeapon) MainWeapon = null;
+        if (weaponList[index] == SubWeapon) SubWeapon = null;
+        weaponList[index] = null;
         OnHotbarChanged?.Invoke();
     }
 
-    public void EquipMain(WeaponInstance instance)
+    // 슬롯 간 무기 교환
+    public void SwapWeapons(int indexA, int indexB)
     {
-        if (instance == null || !weapons.Contains(instance)) return;
+        if (indexA < 0 || indexA >= weaponList.Length) return;
+        if (indexB < 0 || indexB >= weaponList.Length) return;
 
-        if (instance == SubWeapon)
-            SubWeapon = MainWeapon;
-
-        MainWeapon = instance;
+        (weaponList[indexA], weaponList[indexB]) = (weaponList[indexB], weaponList[indexA]);
         OnHotbarChanged?.Invoke();
     }
 
-    public void EquipSub(WeaponInstance instance)
+    public void EquipMain(int index)
     {
-        if (instance == null || !weapons.Contains(instance)) return;
+        if (index < 0 || index >= weaponList.Length) return;
+        var instance = weaponList[index];
+        if (instance == null) return;
 
-        if (instance == MainWeapon) return;
+        // 실제 장착 처리 (조건은 PlayerWeaponManager가 판단)
+        PlayerWeaponManager.Instance?.EquipMainWeapon(instance);
 
-        SubWeapon = instance;
+        MainWeapon = PlayerWeaponManager.Instance.mainWeaponInstance;
+        SubWeapon = PlayerWeaponManager.Instance.subWeaponInstance;
+
+        OnHotbarChanged?.Invoke();
+    }
+
+    public void EquipSub(int index)
+    {
+        if (index < 0 || index >= weaponList.Length) return;
+        var instance = weaponList[index];
+        if (instance == null) return;
+
+        // 실제 장착 처리 (PlayerWeaponManager에서 양손 무기 여부 판단)
+        bool equipped = PlayerWeaponManager.Instance?.EquipSubWeapon(instance) ?? false;
+        if (!equipped) return;
+
+        MainWeapon = PlayerWeaponManager.Instance.mainWeaponInstance;
+        SubWeapon = PlayerWeaponManager.Instance.subWeaponInstance;
+        
         OnHotbarChanged?.Invoke();
     }
 
     public void UnequipMain()
     {
         MainWeapon = null;
+        PlayerWeaponManager.Instance?.UnequipMainWeapon();
         OnHotbarChanged?.Invoke();
     }
 
     public void UnequipSub()
     {
         SubWeapon = null;
+        PlayerWeaponManager.Instance?.UnequipSubWeapon();
         OnHotbarChanged?.Invoke();
     }
 
+    // 외부에서 무기 리스트를 받아 초기화할 때 (세이브 복구)
+    public void LoadWeaponList(List<WeaponInstance> list)
+    {
+        weaponList = new WeaponInstance[hotbarSize];
+        for (int i = 0; i < hotbarSize && i < list.Count; i++)
+        {
+            if (i < list.Count && list[i]?.data != null)
+                weaponList[i] = list[i];
+            else
+                weaponList[i] = null;
+        }
+        OnHotbarChanged?.Invoke();
+    }
+
+    // 무기 리스트 내보내기 (세이브)
     public List<WeaponInstance> GetWeaponList()
     {
-        return new List<WeaponInstance>(weapons);
+        return new List<WeaponInstance>(weaponList);
+    }
+
+    //첫 번째 빈 슬롯 인덱스 반환, 다찼으면 -1
+    public int FindFirstEmptySlot()
+    {
+        for (int i = 0; i < weaponList.Length; i++)
+        {
+            if (weaponList[i] == null)
+                return i;
+        }
+        return -1;
     }
 }

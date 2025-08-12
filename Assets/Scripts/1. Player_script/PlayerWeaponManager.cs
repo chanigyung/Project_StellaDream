@@ -21,6 +21,13 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void EquipMainWeapon(WeaponInstance weaponInstance)
     {
+        //보조무기에 좌클릭한경우 서로 스왑
+        if (weaponInstance == subWeaponInstance)
+        {
+            subWeaponInstance = mainWeaponInstance;
+            ShowWeapon(subWeaponRenderer, subWeaponInstance.data.weaponSprite, subWeaponInstance.data.subRotationOffsetZ);
+        }
+
         mainWeaponInstance = weaponInstance;
 
         if (mainWeaponInstance != null && mainWeaponInstance.data != null)
@@ -41,19 +48,26 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (weaponInstance.data.weaponType == WeaponType.TwoHanded)
         {
-            Debug.LogWarning("왼손에는 양손 무기 장착 불가");
+            Debug.LogWarning("양손 무기는 보조무기로 장착 불가");
             return false;
         }
 
         if(weaponInstance == null)
         {
-            Debug.LogWarning("오른손에 무기가 장착되어 있지 않으므로 왼손 무기 장착 불가");
+            Debug.LogWarning("주무기가 장착되어 있지 않으므로 보조무기 장착 불가");
             return false;
         }
         else if (mainWeaponInstance.data.weaponType == WeaponType.TwoHanded)
         {
-            Debug.LogWarning("오른손에 양손 무기가 있으므로 왼손 무기 장착 불가");
+            Debug.LogWarning("양손무기가 장착되어있으므로 보조무기 장착 불가");
             return false;
+        }
+
+        // 주무기에 우클릭한 경우 서로 스왑
+        if (weaponInstance == mainWeaponInstance)
+        {
+            mainWeaponInstance = subWeaponInstance;
+            ShowWeapon(mainWeaponRenderer, mainWeaponInstance.data.weaponSprite, mainWeaponInstance.data.mainRotationOffsetZ);
         }
 
         subWeaponInstance = weaponInstance;
