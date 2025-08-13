@@ -64,7 +64,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.042835236, y: -0.27377522}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -75,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 1.47}
+  m_Size: {x: 0.5025835, y: 0.7883556}
   m_EdgeRadius: 0
 --- !u!1 &1098514916370791119
 GameObject:
@@ -144,7 +144,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 8
+  m_Radius: 6
 --- !u!114 &6060433438407349035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,8 +270,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.1}
-  m_SizeDelta: {x: 1, y: 1.7}
+  m_AnchoredPosition: {x: 0, y: -0.2}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6270856522031803979
 Canvas:
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 6757501519225320013}
   - component: {fileID: 376932336033404488}
   m_Layer: 0
-  m_Name: ZombieSprite
+  m_Name: MonsterSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,7 +692,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7022137928752891695}
   - component: {fileID: 7328132004622338373}
-  - component: {fileID: 1540493808591808802}
+  - component: {fileID: 6553677425195994556}
   m_Layer: 13
   m_Name: BodyAttackRange
   m_TagString: Untagged
@@ -747,7 +747,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.022818565, y: -0.24461186}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -758,9 +758,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.75783634, y: 0.8453616}
   m_EdgeRadius: 0
---- !u!114 &1540493808591808802
+--- !u!114 &6553677425195994556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -792,7 +792,6 @@ GameObject:
   - component: {fileID: 2084146490990179791}
   - component: {fileID: 1592050569521716108}
   - component: {fileID: 7985708820985115783}
-  - component: {fileID: 8421598183980992719}
   - component: {fileID: 5694127208388331815}
   m_Layer: 12
   m_Name: HinaFan_test
@@ -815,12 +814,12 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 704632068511633736}
+  - {fileID: 7298635696147437977}
+  - {fileID: 7022137928752891695}
   - {fileID: 6257504288753668411}
   - {fileID: 6575413785344020660}
   - {fileID: 7112094622704033392}
   - {fileID: 1155088704519306552}
-  - {fileID: 7022137928752891695}
-  - {fileID: 7298635696147437977}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1818312823878908297
@@ -982,41 +981,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &8421598183980992719
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8636453946240967842}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03}
-  m_Size: {x: 0.47, y: 1.38}
-  m_Direction: 0
 --- !u!61 &5694127208388331815
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1049,7 +1013,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.03}
+  m_Offset: {x: -0.03670883, y: -0.271597}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1060,5 +1024,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.47, y: 1.38}
+  m_Size: {x: 0.26889896, y: 0.7946592}
   m_EdgeRadius: 0
