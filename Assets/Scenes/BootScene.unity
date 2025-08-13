@@ -2191,28 +2191,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainPlayerData: {fileID: 0}
   subPlayerData: {fileID: 0}
-  mainWeaponInstance:
-    data: {fileID: 0}
-    uniqueID: 
-    upgradeInfo:
-      baseUpgradeLevel: 0
-      efficiencyUpgradeLevel: 0
-      masteryUpgradeLevel: 0
-    isTemporary: 0
-    maxDurability: 0
-    currentDurability: 0
-  subWeaponInstance:
-    data: {fileID: 0}
-    uniqueID: 
-    upgradeInfo:
-      baseUpgradeLevel: 0
-      efficiencyUpgradeLevel: 0
-      masteryUpgradeLevel: 0
-    isTemporary: 0
-    maxDurability: 0
-    currentDurability: 0
-  inventoryWeapons: []
-  hotbarWeapons: []
   loadingUIPrefab: {fileID: 5692065910047586650, guid: 25531e1e6cb08fe458d0d69c261fa242, type: 3}
 --- !u!114 &7726554470126376164
 MonoBehaviour:
@@ -2226,6 +2204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df76461de7e9c0f4990f740dbbc9036c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hotbarSize: 6
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
