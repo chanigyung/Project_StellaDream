@@ -64,7 +64,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.022446632, y: -0.18855509}
+  m_Offset: {x: 0, y: -0.19}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -75,7 +75,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6970072, y: 0.9492287}
+  m_Size: {x: 0.7, y: 0.95}
   m_EdgeRadius: 0
 --- !u!1 &1098514916370791119
 GameObject:
@@ -602,7 +602,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -679686549, guid: 1c64101c94ad2cb44912def3e10e65e7, type: 3}
+  m_Sprite: {fileID: -2133524563, guid: a9f6b9dcd83fc2a4bb69e26c5ba4ad5e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -623,7 +623,7 @@ Animator:
   m_GameObject: {fileID: 7351842228590775429}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d224166418cf67942808adbaad1f6c9f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 594acd092495de840be3820047dfc85d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -794,7 +794,7 @@ GameObject:
   - component: {fileID: 7985708820985115783}
   - component: {fileID: 5694127208388331815}
   m_Layer: 12
-  m_Name: YuniFan_test
+  m_Name: BukiFan_test
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropHandler: {fileID: 6303476861000532347}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
-  deathAnimatorController: {fileID: 9100000, guid: b4c01233a71cc4a478aaf9d9e5e704eb, type: 2}
+  deathAnimatorController: {fileID: 9100000, guid: 5a4d4b073ea11e540bc27f4464e2e49f, type: 2}
 --- !u!114 &6303476861000532347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1013,7 +1013,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.182}
+  m_Offset: {x: 0, y: -0.18}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1024,5 +1024,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.4191203, y: 0.97}
+  m_Size: {x: 0.4, y: 0.975}
   m_EdgeRadius: 0

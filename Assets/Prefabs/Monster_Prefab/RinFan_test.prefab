@@ -602,7 +602,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -679686549, guid: 1c64101c94ad2cb44912def3e10e65e7, type: 3}
+  m_Sprite: {fileID: 1759123347, guid: c0fbd4b3b05cdc345a18cb4ae48d8abb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -623,7 +623,7 @@ Animator:
   m_GameObject: {fileID: 7351842228590775429}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d224166418cf67942808adbaad1f6c9f, type: 2}
+  m_Controller: {fileID: 9100000, guid: f9958ca9bf8f72042b29c698fd24ee32, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -794,7 +794,7 @@ GameObject:
   - component: {fileID: 7985708820985115783}
   - component: {fileID: 5694127208388331815}
   m_Layer: 12
-  m_Name: YuniFan_test
+  m_Name: RinFan_test
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropHandler: {fileID: 6303476861000532347}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
-  deathAnimatorController: {fileID: 9100000, guid: b4c01233a71cc4a478aaf9d9e5e704eb, type: 2}
+  deathAnimatorController: {fileID: 9100000, guid: b2354521f4d3e884cb8340759aa43e5b, type: 2}
 --- !u!114 &6303476861000532347
 MonoBehaviour:
   m_ObjectHideFlags: 0
