@@ -46,16 +46,6 @@ public class HotbarController : MonoBehaviour
         OnHotbarChanged?.Invoke();
     }
 
-    // 슬롯 간 무기 교환
-    public void SwapWeapons(int indexA, int indexB)
-    {
-        if (indexA < 0 || indexA >= weaponList.Length) return;
-        if (indexB < 0 || indexB >= weaponList.Length) return;
-
-        (weaponList[indexA], weaponList[indexB]) = (weaponList[indexB], weaponList[indexA]);
-        OnHotbarChanged?.Invoke();
-    }
-
     public void EquipMain(int index)
     {
         if (index < 0 || index >= weaponList.Length) return;

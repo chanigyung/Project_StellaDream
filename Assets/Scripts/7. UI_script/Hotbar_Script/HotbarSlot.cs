@@ -35,13 +35,6 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
 
     public WeaponInstance GetWeaponInstance() => weaponInstance;
 
-    public void SetWeaponInstance(WeaponInstance instance)
-    {
-        weaponInstance = instance;
-        HotbarController.Instance.SetWeaponAt(slotIndex, instance);
-        UpdateUI();
-    }
-
     public void UpdateUI() //슬롯 상태에 따른 슬롯UI 갱신
     {
         if (weaponInstance?.data?.icon != null)
@@ -120,13 +113,14 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
 
     public void OnDrop(PointerEventData eventData) //무기 스왑 처리
     {
-        if (!DragManager.Instance.IsDragging) return;
+        // if (!DragManager.Instance.IsDragging) return;
 
-        var origin = DragManager.Instance.originSlot;
-        if (origin == null || (object)origin == this) return;
+        // var origin = DragManager.Instance.originSlot;
+        // if (origin == null || (object)origin == this) return;
 
-        // 슬롯 간 무기 스왑
-        DragManager.Instance.TryDropOn(this); // 슬롯 교환 처리
-        HotbarUIManager.Instance.UpdateSlotHighlights();
+        // // 슬롯 간 무기 스왑
+        // DragManager.Instance.TryDropOn(this); // 슬롯 교환 처리
+        // HotbarUIManager.Instance.UpdateSlotHighlights();
+        DragManager.Instance.TryDropOn(this);
     }
 }

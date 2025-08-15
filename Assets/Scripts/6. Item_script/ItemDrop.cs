@@ -34,12 +34,20 @@ public class ItemDrop : MonoBehaviour, IInteractable
         bool addedToInventory = false;
 
         if (!addedToHotbar)
-            addedToInventory = InventoryManager.Instance.AddWeaponToInventory(weaponInstance);
+        {
+            addedToInventory = InventoryController.Instance.AddWeapon(weaponInstance);
+            if (addedToInventory)
+                InventoryUIManager.Instance.UpdateAllSlots();
+        }
 
         if (addedToHotbar || addedToInventory)
+        {
             Destroy(gameObject);
+        }
         else
+        {
             Debug.Log("획득 실패: 핫바/인벤토리 공간 없음");
+        }
     }
 
     bool TryAddToHotbar(WeaponInstance weaponInstance)

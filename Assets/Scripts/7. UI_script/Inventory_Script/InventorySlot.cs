@@ -6,14 +6,15 @@ public class InventorySlot : MonoBehaviour, IItemSlot, IBeginDragHandler, IDragH
 {
     [SerializeField] private Image iconImage;
     private WeaponInstance weaponInstance;
+
+    public int slotIndex;
     
     public SlotType GetSlotType() => SlotType.Inventory;
     public bool IsEmpty() => weaponInstance == null;
-
-
-    //------------------------------무기 인스턴스 getter setter-------------------------------------//    
-    public void SetWeaponInstance(WeaponInstance instance)
+    //------------------------------get set 함수-------------------------------------//    
+    public void SetSlot(WeaponInstance instance, int index)
     {
+        slotIndex = index;
         weaponInstance = instance;
         iconImage.sprite = instance?.data?.icon;
         iconImage.enabled = instance != null;
@@ -55,7 +56,6 @@ public class InventorySlot : MonoBehaviour, IItemSlot, IBeginDragHandler, IDragH
 
     public void OnDrop(PointerEventData eventData)
     {
-        DragManager.Instance.MarkDroppedOnSlot(); //DragManager.droppedOnSlot 를 true로 set해주기
         DragManager.Instance.TryDropOn(this);
     }
 }

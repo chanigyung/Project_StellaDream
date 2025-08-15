@@ -41,6 +41,8 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             HideWeapon(mainWeaponRenderer);
         }
+        Debug.Log($"[장착] mainWeaponInstance: {mainWeaponInstance?.GetHashCode()}");
+        Debug.Log($"[장착] HotbarController.MainWeapon: {HotbarController.Instance.MainWeapon?.GetHashCode()}");
     }
 
     public bool EquipSubWeapon(WeaponInstance weaponInstance)

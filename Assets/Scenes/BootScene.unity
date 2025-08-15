@@ -2170,6 +2170,8 @@ GameObject:
   - component: {fileID: 1332866102685255911}
   - component: {fileID: 7726554470126376163}
   - component: {fileID: 7726554470126376164}
+  - component: {fileID: 7726554470126376165}
+  - component: {fileID: 7726554470126376166}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2205,6 +2207,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotbarSize: 6
+--- !u!114 &7726554470126376165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576647360126708175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa410ae0f039a3478200687c0781f17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capacity: 20
+--- !u!114 &7726554470126376166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576647360126708175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7afc2c1aa8a19943849004c04c37517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryDataList: []
+  inventoryUISlotList: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class InGameInitializer : MonoBehaviour
 {
@@ -11,17 +12,17 @@ public class InGameInitializer : MonoBehaviour
     [Header("인게임 UI")]
     [SerializeField] private GameObject inGameUIPrefab;
 
+    private GameObject player;
+
     private void Start()
     {
+        InitializeImmediate();           // 즉시 처리 가능한 초기화
+        StartCoroutine(InitializeDelayed()); // 한 프레임 딜레이 필요한 UI 관련 초기화
+    }
+
+    private void InitializeImmediate()
+    {
         var playerInstance = GameController.Instance.currentPlayerInstance;
-        if (playerInstance == null)
-        {
-            Debug.LogError("currentPlayerInstance가 null임");
-        }
-        else
-        {
-            Debug.Log("currentPlayerInstance 있음: " + playerInstance.data?.characterName);
-        }
 
         if (playerInstance == null || playerInstance.data == null || playerInstance.data.characterPrefab == null)
         {
@@ -29,45 +30,41 @@ public class InGameInitializer : MonoBehaviour
             return;
         }
 
-        //플레이어, ui 프리팹 생성
-        GameObject player = Instantiate(playerInstance.data.characterPrefab, spawnPoint.position, Quaternion.identity);
+        // 플레이어, UI 프리팹 생성
+        player = Instantiate(playerInstance.data.characterPrefab, spawnPoint.position, Quaternion.identity);
         GameObject ui = Instantiate(inGameUIPrefab);
-        //playerController 초기화
+
+        // PlayerController 초기화
         var controller = player.GetComponent<PlayerController>();
-        //playerInstance(데이터, 스텟) 생성
         controller.Init(playerInstance);
 
-        //캐릭터 외형 적용
+        // 캐릭터 외형 적용
         player.GetComponent<PlayerVisualApplier>()?.ApplyVisual(playerInstance.data.visualData);
 
-        //카메라 플레이어 추적
+        // 카메라 추적 설정
         Camera.main.GetComponent<CameraFollow>()?.SetTarget(player.transform);
+    }
 
-        //장착 무기 정보 복원
-        PlayerWeaponManager weaponManager = player.GetComponent<PlayerWeaponManager>();
+    private IEnumerator InitializeDelayed()
+    {
+        yield return null; // UI 적용 프레임 기다림
 
+        // 무기 장착 복원
+        var weaponManager = player.GetComponent<PlayerWeaponManager>();
         var main = HotbarController.Instance.MainWeapon;
         var sub = HotbarController.Instance.SubWeapon;
-        
+
         if (main != null && main.data != null)
             weaponManager.EquipMainWeapon(main);
 
         if (sub != null && sub.data != null)
             weaponManager.EquipSubWeapon(sub);
 
-        // UI 초기화는 자동으로 OnHotbarChanged에서 이루어짐
-        // if (HotbarUIManager.Instance != null)
-        // {
-        //     // UI 강제 갱신 (첫 프레임에서 보장되도록)
-        //     HotbarUIManager.Instance.UpdateAllSlots();
-        // }
+        // 핫바 / 인벤토리 UI 강제 갱신
+        HotbarUIManager.Instance?.UpdateAllSlots();
+        InventoryUIManager.Instance?.UpdateAllSlots();
 
-        // if (InventoryManager.Instance != null) //인벤토리 데이터 복원
-        // {
-        //     InventoryManager.Instance.LoadInventoryFromData(GameController.Instance.inventoryWeapons);
-        // }
-
-        //게임 상태를 Playing으로 전환 (로딩 완료 후 최초 진입 시점)
+        // 게임 상태 전환
         GameController.Instance.ChangeState(GameState.Playing);
     }
 }

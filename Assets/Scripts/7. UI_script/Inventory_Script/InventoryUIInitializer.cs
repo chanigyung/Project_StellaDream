@@ -6,13 +6,13 @@ public class InventoryUIInitializer : MonoBehaviour
     [Header("설정할 프리팹 및 패널")]
     [SerializeField] private GameObject inventorySlotPrefab; // 슬롯 하나의 프리팹
     [SerializeField] private Transform inventoryPanel;        // 슬롯들을 배치할 부모 패널
-    [SerializeField] private int slotCount = 20;              // 생성할 슬롯 수
 
     private List<InventorySlot> inventorySlots = new List<InventorySlot>(); // 생성된 슬롯 저장 리스트
 
     //인벤토리 최초 생성
     private void Start()
     {
+        int slotCount = InventoryController.Instance.Capacity;
         // 슬롯을 slotCount만큼 생성
         for (int i = 0; i < slotCount; i++)
         {
@@ -45,10 +45,10 @@ public class InventoryUIInitializer : MonoBehaviour
             Debug.LogError("DragManager.Instance가 null입니다. 인벤토리 슬롯을 연결할 수 없습니다.");
         }
 
-        if (InventoryManager.Instance != null)
+        if (InventoryUIManager.Instance != null)
         {
             // 🔥 InventoryManager에도 슬롯 리스트를 전달
-            InventoryManager.Instance.SetInventorySlots(inventorySlots.ToArray());
+            InventoryUIManager.Instance.SetSlots(inventorySlots);
         }
         else
         {

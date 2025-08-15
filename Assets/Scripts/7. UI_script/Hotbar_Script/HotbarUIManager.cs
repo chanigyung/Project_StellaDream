@@ -25,13 +25,6 @@ public class HotbarUIManager : MonoBehaviour
     {
         // 데이터 컨트롤러가 핫바 변경될 때마다 슬롯 UI 업데이트(이벤트 구독)
         HotbarController.Instance.OnHotbarChanged += UpdateAllSlots;
-        StartCoroutine(DelayedInitialUIUpdate());
-    }
-    
-    private IEnumerator DelayedInitialUIUpdate()
-    {
-        yield return null; // 프레임 하나 대기
-        UpdateAllSlots();
     }
 
     private void OnDestroy()
