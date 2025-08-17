@@ -41,13 +41,15 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             HideWeapon(mainWeaponRenderer);
         }
+
+        if (HotbarController.Instance != null)
+            HotbarController.Instance.SyncEquipped(mainWeaponInstance, subWeaponInstance);
         Debug.Log($"[장착] mainWeaponInstance: {mainWeaponInstance?.GetHashCode()}");
         Debug.Log($"[장착] HotbarController.MainWeapon: {HotbarController.Instance.MainWeapon?.GetHashCode()}");
     }
 
     public bool EquipSubWeapon(WeaponInstance weaponInstance)
     {
-
         if (weaponInstance.data.weaponType == WeaponType.TwoHanded)
         {
             Debug.LogWarning("양손 무기는 보조무기로 장착 불가");
@@ -83,6 +85,8 @@ public class PlayerWeaponManager : MonoBehaviour
             HideWeapon(subWeaponRenderer);
         }
 
+        if (HotbarController.Instance != null)
+            HotbarController.Instance.SyncEquipped(mainWeaponInstance, subWeaponInstance);
         return true;
     }
 

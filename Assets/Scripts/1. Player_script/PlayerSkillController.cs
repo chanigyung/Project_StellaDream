@@ -81,7 +81,11 @@ public class PlayerSkillController : MonoBehaviour
             if (!stillUsable)
             {
                 HotbarController.Instance.ClearWeaponAt(slotIndex); // 데이터 제거
-                HotbarUIManager.Instance.ClearAllSlots();               // 전체 갱신
+                var wm = PlayerWeaponManager.Instance;
+                if (weaponInstance == wm.mainWeaponInstance)
+                    wm.UnequipMainWeapon();
+                if (weaponInstance == wm.subWeaponInstance)
+                    wm.UnequipSubWeapon();
             }
         }
     }
