@@ -73,7 +73,7 @@ public class HotbarController : MonoBehaviour
 
         MainWeapon = PlayerWeaponManager.Instance.mainWeaponInstance;
         SubWeapon = PlayerWeaponManager.Instance.subWeaponInstance;
-        
+
         OnHotbarChanged?.Invoke();
     }
 
@@ -120,5 +120,12 @@ public class HotbarController : MonoBehaviour
                 return i;
         }
         return -1;
+    }
+    
+    public void SyncEquipped(WeaponInstance main, WeaponInstance sub) //핫바 - 플레이어 컨트롤러간 장착무기 정보 일치시키기
+    {
+        MainWeapon = main;
+        SubWeapon = sub;
+        OnHotbarChanged?.Invoke();
     }
 }

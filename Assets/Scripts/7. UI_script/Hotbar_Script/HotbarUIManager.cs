@@ -81,8 +81,16 @@ public class HotbarUIManager : MonoBehaviour
         var main = HotbarController.Instance.MainWeapon;
         var sub = HotbarController.Instance.SubWeapon;
 
-        equippedSlotDisplay.UpdateMainSlot(main);
-        equippedSlotDisplay.UpdateSubSlot(sub);
+        if (main != null && main.data != null && main.data.weaponType == WeaponType.TwoHanded) //양손무기면 양쪽슬롯 다 양손무기로 표시
+        {
+            equippedSlotDisplay.UpdateMainSlot(main);
+            equippedSlotDisplay.UpdateSubSlot(main);
+        }
+        else
+        {
+            equippedSlotDisplay.UpdateMainSlot(main);
+            equippedSlotDisplay.UpdateSubSlot(sub);
+        }
     }
 
     public void UpdateDurabilityUI(WeaponInstance instance) //무기 내구도 바 개별 업데이트
