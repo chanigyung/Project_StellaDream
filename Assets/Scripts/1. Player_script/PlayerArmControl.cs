@@ -67,6 +67,7 @@ public class PlayerArmControl : MonoBehaviour
         }
         else
         {
+            rightArm.rotation = Quaternion.Euler(0, 0, rightAngle);
             // Quaternion rightRot = Quaternion.Slerp(Quaternion.identity, leftArm.rotation, 0.5f);
             // rightArm.rotation = rightRot;
         }
