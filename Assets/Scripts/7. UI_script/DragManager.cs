@@ -96,41 +96,32 @@ public class DragManager : MonoBehaviour
         }
 
         // 슬롯 외 드롭 처리
-        if (insideInventoryPanel && !droppedOnSlot)
+        if (!insideInventoryPanel && !insideHotbarPanel)
         {
             if (draggingInstance == wm.mainWeaponInstance || draggingInstance == wm.subWeaponInstance)
             {
-                Debug.Log("장착 중인 무기는 인벤토리로 이동할 수 없습니다.");
+                Debug.Log("장착 중인 무기는 버릴 수 없습니다.");
             }
             else
             {
-                int empty = InventoryController.Instance.FindFirstEmptySlot();
-                if (empty != -1)
+                if (originSlot.GetSlotType() == SlotType.Hotbar)
                 {
-                    InventoryController.Instance.SetWeaponAt(empty, draggingInstance);
-                    Debug.Log("인벤토리 빈 슬롯에 자동 등록됨");
-
-                    if (originSlot.GetSlotType() == SlotType.Hotbar)
-                    {
-                        int index = ((HotbarSlot)originSlot).slotIndex;
-                        HotbarController.Instance.ClearWeaponAt(index);
-                    }
-                    else
-                    {
-                        int index = ((InventorySlot)originSlot).slotIndex;
-                        InventoryController.Instance.SetWeaponAt(index, null);
-                    }
+                    int index = ((HotbarSlot)originSlot).slotIndex;
+                    HotbarController.Instance.ClearWeaponAt(index);
                 }
                 else
                 {
-                    Debug.Log("빈 인벤토리 슬롯 없음 → 무시됨");
+                    int index = ((InventorySlot)originSlot).slotIndex;
+                    InventoryController.Instance.SetWeaponAt(index, null);
                 }
+
+                Debug.Log("아이템을 버렸습니다.");
             }
         }
-                else
-                {
-                    Debug.Log("슬롯 외 드롭 → 무시됨");
-                }
+        else
+        {
+            Debug.Log("슬롯 외 드롭 → 무시됨");
+        }
 
         originSlot = null;
         draggingInstance = null;
