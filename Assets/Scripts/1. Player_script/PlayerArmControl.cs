@@ -4,15 +4,19 @@ public class PlayerArmControl : MonoBehaviour
 {
     public Transform body;
     public bool isFacingLeft { get; private set; }
+    public bool isTwoHanded;
 
-    public Transform leftArm; //왼쪽팔 오브젝트 할당해줄 변수
-    public Transform rightArm; //오른쪽팔 오브젝트 할당해줄 변수
-    public Animator leftArmAnimator; //팔 애니메이터 호출
+    public Transform leftArm;
+    public Transform rightArm;
+    public Animator leftArmAnimator;
 
-    private Vector3 leftArmDefaultPos; //왼쪽팔 상대좌표 기본값
-    private Vector3 rightArmDefaultPos; //오른쪽팔 상대좌표 기본값
+    private Vector3 leftArmDefaultPos;
+    private Vector3 rightArmDefaultPos;
 
-    public PlayerWeaponManager weaponManager; //장착 무기 참조
+    public PlayerWeaponManager weaponManager;
+
+    public float rightOffset = 45f;
+    public float leftOffset = 0f;
 
     void Start()
     {
@@ -23,59 +27,50 @@ public class PlayerArmControl : MonoBehaviour
     void Update()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        isFacingLeft = mouseWorldPos.x < transform.position.x;
+        body.localScale = new Vector3(isFacingLeft ? 1 : -1, 1, 1);
 
-        if (mouseWorldPos.x < transform.position.x)
-        {
-            body.localScale = new Vector3(1, 1, 1);
-            isFacingLeft = true;
-        }
-        else
-        {
-            body.localScale = new Vector3(-1, 1, 1);
-            isFacingLeft = false;
-        }
-
-        bool isTwoHanded;
-
-        if(weaponManager.mainWeaponInstance == null)
-        {
+        if (weaponManager.mainWeaponInstance == null || weaponManager.mainWeaponInstance.data == null)
             isTwoHanded = false;
-        }            
         else
         {
-            isTwoHanded = weaponManager.mainWeaponInstance.data != null &&
-                            weaponManager.mainWeaponInstance.data.weaponType == WeaponType.TwoHanded; //무기 참조해서 한손/양손무기 여부 파악
+            isTwoHanded = weaponManager.mainWeaponInstance.data.weaponType == WeaponType.TwoHanded;
         }
 
-        // leftArmAnimator.SetBool("isTwoHanded", isTwoHanded); //양손무기일 경우 왼손 애니메이션 변경
+        float rightAngle = GetArmAngle(rightArm.position, mouseWorldPos, isFacingLeft, rightOffset);
+        float leftAngle = GetArmAngle(rightArm.position, mouseWorldPos, isFacingLeft, leftOffset);
 
-        float rightAngle = GetMouseAngle(rightArm.position, mouseWorldPos);
-        float leftAngle = GetMouseAngle(rightArm.position, mouseWorldPos)+180;
+        leftArm.rotation = Quaternion.Euler(0, 0, leftAngle);
 
-        if (isFacingLeft)
-        {
-            rightAngle += 180f;
-            leftAngle += 180f;
-        }
-
-        leftArm.rotation = Quaternion.Euler(0, 0, leftAngle); //왼팔은 항상 회전                    
-
-        //무기 참조해서 한손무기일땐 오른손만 / 양손무기일땐 양손 다 돌리기
         if (isTwoHanded)
         {
             rightArm.rotation = Quaternion.Euler(0, 0, rightAngle);
         }
+        else if (weaponManager.subWeaponInstance == null || weaponManager.subWeaponInstance.data == null)
+        {
+            Quaternion baseRotation = Quaternion.Euler(0, 0, isFacingLeft ? 80f : -80f);
+            rightArm.rotation = Quaternion.Lerp(baseRotation, leftArm.rotation, 0.3f);
+        }
         else
         {
-            rightArm.rotation = Quaternion.Euler(0, 0, rightAngle);
-            // Quaternion rightRot = Quaternion.Slerp(Quaternion.identity, leftArm.rotation, 0.5f);
-            // rightArm.rotation = rightRot;
+            // rightArm.rotation = Quaternion.Euler(0, 0, rightAngle);// 한손 무기일 때는 고정
+            Quaternion rightRot = Quaternion.Slerp(Quaternion.identity, leftArm.rotation, 0.6f);
+            rightArm.rotation = rightRot;
         }
     }
 
-    float GetMouseAngle(Vector3 fromPosition, Vector3 targetPosition)
+    // 좌우 대칭을 고려한 팔 각도 계산 함수
+    float GetArmAngle(Vector3 from, Vector3 to, bool isFacingLeft, float angleOffset = 0f)
     {
-        Vector3 dir = targetPosition - fromPosition;
-        return Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Vector3 dir = to - from;
+
+        // 좌우 대칭 처리: x 방향 반전
+        if (isFacingLeft)
+            dir.x = -dir.x;
+
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        // 방향에 따라 회전 반전 (일관된 대칭 회전을 위해)
+        return isFacingLeft ? -angle + angleOffset : angle + angleOffset;
     }
 }
