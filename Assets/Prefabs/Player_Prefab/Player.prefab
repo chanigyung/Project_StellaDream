@@ -950,7 +950,7 @@ MonoBehaviour:
   rightArm: {fileID: 6005281310867172742}
   leftArmAnimator: {fileID: 2377152408351007572}
   weaponManager: {fileID: 1741115383766889819}
-  rightOffset: 45
+  rightOffset: 0
   leftOffset: 0
 --- !u!114 &1741115383766889819
 MonoBehaviour:
@@ -1565,13 +1565,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7714466855144322343}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.37899467, w: 0.9253988}
-  m_LocalPosition: {x: -0.185, y: 0.004, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.31274587, w: 0.9498369}
+  m_LocalPosition: {x: -0.223, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 472780715364177062}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -44.543}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -36.45}
 --- !u!212 &866653807976311393
 SpriteRenderer:
   m_ObjectHideFlags: 0

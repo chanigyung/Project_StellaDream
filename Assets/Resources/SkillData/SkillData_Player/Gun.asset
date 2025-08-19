@@ -23,11 +23,13 @@ MonoBehaviour:
   damagePerUpgrade: 1
   projectileLifetime: 3
   lifetimePerUpgrade: 1
-  projectileSpeed: 5
+  projectileSpeed: 20
   projSpeedPerUpgrade: 2
   knockbackX: 1
   knockbackY: 0
   useBasicKnockback: 0
+  skillEffectAnimation: {fileID: 0}
+  skillEffectDuration: 0.2
   references:
     version: 2
     RefIds: []

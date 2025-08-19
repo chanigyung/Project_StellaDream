@@ -15,7 +15,7 @@ public class PlayerArmControl : MonoBehaviour
 
     public PlayerWeaponManager weaponManager;
 
-    public float rightOffset = 45f;
+    public float rightOffset = 0f;
     public float leftOffset = 0f;
 
     void Start()
@@ -53,7 +53,6 @@ public class PlayerArmControl : MonoBehaviour
         }
         else
         {
-            // rightArm.rotation = Quaternion.Euler(0, 0, rightAngle);// 한손 무기일 때는 고정
             Quaternion rightRot = Quaternion.Slerp(Quaternion.identity, leftArm.rotation, 0.6f);
             rightArm.rotation = rightRot;
         }
