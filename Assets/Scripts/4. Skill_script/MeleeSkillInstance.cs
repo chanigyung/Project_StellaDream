@@ -9,6 +9,9 @@ public class MeleeSkillInstance : SkillInstance
     public float distanceFromUser;
     public GameObject hitboxPrefab;
 
+    public RuntimeAnimatorController effectAnimator;
+    public float effectDuration;
+
     public MeleeSkillInstance(MeleeSkillData data) : base(data)
     {
         damage = data.baseDamage;
@@ -17,6 +20,9 @@ public class MeleeSkillInstance : SkillInstance
 
         distanceFromUser = data.hitboxDistanceFromUser;
         hitboxPrefab = data.hitboxPrefab;
+
+        effectAnimator = data.skillEffectAnimation;
+        effectDuration = data.skillEffectDuration;
 
         if (data.statusEffects != null)
         {

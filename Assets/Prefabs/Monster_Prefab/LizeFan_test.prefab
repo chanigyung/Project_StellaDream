@@ -876,6 +876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5dd05c1c138ea499a1a4154e8a9e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonEffectPrefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
 --- !u!114 &6872308342932762091
 MonoBehaviour:
   m_ObjectHideFlags: 0

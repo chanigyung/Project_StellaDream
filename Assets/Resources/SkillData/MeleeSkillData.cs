@@ -21,6 +21,10 @@ public class MeleeSkillData : SkillData
     public float widthPerUpgrade = 0.1f;
     public float heightPerUpgrade = 0.1f;
 
+    [Header("스킬 이펙트")]
+    public RuntimeAnimatorController skillEffectAnimation;
+    public float skillEffectDuration = 0.2f;
+
     public override SkillInstance CreateInstance()
     {
         return new MeleeSkillInstance(this);

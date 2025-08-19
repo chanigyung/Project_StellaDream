@@ -29,6 +29,7 @@ MonoBehaviour:
   hitboxHeight: 1
   widthPerUpgrade: 0.1
   heightPerUpgrade: 0.1
+  skillEffectAnimation: {fileID: 9100000, guid: b791b57a825be4942a764a31a928b2b8, type: 2}
   references:
     version: 2
     RefIds:

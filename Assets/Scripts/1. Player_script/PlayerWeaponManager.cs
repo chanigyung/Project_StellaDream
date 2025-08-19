@@ -44,8 +44,6 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (HotbarController.Instance != null)
             HotbarController.Instance.SyncEquipped(mainWeaponInstance, subWeaponInstance);
-        Debug.Log($"[장착] mainWeaponInstance: {mainWeaponInstance?.GetHashCode()}");
-        Debug.Log($"[장착] HotbarController.MainWeapon: {HotbarController.Instance.MainWeapon?.GetHashCode()}");
     }
 
     public bool EquipSubWeapon(WeaponInstance weaponInstance)

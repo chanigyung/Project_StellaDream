@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class SkillExecutor : MonoBehaviour
 {
     private Dictionary<SkillInstance, float> lastUsedTimeDict = new();
+    [SerializeField] private GameObject commonEffectPrefab;
 
     public bool UseSkill(SkillInstance skillInstance, Vector2 direction)
     {
@@ -51,6 +52,7 @@ public class SkillExecutor : MonoBehaviour
         {
             hitboxComponent.Initialize(gameObject, skill, dir);
         }
+        CreateSkillEffect(skill.effectAnimator, skill.effectDuration, spawnPos, dir);
     }
 
     private void ExecuteProjectileSkill(ProjectileSkillInstance skill, Vector2 dir)
@@ -62,6 +64,18 @@ public class SkillExecutor : MonoBehaviour
         if (projComp != null)
         {
             projComp.Initialize(gameObject, skill, dir);
+        }
+        CreateSkillEffect(skill.effectAnimator, skill.effectDuration, spawnPos, dir);
+    }
+
+    private void CreateSkillEffect(RuntimeAnimatorController animator, float duration, Vector2 pos, Vector2 dir) //스킬 이펙트 재생하기
+    {
+        if (commonEffectPrefab == null || animator == null) return;
+
+        GameObject effect = Instantiate(commonEffectPrefab, pos, Quaternion.identity);
+        if (effect.TryGetComponent(out SkillVFXController vfx))
+        {
+            vfx.Initialize(dir, duration, animator);
         }
     }
 }

@@ -23,7 +23,7 @@ MonoBehaviour:
   damagePerUpgrade: 1
   projectileLifetime: 3
   lifetimePerUpgrade: 1
-  projectileSpeed: 25
+  projectileSpeed: 5
   projSpeedPerUpgrade: 2
   knockbackX: 1
   knockbackY: 0

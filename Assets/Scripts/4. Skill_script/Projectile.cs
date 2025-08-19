@@ -21,7 +21,9 @@ public class Projectile : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
         if (direction.x < 0)
         {
-            transform.localScale = new Vector2(1, -1);
+            Vector3 scale = transform.localScale;
+            scale.y *= -1;
+            transform.localScale = scale;
         }
 
         initialized = true;

@@ -17,10 +17,16 @@ public class SkillHitbox : MonoBehaviour
         this.attacker = attacker;
         this.skill = skill;
         this.direction = direction.normalized;
-        bool isFacingLeft = direction.x < 0;
 
-        float angle = Mathf.Atan2(direction.y, isFacingLeft ? -direction.x : direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, isFacingLeft ? -angle : angle);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        if (direction.x < 0)
+        {
+            Vector3 scale = transform.localScale;
+            scale.y *= -1;
+            transform.localScale = scale;
+        }
 
         if (TryGetComponent(out BoxCollider2D box))
         {

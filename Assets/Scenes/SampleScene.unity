@@ -647,7 +647,7 @@ MonoBehaviour:
   player: {fileID: 704438288}
   testUpgradeInfo:
     baseUpgradeLevel: 10
-    efficiencyUpgradeLevel: 10
+    efficiencyUpgradeLevel: 0
     masteryUpgradeLevel: 0
 --- !u!4 &1193934947
 Transform:
