@@ -96,7 +96,7 @@ ScriptedImporter:
   rigSpriteImportData:
   - name: Yuni_L_hand
     originalName: 
-    pivot: {x: 0.09090909, y: 0.5}
+    pivot: {x: 0.8181819, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -114,10 +114,10 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 117}
-    spritePosition: {x: 39, y: 25}
+    spritePosition: {x: 22, y: 25}
   - name: Yuni_L_arm
     originalName: 
-    pivot: {x: 0.14285715, y: 0.5}
+    pivot: {x: 0.8571429, y: 0.5}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
@@ -135,7 +135,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 51, y: 70}
-    spritePosition: {x: 35, y: 25}
+    spritePosition: {x: 30, y: 25}
   - name: Yuni_Acce
     originalName: 
     pivot: {x: 0.5, y: 0.5}
