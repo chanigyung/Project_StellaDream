@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 616a15617d7140a4b81ff77f6e888adb
+guid: ad48cf4006090454a8d73f1c4457ba9f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,85 +110,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: test_02_0
+      name: tabiFan03_idle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6e94b8b50f60b04d84afb015d3fafff
-      internalID: -1134573347
+      spriteID: 2ecd56ce6d3cf1240b90139199c7fb7c
+      internalID: 1356704773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_02_1
+      name: tabiFan03_idle_1
       rect:
         serializedVersion: 2
-        x: 640
+        x: 64
         y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f2ee4ee58f866c48a016a48f4bd3dc9
-      internalID: -2017198425
+      spriteID: d930c95b78591ff4f91d2478cd9efb37
+      internalID: 838884729
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_02_2
+      name: tabiFan03_idle_2
       rect:
         serializedVersion: 2
-        x: 1280
+        x: 128
         y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7065537ca3272542bda92d0d6cd4795
-      internalID: -605795092
+      spriteID: 6ab0b83c857e93b48af39a6c3b02f0b2
+      internalID: -2037141587
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_02_3
+      name: tabiFan03_idle_3
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 192
         y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 010c2ec8623288945bd1920e5272ec22
-      internalID: -1599553302
+      spriteID: c42a1f7a5afb1854dbf49a00942baac6
+      internalID: 1982966641
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      test_02_0: -1134573347
-      test_02_1: -2017198425
-      test_02_2: -605795092
-      test_02_3: -1599553302
+      tabiFan03_idle_0: 1356704773
+      tabiFan03_idle_1: 838884729
+      tabiFan03_idle_2: -2037141587
+      tabiFan03_idle_3: 1982966641
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

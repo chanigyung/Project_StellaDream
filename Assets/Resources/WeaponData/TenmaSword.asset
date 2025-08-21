@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8366e98e60d0dc74db26acd77550db75, type: 3}
-  m_Name: "\uCC9C\uB9C8\uAC80"
+  m_Name: TenmaSword
   m_EditorClassIdentifier: 
   itemName: spear
   icon: {fileID: 21300000, guid: 80872f06192038a4393f177b7bdf19d5, type: 3}
@@ -21,7 +21,7 @@ MonoBehaviour:
   weaponSprite: {fileID: 21300000, guid: 9792cd454db0ed2428f5b45e6693dda8, type: 3}
   mainRotationOffsetZ: -45
   subRotationOffsetZ: -45
-  mainSkill: {fileID: 11400000, guid: 017607d9e68abcd4a9ba32bd320f9c6e, type: 2}
-  subSkill: {fileID: 11400000, guid: 4015891d96a0f344a8c049cff9683b59, type: 2}
+  mainSkill: {fileID: 11400000, guid: 56337be55f8cbb64580ca5841905ad47, type: 2}
+  subSkill: {fileID: 11400000, guid: 645618de7cff14744bdded6bfd44de79, type: 2}
   tags:
   - test

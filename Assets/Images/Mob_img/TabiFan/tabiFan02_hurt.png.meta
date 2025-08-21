@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 616a15617d7140a4b81ff77f6e888adb
+guid: 5de91501e167a8743b0f5a423786875e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 48
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,85 +110,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: test_02_0
+      name: tabiFan02_hurt_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6e94b8b50f60b04d84afb015d3fafff
-      internalID: -1134573347
+      spriteID: 1d05d8acdf027924d9d2e444fac71e29
+      internalID: -393736458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_02_1
+      name: tabiFan02_hurt_1
       rect:
         serializedVersion: 2
-        x: 640
+        x: 64
         y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f2ee4ee58f866c48a016a48f4bd3dc9
-      internalID: -2017198425
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: test_02_2
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b7065537ca3272542bda92d0d6cd4795
-      internalID: -605795092
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: test_02_3
-      rect:
-        serializedVersion: 2
-        x: 1920
-        y: 0
-        width: 640
-        height: 360
-      alignment: 9
-      pivot: {x: 0.40625, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 010c2ec8623288945bd1920e5272ec22
-      internalID: -1599553302
+      spriteID: cee2b2c59dd94fc42ba5879c297aeefb
+      internalID: 1571786661
       vertices: []
       indices: 
       edges: []
@@ -204,10 +162,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      test_02_0: -1134573347
-      test_02_1: -2017198425
-      test_02_2: -605795092
-      test_02_3: -1599553302
+      tabiFan02_hurt_0: -393736458
+      tabiFan02_hurt_1: 1571786661
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
