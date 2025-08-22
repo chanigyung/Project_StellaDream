@@ -18,16 +18,19 @@ public class SkillHitbox : MonoBehaviour
         this.skill = skill;
         this.direction = direction.normalized;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        if (direction.x < 0)
+        if (skill.rotateEffect)
         {
-            Vector3 scale = transform.localScale;
-            scale.y *= -1;
-            transform.localScale = scale;
-        }
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
 
+            if (direction.x < 0)
+            {
+                Vector3 scale = transform.localScale;
+                scale.y *= -1;
+                transform.localScale = scale;
+            }
+        }
+        
         if (TryGetComponent(out BoxCollider2D box))
         {
             box.size = new Vector2(skill.width, skill.height);

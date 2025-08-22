@@ -6,11 +6,13 @@ public abstract class SkillInstance
 
     public float cooldown;
     public List<StatusEffectInfo> statusEffects = new();
+    public bool rotateEffect; //스킬 이펙트 회전여부
 
     protected SkillInstance(SkillData data)
     {
         baseData = data;
         cooldown = data.cooldown;
+        rotateEffect = data.rotateSkill;
     }
 
     // 강화 반영

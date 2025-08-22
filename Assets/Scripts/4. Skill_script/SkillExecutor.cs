@@ -52,7 +52,7 @@ public class SkillExecutor : MonoBehaviour
         {
             hitboxComponent.Initialize(gameObject, skill, dir);
         }
-        CreateSkillEffect(skill.effectAnimator, skill.effectDuration, spawnPos, dir);
+        CreateSkillEffect(skill.effectAnimator, skill.effectDuration, spawnPos, dir, skill.rotateEffect);
     }
 
     private void ExecuteProjectileSkill(ProjectileSkillInstance skill, Vector2 dir)
@@ -65,16 +65,17 @@ public class SkillExecutor : MonoBehaviour
         {
             projComp.Initialize(gameObject, skill, dir);
         }
-        CreateSkillEffect(skill.effectAnimator, skill.effectDuration, spawnPos, dir);
+        CreateSkillEffect(skill.effectAnimator, skill.effectDuration, spawnPos, dir, skill.rotateEffect);
     }
 
-    private void CreateSkillEffect(RuntimeAnimatorController animator, float duration, Vector2 pos, Vector2 dir) //스킬 이펙트 재생하기
+    private void CreateSkillEffect(RuntimeAnimatorController animator, float duration, Vector2 pos, Vector2 dir, bool rotate) //스킬 이펙트 재생하기
     {
         if (commonEffectPrefab == null || animator == null) return;
 
         GameObject effect = Instantiate(commonEffectPrefab, pos, Quaternion.identity);
         if (effect.TryGetComponent(out SkillVFXController vfx))
         {
+            vfx.applyRotation = rotate;
             vfx.Initialize(dir, duration, animator);
         }
     }

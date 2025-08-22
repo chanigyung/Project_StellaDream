@@ -20,6 +20,7 @@ MonoBehaviour:
   statusEffects:
   - rid: 6182163654774620161
   - rid: 2029413075490177024
+  rotateSkill: 0
   hitboxPrefab: {fileID: 2216451094903520163, guid: d80a129014591244da3eb0168322f997, type: 3}
   baseDamage: 100
   damagePerUpgrade: 1

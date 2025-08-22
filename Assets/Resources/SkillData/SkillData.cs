@@ -24,5 +24,8 @@ public abstract class SkillData : ScriptableObject
     [Header("스킬의 상태이상 정보")]
     [UnityEngine.SerializeReference] public List<StatusEffectInfo> statusEffects;
 
+    [Header("이펙트 회전 여부")]
+    public bool rotateSkill = true;
+
     public abstract SkillInstance CreateInstance();
 }
