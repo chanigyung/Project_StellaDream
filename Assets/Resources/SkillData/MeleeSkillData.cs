@@ -4,6 +4,7 @@ using UnityEngine;
 public class MeleeSkillData : SkillData
 {
     public override SkillType SkillType => SkillType.Melee;
+    [Header("스킬 히트박스 프리팹")]
     public GameObject hitboxPrefab;
 
     [Header("기본 데미지 / 강화배율")]

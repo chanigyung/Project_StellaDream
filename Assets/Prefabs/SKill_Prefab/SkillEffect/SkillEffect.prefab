@@ -120,5 +120,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   applyRotation: 1
-  selfDestructTime: 5.2
   effectAnimator: {fileID: 5523759805287583434}
