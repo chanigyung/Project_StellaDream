@@ -183,6 +183,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &222044200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 222044202}
+  - component: {fileID: 222044201}
+  m_Layer: 0
+  m_Name: DropSpawner (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &222044201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222044200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f33a6cc6657094b8cf24ded7dbd0fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDropPrefab: {fileID: 5353300409739423069, guid: 12259ea11a009c240a542974b201f420, type: 3}
+  testWeapon:
+    data: {fileID: 11400000, guid: 04579b63eb7204d4db1cc1e7c562726e, type: 2}
+    uniqueID: 
+    upgradeInfo:
+      baseUpgradeLevel: 0
+      efficiencyUpgradeLevel: 0
+      masteryUpgradeLevel: 0
+    isTemporary: 0
+    maxDurability: 100
+    currentDurability: 50
+  player: {fileID: 704438288}
+  testUpgradeInfo:
+    baseUpgradeLevel: 0
+    efficiencyUpgradeLevel: 0
+    masteryUpgradeLevel: 0
+--- !u!4 &222044202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 222044200}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &276803298
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +549,66 @@ MonoBehaviour:
   spawnPoint: {fileID: 704438288}
   cameraOffset: {x: 0, y: 0, z: -10}
   inGameUIPrefab: {fileID: 8778927862396764980, guid: 0f832d748aff20a4d9bcfe3bf0735566, type: 3}
+--- !u!1 &1000294787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1000294789}
+  - component: {fileID: 1000294788}
+  m_Layer: 0
+  m_Name: DropSpawner (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1000294788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000294787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f33a6cc6657094b8cf24ded7dbd0fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponDropPrefab: {fileID: 5353300409739423069, guid: 12259ea11a009c240a542974b201f420, type: 3}
+  testWeapon:
+    data: {fileID: 11400000, guid: b22ab8666705d0543953226466bda558, type: 2}
+    uniqueID: 
+    upgradeInfo:
+      baseUpgradeLevel: 0
+      efficiencyUpgradeLevel: 0
+      masteryUpgradeLevel: 0
+    isTemporary: 0
+    maxDurability: 100
+    currentDurability: 50
+  player: {fileID: 704438288}
+  testUpgradeInfo:
+    baseUpgradeLevel: 0
+    efficiencyUpgradeLevel: 0
+    masteryUpgradeLevel: 0
+--- !u!4 &1000294789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000294787}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1028316701
 GameObject:
   m_ObjectHideFlags: 0
@@ -917,16 +1037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1e7b4203aaf1d44bafb7f6448c0459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefabList:
-  - {fileID: 8636453946240967842, guid: a8cfaf5873b59804aacdc91a94af1894, type: 3}
-  - {fileID: 8636453946240967842, guid: cda3f78bc999d3f45b54d9f45e57002e, type: 3}
-  - {fileID: 8636453946240967842, guid: 3b51a96c596a24e4e8423ed7c57d930c, type: 3}
-  - {fileID: 8636453946240967842, guid: 169774ed8de90e746a8b678f871a572c, type: 3}
-  - {fileID: 8636453946240967842, guid: 3fc8f40ca7ba22848ac4b6c8763e3dce, type: 3}
-  - {fileID: 8636453946240967842, guid: 780f50ab0a7625546b2707022b37d594, type: 3}
-  - {fileID: 8636453946240967842, guid: 1475baab14c409a4a826ee10b4996ce4, type: 3}
-  - {fileID: 8636453946240967842, guid: 2c24688f74faf26448faab1c773eb486, type: 3}
-  - {fileID: 8636453946240967842, guid: 269f660f459faff43b2ddc1b46d7385e, type: 3}
   monsterDataList:
   - {fileID: 11400000, guid: 897868eb062d2c7469fe7fd3c8630934, type: 2}
   - {fileID: 11400000, guid: a7d90aefeac47c24392b8d953cfaa0c7, type: 2}
@@ -6852,6 +6962,8 @@ SceneRoots:
   - {fileID: 1509204802}
   - {fileID: 276803300}
   - {fileID: 149175353}
+  - {fileID: 1000294789}
+  - {fileID: 222044202}
   - {fileID: 1937572070}
   - {fileID: 1195512931}
   - {fileID: 1474615669}
