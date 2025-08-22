@@ -1,12 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum MonsterGrade { Normal, Elite, Rare, Boss }
+
 [CreateAssetMenu(menuName = "Monster/MonsterData")]
 public class MonsterData : ScriptableObject
 {
     public GameObject monsterPrefab;
 
     public string monsterName;
+    public MonsterGrade grade;
     public float maxHealth = 100f;
     public float moveSpeed = 1f;
     public float jumpPower = 0f;
@@ -19,6 +22,6 @@ public class MonsterData : ScriptableObject
     public RuntimeAnimatorController deathAnimator;
     public GameObject dieEffectPrefab;
 
-    public List<string> monsterTag;
+    public List<string> tags;
     public List<WeaponDropFilter> dropFilters;
 }

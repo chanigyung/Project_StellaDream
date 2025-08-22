@@ -2171,6 +2171,7 @@ GameObject:
   - component: {fileID: 7726554470126376163}
   - component: {fileID: 7726554470126376164}
   - component: {fileID: 7726554470126376165}
+  - component: {fileID: 7726554470126376167}
   - component: {fileID: 7726554470126376166}
   m_Layer: 0
   m_Name: GameController
@@ -2234,6 +2235,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryDataList: []
   inventoryUISlotList: []
+--- !u!114 &7726554470126376167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576647360126708175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e2ed4d765f564849a277bab7959daee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterDataList: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

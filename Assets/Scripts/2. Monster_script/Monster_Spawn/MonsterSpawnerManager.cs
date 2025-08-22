@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MonsterSpawnerManager : MonoBehaviour
 {
-    [Header("몬스터 데이터 (태그 + 프리팹 포함)")]
+    [Header("몬스터 데이터")]
     public List<MonsterData> monsterDataList;
 
     private List<GameObject> spawnedMonsters = new();
@@ -20,32 +20,23 @@ public class MonsterSpawnerManager : MonoBehaviour
 
         foreach (var point in spawnPoints)
         {
-            // 1. 태그에 해당하는 MonsterData들 필터링
-            List<MonsterData> candidates = monsterDataList.FindAll(data =>
-                data.monsterTag != null &&
-                data.monsterTag.Contains(point.monsterTag) &&
-                data.monsterPrefab != null);
+            //스폰 포인트의 태그에 따라 스폰할 몬스터 목록 가져오기
+            var candidates = MonsterDataManager.Instance.GetMonsterDataByTag(point.monsterTag);
 
             if (candidates.Count == 0)
             {
-                Debug.LogWarning($"[스폰 실패] 태그 '{point.monsterTag}'에 해당하는 몬스터가 없거나 프리팹이 비어 있음");
+                Debug.LogWarning($"[스폰 실패] 태그 '{point.monsterTag}'에 해당하는 몬스터 없음");
                 continue;
             }
 
-            // 2. 랜덤으로 하나 선택
-            MonsterData selectedData = candidates[Random.Range(0, candidates.Count)];
+            //몬스터 리스트에서 랜덤으로 하나 소환
+            var selectedData = candidates[Random.Range(0, candidates.Count)];
+            GameObject monsterObj = Instantiate(selectedData.monsterPrefab, point.GetSpawnPosition(), Quaternion.identity);
 
-            // 3. 프리팹 생성 및 초기화
-            GameObject monsterObj = Instantiate(
-                selectedData.monsterPrefab,
-                point.GetSpawnPosition(),
-                Quaternion.identity
-            );
-
-            MonsterController controller = monsterObj.GetComponent<MonsterController>();
+            var controller = monsterObj.GetComponent<MonsterController>();
             if (controller == null)
             {
-                Debug.LogError("[스폰 실패] 프리팹에 MonsterController가 없음");
+                Debug.LogError("[스폰 실패] MonsterController 없음");
                 continue;
             }
 
@@ -63,7 +54,7 @@ public class MonsterSpawnerManager : MonoBehaviour
             var instance = monster.GetComponent<MonsterController>()?.instance as MonsterInstance;
             if (instance == null) continue;
 
-            foreach (string tag in instance.data.monsterTag)
+            foreach (string tag in instance.data.tags)
             {
                 if (!tagCount.ContainsKey(tag))
                     tagCount[tag] = 0;
