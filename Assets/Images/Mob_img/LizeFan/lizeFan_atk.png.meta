@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uD53C\uC5D4\uB098_atk_0"
+      name: lizeFan_atk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 020feca44c54ff2499bdcabf8586e372
-      internalID: -611936527
+      spriteID: 1a38a2ad2a6beba46aedb38f0951cc8f
+      internalID: -322811983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uD53C\uC5D4\uB098_atk_1"
+      name: lizeFan_atk_1
       rect:
         serializedVersion: 2
         x: 64
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a432b79d37281bc4e9b8d82cdaefaa53
-      internalID: 331893930
+      spriteID: 79c5d793bdc416e4e825c4e11fb6edc7
+      internalID: -979140265
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uD53C\uC5D4\uB098_atk_2"
+      name: lizeFan_atk_2
       rect:
         serializedVersion: 2
         x: 128
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f45dc78a6d97d743a7ebb523e0ca1ae
-      internalID: 1096810133
+      spriteID: 27a5691841453064e9b59afb6f23de83
+      internalID: 1380525326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uD53C\uC5D4\uB098_atk_3"
+      name: lizeFan_atk_3
       rect:
         serializedVersion: 2
         x: 192
@@ -187,8 +187,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a94de38e2d93cec4280337476fd71779
-      internalID: -2069855892
+      spriteID: 0bece53cd82b05c49a59d976f326f1c0
+      internalID: -1360937073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lizeFan_atk_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddc0696a600be3e458a4e6c4cb5d7767
+      internalID: -1965254782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lizeFan_atk_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c9504a897dac114483b340682c3ffb6
+      internalID: 518354283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lizeFan_atk_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 919e9106e1abab442927dee74494da96
+      internalID: 1960048493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lizeFan_atk_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db68051de75b7bd42bd76b217725efd1
+      internalID: 1802260354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lizeFan_atk_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df86395435dfbbc44965d65814d028af
+      internalID: -976988833
       vertices: []
       indices: 
       edges: []
@@ -204,10 +309,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\uD53C\uC5D4\uB098_atk_0": -611936527
-      "\uD53C\uC5D4\uB098_atk_1": 331893930
-      "\uD53C\uC5D4\uB098_atk_2": 1096810133
-      "\uD53C\uC5D4\uB098_atk_3": -2069855892
+      lizeFan_atk_0: -322811983
+      lizeFan_atk_1: -979140265
+      lizeFan_atk_2: 1380525326
+      lizeFan_atk_3: -1360937073
+      lizeFan_atk_4: -1965254782
+      lizeFan_atk_5: 518354283
+      lizeFan_atk_6: 1960048493
+      lizeFan_atk_7: 1802260354
+      lizeFan_atk_8: -976988833
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uBFE1\uB315\uC774_atk_0"
+      name: tabiFan_atk_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f4ed49ea4cf54c4793c8916569aa70b
-      internalID: 2143927118
+      spriteID: 86cb079ac1a3f4944b46bdfb31419cde
+      internalID: 472104227
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uBFE1\uB315\uC774_atk_1"
+      name: tabiFan_atk_1
       rect:
         serializedVersion: 2
         x: 64
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3589922a99b076e41916ce433ac841a3
-      internalID: 480996152
+      spriteID: f7e058b2578bc4444b1ead36b4916b20
+      internalID: 569932921
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uBFE1\uB315\uC774_atk_2"
+      name: tabiFan_atk_2
       rect:
         serializedVersion: 2
         x: 128
@@ -166,8 +166,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c05f115fa18c9ad4792f84e86d3611c9
-      internalID: 1920886227
+      spriteID: 48851046ec6e5c947a7eeec56307a6c9
+      internalID: 1815070503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tabiFan_atk_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45c86b3097f251b42b2424ee8cfaf13a
+      internalID: 1973168231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tabiFan_atk_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b442d0460191e448850eca842628196
+      internalID: 1551948498
       vertices: []
       indices: 
       edges: []
@@ -183,9 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\uBFE1\uB315\uC774_atk_0": 2143927118
-      "\uBFE1\uB315\uC774_atk_1": 480996152
-      "\uBFE1\uB315\uC774_atk_2": 1920886227
+      tabiFan_atk_0: 472104227
+      tabiFan_atk_1: 569932921
+      tabiFan_atk_2: 1815070503
+      tabiFan_atk_3: 1973168231
+      tabiFan_atk_4: 1551948498
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

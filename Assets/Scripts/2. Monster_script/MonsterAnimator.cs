@@ -30,4 +30,9 @@ public class MonsterAnimator : MonoBehaviour
     {
         animator.SetTrigger("Hit");
     }
+
+    public void PlayAttack()
+    {
+        animator.SetTrigger("Attack");
+    }
 }

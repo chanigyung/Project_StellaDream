@@ -11,6 +11,8 @@ public class MonsterSkillAI : MonoBehaviour
     private float lastGlobalSkillUseTime;
     private StatusEffectManager eManager;
 
+    private MonsterAnimator monsterAnimator;
+
     private Dictionary<SkillInstance, float> lastUsedTimes = new();
 
     private float recoverBlockDuration = 0.5f; // 기절/넉백 회복 후 0.5초간 스킬 금지
@@ -21,6 +23,7 @@ public class MonsterSkillAI : MonoBehaviour
         var controller = GetComponent<MonsterController>();
         monster = controller.instance as MonsterInstance;
         eManager = GetComponent<StatusEffectManager>();
+        monsterAnimator = GetComponent<MonsterAnimator>();
 
         player = GameObject.FindWithTag("Player")?.transform;
 
@@ -65,6 +68,8 @@ public class MonsterSkillAI : MonoBehaviour
             if (dist > range) continue; // 거리 조건 불충족
             if (Time.time < lastUsedTimes[skill] + skill.cooldown) continue; // 스킬 쿨타임
             if (Time.time < lastGlobalSkillUseTime + globalSkillCooldown) continue; // 공통 쿨타임
+
+            monsterAnimator?.PlayAttack(); //공격 애니메이션 트리거
 
             // 스킬 실행
             Vector2 dir = (player.position - transform.position).normalized;
