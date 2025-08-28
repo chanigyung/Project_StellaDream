@@ -10,24 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddaced2eddafa96479dc4c7b2c3f173f, type: 3}
-  m_Name: Mob_melee_1
+  m_Name: Mob_Swing
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: Mob_Swing
   description: 
   cooldown: 0
   activationType: 0
   hitboxDistanceFromUser: 0.5
   statusEffects: []
+  rotateSkill: 1
   hitboxPrefab: {fileID: 2216451094903520163, guid: 5df8fa38e43687c4bab69055f3161c1a, type: 3}
   baseDamage: 30
   damagePerUpgrade: 1
   knockbackX: 5
   knockbackY: 5
   useBasicKnockback: 1
-  hitboxWidth: 0.5
-  hitboxHeight: 1
+  hitboxWidth: 1
+  hitboxHeight: 2
   widthPerUpgrade: 0.1
   heightPerUpgrade: 0.1
+  skillEffectAnimation: {fileID: 9100000, guid: fe212119b44f8a348920f0ca1f04814e, type: 2}
+  skillEffectDuration: 0.2
   references:
     version: 2
     RefIds: []

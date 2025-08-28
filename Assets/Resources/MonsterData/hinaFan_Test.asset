@@ -23,8 +23,6 @@ MonoBehaviour:
   skillList:
   - maxRange: 1.5
     skillData: {fileID: 11400000, guid: 57d48e713b4ce39429da246a125b670c, type: 2}
-  - maxRange: 3
-    skillData: {fileID: 11400000, guid: eca7c19e5cfb3f646b3aa6ad0f71f96a, type: 2}
   - maxRange: 8
     skillData: {fileID: 11400000, guid: 9a635c1a231b01f4299256772650eaed, type: 2}
   deathAnimator: {fileID: 9100000, guid: 8959b28ac64d6d043a0c827d197ebc38, type: 2}
