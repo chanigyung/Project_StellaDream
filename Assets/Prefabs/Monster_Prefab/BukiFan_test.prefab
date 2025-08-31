@@ -87,7 +87,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6257504288753668411}
   - component: {fileID: 5569422209121004889}
-  - component: {fileID: 6060433438407349035}
   m_Layer: 21
   m_Name: TraceZone
   m_TagString: Untagged
@@ -145,18 +144,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 8
---- !u!114 &6060433438407349035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098514916370791119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b48b0877d3f7fc43878190dedd458fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2153079768020782744
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,13 +771,15 @@ GameObject:
   - component: {fileID: 1729734114861102264}
   - component: {fileID: 1818312823878908297}
   - component: {fileID: 7358252084151330119}
+  - component: {fileID: 1915722454801272030}
   - component: {fileID: 6632916101516864826}
+  - component: {fileID: 1574358246379064108}
   - component: {fileID: 72482468766992822}
   - component: {fileID: 6872308342932762091}
   - component: {fileID: 6303476861000532347}
   - component: {fileID: 8084018932126541268}
-  - component: {fileID: 2084146490990179791}
   - component: {fileID: 1592050569521716108}
+  - component: {fileID: 7029715973547977330}
   - component: {fileID: 7985708820985115783}
   - component: {fileID: 5694127208388331815}
   m_Layer: 12
@@ -850,6 +839,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1818312823878908297}
   isTracing: 0
+--- !u!114 &1915722454801272030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71ea5ca935c30240983448929f3a684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6632916101516864826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,6 +865,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillExecutor: {fileID: 72482468766992822}
   globalSkillCooldown: 2
+--- !u!114 &1574358246379064108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6131f454808408b4cae2dc544946346f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &72482468766992822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -928,18 +941,6 @@ MonoBehaviour:
   immuneToBleed: 0
   immuneToIgnite: 0
   immuneToPoison: 0
---- !u!114 &2084146490990179791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8636453946240967842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f15ad67d7c018e4ca529f8cf208e645, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1592050569521716108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,6 +956,18 @@ MonoBehaviour:
   controller: {fileID: 1818312823878908297}
   healthFill: {fileID: 8581448013380704362}
   canvas: {fileID: 6270856522031803979}
+--- !u!114 &7029715973547977330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f15ad67d7c018e4ca529f8cf208e645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &7985708820985115783
 Rigidbody2D:
   serializedVersion: 4

@@ -1,8 +1,12 @@
 using UnityEngine;
 
+public enum MonsterState { Idle, Move, Attack, Stun }
+
 public class MonsterAnimator : MonoBehaviour
 {
+    //enum기반으로 변경
     private Animator animator;
+    private MonsterState currentState;
 
     private void Awake()
     {

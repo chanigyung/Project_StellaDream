@@ -40,7 +40,6 @@ public class MonsterSkillAI : MonoBehaviour
     private void TryUseSkill()
     {
         if (player == null || monster == null) return;
-        if (!GetComponent<MonsterMovement>()?.isTracing ?? true) return;
 
         if (eManager != null) //기절, 파워넉백일 경우 스킬사용X
         {
@@ -69,7 +68,7 @@ public class MonsterSkillAI : MonoBehaviour
             if (Time.time < lastUsedTimes[skill] + skill.cooldown) continue; // 스킬 쿨타임
             if (Time.time < lastGlobalSkillUseTime + globalSkillCooldown) continue; // 공통 쿨타임
 
-            monsterAnimator?.PlayAttack(); //공격 애니메이션 트리거
+            monsterAnimator?.PlayAttack();
 
             // 스킬 실행
             Vector2 dir = (player.position - transform.position).normalized;
@@ -84,8 +83,6 @@ public class MonsterSkillAI : MonoBehaviour
             return; // 하나만 사용
         }
 
-        // 사용 가능한 스킬 없음 → 추적 유지
-        GetComponent<MonsterMovement>()?.SetTracing(true);
     }
 
     public void NotifyRecoverDelay()

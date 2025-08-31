@@ -26,6 +26,12 @@ public class MonsterInstance : BaseUnitInstance
         }
     }
 
+    public void InitializeBehavior(MonsterDecisionMaker decisionMaker)
+    {
+        //몬스터가 보유한 행동 목록 decision에 부여해주기
+        decisionMaker.AddAction(new WanderAction());
+    }
+
     public override bool IsKnockbackImmune() => data.knockbackImmune;
     public override float GetKnockbackResistance() => data.knockbackResistance;
 }
