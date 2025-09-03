@@ -66,8 +66,6 @@ public class MonsterSkillAI : MonoBehaviour
             if (Time.time < lastUsedTimes[skill] + skill.cooldown) continue; // 스킬 쿨타임
             if (Time.time < lastGlobalSkillUseTime + globalSkillCooldown) continue; // 공통 쿨타임
 
-            context.movement?.Stop();
-            context.animator?.PlayMoving(false);
             context.animator?.PlayAttack();
 
             // 스킬 실행

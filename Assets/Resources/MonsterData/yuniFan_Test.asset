@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: yuniFan_Test
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: a8cfaf5873b59804aacdc91a94af1894, type: 3}
-  monsterName: 
+  monsterName: "\uC544\uB974\uB0E5"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1

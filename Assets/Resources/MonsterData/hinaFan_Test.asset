@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: hinaFan_Test
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: 3b51a96c596a24e4e8423ed7c57d930c, type: 3}
-  monsterName: 
+  monsterName: "\uD574\uB465\uC774"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1

@@ -1,21 +1,18 @@
-using System.Collections;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
 public class MonsterMovement : MonoBehaviour, IMovementController // IInterruptable
 {
-    private MonsterAnimator monsterAnimator;
-    public UnitController controller;
-    private BaseUnitInstance instance => controller.instance as BaseUnitInstance;
+    private MonsterContext context;
+    private BaseUnitInstance instance => context?.instance;
 
     private bool isRooted = false;
     private bool isStunned = false;
     private bool isPowerKnockbacked = false;
 
-    void Awake()
+    public void Initialize(MonsterContext ctx)
     {
-        monsterAnimator = GetComponent<MonsterAnimator>();
-        controller = GetComponent<UnitController>();
+        context = ctx;
     }
 
     public void Move(Vector3 direction)
@@ -24,12 +21,13 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
             return;
 
         float speed = instance.GetCurrentMoveSpeed();
-        transform.position += direction * speed * Time.deltaTime;
+        context.selfTransform.position += direction * speed * Time.deltaTime;
 
-        transform.localScale = (direction == Vector3.left) ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
+        context.selfTransform.localScale = (direction == Vector3.left) ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
+        context.animator?.PlayMoving(true);
     }
 
-    public void ManualJump()
+    public void Jump()
     {
         if (instance == null || isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
             return;
@@ -46,6 +44,7 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
         // Rigidbody2D rigid = GetComponent<Rigidbody2D>();
         // if (rigid != null)
         //     rigid.velocity = new Vector2(0, rigid.velocity.y);
+        context.animator?.PlayMoving(false);
     }
     
     public void SetRooted(bool value) => isRooted = value;

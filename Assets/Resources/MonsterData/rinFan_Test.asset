@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: rinFan_Test
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: 1475baab14c409a4a826ee10b4996ce4, type: 3}
-  monsterName: 
+  monsterName: "\uCFE0\uB9AC\uBBF8"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1

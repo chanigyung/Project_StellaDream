@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: shiroFan_Test
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: 2c24688f74faf26448faab1c773eb486, type: 3}
-  monsterName: 
+  monsterName: "\uB9C8\uB85C"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1

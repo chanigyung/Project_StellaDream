@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BukiFan_Test
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: cda3f78bc999d3f45b54d9f45e57002e, type: 3}
-  monsterName: 
+  monsterName: "\uC774\uB098\uB9AC"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1

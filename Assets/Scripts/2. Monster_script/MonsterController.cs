@@ -22,6 +22,7 @@ public class MonsterController : UnitController
         context = new MonsterContext();
         context.selfTransform = transform;
         context.movement = GetComponent<MonsterMovement>();
+        context.movement.Initialize(context);
         context.animator = GetComponent<MonsterAnimator>();
         context.instance = instance as MonsterInstance;
 

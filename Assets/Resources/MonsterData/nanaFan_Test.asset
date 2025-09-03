@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: nanaFan_Test
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: 3fc8f40ca7ba22848ac4b6c8763e3dce, type: 3}
-  monsterName: 
+  monsterName: "\uD398\uD1A0"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1
