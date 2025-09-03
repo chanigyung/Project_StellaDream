@@ -53,6 +53,7 @@ public class MonsterSkillAI : MonoBehaviour
         if (Time.time < stunOrKnockbackRecoverTime)
             return;
 
+        // float dist = context.distanceToTarget;
         float dist = Vector2.Distance(transform.position, player.position);
 
         for (int i = 0; i < context.instance.skillInstances.Count; i++)
@@ -70,6 +71,7 @@ public class MonsterSkillAI : MonoBehaviour
             context.animator?.PlayAttack();
 
             // 스킬 실행
+            // Vector2 dir = context.directionToTarget;
             Vector2 dir = (player.position - transform.position).normalized;
             bool success = skillExecutor.UseSkill(skill, dir);
 
