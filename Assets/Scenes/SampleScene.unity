@@ -6905,7 +6905,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 33.75, y: 33.75}
+  m_Size: {x: 1.4583334, y: 1.0416666}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6921,7 +6921,7 @@ Animator:
   m_GameObject: {fileID: 2086256577}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f9958ca9bf8f72042b29c698fd24ee32, type: 2}
+  m_Controller: {fileID: 9100000, guid: 594acd092495de840be3820047dfc85d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
