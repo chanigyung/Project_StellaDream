@@ -18,14 +18,13 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
         controller = GetComponent<UnitController>();
     }
 
-    public void ManualMove(Vector3 direction, float? currentSpeed = null)
+    public void Move(Vector3 direction)
     {
         if (instance == null || isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
             return;
 
-        float speed = currentSpeed ?? instance.GetCurrentMoveSpeed();
+        float speed = instance.GetCurrentMoveSpeed();
         transform.position += direction * speed * Time.deltaTime;
-
 
         transform.localScale = (direction == Vector3.left) ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
     }
@@ -40,6 +39,13 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
 
         rigid.velocity = new Vector2(rigid.velocity.x, 0);
         rigid.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
+    }
+
+    public void Stop()
+    {
+        // Rigidbody2D rigid = GetComponent<Rigidbody2D>();
+        // if (rigid != null)
+        //     rigid.velocity = new Vector2(0, rigid.velocity.y);
     }
     
     public void SetRooted(bool value) => isRooted = value;

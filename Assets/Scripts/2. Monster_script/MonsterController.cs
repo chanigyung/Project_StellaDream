@@ -18,9 +18,12 @@ public class MonsterController : UnitController
         deathHandler = GetComponent<MonsterDeathHandler>();
         animator = GetComponent<MonsterAnimator>();
 
-        //context 생성 및 오브젝트 동기화
+        //context 생성 및 오브젝트 동기화, 컴포넌트 캐싱
         context = new MonsterContext();
         context.selfTransform = transform;
+        context.movement = GetComponent<MonsterMovement>();
+        context.animator = GetComponent<MonsterAnimator>();
+        context.instance = instance as MonsterInstance;
 
         //의사결정 트리와 추적 로직에 context연결
         GetComponent<MonsterSensor>()?.Initialize(context);

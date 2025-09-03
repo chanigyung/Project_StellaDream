@@ -26,17 +26,16 @@ public class WanderAction : IMonsterAction
             directionChangeTimer = 3f;
         }
 
-        var animator = context.selfTransform.GetComponent<MonsterAnimator>();
-
         if (moveDirection == Vector3.zero)
         {
-            animator?.PlayMoving(false);
+            context.movement?.Stop();      
+            context.animator?.PlayMoving(false);
         }
         else
         {
-            var move = context.selfTransform.GetComponent<MonsterMovement>();
-            move?.ManualMove(moveDirection);
-            animator?.PlayMoving(true);
+            context.instance.selfSpeedMultiplier = 1f;
+            context.movement?.Move(moveDirection);
+            context.animator?.PlayMoving(true);
         }
     }
 }

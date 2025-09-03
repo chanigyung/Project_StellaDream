@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonsterContext : MonoBehaviour
+public class MonsterContext
 {
     public Transform selfTransform;
     public GameObject target;
@@ -8,6 +8,11 @@ public class MonsterContext : MonoBehaviour
     public bool isStunned;
     public bool isRooted;
     public bool isKnockbacked;
+
+    // 캐싱 컴포넌트 참조용 변수
+    public MonsterMovement movement;
+    public MonsterAnimator animator;
+    public MonsterInstance instance;
 
     public void UpdateContext()
     {

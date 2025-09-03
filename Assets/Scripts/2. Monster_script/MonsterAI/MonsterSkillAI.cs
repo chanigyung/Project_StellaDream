@@ -6,12 +6,10 @@ public class MonsterSkillAI : MonoBehaviour
     [SerializeField] private SkillExecutor skillExecutor;
     [SerializeField] private float globalSkillCooldown = 3f;
 
-    private MonsterInstance monster;
+    private MonsterContext context;
     private Transform player;
     private float lastGlobalSkillUseTime;
     private StatusEffectManager eManager;
-
-    private MonsterAnimator monsterAnimator;
 
     private Dictionary<SkillInstance, float> lastUsedTimes = new();
 
@@ -21,14 +19,13 @@ public class MonsterSkillAI : MonoBehaviour
     private void Start()
     {
         var controller = GetComponent<MonsterController>();
-        monster = controller.instance as MonsterInstance;
+        context = controller.Context;
         eManager = GetComponent<StatusEffectManager>();
-        monsterAnimator = GetComponent<MonsterAnimator>();
 
         player = GameObject.FindWithTag("Player")?.transform;
 
         // 초기화
-        foreach (var skill in monster.skillInstances)
+        foreach (var skill in context.instance.skillInstances)
         {
             if (skill != null)
                 lastUsedTimes[skill] = -999f; // 초기값
@@ -39,7 +36,7 @@ public class MonsterSkillAI : MonoBehaviour
 
     private void TryUseSkill()
     {
-        if (player == null || monster == null) return;
+        if (player == null || context == null || context.instance == null) return;
 
         if (eManager != null) //기절, 파워넉백일 경우 스킬사용X
         {
@@ -58,17 +55,19 @@ public class MonsterSkillAI : MonoBehaviour
 
         float dist = Vector2.Distance(transform.position, player.position);
 
-        for (int i = 0; i < monster.skillInstances.Count; i++)
+        for (int i = 0; i < context.instance.skillInstances.Count; i++)
         {
-            SkillInstance skill = monster.skillInstances[i];
-            float range = monster.data.skillList[i].maxRange;
+            SkillInstance skill = context.instance.skillInstances[i];
+            float range = context.instance.data.skillList[i].maxRange;
 
             if (skill == null) continue;
             if (dist > range) continue; // 거리 조건 불충족
             if (Time.time < lastUsedTimes[skill] + skill.cooldown) continue; // 스킬 쿨타임
             if (Time.time < lastGlobalSkillUseTime + globalSkillCooldown) continue; // 공통 쿨타임
 
-            monsterAnimator?.PlayAttack();
+            context.movement?.Stop();
+            context.animator?.PlayMoving(false);
+            context.animator?.PlayAttack();
 
             // 스킬 실행
             Vector2 dir = (player.position - transform.position).normalized;
@@ -82,7 +81,6 @@ public class MonsterSkillAI : MonoBehaviour
 
             return; // 하나만 사용
         }
-
     }
 
     public void NotifyRecoverDelay()

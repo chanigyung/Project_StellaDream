@@ -62,10 +62,10 @@ public class MonsterSpawnerManager : MonoBehaviour
             }
         }
 
-        Debug.Log("[몬스터 스폰 요약]");
-        foreach (var kvp in tagCount)
-        {
-            Debug.Log($" - {kvp.Key}: {kvp.Value}마리");
-        }
+        // Debug.Log("[몬스터 스폰 요약]");
+        // foreach (var kvp in tagCount)
+        // {
+        //     Debug.Log($" - {kvp.Key}: {kvp.Value}마리");
+        // }
     }
 }
