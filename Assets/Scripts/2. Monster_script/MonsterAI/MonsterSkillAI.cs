@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,9 +38,7 @@ public class MonsterSkillAI : MonoBehaviour
     private void TryUseSkill()
     {
         if (player == null || context == null || context.instance == null) return;
-
-        if (!context.isTracing)
-            return;
+        if (!context.isTracing || context.isCastingSkill) return;
 
         if (eManager != null) //기절, 파워넉백일 경우 스킬사용X
         {
@@ -56,7 +55,6 @@ public class MonsterSkillAI : MonoBehaviour
         if (Time.time < stunOrKnockbackRecoverTime)
             return;
 
-        // float dist = context.distanceToTarget;
         float dist = Vector2.Distance(transform.position, player.position);
 
         for (int i = 0; i < context.instance.skillInstances.Count; i++)
@@ -69,21 +67,38 @@ public class MonsterSkillAI : MonoBehaviour
             if (Time.time < lastUsedTimes[skill] + skill.cooldown) continue; // 스킬 쿨타임
             if (Time.time < lastGlobalSkillUseTime + globalSkillCooldown) continue; // 공통 쿨타임
 
-            context.animator?.PlayAttack();
+            // 좌우 방향 계산
+            float xDiff = player.position.x - transform.position.x;
+            Vector2 dir = new Vector2(Mathf.Sign(xDiff), 0f);
 
-            // 스킬 실행
-            // Vector2 dir = context.directionToTarget;
-            Vector2 dir = (player.position - transform.position).normalized;
-            bool success = skillExecutor.UseSkill(skill, dir);
-
-            if (success)
-            {
-                lastUsedTimes[skill] = Time.time;
-                lastGlobalSkillUseTime = Time.time;
-            }
-
-            return; // 하나만 사용
+            StartCoroutine(CastSkillWithDelay(skill, dir));
+            return;
         }
+    }
+
+    private IEnumerator CastSkillWithDelay(SkillInstance skill, Vector2 dir)
+    {
+        context.isCastingSkill = true;
+        //정지하고 공격 애니메이션
+        context.movement?.Stop();
+        context.animator?.PlayAttack();
+
+        //딜레이 대기후에
+        yield return new WaitForSeconds(skill.CastDelay);
+
+        //스킬 실행
+        bool success = skillExecutor.UseSkill(skill, dir);
+
+        //실행됐다면 쿨타임 적용
+        if (success)
+        {
+            lastUsedTimes[skill] = Time.time;
+            lastGlobalSkillUseTime = Time.time;
+        }
+        //스킬 후딜레이
+        yield return new WaitForSeconds(skill.CastPostDelay);
+        //캐스팅 상태 종료
+        context.isCastingSkill = false;
     }
 
     public void NotifyRecoverDelay()

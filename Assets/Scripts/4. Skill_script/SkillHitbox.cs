@@ -18,7 +18,7 @@ public class SkillHitbox : MonoBehaviour
         this.skill = skill;
         this.direction = direction.normalized;
 
-        if (skill.rotateEffect)
+        if (skill.RotateEffect)
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);

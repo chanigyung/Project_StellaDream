@@ -24,8 +24,14 @@ public abstract class SkillData : ScriptableObject
     [Header("스킬의 상태이상 정보")]
     [UnityEngine.SerializeReference] public List<StatusEffectInfo> statusEffects;
 
-    [Header("스킬 회전 여부")]
+    [Header("스킬 이펙트 설정")]
     public bool rotateSkill = true;
+    public bool flipSpriteY = true;
+    //이펙트 뒤집을지 여부. 360도 회전하는스킬은 true, 좌우방향 고정되는스킬은 false로 설정할것
+
+    [Header("스킬 시전 딜레이: 몬스터 전용")]
+    public float castDelay = 0.5f;
+    public float castPostDelay = 0.5f;
 
     public abstract SkillInstance CreateInstance();
 }

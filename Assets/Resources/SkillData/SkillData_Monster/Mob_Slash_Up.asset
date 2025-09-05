@@ -19,6 +19,9 @@ MonoBehaviour:
   hitboxDistanceFromUser: 1
   statusEffects: []
   rotateSkill: 1
+  flipSpriteY: 0
+  castDelay: 0.5
+  castPostDelay: 0.5
   hitboxPrefab: {fileID: 2216451094903520163, guid: 5df8fa38e43687c4bab69055f3161c1a, type: 3}
   baseDamage: 15
   damagePerUpgrade: 1

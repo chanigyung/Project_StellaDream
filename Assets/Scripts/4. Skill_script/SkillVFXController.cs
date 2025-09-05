@@ -5,13 +5,13 @@ public class SkillVFXController : MonoBehaviour
     public bool applyRotation = true;
     public Animator effectAnimator;
 
-    public void Initialize(Vector2 direction, float duration, RuntimeAnimatorController effectAnimation = null)
+    public void Initialize(Vector2 direction, float duration, RuntimeAnimatorController effectAnimation = null, bool flipY = true)
     {
         if (applyRotation)
         {
             transform.right = direction;
 
-            if (direction.x < 0)
+            if (direction.x < 0 && flipY)
             {
                 Vector3 scale = transform.localScale;
                 scale.y *= -1;

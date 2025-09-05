@@ -22,6 +22,7 @@ public class MonsterContext
     public bool isTracePermanent = false;          // 공격으로 인해 영구추적 상태 여부
     public bool isTraceReleasedPending = false;    // 추적 해제 대기시간중인지?
     public float traceReleaseTimer = 0f;           // 추적 해제까지 남은 시간
+    public bool isCastingSkill = false;
 
     // === 업데이트 계산 변수 ===
     public Vector2 directionToTarget { get; private set; }
@@ -46,7 +47,7 @@ public class MonsterContext
             targetDirectionX = 1f;
         }
 
-        canMove = !isStunned && !isRooted && !isKnockbacked;
+        canMove = !isStunned && !isRooted && !isKnockbacked && !isCastingSkill;
         canAct  = !isStunned && !isKnockbacked;
     }
 }

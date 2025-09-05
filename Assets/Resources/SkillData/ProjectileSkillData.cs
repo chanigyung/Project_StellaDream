@@ -4,6 +4,8 @@ using UnityEngine;
 public class ProjectileSkillData : SkillData
 {
     public override SkillType SkillType => SkillType.Projectile;
+
+    [Header("투사체 프리팹")]
     public GameObject projectilePrefab;
 
     [Header("기본 데미지 및 강화배율")]

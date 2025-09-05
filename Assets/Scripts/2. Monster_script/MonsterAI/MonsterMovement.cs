@@ -17,8 +17,11 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
 
     public void Move(Vector3 direction)
     {
+        // 임시. 나중에 상태이상 <->context간에 상호작용 구현 완료시킨 후 context.canMave로 통합시킬 조건문
         if (instance == null || isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
             return;
+            
+        if (!context.canMove) return;
 
         float speed = instance.GetCurrentMoveSpeed();
         context.selfTransform.position += direction * speed * Time.deltaTime;

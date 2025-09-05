@@ -18,6 +18,8 @@ MonoBehaviour:
   activationType: 0
   hitboxDistanceFromUser: 1
   statusEffects: []
+  rotateSkill: 1
+  castDelay: 0.5
   projectilePrefab: {fileID: 516866753298579258, guid: 5733ac01d16d646438c7504a0b7210ab, type: 3}
   baseDamage: 5
   damagePerUpgrade: 1
@@ -28,6 +30,8 @@ MonoBehaviour:
   knockbackX: 1
   knockbackY: 1
   useBasicKnockback: 1
+  skillEffectAnimation: {fileID: 0}
+  skillEffectDuration: 0.2
   references:
     version: 2
     RefIds: []
