@@ -2,19 +2,28 @@ using UnityEngine;
 
 public class MonsterContext
 {
+    // === 캐싱 컴포넌트 참조 ===
     public Transform selfTransform;
     public GameObject target;
-    public bool isPlayerDetected;
-    public bool isStunned;
-    public bool isRooted;
-    public bool isKnockbacked;
-
-    // 캐싱 컴포넌트 참조용 변수
     public MonsterMovement movement;
     public MonsterAnimator animator;
     public MonsterInstance instance;
 
-    // update를 통해 계산된 변수들
+    // === 상태이상 관련 변수 ===
+    public bool isStunned;
+    public bool isRooted;
+    public bool isKnockbacked;
+
+    // === 감지/트리거 기반 상태 변수 ===
+    public bool isPlayerDetected; // MonsterSensor에서 판정
+
+    // === 추적 상태 판단용 변수 ===
+    public bool isTracing = false;                 // 현재 추적 중인지
+    public bool isTracePermanent = false;          // 공격으로 인해 영구추적 상태 여부
+    public bool isTraceReleasedPending = false;    // 추적 해제 대기시간중인지?
+    public float traceReleaseTimer = 0f;           // 추적 해제까지 남은 시간
+
+    // === 업데이트 계산 변수 ===
     public Vector2 directionToTarget { get; private set; }
     public float distanceToTarget { get; private set; }
     public float targetDirectionX { get; private set; }
@@ -23,7 +32,6 @@ public class MonsterContext
 
     public void UpdateContext()
     {
-        // 현재 상태(위치, 상태이상 등) 업데이트
         if (target != null)
         {
             Vector2 delta = target.transform.position - selfTransform.position;
@@ -35,7 +43,7 @@ public class MonsterContext
         {
             directionToTarget = Vector2.zero;
             distanceToTarget = float.MaxValue;
-            targetDirectionX = 1f; // 기본값은 오른쪽
+            targetDirectionX = 1f;
         }
 
         canMove = !isStunned && !isRooted && !isKnockbacked;

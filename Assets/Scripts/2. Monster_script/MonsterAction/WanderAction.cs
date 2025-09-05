@@ -17,14 +17,14 @@ public class WanderAction : IMonsterAction
         if (directionChangeTimer <= 0f)
         {
             int choice = Random.Range(0, 3); // 0: 정지, 1: 왼쪽, 2: 오른쪽
-            string choiceDirection;
-            choiceDirection = choice switch
-            {
-                0 => "정지",
-                1 => "왼쪽",
-                _ => "오른쪽",
-            };
-            Debug.Log($"[{context.instance.data.monsterName}] WanderAction 선택: {choiceDirection}");
+            // string choiceDirection;
+            // choiceDirection = choice switch
+            // {
+            //     0 => "정지",
+            //     1 => "왼쪽",
+            //     _ => "오른쪽",
+            // };
+            // Debug.Log($"[{context.instance.data.monsterName}] WanderAction 선택: {choiceDirection}");
             moveDirection = choice switch
             {
                 0 => Vector3.zero,

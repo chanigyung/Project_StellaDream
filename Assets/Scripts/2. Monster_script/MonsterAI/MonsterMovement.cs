@@ -25,6 +25,11 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
 
         context.selfTransform.localScale = (direction == Vector3.left) ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
         context.animator?.PlayMoving(true);
+
+        if (instance.selfSpeedMultiplier > 1.2f)
+            context.animator?.PlayTracing(true);
+        else
+            context.animator?.PlayTracing(false);
     }
 
     public void Jump()

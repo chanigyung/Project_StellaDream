@@ -87,6 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6257504288753668411}
   - component: {fileID: 5569422209121004889}
+  - component: {fileID: 4123206312429036363}
   m_Layer: 21
   m_Name: TraceZone
   m_TagString: Untagged
@@ -144,6 +145,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 8
+--- !u!114 &4123206312429036363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098514916370791119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14a4983df057f4468ef47f333aa67b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  traceReleaseDelay: 1
 --- !u!1 &2153079768020782744
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +611,7 @@ SpriteRenderer:
   m_Size: {x: 1.5, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &376932336033404488
@@ -837,8 +851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cba22d926452a74397328bef566190b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1818312823878908297}
-  isTracing: 0
 --- !u!114 &6632916101516864826
 MonoBehaviour:
   m_ObjectHideFlags: 0

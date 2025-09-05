@@ -29,6 +29,7 @@ public class MonsterController : UnitController
         //의사결정 트리와 추적 로직에 context연결
         GetComponent<MonsterSensor>()?.Initialize(context);
         GetComponent<MonsterDecisionMaker>()?.Initialize(context);
+        GetComponentInChildren<MonsterTraceHandler>()?.Initialize(context);
 
         (instance as MonsterInstance)?.InitializeBehavior(GetComponent<MonsterDecisionMaker>());
     }
@@ -37,6 +38,8 @@ public class MonsterController : UnitController
     {
         base.TakeDamage(damage);
         healthUI?.SetHealth(instance.CurrentHealth);
+
+        GetComponentInChildren<MonsterTraceHandler>()?.NotifyDamaged();
     }
 
     protected override void HandleDeath()

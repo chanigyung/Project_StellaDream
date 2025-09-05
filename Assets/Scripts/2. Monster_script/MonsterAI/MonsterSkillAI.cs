@@ -38,6 +38,9 @@ public class MonsterSkillAI : MonoBehaviour
     {
         if (player == null || context == null || context.instance == null) return;
 
+        if (!context.isTracing)
+            return;
+
         if (eManager != null) //기절, 파워넉백일 경우 스킬사용X
         {
             foreach (var effect in eManager.GetActiveEffects())
