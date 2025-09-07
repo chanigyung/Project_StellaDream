@@ -28,7 +28,7 @@ public class MonsterInstance : BaseUnitInstance
 
     public void InitializeBehavior(MonsterDecisionMaker decisionMaker)
     {
-        //몬스터가 보유한 행동 목록 decision에 부여해주기
+        //몬스터가 보유한 행동 목록 decision에 부여해주기, 우선순위 높은 행동 먼저 작성
         decisionMaker.AddAction(new TraceAction());
         decisionMaker.AddAction(new WanderAction());
     }
