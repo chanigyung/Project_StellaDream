@@ -18,7 +18,7 @@ public abstract class SkillData : ScriptableObject
     [Header("스킬 활성화 타입")]
     public SkillActivationType activationType;
 
-    [Header("공격자와 이펙트간 거리")]
+    [Header("공격자와 스킬간 거리")]
     public float hitboxDistanceFromUser = 1.0f;
 
     [Header("스킬의 상태이상 정보")]

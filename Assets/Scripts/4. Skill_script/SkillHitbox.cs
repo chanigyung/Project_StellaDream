@@ -37,12 +37,6 @@ public class SkillHitbox : MonoBehaviour
             box.offset = Vector2.zero;
         }
 
-        Transform visual = transform.Find("SkillVFX");
-        if (visual != null)
-        {
-            visual.localScale = new Vector3(skill.width, skill.height, 1f);
-        }
-
         initialized = true;
         // 제거 타이머
         Destroy(gameObject, 0.2f);
