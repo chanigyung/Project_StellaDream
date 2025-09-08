@@ -146,13 +146,6 @@ public class DragManager : MonoBehaviour
         var fromWeapon = originSlot.GetWeaponInstance();
         var toWeapon = targetSlot.GetWeaponInstance();
 
-        // Debug.Log($"fromWeapon: {fromWeapon?.GetHashCode()}");
-        // Debug.Log($"toWeapon: {toWeapon?.GetHashCode()}");
-        // Debug.Log($"mainWeapon: {wm.mainWeaponInstance?.GetHashCode()}");
-        // Debug.Log($"subWeapon: {wm.subWeaponInstance?.GetHashCode()}");
-
-        // Debug.Log($"[드롭] from = {fromWeapon?.data?.itemName ?? "null"}, to = {toWeapon?.data?.itemName ?? "null"}");
-
         // 금지 조건 1: 장착 무기를 인벤토리로 옮기려는 경우
         if ((fromWeapon == wm.mainWeaponInstance || fromWeapon == wm.subWeaponInstance) &&
             targetSlot.GetSlotType() == SlotType.Inventory)

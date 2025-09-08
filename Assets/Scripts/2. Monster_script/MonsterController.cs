@@ -27,7 +27,6 @@ public class MonsterController : UnitController
         context.instance = instance as MonsterInstance;
 
         //의사결정 트리와 추적 로직에 context연결
-        GetComponent<MonsterSensor>()?.Initialize(context);
         GetComponent<MonsterDecisionMaker>()?.Initialize(context);
         GetComponentInChildren<MonsterTraceHandler>()?.Initialize(context);
 

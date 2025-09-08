@@ -14,9 +14,6 @@ public class MonsterContext
     public bool isRooted;
     public bool isKnockbacked;
 
-    // === 감지/트리거 기반 상태 변수 ===
-    public bool isPlayerDetected; // MonsterSensor에서 판정
-
     // === 추적 상태 판단용 변수 ===
     public bool isTracing = false;                 // 현재 추적 중인지
     public bool isTracePermanent = false;          // 공격으로 인해 영구추적 상태 여부

@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class MonsterTraceHandler : MonoBehaviour
 {
-    [SerializeField] private float traceReleaseDelay = 1f;
+    [SerializeField] private float traceReleaseDelay = 2f;
 
     private MonsterContext context;
 
