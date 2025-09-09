@@ -7,7 +7,7 @@ public class WanderAction : IMonsterAction
 
     public bool CanExecute(MonsterContext context)
     {
-        return !context.isPlayerDetected && context.canMove;
+        return !context.isTracing && context.canMove;
     }
 
     public void Execute(MonsterContext context)
