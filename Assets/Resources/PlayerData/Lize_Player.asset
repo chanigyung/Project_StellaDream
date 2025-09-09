@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3dd85dcd0fb6641ae2f71adbc64f06, type: 3}
   m_Name: Lize_Player
   m_EditorClassIdentifier: 
+  characterID: Stella22
   characterName: "\uC544\uCE74\uB124 \uB9AC\uC81C"
   characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
   visualData: {fileID: 11400000, guid: 2b4ba1c9a4ca9b84f90e4e12d4423ce9, type: 2}

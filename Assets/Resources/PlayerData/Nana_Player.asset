@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f3dd85dcd0fb6641ae2f71adbc64f06, type: 3}
   m_Name: Nana_Player
   m_EditorClassIdentifier: 
+  characterID: Stella32
   characterName: "\uD558\uB098\uCF54 \uB098\uB098"
   characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
   visualData: {fileID: 11400000, guid: 3b0ffbe545cc52c4c8130dd9b7f22c83, type: 2}
   maxHealth: 100
-  moveSpeed: 4
-  jumpPower: 16
+  moveSpeed: 5
+  jumpPower: 17
   knockbackImmune: 0
   knockbackResistance: 0

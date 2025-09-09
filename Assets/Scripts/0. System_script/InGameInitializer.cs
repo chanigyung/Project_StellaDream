@@ -32,6 +32,11 @@ public class InGameInitializer : MonoBehaviour
 
         // 플레이어, UI 프리팹 생성
         player = Instantiate(playerInstance.data.characterPrefab, spawnPoint.position, Quaternion.identity);
+        if (playerInstance.data.characterID == "Stella32")
+        {
+            player.transform.localScale *= 0.8f;
+        }
+        
         GameObject ui = Instantiate(inGameUIPrefab);
 
         // PlayerController 초기화

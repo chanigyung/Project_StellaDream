@@ -56,6 +56,10 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
     }
     
     public void SetRooted(bool value) => isRooted = value;
-    public void SetStunned(bool value) => isStunned = value;
+    public void SetStunned(bool value)
+    {
+        isStunned = value;
+        context.animator?.PlayStunned(value);
+    }
     public void SetPowerKnockbacked(bool value) => isPowerKnockbacked = value;
 }
