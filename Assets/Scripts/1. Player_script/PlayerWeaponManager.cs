@@ -48,6 +48,12 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public bool EquipSubWeapon(WeaponInstance weaponInstance)
     {
+        if (weaponInstance == null || weaponInstance.data == null)
+        {
+            Debug.Log("Instance 또는 data가 비어있음");
+            return false;
+        }
+        
         if (weaponInstance.data.weaponType == WeaponType.TwoHanded)
         {
             Debug.LogWarning("양손 무기는 보조무기로 장착 불가");
