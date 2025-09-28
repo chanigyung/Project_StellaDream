@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: spear
   icon: {fileID: 21300000, guid: 92d9d8f28326d624f87a80c8fbe58a70, type: 3}
   itemType: 2
-  rarity: 2
+  rarity: 0
   description: 
   weaponType: 0
   weaponSprite: {fileID: 21300000, guid: 4e5f41ab94c70e84db3a92ca41027d6c, type: 3}
