@@ -21,10 +21,10 @@ TagManager:
   - MonsterBody
   - MonsterRigid
   - MonsterATK
+  - MonsterMove
   - ObjectBody
   - ObjectRigid
   - ObjectATK
-  - 
   - 
   - 
   - Interactable

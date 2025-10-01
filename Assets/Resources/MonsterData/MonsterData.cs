@@ -7,6 +7,7 @@ public enum MonsterGrade { Normal, Elite, Rare, Boss }
 public class MonsterData : ScriptableObject
 {
     public GameObject monsterPrefab;
+    public RuntimeAnimatorController animatorController;
 
     public string monsterName;
     public MonsterGrade grade;
@@ -17,7 +18,7 @@ public class MonsterData : ScriptableObject
     public bool knockbackImmune = false;
     public float knockbackResistance = 0f;
 
-     public List<MonsterSkillList> skillList;
+    public List<MonsterSkillList> skillList;
 
     public RuntimeAnimatorController deathAnimator;
     public GameObject dieEffectPrefab;

@@ -10,6 +10,12 @@ public class MonsterDeathHandler : MonoBehaviour
 
     public GameObject dieEffectPrefab; //죽는 이펙트 재생용 프리팹
     public RuntimeAnimatorController deathAnimatorController; //몬스터마다 별개로 적용될 죽는 애니메이션
+    
+    public void InitFromData(MonsterData data)
+    {
+        dieEffectPrefab = data.dieEffectPrefab;
+        deathAnimatorController = data.deathAnimator;
+    }
 
     public void Die()
     {
@@ -22,7 +28,7 @@ public class MonsterDeathHandler : MonoBehaviour
         {
             GameObject effect = Instantiate(dieEffectPrefab, transform.position, Quaternion.identity);
 
-             Vector3 scale = effect.transform.localScale;
+            Vector3 scale = effect.transform.localScale;
             scale.x *= Mathf.Sign(transform.localScale.x); // 현재 몬스터의 방향 따라 반전
             effect.transform.localScale = scale;
 

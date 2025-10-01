@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
   m_Name: lizeFan_Test
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 8636453946240967842, guid: 169774ed8de90e746a8b678f871a572c, type: 3}
+  monsterPrefab: {fileID: 8636453946240967842, guid: 289e58d7d433f9a49bffdef356884a33, type: 3}
+  animatorController: {fileID: 9100000, guid: 409362d796789bb4e809ab2bb0b872b6, type: 2}
   monsterName: "\uD53C\uC5D4\uB098"
   grade: 0
   maxHealth: 1000

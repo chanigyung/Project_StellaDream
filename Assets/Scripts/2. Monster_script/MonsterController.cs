@@ -26,11 +26,20 @@ public class MonsterController : UnitController
         context.animator = GetComponent<MonsterAnimator>();
         context.instance = instance as MonsterInstance;
 
+        //몬스터 애니메이션 설정(데이터 기반)
+        var animatorComponent = GetComponentInChildren<Animator>();
+        if (animatorComponent != null && context.instance?.data?.animatorController != null)
+        {
+            animatorComponent.runtimeAnimatorController = context.instance.data.animatorController;
+        }
+
         //의사결정 트리와 추적 로직에 context연결
         GetComponent<MonsterDecisionMaker>()?.Initialize(context);
         GetComponentInChildren<MonsterTraceHandler>()?.Initialize(context);
 
         (instance as MonsterInstance)?.InitializeBehavior(GetComponent<MonsterDecisionMaker>());
+
+        deathHandler?.InitFromData(context.instance.data);
     }
 
     public override void TakeDamage(float damage)

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
   m_Name: ricoFan_Test
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 8636453946240967842, guid: 780f50ab0a7625546b2707022b37d594, type: 3}
+  monsterPrefab: {fileID: 8636453946240967842, guid: 289e58d7d433f9a49bffdef356884a33, type: 3}
+  animatorController: {fileID: 9100000, guid: 018b790a5ce691c44bc047db259f4491, type: 2}
   monsterName: "\uCE58\uCF54"
   grade: 0
   maxHealth: 1000

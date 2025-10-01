@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
   m_Name: BukiFan_Test
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 8636453946240967842, guid: cda3f78bc999d3f45b54d9f45e57002e, type: 3}
+  monsterPrefab: {fileID: 8636453946240967842, guid: 289e58d7d433f9a49bffdef356884a33, type: 3}
+  animatorController: {fileID: 9100000, guid: 594acd092495de840be3820047dfc85d, type: 2}
   monsterName: "\uC774\uB098\uB9AC"
   grade: 0
   maxHealth: 1000
