@@ -17,8 +17,16 @@ MonoBehaviour:
   cooldown: 0
   activationType: 0
   hitboxDistanceFromUser: 1
+  spawnOffset: {x: 0, y: 0}
   statusEffects:
   - rid: 1875459138536603649
+  skillEffectAnimation: {fileID: 0}
+  skillEffectPrefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
+  skillEffectDuration: 0.2
+  rotateSkill: 1
+  flipSpriteY: 1
+  castDelay: 0.5
+  castPostDelay: 0.5
   hitboxPrefab: {fileID: 2216451094903520163, guid: 3167187eb65696f46920b47427ffa068, type: 3}
   baseDamage: 0
   damagePerUpgrade: 1

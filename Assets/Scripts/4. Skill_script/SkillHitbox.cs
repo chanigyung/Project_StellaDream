@@ -17,6 +17,7 @@ public class SkillHitbox : MonoBehaviour
         this.attacker = attacker;
         this.skill = skill;
         this.direction = direction.normalized;
+        initialized = true;
 
         if (skill.RotateEffect)
         {

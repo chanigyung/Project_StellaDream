@@ -23,10 +23,6 @@ public class ProjectileSkillData : SkillData
     public float knockbackY = 0;
     public bool useBasicKnockback = true;
 
-    [Header("스킬 이펙트")]
-    public RuntimeAnimatorController skillEffectAnimation;
-    public float skillEffectDuration = 0.2f;
-
     public override SkillInstance CreateInstance()
     {
         return new ProjectileSkillInstance(this);

@@ -17,7 +17,11 @@ MonoBehaviour:
   cooldown: 0
   activationType: 0
   hitboxDistanceFromUser: 0.5
+  spawnOffset: {x: 0, y: 0}
   statusEffects: []
+  skillEffectAnimation: {fileID: 9100000, guid: fef68e2ebfd7d2f45a65d69f53ca071a, type: 2}
+  skillEffectPrefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
+  skillEffectDuration: 0.2
   rotateSkill: 1
   flipSpriteY: 0
   castDelay: 0.5
@@ -32,8 +36,6 @@ MonoBehaviour:
   hitboxHeight: 1.5
   widthPerUpgrade: 0.1
   heightPerUpgrade: 0.1
-  skillEffectAnimation: {fileID: 9100000, guid: fef68e2ebfd7d2f45a65d69f53ca071a, type: 2}
-  skillEffectDuration: 0.2
   references:
     version: 2
     RefIds: []

@@ -1,22 +1,40 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class SkillInstance
 {
     public SkillData baseData;
 
     public float cooldown;
+    public Vector2 spawnOffset;
+
     public List<StatusEffectInfo> statusEffects = new();
     public float CastDelay => baseData.castDelay; //스킬 선딜레이
     public float CastPostDelay => baseData.castPostDelay; //스킬 후딜레이
 
     public bool RotateEffect => baseData.rotateSkill;
     public bool FlipSpriteY => baseData.flipSpriteY;
-    
+
+    //스킬 이펙트 정보
+    public RuntimeAnimatorController effectAnimator => baseData.skillEffectAnimation;
+    public GameObject effectPrefab => baseData.skillEffectPrefab;
+    public float effectDuration;
+
+    //스킬 관련 오브젝트 캐싱
+    public GameObject spawnedHitbox; //히트박스
+    public GameObject spawnedProjectile; //투사체
+    public GameObject spawnedEffect; //이펙트
+
     protected SkillInstance(SkillData data)
     {
         baseData = data;
         cooldown = data.cooldown;
+        spawnOffset = data.spawnOffset;
+
+        effectDuration = data.skillEffectDuration;
     }
+    
+    public virtual void OnHit(GameObject attacker, GameObject target) { }
 
     // 강화 반영
     public abstract void ApplyUpgrade(WeaponUpgradeInfo upgrade);

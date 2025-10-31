@@ -9,9 +9,6 @@ public class ProjectileSkillInstance : SkillInstance
     public float distanceFromUser;
     public GameObject projectilePrefab;
 
-    public RuntimeAnimatorController effectAnimator;
-    public float effectDuration;
-
     public ProjectileSkillInstance(ProjectileSkillData data) : base(data)
     {
         damage = data.baseDamage;
@@ -20,9 +17,6 @@ public class ProjectileSkillInstance : SkillInstance
 
         distanceFromUser = data.hitboxDistanceFromUser;
         projectilePrefab = data.projectilePrefab;
-
-        effectAnimator = data.skillEffectAnimation;
-        effectDuration = data.skillEffectDuration;
 
         if (data.statusEffects != null)
         {
