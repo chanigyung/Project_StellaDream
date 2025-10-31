@@ -108,13 +108,9 @@ public static class SkillUtils
         // 데미지
         ApplyDamage(target, (skill is MeleeSkillInstance melee) ? melee.damage : (skill is ProjectileSkillInstance proj ? proj.damage : 0f));
 
-        // 넉백 (useBasicKnockback이 true인 경우만 적용)
-        if ((skill.baseData is MeleeSkillData meleeData && meleeData.useBasicKnockback) ||
-            (skill.baseData is ProjectileSkillData projData && projData.useBasicKnockback))
-        {
-            Vector2 force = GetKnockbackDirection(skill, attacker, target);
-            ApplyKnockback(attacker, target, force);
-        }
+        //넉백
+        Vector2 force = GetKnockbackDirection(skill, attacker, target);
+        ApplyKnockback(attacker, target, force);
 
         // 상태이상
         ApplyStatusEffects(attacker, target, skill);

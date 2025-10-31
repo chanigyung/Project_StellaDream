@@ -14,7 +14,6 @@ public class MeleeSkillData : SkillData
     [Header("기본 넉백 수치")]
     public float knockbackX = 5f;
     public float knockbackY = 5f;
-    public bool useBasicKnockback = true;
 
     [Header("범위 / 강화배율")]
     public float hitboxWidth = 1.0f;

@@ -21,7 +21,6 @@ public class ProjectileSkillData : SkillData
     [Header("기본 넉백 수치")]
     public float knockbackX = 0;
     public float knockbackY = 0;
-    public bool useBasicKnockback = true;
 
     public override SkillInstance CreateInstance()
     {

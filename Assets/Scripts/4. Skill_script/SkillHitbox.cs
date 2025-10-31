@@ -46,34 +46,14 @@ public class SkillHitbox : MonoBehaviour
     //데미지 판정
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (!initialized) return; //초기화 전에는 충돌무시
-        var other = collider.transform.parent;
-        if (alreadyHit.Contains(other.gameObject)) return;
-        alreadyHit.Add(other.gameObject);
+        if (!initialized) return;
 
-        if (other.TryGetComponent<IDamageable>(out var target))
-        {
-            target.TakeDamage(skill.damage); //데미지
+        Component damageableComp = collider.GetComponentInParent<IDamageable>() as Component;
+        GameObject target = damageableComp?.gameObject;
 
-            if (skill.baseData is MeleeSkillData melee && melee.useBasicKnockback)
-            {
-                if (other.TryGetComponent<IKnockbackable>(out var knockbackable))
-                {
-                    float xDir = Mathf.Sign(other.transform.position.x - attacker.transform.position.x);
-                    Vector2 knockbackForce = new Vector2(melee.knockbackX * xDir, melee.knockbackY);
-                    knockbackable.ApplyKnockback(knockbackForce);
-                }
-            }
+        if (target == null || alreadyHit.Contains(target)) return;
 
-            if (other.TryGetComponent<StatusEffectManager>(out var eManager))
-            {
-                foreach (var effect in skill.statusEffects)
-                {
-                    var instance = StatusEffectFactory.CreateEffectInstance(effect, other.gameObject, attacker, eManager);
-                    if (instance != null)
-                        eManager.ApplyEffect(instance);
-                }
-            }
-        }       
+        alreadyHit.Add(target);
+        skill.OnHit(attacker, target);
     }
 }

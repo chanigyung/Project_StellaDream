@@ -27,6 +27,20 @@ public class MeleeSkillInstance : SkillInstance
         }
     }
 
+    public override void Execute(GameObject attacker, Vector2 direction)
+    {
+        SkillUtils.SpawnHitbox(attacker, this, direction);
+    }
+
+    public override void OnHit(GameObject attacker, GameObject target)
+    {
+        // SkillUtils.ApplyDamage(target, damage);
+
+        SkillUtils.ApplyKnockback(attacker, target, SkillUtils.GetKnockbackDirection(this, attacker, target));
+
+        SkillUtils.ApplyStatusEffects(attacker, target, this);
+    }
+
     public override void ApplyUpgrade(WeaponUpgradeInfo upgrade)
     {
         if (upgrade == null) return;

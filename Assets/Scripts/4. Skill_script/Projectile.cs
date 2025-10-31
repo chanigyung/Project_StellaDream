@@ -38,33 +38,14 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (!initialized) return;
-        var other = collider.transform.parent;
-        if (alreadyHit.Contains(other.gameObject)) return;
-        alreadyHit.Add(other.gameObject);
 
-        if (other.TryGetComponent<IDamageable>(out var target))
-        {
-            target.TakeDamage(skill.damage);
-            if (skill.baseData is ProjectileSkillData proj && proj.useBasicKnockback)
-            {
-                if (other.TryGetComponent<IKnockbackable>(out var knockbackable))
-                {
-                    float xDir = Mathf.Sign(other.transform.position.x - attacker.transform.position.x);
-                    Vector2 knockbackForce = new Vector2(proj.knockbackX * xDir, proj.knockbackY);
-                    knockbackable.ApplyKnockback(knockbackForce);
-                }
+        Component damageableComp = collider.GetComponentInParent<IDamageable>() as Component;
+        GameObject target = damageableComp?.gameObject;
 
-                if (other.TryGetComponent<StatusEffectManager>(out var eManager))
-                {
-                    foreach (var effect in skill.statusEffects)
-                    {
-                        var instance = StatusEffectFactory.CreateEffectInstance(effect, other.gameObject, attacker, eManager);
-                        if (instance != null)
-                            eManager.ApplyEffect(instance);
-                    }
-                }
-            }
-            Destroy(gameObject);
-        }
+        if (target == null || alreadyHit.Contains(target)) return;
+
+        alreadyHit.Add(target);
+        skill.OnHit(attacker, target);
+        Destroy(gameObject);
     }
 }

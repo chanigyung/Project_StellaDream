@@ -39,6 +39,8 @@ public abstract class SkillInstance
     // 강화 반영
     public abstract void ApplyUpgrade(WeaponUpgradeInfo upgrade);
 
+    public abstract void Execute(GameObject attacker, Vector2 direction);
+
     protected static StatusEffectInfo CopyEffect(StatusEffectInfo original) //상태이상 정보 복사해서 인스턴스화시키는 함수
     {
         switch (original)
