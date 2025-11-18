@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SkillType { Melee, Projectile }
+public enum SkillType { Melee, Projectile, Combo }
 public enum SkillActivationType { OnPress, OnRelease, WhileHeld }
 
 public abstract class SkillData : ScriptableObject

@@ -28,10 +28,19 @@ public abstract class SkillInstance
     protected SkillInstance(SkillData data)
     {
         baseData = data;
-        cooldown = data.cooldown;
-        spawnOffset = data.spawnOffset;
-
-        effectDuration = data.skillEffectDuration;
+        if (data == null)
+        {
+            Debug.LogWarning($"[SkillInstance] SkillData가 null입니다! 타입: {this.GetType().Name}");
+            cooldown = 999f;
+            spawnOffset = Vector2.zero;
+            effectDuration = 0f; // 시각 효과 없음. 일단은
+        }
+        else
+        {
+            cooldown = data.cooldown;
+            spawnOffset = data.spawnOffset;
+            effectDuration = data.skillEffectDuration;
+        }
     }
     
     public virtual void OnHit(GameObject attacker, GameObject target) { }

@@ -34,7 +34,7 @@ public class MeleeSkillInstance : SkillInstance
 
     public override void OnHit(GameObject attacker, GameObject target)
     {
-        // SkillUtils.ApplyDamage(target, damage);
+        SkillUtils.ApplyDamage(target, damage);
 
         SkillUtils.ApplyKnockback(attacker, target, SkillUtils.GetKnockbackDirection(this, attacker, target));
 

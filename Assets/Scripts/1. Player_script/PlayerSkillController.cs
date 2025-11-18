@@ -33,7 +33,7 @@ public class PlayerSkillController : MonoBehaviour
 
         var dir = GetMouseDirection();
 
-        // 바로시전 / 누르다 떼는순간 시전 / 누르는내내 시전 분기 시켜주기
+        // 바로시전 / 누르다 떼는순간 시전 / 누르는내내 시전
         bool inputTriggered = false;
         switch (skillToUse.baseData.activationType)
         {
