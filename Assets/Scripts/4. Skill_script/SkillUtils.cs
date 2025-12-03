@@ -48,14 +48,20 @@ public static class SkillUtils
     }
 
     //히트박스 생성(근접)
-    public static void SpawnHitbox(GameObject attacker, MeleeSkillInstance skill, Vector2 direction)
+    public static void SpawnHitbox(GameObject attacker, SkillInstance skill, Vector2 direction)
     {
-        Vector3 offset = new Vector2(skill.spawnOffset.x * Mathf.Sign(direction.x), skill.spawnOffset.y);
-        Vector3 spawnPos = attacker.transform.position
-                         + (Vector3)(direction.normalized * (skill.distanceFromUser + skill.width * 0.5f))
-                         + offset;
+        if (skill is not IHitboxInfo info) return;
 
-        GameObject hitbox = Object.Instantiate(skill.hitboxPrefab, spawnPos, Quaternion.identity);
+        Vector2 offset = new Vector2(skill.spawnOffset.x * Mathf.Sign(direction.x), skill.spawnOffset.y);
+        Vector3 spawnPos = attacker.transform.position + (Vector3)(direction.normalized * (skill.baseData.distanceFromUser + info.Width * 0.5f)) + (Vector3)offset;
+
+        // Vector2 offset = skill.spawnOffset;
+        // offset.x *= Mathf.Sign(direction.x);
+        // Vector3 spawnPos = attacker.transform.position
+        //          + (Vector3)(direction.normalized * (info.Width * 0.5f)) // ← 마우스 방향 기반 위치
+        //          + (Vector3)offset;
+
+        GameObject hitbox = Object.Instantiate(info.HitboxPrefab, spawnPos, Quaternion.identity);
 
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
@@ -67,14 +73,15 @@ public static class SkillUtils
     }
 
     //투사체 생성(원거리)
-    public static void SpawnProjectile(GameObject attacker, ProjectileSkillInstance skill, Vector2 direction)
+    public static void SpawnProjectile(GameObject attacker, SkillInstance skill, Vector2 direction)
     {
-        Vector3 offset = new Vector2(skill.spawnOffset.x * Mathf.Sign(direction.x), skill.spawnOffset.y);
-        Vector3 spawnPos = attacker.transform.position
-                         + (Vector3)(direction.normalized * skill.distanceFromUser)
-                         + offset;
+         if (skill is not IProjectileInfo info) return;
 
-        GameObject projectile = Object.Instantiate(skill.projectilePrefab, spawnPos, Quaternion.identity);
+        Vector2 offset = skill.spawnOffset;
+        offset.x *= Mathf.Sign(direction.x);
+        Vector3 spawnPos = attacker.transform.position + (Vector3)offset;
+
+        GameObject projectile = Object.Instantiate(info.ProjectilePrefab, spawnPos, Quaternion.identity);
 
         if (projectile.TryGetComponent(out Projectile projComp))
         {

@@ -15,7 +15,7 @@ public class MeleeSkillData : SkillData
     public float knockbackX = 5f;
     public float knockbackY = 5f;
 
-    [Header("범위 / 강화배율")]
+    [Header("히트박스 범위 / 강화배율")]
     public float hitboxWidth = 1.0f;
     public float hitboxHeight = 1.0f;
     public float widthPerUpgrade = 0.1f;

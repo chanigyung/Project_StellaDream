@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class MeleeSkillInstance : SkillInstance
+public class MeleeSkillInstance : SkillInstance, IHitboxInfo
 {
     public float damage;
     public float width;
     public float height;
-
-    public float distanceFromUser;
     public GameObject hitboxPrefab;
+
+    //Hitbox 정보 인터페이스
+    public float Width => width;
+    public float Height => height;
+    public GameObject HitboxPrefab => hitboxPrefab;
 
     public MeleeSkillInstance(MeleeSkillData data) : base(data)
     {
@@ -15,7 +18,6 @@ public class MeleeSkillInstance : SkillInstance
         width = data.hitboxWidth;
         height = data.hitboxHeight;
 
-        distanceFromUser = data.hitboxDistanceFromUser;
         hitboxPrefab = data.hitboxPrefab;
 
         if (data.statusEffects != null)

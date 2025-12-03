@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class ProjectileSkillInstance : SkillInstance
+public class ProjectileSkillInstance : SkillInstance, IProjectileInfo
 {
     public float damage;
     public float lifetime;
     public float speed;
 
-    public float distanceFromUser;
+    public float Speed => speed;
+    public float Lifetime => lifetime;
+    public GameObject ProjectilePrefab => projectilePrefab;
+
     public GameObject projectilePrefab;
 
     public ProjectileSkillInstance(ProjectileSkillData data) : base(data)
@@ -15,7 +18,6 @@ public class ProjectileSkillInstance : SkillInstance
         lifetime = data.projectileLifetime;
         speed = data.projectileSpeed;
 
-        distanceFromUser = data.hitboxDistanceFromUser;
         projectilePrefab = data.projectilePrefab;
 
         if (data.statusEffects != null)

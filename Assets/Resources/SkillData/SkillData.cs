@@ -19,7 +19,7 @@ public abstract class SkillData : ScriptableObject
     public SkillActivationType activationType;
 
     [Header("스킬 위치 오프셋")]
-    public float hitboxDistanceFromUser = 1.0f; //임시. 나중에 offset으로 바꿀거임
+    public float distanceFromUser = 1.0f; //임시. 나중에 offset으로 바꿀거임
     public Vector2 spawnOffset = Vector2.zero;
 
     [Header("스킬 상태이상")]

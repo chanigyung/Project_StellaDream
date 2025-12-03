@@ -150,3 +150,17 @@ public abstract class SkillInstance
         }
     }
 }
+
+public interface IHitboxInfo
+{
+    float Width { get; }
+    float Height { get; }
+    GameObject HitboxPrefab { get; }
+}
+
+public interface IProjectileInfo
+{
+    float Speed { get; }
+    float Lifetime { get; }
+    GameObject ProjectilePrefab { get; }
+}
