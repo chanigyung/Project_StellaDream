@@ -11,10 +11,6 @@ public class MeleeSkillData : SkillData
     public float baseDamage;
     public float damagePerUpgrade = 1f;
 
-    [Header("기본 넉백 수치")]
-    public float knockbackX = 5f;
-    public float knockbackY = 5f;
-
     [Header("히트박스 범위 / 강화배율")]
     public float hitboxWidth = 1.0f;
     public float hitboxHeight = 1.0f;

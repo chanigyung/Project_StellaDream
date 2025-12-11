@@ -8,6 +8,7 @@ public class MeleeSkillInstance : SkillInstance, IHitboxInfo
     public GameObject hitboxPrefab;
 
     //Hitbox 정보 인터페이스
+    public float Damage => damage;
     public float Width => width;
     public float Height => height;
     public GameObject HitboxPrefab => hitboxPrefab;
@@ -17,7 +18,6 @@ public class MeleeSkillInstance : SkillInstance, IHitboxInfo
         damage = data.baseDamage;
         width = data.hitboxWidth;
         height = data.hitboxHeight;
-
         hitboxPrefab = data.hitboxPrefab;
 
         if (data.statusEffects != null)

@@ -18,10 +18,6 @@ public class ProjectileSkillData : SkillData
     public float projectileSpeed;
     public float projSpeedPerUpgrade = 2f;
 
-    [Header("기본 넉백 수치")]
-    public float knockbackX = 0;
-    public float knockbackY = 0;
-
     public override SkillInstance CreateInstance()
     {
         return new ProjectileSkillInstance(this);

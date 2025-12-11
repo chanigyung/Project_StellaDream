@@ -15,9 +15,11 @@ MonoBehaviour:
   skillName: 
   description: 
   cooldown: 0
+  knockbackX: 5
+  knockbackY: 5
   activationType: 0
-  hitboxDistanceFromUser: 0
-  spawnOffset: {x: 0, y: 10}
+  distanceFromUser: 1
+  spawnOffset: {x: 0, y: 0}
   statusEffects:
   - rid: 6182163654774620161
   skillEffectAnimation: {fileID: 9100000, guid: 0e524ad293945564fa9de273cb270be8, type: 2}
@@ -30,8 +32,6 @@ MonoBehaviour:
   hitboxPrefab: {fileID: 2216451094903520163, guid: d80a129014591244da3eb0168322f997, type: 3}
   baseDamage: 10
   damagePerUpgrade: 1
-  knockbackX: 5
-  knockbackY: 5
   hitboxWidth: 8
   hitboxHeight: 6
   widthPerUpgrade: 0.1

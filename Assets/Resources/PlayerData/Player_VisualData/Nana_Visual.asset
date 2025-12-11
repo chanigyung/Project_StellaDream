@@ -19,7 +19,7 @@ MonoBehaviour:
   hair1: {fileID: 5826880133911799874, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}
   hair2: {fileID: -7368275696729023196, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}
   body: {fileID: -5924996136657556620, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}
-  leftArm: {fileID: -8252504428306273893, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}
+  leftArm: {fileID: 7815124100193837999, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}
   leftHand: {fileID: 6094755142631208164, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}
   rightArm: {fileID: -8252504428306273893, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}
   rightHand: {fileID: 6094755142631208164, guid: 4b2205bc11bf6874ebaf55eb7e602e7c, type: 3}

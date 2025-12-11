@@ -6,6 +6,7 @@ public class ProjectileSkillInstance : SkillInstance, IProjectileInfo
     public float lifetime;
     public float speed;
 
+    public float Damage => damage;
     public float Speed => speed;
     public float Lifetime => lifetime;
     public GameObject ProjectilePrefab => projectilePrefab;
@@ -17,7 +18,6 @@ public class ProjectileSkillInstance : SkillInstance, IProjectileInfo
         damage = data.baseDamage;
         lifetime = data.projectileLifetime;
         speed = data.projectileSpeed;
-
         projectilePrefab = data.projectilePrefab;
 
         if (data.statusEffects != null)

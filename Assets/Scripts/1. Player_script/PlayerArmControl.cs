@@ -8,7 +8,6 @@ public class PlayerArmControl : MonoBehaviour
 
     public Transform leftArm;
     public Transform rightArm;
-    public Animator leftArmAnimator;
 
     private Vector3 leftArmDefaultPos;
     private Vector3 rightArmDefaultPos;

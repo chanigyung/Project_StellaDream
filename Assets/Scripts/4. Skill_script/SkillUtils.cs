@@ -35,16 +35,7 @@ public static class SkillUtils
     public static Vector2 GetKnockbackDirection(SkillInstance skill, GameObject attacker, GameObject target)
     {
         float xDir = Mathf.Sign(target.transform.position.x - attacker.transform.position.x);
-
-        switch (skill.baseData)
-        {
-            case MeleeSkillData melee:
-                return new Vector2(melee.knockbackX * xDir, melee.knockbackY);
-            case ProjectileSkillData proj:
-                return new Vector2(proj.knockbackX * xDir, proj.knockbackY);
-            default:
-                return Vector2.zero;
-        }
+        return new Vector2(skill.baseData.knockbackX * xDir, skill.baseData.knockbackY);
     }
 
     //히트박스 생성(근접)

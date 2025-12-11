@@ -153,6 +153,7 @@ public abstract class SkillInstance
 
 public interface IHitboxInfo
 {
+    float Damage { get; }
     float Width { get; }
     float Height { get; }
     GameObject HitboxPrefab { get; }
@@ -160,6 +161,7 @@ public interface IHitboxInfo
 
 public interface IProjectileInfo
 {
+    float Damage { get; }
     float Speed { get; }
     float Lifetime { get; }
     GameObject ProjectilePrefab { get; }

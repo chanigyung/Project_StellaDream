@@ -14,6 +14,8 @@ public abstract class SkillData : ScriptableObject
 
     [Header("스킬 기본 스탯")]
     public float cooldown;
+    public float knockbackX = 5f;
+    public float knockbackY = 5f;
 
     [Header("스킬 활성화 타입")]
     public SkillActivationType activationType;
