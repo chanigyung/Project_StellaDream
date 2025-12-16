@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8921032385202094983}
   - component: {fileID: 2910136939557201192}
+  - component: {fileID: 7327163411151598801}
   m_Layer: 0
   m_Name: LeftArmSprite
   m_TagString: Untagged
@@ -197,7 +198,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 472780715364177062}
   m_Father: {fileID: 8214704157615182604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2910136939557201192
@@ -252,6 +254,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7327163411151598801
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181464950325688981}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8a5a0dddfd1b7fc41985ed1eb9943d0c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &986904692895671303
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +389,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 577482371824845381}
-  - {fileID: 8919903314956026608}
   m_Father: {fileID: 6005281310867172742}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1025405201822840768
@@ -465,7 +487,7 @@ GameObject:
   - component: {fileID: 472780715364177062}
   - component: {fileID: 3703379339744939346}
   m_Layer: 0
-  m_Name: LeftHand
+  m_Name: LeftHandSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -480,12 +502,12 @@ Transform:
   m_GameObject: {fileID: 1267353982683409688}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.16, y: 0, z: 0}
+  m_LocalPosition: {x: -0.15999998, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2228649944754762395}
-  m_Father: {fileID: 8214704157615182604}
+  m_Father: {fileID: 8921032385202094983}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -20}
 --- !u!212 &3703379339744939346
 SpriteRenderer:
@@ -569,7 +591,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8921032385202094983}
-  - {fileID: 472780715364177062}
   m_Father: {fileID: 6555701076482992214}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3088221033114274335
@@ -822,7 +843,7 @@ GameObject:
   - component: {fileID: 8919903314956026608}
   - component: {fileID: 1565730818738045526}
   m_Layer: 0
-  m_Name: RightHand
+  m_Name: RightHandSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -836,13 +857,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5038007719344721581}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.125, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.12499982, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4846781760497693565}
-  m_Father: {fileID: 7587736552713775611}
+  m_Father: {fileID: 577482371824845381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1565730818738045526
 SpriteRenderer:
@@ -1346,6 +1367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 577482371824845381}
   - component: {fileID: 7112753573504516720}
+  - component: {fileID: 1435178154997624078}
   m_Layer: 0
   m_Name: RightArmSprite
   m_TagString: Untagged
@@ -1365,7 +1387,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8919903314956026608}
   m_Father: {fileID: 7587736552713775611}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7112753573504516720
@@ -1420,6 +1443,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1435178154997624078
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5751650877982651594}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d7211238f080ad47ab824b054387c6d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6165056051395092060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,7 +1718,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6555701076482992214}
-  - component: {fileID: 2377152408351007572}
   m_Layer: 0
   m_Name: LeftArm
   m_TagString: Untagged
@@ -1698,27 +1741,6 @@ Transform:
   - {fileID: 8214704157615182604}
   m_Father: {fileID: 7870175111720736423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &2377152408351007572
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7557504395994408206}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8a5a0dddfd1b7fc41985ed1eb9943d0c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7714466855144322343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,7 +1918,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6005281310867172742}
-  - component: {fileID: 8965457922231619052}
   m_Layer: 0
   m_Name: RightArm
   m_TagString: Untagged
@@ -1920,27 +1941,6 @@ Transform:
   - {fileID: 7587736552713775611}
   m_Father: {fileID: 7870175111720736423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8965457922231619052
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7891084575608924703}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8d7211238f080ad47ab824b054387c6d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8448046361848062189
 GameObject:
   m_ObjectHideFlags: 0
