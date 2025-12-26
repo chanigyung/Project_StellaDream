@@ -3,6 +3,7 @@ using UnityEngine;
 
 public enum SkillType { Melee, Projectile, Combo }
 public enum SkillActivationType { OnPress, OnRelease, WhileHeld }
+public enum SkillSpawnPointType {LeftArm,RightArm,GroundCenter}
 
 public abstract class SkillData : ScriptableObject
 {
@@ -20,7 +21,8 @@ public abstract class SkillData : ScriptableObject
     [Header("스킬 활성화 타입")]
     public SkillActivationType activationType;
 
-    [Header("스킬 위치 오프셋")]
+    [Header("스킬 위치 설정")]
+    public SkillSpawnPointType spawnPointType = SkillSpawnPointType.LeftArm; //스킬 소환 지점
     public float distanceFromUser = 1.0f; //임시. 나중에 offset으로 바꿀거임
     public Vector2 spawnOffset = Vector2.zero;
 

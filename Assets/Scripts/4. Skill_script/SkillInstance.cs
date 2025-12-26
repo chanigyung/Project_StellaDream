@@ -149,6 +149,8 @@ public abstract class SkillInstance
             }
         }
     }
+
+    public virtual bool ShouldAttachToSpawnPoint() => false; //스킬이 공격자에 부착되는지 여부
 }
 
 public interface IHitboxInfo

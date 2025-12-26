@@ -43,16 +43,19 @@ public static class SkillUtils
     {
         if (skill is not IHitboxInfo info) return;
 
-        Vector2 offset = new Vector2(skill.spawnOffset.x * Mathf.Sign(direction.x), skill.spawnOffset.y);
-        Vector3 spawnPos = attacker.transform.position + (Vector3)(direction.normalized * (skill.baseData.distanceFromUser + info.Width * 0.5f)) + (Vector3)offset;
+        Transform spawnPoint = GetSpawnPoint(attacker, skill);
 
-        // Vector2 offset = skill.spawnOffset;
-        // offset.x *= Mathf.Sign(direction.x);
-        // Vector3 spawnPos = attacker.transform.position
-        //          + (Vector3)(direction.normalized * (info.Width * 0.5f)) // ← 마우스 방향 기반 위치
-        //          + (Vector3)offset;
+        Vector2 offset = skill.spawnOffset;
+        offset.x *= Mathf.Sign(direction.x); // 좌우 반전
+
+        Vector3 spawnPos = spawnPoint.position + (Vector3)offset;
 
         GameObject hitbox = Object.Instantiate(info.HitboxPrefab, spawnPos, Quaternion.identity);
+
+        if (skill.ShouldAttachToSpawnPoint())
+        {
+            hitbox.transform.SetParent(spawnPoint, worldPositionStays: true);
+        }
 
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
@@ -66,21 +69,35 @@ public static class SkillUtils
     //투사체 생성(원거리)
     public static void SpawnProjectile(GameObject attacker, SkillInstance skill, Vector2 direction)
     {
-         if (skill is not IProjectileInfo info) return;
+        if (skill is not IProjectileInfo info) return;
+
+        Transform spawnPoint = GetSpawnPoint(attacker, skill);
 
         Vector2 offset = skill.spawnOffset;
-        offset.x *= Mathf.Sign(direction.x);
-        Vector3 spawnPos = attacker.transform.position + (Vector3)offset;
+        offset.x *= Mathf.Sign(direction.x); // 좌우 반전
+
+        Vector3 spawnPos = spawnPoint.position + (Vector3)offset;
 
         GameObject projectile = Object.Instantiate(info.ProjectilePrefab, spawnPos, Quaternion.identity);
 
         if (projectile.TryGetComponent(out Projectile projComp))
-        {
             projComp.Initialize(attacker, skill, direction);
-        }
 
         skill.spawnedProjectile = projectile;
         skill.spawnedEffect = PlayEffect(skill, spawnPos, direction);
+    }
+
+    //스킬 사용 좌표 계산
+    public static Transform GetSpawnPoint(GameObject attacker, SkillInstance skill)
+    {
+        var pointHolder = attacker.GetComponent<SkillSpawnPoints>();
+        if (pointHolder == null)
+        {
+            Debug.LogWarning("[SkillUtils] SkillSpawnPoints가 존재하지 않습니다.");
+            return attacker.transform; // fallback
+        }
+
+        return pointHolder.GetPoint(skill.baseData.spawnPointType);
     }
 
     //스킬 이펙트 재생
