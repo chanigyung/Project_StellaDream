@@ -18,8 +18,8 @@ MonoBehaviour:
   knockbackX: 5
   knockbackY: 5
   activationType: 0
-  distanceFromUser: 1
-  spawnOffset: {x: 0, y: 0}
+  spawnPointType: 0
+  spawnOffset: {x: 4, y: -0.5}
   statusEffects:
   - rid: 6182163654774620161
   skillEffectAnimation: {fileID: 9100000, guid: 0e524ad293945564fa9de273cb270be8, type: 2}

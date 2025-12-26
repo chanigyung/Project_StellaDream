@@ -48,7 +48,7 @@ public static class SkillUtils
         Vector2 offset = skill.spawnOffset;
         offset.x *= Mathf.Sign(direction.x); // 좌우 반전
 
-        Vector3 spawnPos = spawnPoint.position + (Vector3)offset;
+        Vector3 spawnPos = spawnPoint.position + (Vector3)(spawnPoint.rotation * offset);
 
         GameObject hitbox = Object.Instantiate(info.HitboxPrefab, spawnPos, Quaternion.identity);
 
