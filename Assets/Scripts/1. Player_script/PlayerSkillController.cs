@@ -35,7 +35,7 @@ public class PlayerSkillController : MonoBehaviour
 
         // 바로시전 / 누르다 떼는순간 시전 / 누르는내내 시전
         bool inputTriggered = false;
-        switch (skillToUse.baseData.activationType)
+        switch (skillToUse.data.activationType)
         {
             case SkillActivationType.OnPress:
                 inputTriggered = Input.GetMouseButtonDown(button);

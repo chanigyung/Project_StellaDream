@@ -15,15 +15,15 @@ public class MonsterInstance : BaseUnitInstance
         baseMoveSpeed = data.moveSpeed;
         baseJumpPower = data.jumpPower;
 
-        foreach (var trigger in data.skillList)
-        {
-            if (trigger.skillData is MeleeSkillData melee)
-                skillInstances.Add(new MeleeSkillInstance(melee));
-            else if (trigger.skillData is ProjectileSkillData proj)
-                skillInstances.Add(new ProjectileSkillInstance(proj));
-            else
-                skillInstances.Add(null); // fallback
-        }
+        // foreach (var trigger in data.skillList)
+        // {
+        //     if (trigger.skillData is MeleeSkillData melee)
+        //         skillInstances.Add(new MeleeSkillInstance(melee));
+        //     else if (trigger.skillData is ProjectileSkillData proj)
+        //         skillInstances.Add(new ProjectileSkillInstance(proj));
+        //     else
+        //         skillInstances.Add(null); // fallback
+        // }
     }
 
     public void InitializeBehavior(MonsterDecisionMaker decisionMaker)

@@ -71,35 +71,35 @@ public class MonsterSkillAI : MonoBehaviour
             float xDiff = player.position.x - transform.position.x;
             Vector2 dir = new Vector2(Mathf.Sign(xDiff), 0f);
 
-            StartCoroutine(CastSkillWithDelay(skill, dir));
+            // StartCoroutine(CastSkillWithDelay(skill, dir));
             return;
         }
     }
 
-    private IEnumerator CastSkillWithDelay(SkillInstance skill, Vector2 dir)
-    {
-        context.isCastingSkill = true;
-        //정지하고 공격 애니메이션
-        context.movement?.Stop();
-        context.animator?.PlayAttack();
+    // private IEnumerator CastSkillWithDelay(SkillInstance skill, Vector2 dir)
+    // {
+    //     context.isCastingSkill = true;
+    //     //정지하고 공격 애니메이션
+    //     context.movement?.Stop();
+    //     context.animator?.PlayAttack();
 
-        //딜레이 대기후에
-        yield return new WaitForSeconds(skill.CastDelay);
+    //     //딜레이 대기후에
+    //     yield return new WaitForSeconds(skill.CastDelay);
 
-        //스킬 실행
-        bool success = skillExecutor.UseSkill(skill, dir);
+    //     //스킬 실행
+    //     bool success = skillExecutor.UseSkill(skill, dir);
 
-        //실행됐다면 쿨타임 적용
-        if (success)
-        {
-            lastUsedTimes[skill] = Time.time;
-            lastGlobalSkillUseTime = Time.time;
-        }
-        //스킬 후딜레이
-        yield return new WaitForSeconds(skill.CastPostDelay);
-        //캐스팅 상태 종료
-        context.isCastingSkill = false;
-    }
+    //     //실행됐다면 쿨타임 적용
+    //     if (success)
+    //     {
+    //         lastUsedTimes[skill] = Time.time;
+    //         lastGlobalSkillUseTime = Time.time;
+    //     }
+    //     //스킬 후딜레이
+    //     yield return new WaitForSeconds(skill.CastPostDelay);
+    //     //캐스팅 상태 종료
+    //     context.isCastingSkill = false;
+    // }
 
     public void NotifyRecoverDelay()
     {

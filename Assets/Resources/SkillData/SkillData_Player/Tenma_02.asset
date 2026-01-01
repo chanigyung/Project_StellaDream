@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
+  m_Name: Tenma_02
+  m_EditorClassIdentifier: 
+  modules:
+  - {fileID: 11400000, guid: 4c8b8613b1234274086fd6ce30c3daaf, type: 2}
+  - {fileID: 11400000, guid: 730e4f6c5d7edb241a00d49336e735d9, type: 2}
+  - {fileID: 11400000, guid: 11bed8cadf1468740973bceb1ba38864, type: 2}
+  cooldown: 0
+  castDelay: 0.5
+  castPostDelay: 0.5
+  activationType: 0
+  spawnPointType: 2
+  spawnOffset: {x: 0, y: 0}
+  attachToSpawnPoint: 1
+  statusEffects: []
+  rotateSkill: 0
+  flipSpriteY: 0
+  references:
+    version: 2
+    RefIds: []
