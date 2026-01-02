@@ -19,8 +19,8 @@ MonoBehaviour:
   description: 
   weaponType: 1
   weaponSprite: {fileID: 21300000, guid: ae46e03c8ef9e304583909bb4b3dc018, type: 3}
-  mainRotationOffsetZ: -135
-  subRotationOffsetZ: 45
+  mainRotationOffsetZ: -45
+  subRotationOffsetZ: -45
   mainSkill: {fileID: 11400000, guid: 71b327041d5a8dd4ab18ed46e54e59ae, type: 2}
-  subSkill: {fileID: 0}
+  subSkill: {fileID: 11400000, guid: f61fc07b825b38441b975752179654f0, type: 2}
   tags: []
