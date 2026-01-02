@@ -1,0 +1,613 @@
+fileFormatVersion: 2
+guid: e5224d7b76c94194f8322287f50d4d04
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 32
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Shiro_L_hand
+    originalName: 
+    pivot: {x: 0.8181819, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 44
+      width: 11
+      height: 5
+    spriteID: 19f8e86f285763a40883b2df66c8309f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 44}
+    spritePosition: {x: 22, y: 25}
+  - name: Shiro_Acce
+    originalName: 
+    pivot: {x: 0.5, y: -0.25925925}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 101
+      width: 27
+      height: 27
+    spriteID: 0ebc59bc31367184b8c5161a5c8efe36
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 101}
+    spritePosition: {x: 14, y: 40}
+  - name: Shiro_L_arm
+    originalName: 
+    pivot: {x: 0.8571429, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 58
+      y: 44
+      width: 7
+      height: 5
+    spriteID: da15cacc781802a439ee3a4f6f7430b0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 58, y: 44}
+    spritePosition: {x: 30, y: 25}
+  - name: Shiro_frontHair
+    originalName: 
+    pivot: {x: 0.5740741, y: 0.55172414}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 27
+      height: 29
+    spriteID: 1050f53bed43c6649ab110138966d83f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 18, y: 29}
+  - name: Shiro_Face
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 27
+      width: 14
+      height: 9
+    spriteID: 89f55c50a2bba6544bb84d2719788613
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 27}
+    spritePosition: {x: 20, y: 32}
+  - name: Shiro_Head
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 71
+      width: 25
+      height: 22
+    spriteID: 93c381265db556a4192cebcfd109e778
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 71}
+    spritePosition: {x: 19, y: 30}
+  - name: Shiro_Body
+    originalName: 
+    pivot: {x: 0.25925925, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 4
+      width: 27
+      height: 15
+    spriteID: 4f84b87cd109def48926d3a8b595c806
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 4}
+    spritePosition: {x: 24, y: 16}
+  - name: Shiro_R_leg
+    originalName: 
+    pivot: {x: 0.5, y: 0.8888889}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 70
+      width: 6
+      height: 9
+    spriteID: f0a0b10c612303846818597156cae0f0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 70}
+    spritePosition: {x: 25, y: 10}
+  - name: Shiro_R_foot
+    originalName: 
+    pivot: {x: 0.5, y: 1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 61
+      y: 27
+      width: 5
+      height: 7
+    spriteID: 546ebfb72acfda84194f83df88260f39
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 61, y: 27}
+    spritePosition: {x: 26, y: 5}
+  - name: Shiro_L_leg
+    originalName: 
+    pivot: {x: 0.5, y: 0.8888889}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 87
+      width: 6
+      height: 9
+    spriteID: 620571a1ae6efc14d87b7c807e6c1768
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 87}
+    spritePosition: {x: 32, y: 10}
+  - name: Shiro_L_foot
+    originalName: 
+    pivot: {x: 0.5, y: 1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 104
+      width: 5
+      height: 7
+    spriteID: f0e9bd713b58689439ac36f3d291fb96
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 104}
+    spritePosition: {x: 33, y: 5}
+  - name: Shiro_R_hand
+    originalName: 
+    pivot: {x: 0.90909094, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 57
+      width: 11
+      height: 5
+    spriteID: 38e2646b0f4b7654da7455543192448e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 57}
+    spritePosition: {x: 11, y: 25}
+  - name: Shiro_R_arm
+    originalName: 
+    pivot: {x: 0.8571429, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 39
+      y: 119
+      width: 7
+      height: 5
+    spriteID: c2096be70d0fb6e4996c57d2aba27e0e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 39, y: 119}
+    spritePosition: {x: 19, y: 25}
+  - name: Shiro_backHair
+    originalName: 
+    pivot: {x: 0.5555556, y: -0.22727273}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 41
+      width: 27
+      height: 22
+    spriteID: 6c3551c626109d74c82dfca9884fda38
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 41}
+    spritePosition: {x: 18, y: 30}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  sharedRigSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  mosaicLayers: 1
+  characterMode: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 0
+  importHiddenLayers: 0
+  layerMappingOption: 2
+  generatePhysicsShape: 0
+  paperDollMode: 0
+  keepDupilcateSpriteName: 1
+  skeletonAssetReferenceID: 
+  pipeline: {instanceID: 0}
+  pipelineVersion: 
+  padding: 4
+  spriteSizeExpand: 0
+  spriteCategoryList:
+    categories: []
+  spritePackingTag: 
+  resliceFromLayer: 0
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: Shiro_L_hand
+    spriteName: Shiro_L_hand
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 19f8e86f285763a40883b2df66c8309f
+    layerID: 29
+    mosaicPosition: {x: 39, y: 44}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_Acce
+    spriteName: Shiro_Acce
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 0ebc59bc31367184b8c5161a5c8efe36
+    layerID: 14
+    mosaicPosition: {x: 4, y: 101}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_L_arm
+    spriteName: Shiro_L_arm
+    isGroup: 0
+    parentIndex: -1
+    spriteID: da15cacc781802a439ee3a4f6f7430b0
+    layerID: 28
+    mosaicPosition: {x: 58, y: 44}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_frontHair
+    spriteName: Shiro_frontHair
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 1050f53bed43c6649ab110138966d83f
+    layerID: 19
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_Face
+    spriteName: Shiro_Face
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 89f55c50a2bba6544bb84d2719788613
+    layerID: 32
+    mosaicPosition: {x: 39, y: 27}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_Head
+    spriteName: Shiro_Head
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 93c381265db556a4192cebcfd109e778
+    layerID: 17
+    mosaicPosition: {x: 4, y: 71}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_Body
+    spriteName: Shiro_Body
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 4f84b87cd109def48926d3a8b595c806
+    layerID: 20
+    mosaicPosition: {x: 39, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_R_leg
+    spriteName: Shiro_R_leg
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f0a0b10c612303846818597156cae0f0
+    layerID: 23
+    mosaicPosition: {x: 39, y: 70}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_R_foot
+    spriteName: Shiro_R_foot
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 546ebfb72acfda84194f83df88260f39
+    layerID: 24
+    mosaicPosition: {x: 61, y: 27}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_L_leg
+    spriteName: Shiro_L_leg
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 620571a1ae6efc14d87b7c807e6c1768
+    layerID: 21
+    mosaicPosition: {x: 39, y: 87}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_L_foot
+    spriteName: Shiro_L_foot
+    isGroup: 0
+    parentIndex: -1
+    spriteID: f0e9bd713b58689439ac36f3d291fb96
+    layerID: 22
+    mosaicPosition: {x: 39, y: 104}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_R_hand
+    spriteName: Shiro_R_hand
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 38e2646b0f4b7654da7455543192448e
+    layerID: 27
+    mosaicPosition: {x: 39, y: 57}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_R_arm
+    spriteName: Shiro_R_arm
+    isGroup: 0
+    parentIndex: -1
+    spriteID: c2096be70d0fb6e4996c57d2aba27e0e
+    layerID: 25
+    mosaicPosition: {x: 39, y: 119}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Shiro_backHair
+    spriteName: Shiro_backHair
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6c3551c626109d74c82dfca9884fda38
+    layerID: 16
+    mosaicPosition: {x: 4, y: 41}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  sharedRigPSDLayers: []
+  pSDLayerImportSetting: []
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 638895751317135114
+  spriteSizeExpandChanged: 0
+  generateGOHierarchy: 0
+  textureAssetName: 
+  prefabAssetName: 
+  spriteLibAssetName: 
+  skeletonAssetName: 
+  secondarySpriteTextures: []

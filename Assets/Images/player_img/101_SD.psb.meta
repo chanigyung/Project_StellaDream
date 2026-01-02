@@ -1,0 +1,613 @@
+fileFormatVersion: 2
+guid: be42ff89d022afc4aaf3f8d337d7ea72
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 32
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Yuni_L_hand
+    originalName: 
+    pivot: {x: 0.8181819, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 117
+      width: 11
+      height: 5
+    spriteID: 737414c2ffccc7f41a71aecfc87a9c2e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 117}
+    spritePosition: {x: 22, y: 25}
+  - name: Yuni_L_arm
+    originalName: 
+    pivot: {x: 0.8571429, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 51
+      y: 70
+      width: 7
+      height: 5
+    spriteID: 3222bc8961131ec418a4b9aee3519ae1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 51, y: 70}
+    spritePosition: {x: 30, y: 25}
+  - name: Yuni_Acce
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 100
+      width: 0
+      height: 0
+    spriteID: 9e80436b7ad6fb0479193d1e32efde31
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 26, y: 100}
+    spritePosition: {x: 0, y: 64}
+  - name: Yuni_frontHair
+    originalName: 
+    pivot: {x: 0.56060606, y: 0.5416667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 38
+      width: 33
+      height: 24
+    spriteID: 9de707c77f6bc9a47b3112521e8c5cc1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 38}
+    spritePosition: {x: 15, y: 32}
+  - name: Yuni_Face
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 100
+      width: 14
+      height: 9
+    spriteID: a446b85754899b64bae6cc9dfe278434
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 100}
+    spritePosition: {x: 20, y: 32}
+  - name: Yuni_Head
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 70
+      width: 25
+      height: 22
+    spriteID: b66b8f6290ea83a46afe3c2caa6d8871
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 70}
+    spritePosition: {x: 19, y: 30}
+  - name: Yuni_Body
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 40
+      width: 16
+      height: 15
+    spriteID: 20656f7d81e933444a77cee41bc504f9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 44, y: 38}
+    spritePosition: {x: 23, y: 14}
+  - name: Yuni_R_leg
+    originalName: 
+    pivot: {x: 0.5, y: 0.8888889}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 47
+      y: 17
+      width: 6
+      height: 9
+    spriteID: ab6fa38cea657ed47966798cc18d46d5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 47, y: 17}
+    spritePosition: {x: 25, y: 10}
+  - name: Yuni_R_foot
+    originalName: 
+    pivot: {x: 0.5, y: 1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 23
+      y: 117
+      width: 5
+      height: 7
+    spriteID: 02327ccd198dc3942b8176d7afa8ca39
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 23, y: 117}
+    spritePosition: {x: 26, y: 5}
+  - name: Yuni_L_leg
+    originalName: 
+    pivot: {x: 0.5, y: 0.8888889}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 37
+      y: 70
+      width: 6
+      height: 9
+    spriteID: 614c9edea5aeb78499014cf6de001547
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 37, y: 70}
+    spritePosition: {x: 32, y: 10}
+  - name: Yuni_L_foot
+    originalName: 
+    pivot: {x: 0.5, y: 1}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 37
+      y: 87
+      width: 5
+      height: 7
+    spriteID: 4b106f477898ae14c870b03a3a94c40b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 37, y: 87}
+    spritePosition: {x: 33, y: 5}
+  - name: Yuni_R_hand
+    originalName: 
+    pivot: {x: 0.90909094, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 47
+      y: 4
+      width: 11
+      height: 5
+    spriteID: a50d155a212e7174ba3c9127edc1e645
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 47, y: 4}
+    spritePosition: {x: 13, y: 25}
+  - name: Yuni_R_arm
+    originalName: 
+    pivot: {x: 0.8571429, y: 0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 51
+      y: 83
+      width: 7
+      height: 5
+    spriteID: 6ca8904c04a80124fa12471631e1d5bc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 51, y: 83}
+    spritePosition: {x: 20, y: 25}
+  - name: Yuni_backHair
+    originalName: 
+    pivot: {x: 0.47142857, y: 0.6730769}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 35
+      height: 26
+    spriteID: 325bb432359da6e48ab62e4012d5b061
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 16, y: 8}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  sharedRigSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Server
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  mosaicLayers: 1
+  characterMode: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  layerMappingOption: 2
+  generatePhysicsShape: 0
+  paperDollMode: 0
+  keepDupilcateSpriteName: 1
+  skeletonAssetReferenceID: 
+  pipeline: {instanceID: 0}
+  pipelineVersion: 
+  padding: 4
+  spriteSizeExpand: 0
+  spriteCategoryList:
+    categories: []
+  spritePackingTag: 
+  resliceFromLayer: 0
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: Yuni_L_hand
+    spriteName: Yuni_L_hand
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 737414c2ffccc7f41a71aecfc87a9c2e
+    layerID: 29
+    mosaicPosition: {x: 4, y: 117}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_L_arm
+    spriteName: Yuni_L_arm
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 3222bc8961131ec418a4b9aee3519ae1
+    layerID: 28
+    mosaicPosition: {x: 51, y: 70}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_Acce
+    spriteName: Yuni_Acce
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9e80436b7ad6fb0479193d1e32efde31
+    layerID: 14
+    mosaicPosition: {x: 26, y: 100}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_frontHair
+    spriteName: Yuni_frontHair
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 9de707c77f6bc9a47b3112521e8c5cc1
+    layerID: 19
+    mosaicPosition: {x: 4, y: 38}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_Face
+    spriteName: Yuni_Face
+    isGroup: 0
+    parentIndex: -1
+    spriteID: a446b85754899b64bae6cc9dfe278434
+    layerID: 32
+    mosaicPosition: {x: 4, y: 100}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_Head
+    spriteName: Yuni_Head
+    isGroup: 0
+    parentIndex: -1
+    spriteID: b66b8f6290ea83a46afe3c2caa6d8871
+    layerID: 17
+    mosaicPosition: {x: 4, y: 70}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_Body
+    spriteName: Yuni_Body
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 20656f7d81e933444a77cee41bc504f9
+    layerID: 36
+    mosaicPosition: {x: 44, y: 38}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_R_leg
+    spriteName: Yuni_R_leg
+    isGroup: 0
+    parentIndex: -1
+    spriteID: ab6fa38cea657ed47966798cc18d46d5
+    layerID: 23
+    mosaicPosition: {x: 47, y: 17}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_R_foot
+    spriteName: Yuni_R_foot
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 02327ccd198dc3942b8176d7afa8ca39
+    layerID: 24
+    mosaicPosition: {x: 23, y: 117}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_L_leg
+    spriteName: Yuni_L_leg
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 614c9edea5aeb78499014cf6de001547
+    layerID: 21
+    mosaicPosition: {x: 37, y: 70}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_L_foot
+    spriteName: Yuni_L_foot
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 4b106f477898ae14c870b03a3a94c40b
+    layerID: 22
+    mosaicPosition: {x: 37, y: 87}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_R_hand
+    spriteName: Yuni_R_hand
+    isGroup: 0
+    parentIndex: -1
+    spriteID: a50d155a212e7174ba3c9127edc1e645
+    layerID: 27
+    mosaicPosition: {x: 47, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_R_arm
+    spriteName: Yuni_R_arm
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6ca8904c04a80124fa12471631e1d5bc
+    layerID: 25
+    mosaicPosition: {x: 51, y: 83}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Yuni_backHair
+    spriteName: Yuni_backHair
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 325bb432359da6e48ab62e4012d5b061
+    layerID: 16
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  sharedRigPSDLayers: []
+  pSDLayerImportSetting: []
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 638889701152355176
+  spriteSizeExpandChanged: 0
+  generateGOHierarchy: 0
+  textureAssetName: 
+  prefabAssetName: 
+  spriteLibAssetName: 
+  skeletonAssetName: 
+  secondarySpriteTextures: []
