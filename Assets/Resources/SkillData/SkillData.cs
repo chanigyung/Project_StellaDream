@@ -13,8 +13,8 @@ public class SkillData : ScriptableObject
 
     [Header("스킬 기본 스탯")]
     public float cooldown;
-    public float castDelay = 0.5f;
-    public float castPostDelay = 0.5f;
+    public float delay = 0f;
+    public float postDelay = 0f;
 
     [Header("스킬 활성화 타입")]
     public SkillActivationType activationType;

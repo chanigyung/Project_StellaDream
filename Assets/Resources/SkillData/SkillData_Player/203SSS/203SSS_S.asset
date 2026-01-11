@@ -17,8 +17,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 730e4f6c5d7edb241a00d49336e735d9, type: 2}
   - {fileID: 11400000, guid: 11bed8cadf1468740973bceb1ba38864, type: 2}
   cooldown: 0
-  castDelay: 0.5
-  castPostDelay: 0.5
+  delay: 1
+  postDelay: 0
   activationType: 0
   spawnPointType: 2
   spawnOffset: {x: 0, y: 0}

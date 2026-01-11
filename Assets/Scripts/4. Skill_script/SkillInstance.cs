@@ -12,6 +12,8 @@ public class SkillInstance
     // 기본 스탯 (캐싱)
     public float cooldown;
     public Vector2 spawnOffset;
+    public float delay;
+    public float postDelay;
 
     // 런타임 캐싱 오브젝트
     public GameObject spawnedHitbox;
@@ -33,6 +35,8 @@ public class SkillInstance
 
         cooldown = data.cooldown;
         spawnOffset = data.spawnOffset;
+        delay = data.delay;
+        postDelay = data.postDelay;
 
         // 모듈 인스턴스 생성 (핵심)
         if (data.modules != null)
@@ -48,6 +52,10 @@ public class SkillInstance
         }
     }
 
+    public void OnDelay(GameObject attacker)
+    {
+        //선딜
+    }
     public void Execute(GameObject attacker, Vector2 direction)
     {
         for (int i = 0; i < modules.Count; i++)
@@ -70,6 +78,11 @@ public class SkillInstance
     {
         for (int i = 0; i < modules.Count; i++)
             modules[i].OnExpire(attacker);
+    }
+
+    public void OnPostDelay(GameObject attacker)
+    {
+        //후딜
     }
 
     public void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)
