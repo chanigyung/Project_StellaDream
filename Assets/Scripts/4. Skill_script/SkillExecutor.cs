@@ -10,8 +10,7 @@ public class SkillExecutor : MonoBehaviour
     {
         if (skillInstance == null) return false;
 
-        float lastUsed;
-        if (lastUsedTimeDict.TryGetValue(skillInstance, out lastUsed))
+        if (lastUsedTimeDict.TryGetValue(skillInstance, out float lastUsed))
         {
             if (Time.time < lastUsed + skillInstance.cooldown)
                 return false;
@@ -32,8 +31,8 @@ public class SkillExecutor : MonoBehaviour
 
     private IEnumerator ExecuteSkillWithDelay(SkillInstance skill, Vector2 direction)
     {
-        // 선딜 단계
-        skill.OnDelay(gameObject);
+        // 선딜
+        skill.Delay(gameObject);
 
         if (skill.delay > 0f)
             yield return new WaitForSeconds(skill.delay);
@@ -41,8 +40,8 @@ public class SkillExecutor : MonoBehaviour
         // 실제 스킬 실행
         skill.Execute(gameObject, direction);
 
-        // 후딜 단계
-        skill.OnPostDelay(gameObject);
+        // 후딜
+        skill.PostDelay(gameObject);
 
         if (skill.postDelay > 0f)
             yield return new WaitForSeconds(skill.postDelay);

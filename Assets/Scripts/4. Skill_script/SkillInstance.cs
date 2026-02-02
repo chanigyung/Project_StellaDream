@@ -27,12 +27,6 @@ public class SkillInstance
     {
         this.data = data;
 
-        if (data == null)
-        {
-            Debug.LogWarning("[SkillInstance] SkillData is null");
-            return;
-        }
-
         cooldown = data.cooldown;
         spawnOffset = data.spawnOffset;
         delay = data.delay;
@@ -52,10 +46,12 @@ public class SkillInstance
         }
     }
 
-    public void OnDelay(GameObject attacker)
+    public void Delay(GameObject attacker)
     {
-        //선딜
+        for (int i = 0; i < modules.Count; i++)
+            modules[i].OnDelay(attacker);
     }
+
     public void Execute(GameObject attacker, Vector2 direction)
     {
         for (int i = 0; i < modules.Count; i++)
@@ -80,9 +76,10 @@ public class SkillInstance
             modules[i].OnExpire(attacker);
     }
 
-    public void OnPostDelay(GameObject attacker)
+    public void PostDelay(GameObject attacker)
     {
-        //후딜
+        for (int i = 0; i < modules.Count; i++)
+            modules[i].OnPostDelay(attacker);
     }
 
     public void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)
