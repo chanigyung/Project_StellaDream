@@ -32,6 +32,9 @@ public class SkillData : ScriptableObject
     public bool flipSpriteY = true;
     //이펙트 뒤집을지 여부. 360도 회전하는스킬은 true, 좌우방향 고정되는스킬은 false로 설정할것
 
+    [Header("스킬 동시 사용 가능 여부")]
+    public bool ignoreCastLock = false; 
+
     public virtual SkillInstance CreateInstance()
     {
         return new SkillInstance(this);

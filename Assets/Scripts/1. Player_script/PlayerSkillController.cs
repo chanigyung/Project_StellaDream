@@ -34,28 +34,55 @@ public class PlayerSkillController : MonoBehaviour
         var dir = GetMouseDirection();
 
         // 바로시전 / 누르다 떼는순간 시전 / 누르는내내 시전
-        bool inputTriggered = false;
         switch (skillToUse.data.activationType)
         {
             case SkillActivationType.OnPress:
-                inputTriggered = Input.GetMouseButtonDown(button);
+                if (Input.GetMouseButtonDown(button))
+                {
+                    if (skillExecutor.UseSkill(skillToUse, dir))
+                    {
+                        var weapon = weaponManager.GetWeaponBySkill(skillToUse);
+                        if (weapon != null && weapon.isTemporary)
+                            HandleDurabilityAfterSkill(weapon);
+                    }
+                }
                 break;
-            case SkillActivationType.OnRelease:
-                inputTriggered = Input.GetMouseButtonUp(button);
-                break;
-            case SkillActivationType.WhileHeld:
-                inputTriggered = Input.GetMouseButton(button);
-                break;
-        }
 
-        if (inputTriggered)
-        {
-            if (skillExecutor.UseSkill(skillToUse, dir))
-            {
-                var weapon = weaponManager.GetWeaponBySkill(skillToUse);
-                if (weapon != null && weapon.isTemporary)
-                    HandleDurabilityAfterSkill(weapon);
-            }
+            case SkillActivationType.OnRelease:
+                if (Input.GetMouseButtonUp(button))
+                {
+                    if (skillExecutor.UseSkill(skillToUse, dir))
+                    {
+                        var weapon = weaponManager.GetWeaponBySkill(skillToUse);
+                        if (weapon != null && weapon.isTemporary)
+                            HandleDurabilityAfterSkill(weapon);
+                    }
+                }
+                break;
+
+            case SkillActivationType.WhileHeld:
+                if (Input.GetMouseButtonDown(button))
+                {
+                    skillExecutor.BeginHeldSkill(skillToUse);
+                }
+
+                // [수정] 유지 중 발동은 후딜 스킵
+                if (Input.GetMouseButton(button))
+                {
+                    if (skillExecutor.UseSkill(skillToUse, dir, skipPostDelay: true))
+                    {
+                        var weapon = weaponManager.GetWeaponBySkill(skillToUse);
+                        if (weapon != null && weapon.isTemporary)
+                            HandleDurabilityAfterSkill(weapon);
+                    }
+                }
+
+                // [추가] Held 종료 순간에만 후딜 실행
+                if (Input.GetMouseButtonUp(button))
+                {
+                    skillExecutor.EndHeldSkill(skillToUse);
+                }
+                break;
         }
     }
 
