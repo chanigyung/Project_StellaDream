@@ -114,7 +114,6 @@ public static class SkillUtils
             anim.runtimeAnimatorController = data.animator;
         }
 
-        Object.Destroy(effect, data.duration);
         skill.spawnedEffect = effect;
     }
 
