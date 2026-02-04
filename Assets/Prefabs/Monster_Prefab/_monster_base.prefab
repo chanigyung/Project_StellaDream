@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4892033715618190658}
   m_Layer: 0
-  m_Name: LeftArmPoint
+  m_Name: LeftPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2388118274120476319}
   m_Layer: 0
-  m_Name: GroundCenterPoint
+  m_Name: GroundPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -571,7 +571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4217821515765932170}
   m_Layer: 0
-  m_Name: RightArmPoint
+  m_Name: RightPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -618,6 +618,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.036, y: -0.685, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1729734114861102264}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6610593712909003657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1868537016833756426}
+  m_Layer: 0
+  m_Name: CenterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1868537016833756426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6610593712909003657}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.656, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1026,6 +1057,7 @@ Transform:
   - {fileID: 164746061437018516}
   - {fileID: 8678910876371455250}
   - {fileID: 2059103968672486565}
+  - {fileID: 1868537016833756426}
   - {fileID: 2388118274120476319}
   - {fileID: 4892033715618190658}
   - {fileID: 4217821515765932170}
@@ -1081,8 +1113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5dd50282b890d14585d01068b0c1303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftArmPoint: {fileID: 4892033715618190658}
-  rightArmPoint: {fileID: 4217821515765932170}
+  centerPoint: {fileID: 1868537016833756426}
+  leftPoint: {fileID: 4892033715618190658}
+  rightPoint: {fileID: 4217821515765932170}
   groundPoint: {fileID: 2388118274120476319}
 --- !u!114 &6632916101516864826
 MonoBehaviour:

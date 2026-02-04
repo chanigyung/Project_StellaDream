@@ -20,9 +20,6 @@ public class VFXEntry
     [Header("방향")]
     public bool useDirection;
 
-    [Header("오프셋")]
-    public Vector3 localOffset;
-
     [Header("트리거")]
     public string trigger;
 }

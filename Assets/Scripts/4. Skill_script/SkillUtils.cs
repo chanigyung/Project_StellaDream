@@ -79,48 +79,38 @@ public static class SkillUtils
     }
 
     //스킬 사용 좌표 계산
-    public static Transform GetSpawnPoint(GameObject attacker, SkillInstance skill)
+    public static Transform GetSpawnPoint(GameObject spawnOwner, SkillInstance skill)
     {
-        var pointHolder = attacker.GetComponent<SkillSpawnPoints>();
-        if (pointHolder == null)
+        if (spawnOwner == null)
+            return null;
+
+        var spawnPoint = spawnOwner.GetComponent<SkillSpawnPoints>();
+        if (spawnPoint == null)
         {
-            return attacker.transform; // fallback
+            return spawnOwner.transform; // fallback
         }
 
-        return pointHolder.GetPoint(skill.data.spawnPointType);
+        return spawnPoint.GetPoint(skill.data.spawnPointType);
     }
 
-    //스킬 이펙트 재생
-    // public static void PlayEffect(GameObject attacker,SkillInstance skill,Vector2 direction,VFXModuleData data)
-    // {
-    //     if (data.effectPrefab == null) return;
-
-    //     CalculateSpawnTransform(attacker,skill,direction, out var pos, out var rot, out var spawnPoint);
-
-    //     GameObject effect = Object.Instantiate(data.effectPrefab, pos, rot);
-
-    //     if (skill.data.attachToSpawnPoint)
-    //         effect.transform.SetParent(spawnPoint, true);
-
-    //     if (skill.RotateEffect && direction.x < 0 && skill.FlipSpriteY)
-    //     {
-    //         Vector3 scale = effect.transform.localScale;
-    //         scale.y *= -1;
-    //         effect.transform.localScale = scale;
-    //     }
-
-    //     if (data.animator != null && effect.TryGetComponent(out Animator anim))
-    //     {
-    //         anim.runtimeAnimatorController = data.animator;
-    //     }
-
-    //     skill.spawnedEffect = effect;
-    // }
-
-    public static GameObject SpawnVFX(GameObject prefab, Vector3 position,
-        Quaternion rotation, RuntimeAnimatorController animator, string trigger)
+    public static GameObject SpawnVFX(GameObject spawnOwner, SkillInstance skill, Vector2 direction,
+        GameObject prefab, RuntimeAnimatorController animator, string trigger)
     {
-        GameObject vfx = Object.Instantiate(prefab, position, rotation);
+        if (prefab == null) return null;
+
+        CalculateSpawnTransform(spawnOwner, skill, direction, out var pos, out var rot, out var spawnPoint);
+
+        GameObject vfx = Object.Instantiate(prefab, pos, rot);
+
+        if (skill.data.attachToSpawnPoint && spawnPoint != null)
+            vfx.transform.SetParent(spawnPoint, true);
+
+        if (skill.RotateEffect && direction.x < 0f && skill.FlipSpriteY)
+        {
+            Vector3 scale = vfx.transform.localScale;
+            scale.y *= -1f;
+            vfx.transform.localScale = scale;
+        }
 
         if (animator != null && vfx.TryGetComponent(out Animator anim))
         {
@@ -129,25 +119,34 @@ public static class SkillUtils
             if (!string.IsNullOrEmpty(trigger))
                 anim.SetTrigger(trigger);
         }
+
         return vfx;
     }
 
-    public static void CalculateSpawnTransform(GameObject attacker,SkillInstance skill,
+    public static void CalculateSpawnTransform(GameObject spawnOwner,SkillInstance skill,
         Vector2 direction, out Vector3 position, out Quaternion rotation, out Transform spawnPoint)
     {
-        spawnPoint = GetSpawnPoint(attacker, skill);
+        spawnPoint = GetSpawnPoint(spawnOwner, skill);
+        if (spawnPoint == null)
+        {
+            position = Vector3.zero;
+            rotation = Quaternion.identity;
+            return;
+        }
+
+        Vector2 dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
 
         Vector2 offset = skill.spawnOffset;
-        offset.x *= Mathf.Sign(direction.x);
+        Vector2 perp = new Vector2(-dir.y, dir.x);
 
-        Vector3 worldOffset = spawnPoint.rotation * offset;
+        Vector3 worldOffset = (Vector3)(dir * offset.x + perp * offset.y);
+
         position = spawnPoint.position + worldOffset;
 
         rotation = Quaternion.identity;
-
         if (skill.RotateEffect)
         {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             rotation = Quaternion.Euler(0, 0, angle);
         }
     }

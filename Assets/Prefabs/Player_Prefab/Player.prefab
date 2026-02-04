@@ -1171,8 +1171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5dd50282b890d14585d01068b0c1303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftArmPoint: {fileID: 2228649944754762395}
-  rightArmPoint: {fileID: 4846781760497693565}
+  centerPoint: {fileID: 8315906823629270547}
+  leftPoint: {fileID: 2228649944754762395}
+  rightPoint: {fileID: 4846781760497693565}
   groundPoint: {fileID: 8276392092178303177}
 --- !u!114 &370225880124302853
 MonoBehaviour:
@@ -2027,7 +2028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8276392092178303177}
   m_Layer: 0
-  m_Name: GroundCenterPoint
+  m_Name: GroundPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

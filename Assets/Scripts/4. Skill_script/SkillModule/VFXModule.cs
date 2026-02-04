@@ -65,37 +65,48 @@ public class VFXModule : SkillModuleBase
             if (entry.hook != hook) continue;
             if (entry.prefab == null) continue;
 
-            Vector3 basePos = ResolveAnchorPosition(entry.anchor, ctx);
-            Vector3 spawnPos = basePos + entry.localOffset;
+            GameObject spawnOwner = ResolveAnchorOwner(entry.anchor, ctx);
 
-            Quaternion rot = Quaternion.identity;
-            if (entry.useDirection)
-            {
-                Vector2 dir = ctx.hasDirection ? ctx.direction : Vector2.right;
-                rot = SkillUtils.CalculateRotation(dir);
-            }
+            Vector2 dir = ResolveVFXDirection(entry.useDirection, ctx);
 
-            SkillUtils.SpawnVFX(entry.prefab, spawnPos, rot, entry.animator, entry.trigger);
+            SkillUtils.SpawnVFX(spawnOwner, owner, dir, entry.prefab, 
+                entry.animator, entry.trigger);
         }
     }
 
-    private Vector3 ResolveAnchorPosition(VFXAnchor anchor, VFXContext ctx)
+    private GameObject ResolveAnchorOwner(VFXAnchor anchor, VFXContext ctx)
     {
         switch (anchor)
         {
-            case VFXAnchor.Caster:
-                return ctx.caster != null ? ctx.caster.transform.position : Vector3.zero;
-
             case VFXAnchor.Target:
-                return ctx.target != null ? ctx.target.transform.position
-                    : (ctx.caster != null ? ctx.caster.transform.position : Vector3.zero);
+                return ctx.target != null ? ctx.target : ctx.caster;
 
             case VFXAnchor.SourceObject:
-                return ctx.sourceObject != null ? ctx.sourceObject.transform.position
-                    : (ctx.caster != null ? ctx.caster.transform.position : Vector3.zero);
+                return ctx.sourceObject != null ? ctx.sourceObject : ctx.caster;
 
             default:
-                return ctx.caster != null ? ctx.caster.transform.position : Vector3.zero;
+                return ctx.caster;
         }
     }
+
+    private Vector2 ResolveVFXDirection(bool useDirection, VFXContext ctx)
+    {
+        if (!useDirection)
+            return Vector2.right;
+
+        if (ctx.hasDirection)
+            return ctx.direction;
+
+        // hit/tick/expire 훅에서 방향이 필요하다면, 타겟이 있으면 caster->target 방향을 사용
+        if (ctx.caster != null && ctx.target != null)
+        {
+            Vector2 dir = (ctx.target.transform.position - ctx.caster.transform.position);
+            if (dir.sqrMagnitude > 0.0001f)
+                return dir.normalized;
+        }
+
+        // fallback
+        return Vector2.right;
+    }
+
 }

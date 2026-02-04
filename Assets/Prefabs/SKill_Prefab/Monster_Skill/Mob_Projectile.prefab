@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1224341147218689283}
   - component: {fileID: 7475423191734748697}
   - component: {fileID: -4969534630906863554}
+  - component: {fileID: 5339785731931667348}
   m_Layer: 13
   m_Name: Mob_Projectile
   m_TagString: Untagged
@@ -119,6 +120,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f25dd5b101fe94bb9c71517640ad3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5339785731931667348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516866753298579258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5dd50282b890d14585d01068b0c1303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerPoint: {fileID: 7216591080711373617}
+  leftPoint: {fileID: 0}
+  rightPoint: {fileID: 0}
+  groundPoint: {fileID: 0}
 --- !u!1 &2106514590257841141
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +217,6 @@ SpriteRenderer:
   m_Size: {x: 2.79, y: 2.68}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

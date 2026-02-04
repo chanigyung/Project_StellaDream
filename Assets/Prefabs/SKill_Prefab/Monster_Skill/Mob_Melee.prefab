@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9198692478265563338}
   - component: {fileID: 7300661320585817938}
   - component: {fileID: 3910252992785891657}
+  - component: {fileID: 8601813032602276296}
   m_Layer: 13
   m_Name: Mob_Melee
   m_TagString: Untagged
@@ -119,6 +120,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &8601813032602276296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2216451094903520163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5dd50282b890d14585d01068b0c1303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerPoint: {fileID: 8710187810925818619}
+  leftPoint: {fileID: 0}
+  rightPoint: {fileID: 0}
+  groundPoint: {fileID: 0}
 --- !u!1 &7154227130123748312
 GameObject:
   m_ObjectHideFlags: 0

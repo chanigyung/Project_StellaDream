@@ -20,12 +20,13 @@ MonoBehaviour:
   delay: 1
   postDelay: 0
   activationType: 0
-  spawnPointType: 2
+  spawnPointType: 0
   spawnOffset: {x: 0, y: 0}
   attachToSpawnPoint: 1
   statusEffects: []
   rotateSkill: 0
   flipSpriteY: 0
+  ignoreCastLock: 0
   references:
     version: 2
     RefIds: []
