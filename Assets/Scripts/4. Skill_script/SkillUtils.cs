@@ -91,30 +91,45 @@ public static class SkillUtils
     }
 
     //스킬 이펙트 재생
-    public static void PlayEffect(GameObject attacker,SkillInstance skill,Vector2 direction,VFXModuleData data)
+    // public static void PlayEffect(GameObject attacker,SkillInstance skill,Vector2 direction,VFXModuleData data)
+    // {
+    //     if (data.effectPrefab == null) return;
+
+    //     CalculateSpawnTransform(attacker,skill,direction, out var pos, out var rot, out var spawnPoint);
+
+    //     GameObject effect = Object.Instantiate(data.effectPrefab, pos, rot);
+
+    //     if (skill.data.attachToSpawnPoint)
+    //         effect.transform.SetParent(spawnPoint, true);
+
+    //     if (skill.RotateEffect && direction.x < 0 && skill.FlipSpriteY)
+    //     {
+    //         Vector3 scale = effect.transform.localScale;
+    //         scale.y *= -1;
+    //         effect.transform.localScale = scale;
+    //     }
+
+    //     if (data.animator != null && effect.TryGetComponent(out Animator anim))
+    //     {
+    //         anim.runtimeAnimatorController = data.animator;
+    //     }
+
+    //     skill.spawnedEffect = effect;
+    // }
+
+    public static GameObject SpawnVFX(GameObject prefab, Vector3 position,
+        Quaternion rotation, RuntimeAnimatorController animator, string trigger)
     {
-        if (data.effectPrefab == null) return;
+        GameObject vfx = Object.Instantiate(prefab, position, rotation);
 
-        CalculateSpawnTransform(attacker,skill,direction, out var pos, out var rot, out var spawnPoint);
-
-        GameObject effect = Object.Instantiate(data.effectPrefab, pos, rot);
-
-        if (skill.data.attachToSpawnPoint)
-            effect.transform.SetParent(spawnPoint, true);
-
-        if (skill.RotateEffect && direction.x < 0 && skill.FlipSpriteY)
+        if (animator != null && vfx.TryGetComponent(out Animator anim))
         {
-            Vector3 scale = effect.transform.localScale;
-            scale.y *= -1;
-            effect.transform.localScale = scale;
-        }
+            anim.runtimeAnimatorController = animator;
 
-        if (data.animator != null && effect.TryGetComponent(out Animator anim))
-        {
-            anim.runtimeAnimatorController = data.animator;
+            if (!string.IsNullOrEmpty(trigger))
+                anim.SetTrigger(trigger);
         }
-
-        skill.spawnedEffect = effect;
+        return vfx;
     }
 
     public static void CalculateSpawnTransform(GameObject attacker,SkillInstance skill,
@@ -137,4 +152,13 @@ public static class SkillUtils
         }
     }
 
+    public static Quaternion CalculateRotation(Vector2 direction)
+    {
+        if (direction.sqrMagnitude < 0.0001f)
+            direction = Vector2.right;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        return Quaternion.Euler(0f, 0f, angle);
+    }
+    
 }

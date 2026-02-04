@@ -80,7 +80,7 @@ public class PlayerSkillController : MonoBehaviour
                 // [추가] Held 종료 순간에만 후딜 실행
                 if (Input.GetMouseButtonUp(button))
                 {
-                    skillExecutor.EndHeldSkill(skillToUse);
+                    skillExecutor.EndHeldSkill(skillToUse, dir);
                 }
                 break;
         }

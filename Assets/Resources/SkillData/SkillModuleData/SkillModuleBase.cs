@@ -9,10 +9,10 @@ public abstract class SkillModuleBase : ISkillModule
         this.owner = owner;
     }
 
-    public virtual void OnDelay(GameObject attacker) { }
+    public virtual void OnDelay(GameObject attacker, Vector2 direction) { }
     public virtual void OnExecute(GameObject attacker, Vector2 direction) { }
     public virtual void OnHit(GameObject attacker, GameObject target) { }
-    public virtual void OnTick(GameObject attacker) { }
-    public virtual void OnExpire(GameObject attacker) { }
-    public virtual void OnPostDelay(GameObject attacker) { }
+    public virtual void OnTick(GameObject attacker, GameObject target, GameObject sourceObject) { }
+    public virtual void OnExpire(GameObject attacker, GameObject sourceObject) { }
+    public virtual void OnPostDelay(GameObject attacker, Vector2 direction) { }
 }

@@ -17,15 +17,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 731cc58ae68285045bc4b0d89f561466, type: 2}
   - {fileID: 11400000, guid: 56e26eef683f6e94c8698eef2b9d337f, type: 2}
   cooldown: 2
-  castDelay: 0.5
-  castPostDelay: 0.5
+  delay: 0
+  postDelay: 0
   activationType: 0
   spawnPointType: 2
   spawnOffset: {x: 0, y: 0}
-  attachToSpawnPoint: 1
+  attachToSpawnPoint: 0
   statusEffects: []
   rotateSkill: 0
   flipSpriteY: 0
+  ignoreCastLock: 0
   references:
     version: 2
     RefIds: []

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7868655474726641693}
   - component: {fileID: 660148467950499075}
   - component: {fileID: 5523759805287583434}
-  - component: {fileID: 3448175460613828577}
   m_Layer: 0
   m_Name: SkillEffect
   m_TagString: Untagged
@@ -107,17 +106,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3448175460613828577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3068963375615690777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 515a2485ec3f3174fba9f16ee881a8f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  applyRotation: 1
-  effectAnimator: {fileID: 5523759805287583434}

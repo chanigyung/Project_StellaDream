@@ -46,10 +46,10 @@ public class SkillInstance
         }
     }
 
-    public void Delay(GameObject attacker)
+    public void Delay(GameObject attacker, Vector2 direction)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnDelay(attacker);
+            modules[i].OnDelay(attacker, direction);
     }
 
     public void Execute(GameObject attacker, Vector2 direction)
@@ -64,22 +64,22 @@ public class SkillInstance
             modules[i].OnHit(attacker, target);
     }
 
-    public void OnTick(GameObject attacker)
+    public void OnTick(GameObject attacker, GameObject target, GameObject sourceObject)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnTick(attacker);
+            modules[i].OnTick(attacker, target, sourceObject);
     }
 
-    public void OnExpire(GameObject attacker)
+    public void OnExpire(GameObject attacker, GameObject sourceObject)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnExpire(attacker);
+            modules[i].OnExpire(attacker, sourceObject);
     }
 
-    public void PostDelay(GameObject attacker)
+    public void PostDelay(GameObject attacker, Vector2 direction)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnPostDelay(attacker);
+            modules[i].OnPostDelay(attacker, direction);
     }
 
     public void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)

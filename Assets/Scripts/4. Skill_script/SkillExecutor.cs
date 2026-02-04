@@ -57,7 +57,7 @@ public class SkillExecutor : MonoBehaviour
         // 스킬 딜레이 적용
         if (skill.delay > 0f)
         {
-            skill.Delay(gameObject);
+            skill.Delay(gameObject, direction);
             yield return new WaitForSeconds(skill.delay);
         }  
 
@@ -67,7 +67,7 @@ public class SkillExecutor : MonoBehaviour
         // 후딜 (WhileHeld 유지 중이면 스킵)
         if (!skipPostDelay)
         {
-            skill.PostDelay(gameObject);
+            skill.PostDelay(gameObject, direction);
 
             if (skill.postDelay > 0f)
                 yield return new WaitForSeconds(skill.postDelay);
@@ -89,7 +89,7 @@ public class SkillExecutor : MonoBehaviour
     }
 
     // 홀드형 스킬 종료시 호출
-    public void EndHeldSkill(SkillInstance skillInstance)
+    public void EndHeldSkill(SkillInstance skillInstance, Vector2 direction)
     {
         if (skillInstance == null) return;
         if (!heldSkill.Contains(skillInstance)) return;
@@ -97,13 +97,13 @@ public class SkillExecutor : MonoBehaviour
         heldSkill.Remove(skillInstance);
 
         // 종료 순간에만 후딜 처리
-        StartCoroutine(heldSkillPostDelay(skillInstance));
+        StartCoroutine(heldSkillPostDelay(skillInstance, direction));
     }
 
     // 후딜용 코루틴
-    private IEnumerator heldSkillPostDelay(SkillInstance skill)
+    private IEnumerator heldSkillPostDelay(SkillInstance skill, Vector2 direction)
     {
-        skill.PostDelay(gameObject);
+        skill.PostDelay(gameObject, Vector2.right);
 
         if (skill.postDelay > 0f)
             yield return new WaitForSeconds(skill.postDelay);
