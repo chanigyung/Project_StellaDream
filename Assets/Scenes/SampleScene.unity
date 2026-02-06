@@ -459,7 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDropPrefab: {fileID: 5353300409739423069, guid: 12259ea11a009c240a542974b201f420, type: 3}
   testWeapon:
-    data: {fileID: 11400000, guid: b22ab8666705d0543953226466bda558, type: 2}
+    data: {fileID: 11400000, guid: d82980882d6e51e48abb64db9a957e49, type: 2}
     uniqueID: 
     upgradeInfo:
       baseUpgradeLevel: 0

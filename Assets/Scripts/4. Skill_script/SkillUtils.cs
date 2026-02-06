@@ -78,6 +78,32 @@ public static class SkillUtils
         skill.spawnedProjectile = projectile;
     }
 
+    //장판스킬 히트박스 생성
+    public static void SpawnAreaHitbox( GameObject attacker, SkillInstance skill, Vector2 direction, AreaHitboxModuleData data)
+    {
+        CalculateSpawnTransform(attacker, skill, direction, out var pos, out var rot, out var spawnPoint);
+
+        GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
+
+        if (skill.data.attachToSpawnPoint && spawnPoint != null)
+            hitboxObj.transform.SetParent(spawnPoint, true);
+
+        if (hitboxObj.TryGetComponent(out BoxCollider2D col))
+        {
+            col.isTrigger = true;
+            col.size = data.size;
+            col.offset = Vector2.zero;
+        }
+
+        if (hitboxObj.TryGetComponent(out AreaHitbox area))
+        {
+            area.Initialize(attacker, skill, data.tickInterval, data.duration);
+        }
+
+        // [유지] 런타임 캐싱은 기존 필드 재사용
+        skill.spawnedHitbox = hitboxObj;
+    }
+
     //스킬 사용 좌표 계산
     public static Transform GetSpawnPoint(GameObject spawnOwner, SkillInstance skill)
     {

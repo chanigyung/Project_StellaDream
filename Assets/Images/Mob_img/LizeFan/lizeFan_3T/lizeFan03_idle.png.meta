@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c5b8169f5294764399e81141adc26f9
-      internalID: 1024411297
+      spriteID: 3b02a8d53600c284ebfaaa3dbabaa4be
+      internalID: 2928057
       vertices: []
       indices: 
       edges: []
@@ -132,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b63975bc7c0298f48b8df18d2d36dab8
-      internalID: 1683986722
+      spriteID: 5e79a5f67f8e57c4cac8121074e34bae
+      internalID: 668901261
       vertices: []
       indices: 
       edges: []
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6e2df6eb75ec0d4a96a0795fc5e2e13
-      internalID: 64756994
+      spriteID: 5ecf48a80ab93b547baabb8a7822c8f1
+      internalID: -1370059531
       vertices: []
       indices: 
       edges: []
@@ -174,8 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65257427a59d30b4f9a1795dba12314f
-      internalID: 1997385348
+      spriteID: 8b1e12c9f49f5174dba005c541087c40
+      internalID: -720514550
       vertices: []
       indices: 
       edges: []
@@ -191,10 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      lizeFan03_idle_0: 1024411297
-      lizeFan03_idle_1: 1683986722
-      lizeFan03_idle_2: 64756994
-      lizeFan03_idle_3: 1997385348
+      lizeFan03_idle_0: 2928057
+      lizeFan03_idle_1: 668901261
+      lizeFan03_idle_2: -1370059531
+      lizeFan03_idle_3: -720514550
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
