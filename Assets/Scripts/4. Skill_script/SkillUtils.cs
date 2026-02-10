@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class SkillUtils
@@ -177,13 +178,39 @@ public static class SkillUtils
         }
     }
 
-    public static Quaternion CalculateRotation(Vector2 direction)
+    public static GameObject FindEnemyInCamera(Vector2 from, Camera cam, LayerMask enemyLayer, GameObject exclude)
     {
-        if (direction.sqrMagnitude < 0.0001f)
-            direction = Vector2.right;
+        if (cam == null) return null;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        return Quaternion.Euler(0f, 0f, angle);
-    }
-    
+        Vector3 min = cam.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        Vector3 max = cam.ViewportToWorldPoint(new Vector3(1, 1, 0));
+
+        Collider2D[] hits = Physics2D.OverlapAreaAll(min, max, enemyLayer);
+
+        float bestDist = float.MaxValue;
+        GameObject best = null;
+
+        // 자식 콜라이더 중복 방지(같은 몬스터가 여러 콜라이더면 중복 후보가 됨)
+        HashSet<GameObject> uniqueTargets = new();
+
+        foreach (var hit in hits)
+        {
+            var damageable = hit.GetComponentInParent<IDamageable>() as Component;
+            if (damageable == null) continue;
+
+            GameObject candidate = damageable.gameObject;
+            if (!uniqueTargets.Add(candidate)) continue;
+
+            if (candidate == exclude) continue;
+
+            float dist = Vector2.Distance(from, candidate.transform.position);
+            if (dist < bestDist)
+            {
+                bestDist = dist;
+                best = candidate;
+            }
+        }
+
+        return best;
+    }   
 }

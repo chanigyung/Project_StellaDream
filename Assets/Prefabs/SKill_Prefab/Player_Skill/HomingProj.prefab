@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1224341147218689283}
   - component: {fileID: 7475423191734748697}
   - component: {fileID: -8823140185300508261}
-  - component: {fileID: -4969534630906863554}
+  - component: {fileID: -8085196848720011678}
   m_Layer: 10
-  m_Name: Projectile
+  m_Name: HomingProj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   leftPoint: {fileID: 0}
   rightPoint: {fileID: 0}
   groundPoint: {fileID: 0}
---- !u!114 &-4969534630906863554
+--- !u!114 &-8085196848720011678
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,9 +133,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 516866753298579258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97f25dd5b101fe94bb9c71517640ad3d, type: 3}
+  m_Script: {fileID: 11500000, guid: 13377333414140b4abae2ad47a07b85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  initialStraightTime: 0.3
+  initialSearchRadius: 5
+  hitRadius: 0.3
+  maxHitCount: 6
+  returnStopDistance: 1
 --- !u!1 &2106514590257841141
 GameObject:
   m_ObjectHideFlags: 0

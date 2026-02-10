@@ -1,22 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
-    private GameObject attacker;
-    private SkillInstance skill;
-    private Vector2 direction;
-    private float speed;
+    protected GameObject attacker;
+    protected SkillInstance skill;
+    protected Vector2 direction;
+    protected float speed;
+
+    public int HitCount { get; protected set; }
+    private Coroutine lifetimeRoutine; // [추가]
+    private bool isHit;
 
     private readonly HashSet<GameObject> alreadyHit = new();
-    private bool initialized;
+    protected bool initialized;
 
-    public void Initialize(GameObject attacker,SkillInstance skill,Vector2 direction,float speed,float lifetime)
+    public virtual void Initialize(GameObject attacker, SkillInstance skill, Vector2 direction, float speed, float lifetime)
     {
         this.attacker = attacker;
         this.skill = skill;
         this.direction = direction.normalized;
         this.speed = speed;
+
+        HitCount = 0;
+        isHit = false;
 
         float angle = Mathf.Atan2(this.direction.y, this.direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -29,14 +37,21 @@ public class Projectile : MonoBehaviour
         }
 
         initialized = true;
-        Destroy(gameObject, lifetime);
+        if (lifetimeRoutine != null) StopCoroutine(lifetimeRoutine);
+        if (lifetime > 0f)
+            lifetimeRoutine = StartCoroutine(LifetimeRoutine(lifetime));
     }
 
     private void Update()
     {
         if (!initialized) return;
 
-        transform.Translate(Vector3.right * speed * Time.deltaTime, Space.Self);
+        Move();
+    }
+
+    protected virtual void Move()
+    {
+        transform.position += transform.right * (speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -47,13 +62,53 @@ public class Projectile : MonoBehaviour
         if (damageable == null) return;
 
         GameObject target = damageable.gameObject;
-        if (alreadyHit.Contains(target)) return;
 
+        if (!CanHitTarget(target)) return;
+
+        RegisterHitTarget(target);
+        HandleHit(target);
+    }
+
+    // 이미 공격한 대상 판정
+    protected virtual bool CanHitTarget(GameObject target)
+    {
+        return !alreadyHit.Contains(target);
+    }
+
+    // 공격한 대상 alreadyHit리스트에 넣어주기
+    protected virtual void RegisterHitTarget(GameObject target)
+    {
         alreadyHit.Add(target);
+    }
 
-        // 히트 처리 위임
+    //투사체 충돌시 처리
+    protected virtual void HandleHit(GameObject target)
+    {
         skill.OnHit(attacker, target);
+        HitCount++;
+        isHit = true;
+
+        if (lifetimeRoutine != null)
+            StopCoroutine(lifetimeRoutine);
 
         Destroy(gameObject);
+    }
+
+    // 투사체 지속시간 후 파괴용 코루틴
+    private IEnumerator LifetimeRoutine(float lifetime)
+    {
+        if (lifetime > 0f)
+            yield return new WaitForSeconds(lifetime);
+
+        if (!isHit)
+            Expire();
+
+        Destroy(gameObject);
+    }
+
+    private void Expire()
+    {
+        if (skill == null) return;
+        skill.OnExpire(attacker, gameObject);
     }
 }
