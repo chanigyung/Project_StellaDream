@@ -101,11 +101,10 @@ public static class SkillUtils
             area.Initialize(attacker, skill, data.tickInterval, data.duration);
         }
 
-        // [유지] 런타임 캐싱은 기존 필드 재사용
         skill.spawnedHitbox = hitboxObj;
     }
 
-    //스킬 사용 좌표 계산
+    //스킬 소환되는 좌표 계산
     public static Transform GetSpawnPoint(GameObject spawnOwner, SkillInstance skill)
     {
         if (spawnOwner == null)
@@ -120,6 +119,7 @@ public static class SkillUtils
         return spawnPoint.GetPoint(skill.data.spawnPointType);
     }
 
+    // VFX 실행
     public static GameObject SpawnVFX(GameObject spawnOwner, SkillInstance skill, Vector2 direction,
         GameObject prefab, RuntimeAnimatorController animator, string trigger)
     {
@@ -150,6 +150,7 @@ public static class SkillUtils
         return vfx;
     }
 
+    // 스킬orVFX 스폰 위치 및 방향 계산
     public static void CalculateSpawnTransform(GameObject spawnOwner,SkillInstance skill,
         Vector2 direction, out Vector3 position, out Quaternion rotation, out Transform spawnPoint)
     {
@@ -178,6 +179,7 @@ public static class SkillUtils
         }
     }
 
+    //카메라 시야 내의 몬스터들 찾아서 List로 반환
     public static List<Transform> FindEnemyInCamera(Vector2 from, Camera cam, LayerMask enemyLayer)
     {
         List<Transform> result = new();
