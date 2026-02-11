@@ -15,8 +15,13 @@ MonoBehaviour:
   vfxEntryList:
   - hook: 1
     anchor: 0
-    prefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
+    prefab: {fileID: 3068963375615690777, guid: 1e0f8a5da7203b044a041c00fb130980, type: 3}
     animator: {fileID: 9100000, guid: 04a24d66016ec904e9c029f8d13af074, type: 2}
     useDirection: 0
-    localOffset: {x: 0, y: 0, z: 0}
+    trigger: 
+  - hook: 3
+    anchor: 1
+    prefab: {fileID: 3068963375615690777, guid: b39b5ab57169bbf4ab31f7a569603653, type: 3}
+    animator: {fileID: 9100000, guid: 4d06d8d91be069f45bbcad061eac19d2, type: 2}
+    useDirection: 0
     trigger: 

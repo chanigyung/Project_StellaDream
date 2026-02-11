@@ -15,8 +15,7 @@ MonoBehaviour:
   vfxEntryList:
   - hook: 1
     anchor: 0
-    prefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
+    prefab: {fileID: 3068963375615690777, guid: 1e0f8a5da7203b044a041c00fb130980, type: 3}
     animator: {fileID: 9100000, guid: 0891fa515862c0748829422e8a600ee7, type: 2}
     useDirection: 0
-    localOffset: {x: 0, y: 0, z: 0}
     trigger: 

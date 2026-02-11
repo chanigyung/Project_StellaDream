@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e177b023e5c4774ea3b6c3fd8c3de37, type: 3}
-  m_Name: HomingProjVFX
+  m_Name: 204SSS_VFX
   m_EditorClassIdentifier: 
   vfxEntryList:
   - hook: 3

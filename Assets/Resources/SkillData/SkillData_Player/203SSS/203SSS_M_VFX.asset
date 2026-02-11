@@ -18,5 +18,10 @@ MonoBehaviour:
     prefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
     animator: {fileID: 9100000, guid: 0e524ad293945564fa9de273cb270be8, type: 2}
     useDirection: 1
-    localOffset: {x: 0, y: 0, z: 0}
+    trigger: 
+  - hook: 3
+    anchor: 1
+    prefab: {fileID: 3068963375615690777, guid: b39b5ab57169bbf4ab31f7a569603653, type: 3}
+    animator: {fileID: 9100000, guid: 4d06d8d91be069f45bbcad061eac19d2, type: 2}
+    useDirection: 1
     trigger: 

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
-  m_Name: HomingTest_Skill
+  m_Name: 204SSS_S
   m_EditorClassIdentifier: 
   modules:
   - {fileID: 11400000, guid: 70d1c4e70014e7e4a91234c5a3efcedd, type: 2}
-  - {fileID: 11400000, guid: 17a0e979a3ee93044984dac98e9e2b1e, type: 2}
+  - {fileID: 11400000, guid: 2f2cbae10c3dc2144b74d00e8449fbc1, type: 2}
   - {fileID: 11400000, guid: 31f96181a535b5149ae001a711e48dd9, type: 2}
   cooldown: 1
   delay: 0

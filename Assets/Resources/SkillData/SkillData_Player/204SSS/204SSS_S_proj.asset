@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77cd8b27951ac7b45a890f1a21bd5cfd, type: 3}
-  m_Name: projTest_DMG
+  m_Script: {fileID: 11500000, guid: 4bc214a65f15ad148ad58dcb9906ad30, type: 3}
+  m_Name: 204SSS_S_proj
   m_EditorClassIdentifier: 
-  damage: 100
+  projectilePrefab: {fileID: 516866753298579258, guid: e0f2ec96041168f4e93671345ba43a12, type: 3}
+  speed: 20
+  lifetime: 10

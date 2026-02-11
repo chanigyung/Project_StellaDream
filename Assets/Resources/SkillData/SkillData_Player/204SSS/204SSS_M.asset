@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
-  m_Name: ProjectileTestSkill
+  m_Name: 204SSS_M
   m_EditorClassIdentifier: 
   modules:
   - {fileID: 11400000, guid: 17a0e979a3ee93044984dac98e9e2b1e, type: 2}
   - {fileID: 11400000, guid: 40f351bf1be10934fb9865f89abf4073, type: 2}
+  - {fileID: 11400000, guid: 31f96181a535b5149ae001a711e48dd9, type: 2}
   cooldown: 0.2
   delay: 0
   postDelay: 0
