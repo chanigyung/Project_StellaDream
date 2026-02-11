@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77cd8b27951ac7b45a890f1a21bd5cfd, type: 3}
   m_Name: projTest_DMG
   m_EditorClassIdentifier: 
-  damage: 400
+  damage: 100

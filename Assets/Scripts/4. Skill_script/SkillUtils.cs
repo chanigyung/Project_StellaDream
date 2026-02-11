@@ -178,39 +178,32 @@ public static class SkillUtils
         }
     }
 
-    public static GameObject FindEnemyInCamera(Vector2 from, Camera cam, LayerMask enemyLayer, GameObject exclude)
+    public static List<Transform> FindEnemyInCamera(Vector2 from, Camera cam, LayerMask enemyLayer)
     {
-        if (cam == null) return null;
+        List<Transform> result = new();
 
-        Vector3 min = cam.ViewportToWorldPoint(new Vector3(0, 0, 0));
-        Vector3 max = cam.ViewportToWorldPoint(new Vector3(1, 1, 0));
+        if (cam == null)
+            return result;
+
+        Vector3 min = cam.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
+        Vector3 max = cam.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
 
         Collider2D[] hits = Physics2D.OverlapAreaAll(min, max, enemyLayer);
 
-        float bestDist = float.MaxValue;
-        GameObject best = null;
-
-        // 자식 콜라이더 중복 방지(같은 몬스터가 여러 콜라이더면 중복 후보가 됨)
-        HashSet<GameObject> uniqueTargets = new();
+        HashSet<GameObject> unique = new();
 
         foreach (var hit in hits)
         {
             var damageable = hit.GetComponentInParent<IDamageable>() as Component;
             if (damageable == null) continue;
 
-            GameObject candidate = damageable.gameObject;
-            if (!uniqueTargets.Add(candidate)) continue;
+            GameObject go = damageable.gameObject;
+            if (go == null || !go.activeInHierarchy) continue;
+            if (!unique.Add(go)) continue;
 
-            if (candidate == exclude) continue;
-
-            float dist = Vector2.Distance(from, candidate.transform.position);
-            if (dist < bestDist)
-            {
-                bestDist = dist;
-                best = candidate;
-            }
+            result.Add(go.transform);
         }
 
-        return best;
+        return result;
     }   
 }

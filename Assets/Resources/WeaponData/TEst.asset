@@ -23,4 +23,5 @@ MonoBehaviour:
   subRotationOffsetZ: 45
   mainSkill: {fileID: 11400000, guid: f9155d69891ee4a4bba471ac4e0e63bc, type: 2}
   subSkill: {fileID: 11400000, guid: f9155d69891ee4a4bba471ac4e0e63bc, type: 2}
-  tags: []
+  tags:
+  - test

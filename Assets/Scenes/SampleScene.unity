@@ -857,15 +857,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterDataList:
-  - {fileID: 11400000, guid: 897868eb062d2c7469fe7fd3c8630934, type: 2}
   - {fileID: 11400000, guid: a7d90aefeac47c24392b8d953cfaa0c7, type: 2}
-  - {fileID: 11400000, guid: 502e372088f1ab64fb59e62a5f1e611b, type: 2}
-  - {fileID: 11400000, guid: b21e800852d1ae740851b2fabad64488, type: 2}
-  - {fileID: 11400000, guid: ef9354db963e6f14da1567ac78997eda, type: 2}
-  - {fileID: 11400000, guid: 83d79640cf4c38347a3aad6aeea6d6cd, type: 2}
-  - {fileID: 11400000, guid: ac050a1c51b0f9549beed7ee7f3305d1, type: 2}
-  - {fileID: 11400000, guid: fb378a5dba5f3cb4c9b5342756da2172, type: 2}
-  - {fileID: 11400000, guid: 15688e735c5a566418bc6b8373e85b84, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1617650181
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8366e98e60d0dc74db26acd77550db75, type: 3}
-  m_Name: projectileTestWeapon
+  m_Name: 204SSS
   m_EditorClassIdentifier: 
   itemName: 
-  icon: {fileID: 21300000, guid: 1790ce9edcb0c0749abe9c8e9b6a95f0, type: 3}
+  icon: {fileID: 21300000, guid: 055ae758da338ac46addc6010482607e, type: 3}
   itemType: 2
   rarity: 0
   description: 
   weaponType: 1
-  weaponSprite: {fileID: 21300000, guid: 1790ce9edcb0c0749abe9c8e9b6a95f0, type: 3}
+  weaponSprite: {fileID: 21300000, guid: 055ae758da338ac46addc6010482607e, type: 3}
   mainRotationOffsetZ: 113
   subRotationOffsetZ: 0
   mainSkill: {fileID: 11400000, guid: c1db8f33edab14248b1d0e2262fd85e3, type: 2}
   subSkill: {fileID: 11400000, guid: 17e7854a96aaa52438cb9c4cb3169678, type: 2}
-  tags: []
+  tags:
+  - test
