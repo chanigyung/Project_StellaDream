@@ -88,7 +88,9 @@ public class HomingProjectile : Projectile
                 TryAcquireInitialTarget();
             }
 
-            return;
+            // 변경: 직진 중이라도 가까운 적을 찾으면 즉시 추적 단계로 넘어감
+            if (target == null)
+                return;
         }
 
         // 2) 타겟 탐색
@@ -193,7 +195,7 @@ public class HomingProjectile : Projectile
             enemyLayer
         );
 
-        // 1️⃣ 아직 안 맞은 대상 우선
+        // 아직 안 맞은 대상 우선
         Transform next = PickNextTarget(candidates, true);
         if (next != null)
         {
@@ -201,7 +203,7 @@ public class HomingProjectile : Projectile
             return;
         }
 
-        // 2️⃣ 전부 한 번씩 맞췄으면 순환
+        // 전부 한 번씩 맞췄으면 순환
         if (candidates.Count > 0)
         {
             hitTargetSet.Clear();
