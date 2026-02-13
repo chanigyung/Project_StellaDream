@@ -16,6 +16,8 @@ public class SkillExecutor : MonoBehaviour
     {
         if (skillInstance == null) return false;
 
+        if (skillInstance.skillLock) return false;
+
         if (activeSkill != null &&
             activeSkill != skillInstance &&
             !skillInstance.data.ignoreCastLock)
@@ -95,6 +97,12 @@ public class SkillExecutor : MonoBehaviour
         if (!heldSkill.Contains(skillInstance)) return;
 
         heldSkill.Remove(skillInstance);
+
+        if (skillInstance.spawnedHitbox != null)
+        {
+            Destroy(skillInstance.spawnedHitbox);
+            skillInstance.spawnedHitbox = null;
+        }
 
         // 종료 순간에만 후딜 처리
         StartCoroutine(heldSkillPostDelay(skillInstance, direction));

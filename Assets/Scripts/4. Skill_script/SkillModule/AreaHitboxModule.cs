@@ -11,7 +11,11 @@ public class AreaHitboxModule : SkillModuleBase
 
     public override void OnExecute(GameObject attacker, Vector2 direction)
     {
-        // [추가] Area 히트박스 스폰
+        if (owner.data.activationType == SkillActivationType.WhileHeld)
+            {
+                if (owner.spawnedHitbox != null) return;
+            }
+
         SkillUtils.SpawnAreaHitbox(attacker, owner, direction, data);
     }
 }

@@ -86,8 +86,12 @@ public static class SkillUtils
 
         GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
 
-        if (skill.data.attachToSpawnPoint && spawnPoint != null)
-            hitboxObj.transform.SetParent(spawnPoint, true);
+    //     bool isHeldFollow =
+    //     skill.data.activationType == SkillActivationType.WhileHeld &&
+    //     (data.followWhileHeld || data.rotateWhileHeld);
+
+    // if (!isHeldFollow && skill.data.attachToSpawnPoint && spawnPoint != null)
+    //     hitboxObj.transform.SetParent(spawnPoint, true);
 
         if (hitboxObj.TryGetComponent(out BoxCollider2D col))
         {
@@ -98,7 +102,7 @@ public static class SkillUtils
 
         if (hitboxObj.TryGetComponent(out AreaHitbox area))
         {
-            area.Initialize(attacker, skill, data.tickInterval, data.duration);
+            area.Initialize(attacker, skill, data.tickInterval, data.duration, data.followWhileHeld, data.rotateWhileHeld);
         }
 
         skill.spawnedHitbox = hitboxObj;

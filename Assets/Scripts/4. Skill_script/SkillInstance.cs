@@ -23,6 +23,11 @@ public class SkillInstance
     // 모듈 인스턴스들
     private readonly List<ISkillModule> modules = new();
 
+    // 스킬 잠금(선딜레이 등)
+    public bool skillLock;
+    // 스킬이 사용하는 오브젝트(히트박스, 투사체), 추후 사용할지 여부 결정
+    // private readonly List<GameObject> skillObjectList = new();
+
     public SkillInstance(SkillData data)
     {
         this.data = data;

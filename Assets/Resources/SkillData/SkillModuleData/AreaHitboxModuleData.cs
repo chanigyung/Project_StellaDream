@@ -13,6 +13,10 @@ public class AreaHitboxModuleData : SkillModuleData
     [Header("Damage")]
     public float tickInterval = 0.5f;
 
+    [Header("회전 옵션")]
+    public bool followWhileHeld = false;
+    public bool rotateWhileHeld = false;
+
     public override ISkillModule CreateModule(SkillInstance owner)
     {
         return new AreaHitboxModule(owner, this);
