@@ -102,7 +102,7 @@ public static class SkillUtils
 
         if (hitboxObj.TryGetComponent(out AreaHitbox area))
         {
-            area.Initialize(attacker, skill, data.tickInterval, data.duration, data.followWhileHeld, data.rotateWhileHeld);
+            area.Initialize(attacker, skill, data.tickInterval, data.duration, data.followWhileHeld, data.rotateWhileHeld, data.hitboxAnimator);
         }
 
         skill.spawnedHitbox = hitboxObj;

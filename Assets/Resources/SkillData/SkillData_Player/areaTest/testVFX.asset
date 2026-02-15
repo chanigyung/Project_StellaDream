@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: testVFX
   m_EditorClassIdentifier: 
   vfxEntryList:
-  - hook: 4
-    anchor: 0
-    prefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
-    animator: {fileID: 9100000, guid: 3c71ed0ffd2f5b040aff1080fc3386cd, type: 2}
+  - hook: 1
+    anchor: 2
+    prefab: {fileID: 0}
+    animator: {fileID: 0}
     useDirection: 0
     trigger: 

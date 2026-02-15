@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: testHitbox_area
   m_EditorClassIdentifier: 
   hitboxPrefab: {fileID: 2216451094903520163, guid: c2693b7d54a4b244a964af1b22959d9c, type: 3}
-  size: {x: 6, y: 1}
+  size: {x: 3, y: 1}
   duration: 0
   tickInterval: 0.1
   followWhileHeld: 1
   rotateWhileHeld: 1
+  hitboxAnimator: {fileID: 9100000, guid: b791b57a825be4942a764a31a928b2b8, type: 2}

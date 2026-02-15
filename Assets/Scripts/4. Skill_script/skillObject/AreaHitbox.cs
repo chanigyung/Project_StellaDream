@@ -15,11 +15,14 @@ public class AreaHitbox : MonoBehaviour
 
     private bool followWhileHeld;
     private bool rotateWhileHeld;
-    // [추가] duration <= 0 무한 유지 지원 + Invoke 취소/중복 방지용
-    private bool hasExpireTimer;
+    // duration <= 0 무한 유지 지원 + Invoke 취소/중복 방지용
+    // private bool hasExpireTimer;
+
+    //히트박스 이미지 렌더러
+    [SerializeField] private Animator hitboxAnimator;
 
     public void Initialize(GameObject attacker, SkillInstance skill, float tickInterval, float duration,
-         bool followWhileHeld, bool rotateWhileHeld)
+         bool followWhileHeld, bool rotateWhileHeld, RuntimeAnimatorController hitboxAnimation)
     {
         this.attacker = attacker;
         this.skill = skill;
@@ -30,15 +33,21 @@ public class AreaHitbox : MonoBehaviour
 
         initialized = true;
 
+        if (hitboxAnimator != null && hitboxAnimation != null)
+        {
+            hitboxAnimator.runtimeAnimatorController = hitboxAnimation;
+            hitboxAnimator.enabled = true;
+        }
+
         if (duration > 0f)
         {
-            hasExpireTimer = true;
+            // hasExpireTimer = true;
             Invoke(nameof(Expire), duration);
         }
-        else
-        {
-            hasExpireTimer = false;
-        }
+        // else
+        // {
+        //     hasExpireTimer = false;
+        // }
     }
 
     private void Update()
