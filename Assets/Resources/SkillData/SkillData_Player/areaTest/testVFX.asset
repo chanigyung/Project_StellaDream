@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: testVFX
   m_EditorClassIdentifier: 
   vfxEntryList:
-  - hook: 1
+  - hook: 4
     anchor: 2
-    prefab: {fileID: 0}
-    animator: {fileID: 0}
+    spawnPointType: 1
+    prefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
+    animator: {fileID: 9100000, guid: b838f95ee034ed24d810858b054dbe28, type: 2}
+    useDirection: 0
+    trigger: 
+  - hook: 4
+    anchor: 2
+    spawnPointType: 2
+    prefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
+    animator: {fileID: 9100000, guid: a55c1846b34d26d48900799b81c26c74, type: 2}
     useDirection: 0
     trigger: 

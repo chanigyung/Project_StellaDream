@@ -22,7 +22,6 @@ MonoBehaviour:
   activationType: 2
   spawnPointType: 1
   spawnOffset: {x: 1.5, y: 0}
-  attachToSpawnPoint: 0
   statusEffects: []
   rotateSkill: 1
   flipSpriteY: 1

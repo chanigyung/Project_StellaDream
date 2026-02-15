@@ -59,7 +59,7 @@ public class AreaHitbox : MonoBehaviour
         (followWhileHeld || rotateWhileHeld))
         {
             Vector2 dir = GetMouseDirFromAttacker();
-            SkillUtils.CalculateSpawnTransform(attacker, skill, dir, out var pos, out var rot, out _);
+            SkillUtils.CalculateSpawnTransform(attacker, skill, dir, skill.data.spawnPointType, out var pos, out var rot, out _);
 
             if (followWhileHeld)
                 transform.position = pos;

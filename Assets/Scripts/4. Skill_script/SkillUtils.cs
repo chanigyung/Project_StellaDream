@@ -40,12 +40,9 @@ public static class SkillUtils
     //히트박스 생성(근접)
     public static void SpawnHitbox(GameObject attacker, SkillInstance skill, Vector2 direction, HitboxModuleData data)
     {
-        CalculateSpawnTransform(attacker,skill,direction, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType, out var pos, out var rot, out var spawnPoint);
 
         GameObject hitbox = Object.Instantiate(data.hitboxPrefab,pos,Quaternion.identity);
-
-        if (skill.data.attachToSpawnPoint)
-            hitbox.transform.SetParent(spawnPoint, true);
 
         if (hitbox.TryGetComponent(out BoxCollider2D box))
         {
@@ -66,7 +63,7 @@ public static class SkillUtils
     //투사체 생성(원거리)
     public static void SpawnProjectile(GameObject attacker, SkillInstance skill, Vector2 direction, ProjectileModuleData data)
     {
-        CalculateSpawnTransform(attacker,skill,direction, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType, out var pos, out var rot, out var spawnPoint);
 
         GameObject projectile = Object.Instantiate(data.projectilePrefab, pos, Quaternion.identity);
 
@@ -82,16 +79,9 @@ public static class SkillUtils
     //장판스킬 히트박스 생성
     public static void SpawnAreaHitbox( GameObject attacker, SkillInstance skill, Vector2 direction, AreaHitboxModuleData data)
     {
-        CalculateSpawnTransform(attacker, skill, direction, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, out var pos, out var rot, out var spawnPoint);
 
         GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
-
-    //     bool isHeldFollow =
-    //     skill.data.activationType == SkillActivationType.WhileHeld &&
-    //     (data.followWhileHeld || data.rotateWhileHeld);
-
-    // if (!isHeldFollow && skill.data.attachToSpawnPoint && spawnPoint != null)
-    //     hitboxObj.transform.SetParent(spawnPoint, true);
 
         if (hitboxObj.TryGetComponent(out BoxCollider2D col))
         {
@@ -109,7 +99,7 @@ public static class SkillUtils
     }
 
     //스킬 소환되는 좌표 계산
-    public static Transform GetSpawnPoint(GameObject spawnOwner, SkillInstance skill)
+    public static Transform GetSpawnPoint(GameObject spawnOwner, SkillSpawnPointType type)
     {
         if (spawnOwner == null)
             return null;
@@ -120,21 +110,18 @@ public static class SkillUtils
             return spawnOwner.transform; // fallback
         }
 
-        return spawnPoint.GetPoint(skill.data.spawnPointType);
+        return spawnPoint.GetPoint(type);
     }
 
     // VFX 실행
     public static GameObject SpawnVFX(GameObject spawnOwner, SkillInstance skill, Vector2 direction,
-        GameObject prefab, RuntimeAnimatorController animator, string trigger)
+        GameObject prefab, RuntimeAnimatorController animator, string trigger, SkillSpawnPointType spawnPointType)
     {
         if (prefab == null) return null;
 
-        CalculateSpawnTransform(spawnOwner, skill, direction, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(spawnOwner, skill, direction, spawnPointType, out var pos, out var rot, out var spawnPoint);
 
         GameObject vfx = Object.Instantiate(prefab, pos, rot);
-
-        if (skill.data.attachToSpawnPoint && spawnPoint != null)
-            vfx.transform.SetParent(spawnPoint, true);
 
         if (skill.RotateEffect && direction.x < 0f && skill.FlipSpriteY)
         {
@@ -155,10 +142,10 @@ public static class SkillUtils
     }
 
     // 스킬orVFX 스폰 위치 및 방향 계산
-    public static void CalculateSpawnTransform(GameObject spawnOwner,SkillInstance skill,
-        Vector2 direction, out Vector3 position, out Quaternion rotation, out Transform spawnPoint)
+    public static void CalculateSpawnTransform(GameObject spawnOwner,SkillInstance skill, Vector2 direction,
+        SkillSpawnPointType spawnPointType, out Vector3 position, out Quaternion rotation, out Transform spawnPoint)
     {
-        spawnPoint = GetSpawnPoint(spawnOwner, skill);
+        spawnPoint = GetSpawnPoint(spawnOwner, spawnPointType);
         if (spawnPoint == null)
         {
             position = Vector3.zero;

@@ -70,7 +70,7 @@ public class VFXModule : SkillModuleBase
             Vector2 dir = ResolveVFXDirection(entry.useDirection, ctx);
 
             SkillUtils.SpawnVFX(spawnOwner, owner, dir, entry.prefab, 
-                entry.animator, entry.trigger);
+                entry.animator, entry.trigger, entry.spawnPointType);
         }
     }
 
