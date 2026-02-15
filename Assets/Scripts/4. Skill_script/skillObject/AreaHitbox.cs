@@ -5,9 +5,14 @@ public class AreaHitbox : MonoBehaviour
 {
     private GameObject attacker;
     private SkillInstance skill;
+    private AreaHitboxModuleData data; 
+
+    private SkillSpawnPointType spawnPointType;
+    private Vector2 spawnOffset;
 
     private float tickInterval;
     private float tickTimer;
+    private float duration;
 
     private readonly HashSet<GameObject> targetSet = new();
 
@@ -21,33 +26,32 @@ public class AreaHitbox : MonoBehaviour
     //히트박스 이미지 렌더러
     [SerializeField] private Animator hitboxAnimator;
 
-    public void Initialize(GameObject attacker, SkillInstance skill, float tickInterval, float duration,
-         bool followWhileHeld, bool rotateWhileHeld, RuntimeAnimatorController hitboxAnimation)
+    public void Initialize(GameObject attacker, SkillInstance skill, AreaHitboxModuleData data)
     {
         this.attacker = attacker;
         this.skill = skill;
-        this.tickInterval = Mathf.Max(0.01f, tickInterval);
+        this.data = data;
 
-        this.followWhileHeld = followWhileHeld;
-        this.rotateWhileHeld = rotateWhileHeld;
+        spawnPointType = skill.data.spawnPointType;
+        spawnOffset = data.spawnOffset;
 
         initialized = true;
 
-        if (hitboxAnimator != null && hitboxAnimation != null)
+        tickInterval = Mathf.Max(0.01f, data.tickInterval);
+        duration = data.duration;
+        followWhileHeld = data.followWhileHeld;
+        rotateWhileHeld = data.rotateWhileHeld;
+
+        if (hitboxAnimator != null && data.hitboxAnimator != null)
         {
-            hitboxAnimator.runtimeAnimatorController = hitboxAnimation;
+            hitboxAnimator.runtimeAnimatorController = data.hitboxAnimator;
             hitboxAnimator.enabled = true;
         }
 
         if (duration > 0f)
         {
-            // hasExpireTimer = true;
             Invoke(nameof(Expire), duration);
         }
-        // else
-        // {
-        //     hasExpireTimer = false;
-        // }
     }
 
     private void Update()
@@ -59,7 +63,7 @@ public class AreaHitbox : MonoBehaviour
         (followWhileHeld || rotateWhileHeld))
         {
             Vector2 dir = GetMouseDirFromAttacker();
-            SkillUtils.CalculateSpawnTransform(attacker, skill, dir, skill.data.spawnPointType, out var pos, out var rot, out _);
+            SkillUtils.CalculateSpawnTransform(attacker, skill, dir, spawnPointType, spawnOffset, out var pos, out var rot, out _);
 
             if (followWhileHeld)
                 transform.position = pos;

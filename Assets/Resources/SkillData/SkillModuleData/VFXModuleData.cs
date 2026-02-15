@@ -8,13 +8,14 @@ public enum VFXAnchor { Caster, Target, SourceObject, }
 [System.Serializable]
 public class VFXEntry
 {
+    [Header("프리팹")]
+    public GameObject prefab;
+
     [Header("이펙트 출력 관련")]
     public VFXHook hook;
     public VFXAnchor anchor;
     public SkillSpawnPointType spawnPointType = SkillSpawnPointType.Center;
-
-    [Header("프리팹")]
-    public GameObject prefab;
+    public Vector2 spawnOffset = Vector2.zero;
 
     [Header("애니메이터")]
     public RuntimeAnimatorController animator;

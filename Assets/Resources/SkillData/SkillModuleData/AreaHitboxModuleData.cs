@@ -6,8 +6,9 @@ public class AreaHitboxModuleData : SkillModuleData
     [Header("Prefab")]
     public GameObject hitboxPrefab;
 
-    [Header("Area Stats")]
+    [Header("히트박스 속성")]
     public Vector2 size = new Vector2(2f, 2f);
+    public Vector2 spawnOffset = Vector2.zero;
     public float duration = 2f;
 
     [Header("데미지 주기")]

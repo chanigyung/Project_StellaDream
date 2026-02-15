@@ -40,9 +40,10 @@ public static class SkillUtils
     //히트박스 생성(근접)
     public static void SpawnHitbox(GameObject attacker, SkillInstance skill, Vector2 direction, HitboxModuleData data)
     {
-        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType, out var pos, out var rot, out var spawnPoint);
+        Vector2 offset = data.spawnOffset;
+        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
-        GameObject hitbox = Object.Instantiate(data.hitboxPrefab,pos,Quaternion.identity);
+        GameObject hitbox = Object.Instantiate(data.hitboxPrefab, pos, Quaternion.identity);
 
         if (hitbox.TryGetComponent(out BoxCollider2D box))
         {
@@ -63,7 +64,8 @@ public static class SkillUtils
     //투사체 생성(원거리)
     public static void SpawnProjectile(GameObject attacker, SkillInstance skill, Vector2 direction, ProjectileModuleData data)
     {
-        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType, out var pos, out var rot, out var spawnPoint);
+        Vector2 offset = data.spawnOffset;
+        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType,offset, out var pos, out var rot, out var spawnPoint);
 
         GameObject projectile = Object.Instantiate(data.projectilePrefab, pos, Quaternion.identity);
 
@@ -79,7 +81,8 @@ public static class SkillUtils
     //장판스킬 히트박스 생성
     public static void SpawnAreaHitbox( GameObject attacker, SkillInstance skill, Vector2 direction, AreaHitboxModuleData data)
     {
-        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, out var pos, out var rot, out var spawnPoint);
+        Vector2 offset = data.spawnOffset;
+        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
         GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
 
@@ -92,7 +95,7 @@ public static class SkillUtils
 
         if (hitboxObj.TryGetComponent(out AreaHitbox area))
         {
-            area.Initialize(attacker, skill, data.tickInterval, data.duration, data.followWhileHeld, data.rotateWhileHeld, data.hitboxAnimator);
+            area.Initialize(attacker, skill, data);
         }
 
         skill.spawnedHitbox = hitboxObj;
@@ -114,14 +117,13 @@ public static class SkillUtils
     }
 
     // VFX 실행
-    public static GameObject SpawnVFX(GameObject spawnOwner, SkillInstance skill, Vector2 direction,
-        GameObject prefab, RuntimeAnimatorController animator, string trigger, SkillSpawnPointType spawnPointType)
+    public static GameObject SpawnVFX(GameObject spawnOwner, SkillInstance skill, Vector2 direction, VFXEntry entry)
     {
-        if (prefab == null) return null;
+        if (entry == null || entry.prefab == null) return null;
 
-        CalculateSpawnTransform(spawnOwner, skill, direction, spawnPointType, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(spawnOwner, skill, direction, entry.spawnPointType, entry.spawnOffset, out var pos, out var rot, out var spawnPoint);
 
-        GameObject vfx = Object.Instantiate(prefab, pos, rot);
+        GameObject vfx = Object.Instantiate(entry.prefab, pos, rot);
 
         if (skill.RotateEffect && direction.x < 0f && skill.FlipSpriteY)
         {
@@ -130,12 +132,12 @@ public static class SkillUtils
             vfx.transform.localScale = scale;
         }
 
-        if (animator != null && vfx.TryGetComponent(out Animator anim))
+        if (entry.animator != null && vfx.TryGetComponent(out Animator anim))
         {
-            anim.runtimeAnimatorController = animator;
+            anim.runtimeAnimatorController = entry.animator;
 
-            if (!string.IsNullOrEmpty(trigger))
-                anim.SetTrigger(trigger);
+            if (!string.IsNullOrEmpty(entry.trigger))
+                anim.SetTrigger(entry.trigger);
         }
 
         return vfx;
@@ -143,7 +145,7 @@ public static class SkillUtils
 
     // 스킬orVFX 스폰 위치 및 방향 계산
     public static void CalculateSpawnTransform(GameObject spawnOwner,SkillInstance skill, Vector2 direction,
-        SkillSpawnPointType spawnPointType, out Vector3 position, out Quaternion rotation, out Transform spawnPoint)
+        SkillSpawnPointType spawnPointType, Vector2 offset, out Vector3 position, out Quaternion rotation, out Transform spawnPoint)
     {
         spawnPoint = GetSpawnPoint(spawnOwner, spawnPointType);
         if (spawnPoint == null)
@@ -155,7 +157,6 @@ public static class SkillUtils
 
         Vector2 dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
 
-        Vector2 offset = skill.spawnOffset;
         Vector2 perp = new Vector2(-dir.y, dir.x);
 
         Vector3 worldOffset = (Vector3)(dir * offset.x + perp * offset.y);

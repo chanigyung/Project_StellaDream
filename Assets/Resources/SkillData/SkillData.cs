@@ -21,7 +21,6 @@ public class SkillData : ScriptableObject
 
     [Header("스킬 위치 설정")]
     public SkillSpawnPointType spawnPointType = SkillSpawnPointType.Center; //스킬 소환 지점
-    public Vector2 spawnOffset = Vector2.zero;
 
     [Header("스킬 상태이상")]
     [UnityEngine.SerializeReference] public List<StatusEffectInfo> statusEffects;

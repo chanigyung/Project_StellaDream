@@ -33,7 +33,6 @@ public class SkillInstance
         this.data = data;
 
         cooldown = data.cooldown;
-        spawnOffset = data.spawnOffset;
         delay = data.delay;
         postDelay = data.postDelay;
 
