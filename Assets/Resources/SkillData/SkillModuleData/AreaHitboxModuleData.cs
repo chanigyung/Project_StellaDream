@@ -21,6 +21,9 @@ public class AreaHitboxModuleData : SkillModuleData
     [Header("히트박스 이펙트")]
     public RuntimeAnimatorController hitboxAnimator;
 
+    public RuntimeAnimatorController startEndAnimator; // 출발 지점 이펙트(왼쪽 끝)
+    public RuntimeAnimatorController endEndAnimator; // 도착 지점 이펙트(오른쪽 끝)
+
     public override ISkillModule CreateModule(SkillInstance owner)
     {
         return new AreaHitboxModule(owner, this);

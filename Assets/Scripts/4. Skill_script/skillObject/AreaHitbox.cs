@@ -25,6 +25,9 @@ public class AreaHitbox : MonoBehaviour
 
     //히트박스 이미지 렌더러
     [SerializeField] private Animator hitboxAnimator;
+    [SerializeField] private Animator startEndAnimator;
+    [SerializeField] private Animator endEndAnimator;
+    private bool endAnchorsInitialized; // 시작, 끝 지점 중 하나 있으면 true
 
     public void Initialize(GameObject attacker, SkillInstance skill, AreaHitboxModuleData data)
     {
@@ -46,6 +49,20 @@ public class AreaHitbox : MonoBehaviour
         {
             hitboxAnimator.runtimeAnimatorController = data.hitboxAnimator;
             hitboxAnimator.enabled = true;
+        }
+
+        ApplyOptionalAnimator(startEndAnimator, data.startEndAnimator);
+        ApplyOptionalAnimator(endEndAnimator, data.endEndAnimator);
+
+        // 시작 지점 있으면 애니메이션 앵커 이동
+        if (startEndAnimator != null)
+        {
+            if (!TryGetComponent(out BoxCollider2D col)) return;
+
+            float halfX = col.size.x * 0.5f;
+
+            startEndAnimator.transform.localPosition = new Vector3(-halfX, 0f, 0f);
+            endEndAnimator.transform.localPosition   = new Vector3( halfX, 0f, 0f);
         }
 
         if (duration > 0f)
@@ -79,23 +96,12 @@ public class AreaHitbox : MonoBehaviour
         Tick();
     }
 
-    private Vector2 GetMouseDirFromAttacker()
-    {
-        if (attacker == null || Camera.main == null) return Vector2.right;
-
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 dir = (Vector2)(mouseWorld - attacker.transform.position);
-
-        return dir.sqrMagnitude > 0.0001f ? dir.normalized : Vector2.right;
-    }
-
     private void Tick()
     {
         skill.OnTick(attacker, null, gameObject); // [변경/추가]
 
         if (targetSet.Count == 0) return;
 
-        // [유지] null 정리용
         List<GameObject> removeList = null;
 
         foreach (var target in targetSet)
@@ -148,5 +154,30 @@ public class AreaHitbox : MonoBehaviour
         if (damageable.gameObject == attacker) return;
 
         targetSet.Remove(damageable.gameObject);
+    }
+
+    private Vector2 GetMouseDirFromAttacker()
+    {
+        if (attacker == null || Camera.main == null) return Vector2.right;
+
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 dir = (Vector2)(mouseWorld - attacker.transform.position);
+
+        return dir.sqrMagnitude > 0.0001f ? dir.normalized : Vector2.right;
+    }
+
+    // 레이저 스킬일 경우 시작지점/끝지점 이펙트 불여주기
+    private void ApplyOptionalAnimator(Animator anim, RuntimeAnimatorController controller)
+    {
+        if (anim == null) return;
+
+        if (controller == null)
+        {
+            anim.enabled = false;
+            return;
+        }
+
+        anim.runtimeAnimatorController = controller;
+        anim.enabled = true;
     }
 }
