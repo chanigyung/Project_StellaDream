@@ -22,9 +22,6 @@ public class VFXEntry
 
     [Header("방향")]
     public bool useDirection;
-
-    [Header("트리거")]
-    public string trigger;
 }
 
 [CreateAssetMenu(menuName = "SkillModule/VFX")]

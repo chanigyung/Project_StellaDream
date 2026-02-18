@@ -31,6 +31,6 @@ public class CharacterSelectUI : MonoBehaviour
         if (selectedData == null) return;
 
         GameController.Instance.SetMainPlayer(selectedData);
-        GameController.Instance.RequestSceneLoad("SampleScene");
+        GameController.Instance.RequestSceneLoad("Home");
     }
 }

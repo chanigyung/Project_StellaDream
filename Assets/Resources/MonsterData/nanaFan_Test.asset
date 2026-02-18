@@ -23,9 +23,9 @@ MonoBehaviour:
   knockbackResistance: 0
   skillList:
   - maxRange: 1.5
-    skillData: {fileID: 11400000, guid: 231365cc7acae9d44b3ccd2c7795151d, type: 2}
+    skillData: {fileID: 0}
   - maxRange: 5
-    skillData: {fileID: 11400000, guid: 9a635c1a231b01f4299256772650eaed, type: 2}
+    skillData: {fileID: 0}
   deathAnimator: {fileID: 9100000, guid: 23218138995d0d4468d7dc4cc18776ae, type: 2}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
   tags:

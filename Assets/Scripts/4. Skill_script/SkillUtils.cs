@@ -135,9 +135,6 @@ public static class SkillUtils
         if (entry.animator != null && vfx.TryGetComponent(out Animator anim))
         {
             anim.runtimeAnimatorController = entry.animator;
-
-            if (!string.IsNullOrEmpty(entry.trigger))
-                anim.SetTrigger(entry.trigger);
         }
 
         return vfx;
