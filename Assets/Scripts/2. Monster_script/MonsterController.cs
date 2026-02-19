@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -34,12 +35,53 @@ public class MonsterController : UnitController
         }
 
         //의사결정 트리와 추적 로직에 context연결
-        GetComponent<MonsterDecisionMaker>()?.Initialize(context);
+        var decisionMaker = GetComponent<MonsterDecisionMaker>();
+        decisionMaker?.Initialize(context);
+
         GetComponentInChildren<MonsterTraceHandler>()?.Initialize(context);
 
-        (instance as MonsterInstance)?.InitializeBehavior(GetComponent<MonsterDecisionMaker>());
+        BuildActions(decisionMaker);
 
         deathHandler?.InitFromData(context.instance.data);
+    }
+
+    // MonsterData.actionTypes 기반으로 액션 조립 후 DecisionMaker에 주입
+    private void BuildActions(MonsterDecisionMaker decisionMaker)
+    {
+        if (decisionMaker == null || context == null || context.instance == null || context.instance.data == null)
+            return;
+
+        List<IMonsterAction> actionList = new();
+
+        // MonsterData에 actionTypes가 비어있으면 안전 기본값 적용
+        if (context.instance.data.actionTypes == null || context.instance.data.actionTypes.Count == 0)
+        {
+            actionList.Add(new TraceAction());
+            actionList.Add(new WanderAction());
+            decisionMaker.SetActions(actionList);
+            return;
+        }
+
+        foreach (var type in context.instance.data.actionTypes)
+        {
+            IMonsterAction action = CreateAction(type);
+            if (action != null)
+                actionList.Add(action);
+        }
+
+        decisionMaker.SetActions(actionList);
+    }
+
+    // ActionType -> IMonsterAction 생성
+    private IMonsterAction CreateAction(ActionType type)
+    {
+        return type switch
+        {
+            ActionType.Trace => new TraceAction(),
+            ActionType.Wander => new WanderAction(),
+            // ActionType.Attack => new AttackAction(), // AttackAction 단계에서 연결 예정
+            _ => null,
+        };
     }
 
     public override void TakeDamage(float damage)

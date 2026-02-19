@@ -3,35 +3,35 @@ using UnityEngine;
 public class MonsterTraceHandler : MonoBehaviour
 {
     [Header("Detection")]
-    [SerializeField] private LayerMask candidateLayers;     // [변경] Player + Monster 포함
+    [SerializeField] private LayerMask candidateLayers;
     [SerializeField] private float detectRadius = 6f;       // 탐지 시작 범위
     [SerializeField] private float loseRadius = 8f;         // 추적 유지(해제) 범위
-    [SerializeField] private float pollInterval = 0.1f;     // [추가] 폴링 주기(초)
+    [SerializeField] private float pollInterval = 0.1f;     // 폴링 주기(초)
 
     [Header("Trace")]
-    [SerializeField] private float traceReleaseDelay = 1f;  // 이탈 후 추적 해제 대기(요구사항: 1초)
+    [SerializeField] private float traceReleaseDelay = 1f;  // 이탈 후 추적 해제 대기
     [SerializeField] private float tracingSpeedMultiplier = 1.5f;
-    [SerializeField] private float pendingSpeedMultiplier = 1f; // 요구사항: 해제 대기 중엔 원래 속도로 계속 따라감
+    [SerializeField] private float pendingSpeedMultiplier = 1f; // 해제 대기 중엔 원래 속도로 계속 따라감
 
     [Header("Buffer")]
     [SerializeField] private int overlapBufferSize = 24;
 
     private MonsterContext context;
 
-    // [추가] 폴링 타이머
+    // 폴링 타이머
     private float pollTimer = 0f;
 
-    // [추가] Overlap 결과 버퍼(NonAlloc)
+    // Overlap 결과 버퍼(NonAlloc)
     private Collider2D[] overlapBuffer;
 
     public void Initialize(MonsterContext ctx)
     {
         context = ctx;
 
-        // [추가] 버퍼 준비
+        // 버퍼 준비
         overlapBuffer = new Collider2D[Mathf.Max(4, overlapBufferSize)];
 
-        // [추가] 시작하자마자 1회 검사하고 싶으면 0으로, 아니면 pollInterval로 둬도 됨
+        // 시작하자마자 1회 검사하고 싶으면 0으로, 아니면 pollInterval로 둬도 됨
         pollTimer = 0f;
     }
 
@@ -39,7 +39,7 @@ public class MonsterTraceHandler : MonoBehaviour
     {
         if (context == null) return;
 
-        // [추가] 폴링 주기마다 감지/타겟 평가
+        // 폴링 주기마다 감지/타겟 평가
         pollTimer -= Time.deltaTime;
         if (pollTimer <= 0f)
         {
@@ -47,7 +47,7 @@ public class MonsterTraceHandler : MonoBehaviour
             EvaluateDetectionAndTarget();
         }
 
-        // [기존 개념 유지] 추적 해제 대기 타이머 처리
+        // 추적 해제 대기 타이머 처리
         if (context.isTraceReleasedPending)
         {
             context.traceReleaseTimer -= Time.deltaTime;
@@ -61,7 +61,7 @@ public class MonsterTraceHandler : MonoBehaviour
     {
         if (!context.isTracing)
         {
-            // [변경] 공격받을 때도 타겟을 잡아주기 위해 평가 1회
+            // 공격받을 때도 타겟을 잡아주기 위해 평가 1회
             EvaluateDetectionAndTarget();
 
             // 혹시 주변 후보가 없더라도 기본 플레이어 타겟은 유지
@@ -77,7 +77,7 @@ public class MonsterTraceHandler : MonoBehaviour
         context.instance.selfSpeedMultiplier = tracingSpeedMultiplier;
     }
 
-    // [추가] 상태이상에서 on/off 할 수 있도록 공개 API
+    // 상태이상에서 on/off 할 수 있도록 공개 API
     public void SetRedirectTargetToNearestMonster(bool enabled)
     {
         if (context == null) return;
@@ -130,7 +130,7 @@ public class MonsterTraceHandler : MonoBehaviour
     {
         Vector2 center = context.selfTransform.position;
 
-        // [추가] 추적 중이면 loseRadius로 유지, 아니면 detectRadius로 탐지
+        // 추적 중이면 loseRadius로 유지, 아니면 detectRadius로 탐지
         float radius = context.isTracing ? loseRadius : detectRadius;
 
         int count = Physics2D.OverlapCircleNonAlloc(center, radius, overlapBuffer, candidateLayers);
@@ -174,8 +174,6 @@ public class MonsterTraceHandler : MonoBehaviour
             }
         }
 
-        // 합의한 룰:
-        // 기본은 Player
         // 상태이상(redirect flag)일 때는 "몬스터가 있으면 몬스터", 없으면 Player
         if (context.attackMonster)
             return nearestMonster != null ? nearestMonster : nearestPlayer;
@@ -224,7 +222,7 @@ public class MonsterTraceHandler : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    // [추가] 씬에서 감지 반경 확인용
+    // 씬에서 감지 반경 확인용
     private void OnDrawGizmosSelected()
     {
         if (!Application.isPlaying) return;

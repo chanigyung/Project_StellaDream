@@ -18,6 +18,9 @@ public class MonsterData : ScriptableObject
     public bool knockbackImmune = false;
     public float knockbackResistance = 0f;
 
+    [Header("패턴")]
+    public List<ActionType> actionTypes = new();
+
     public List<MonsterSkillList> skillList;
 
     public RuntimeAnimatorController deathAnimator;

@@ -21,6 +21,7 @@ MonoBehaviour:
   jumpPower: 0
   knockbackImmune: 0
   knockbackResistance: 0
+  actionTypes: 0100000002000000
   skillList:
   - maxRange: 2
     skillData: {fileID: 11400000, guid: c690c6acde6974c49acb818140b0948e, type: 2}

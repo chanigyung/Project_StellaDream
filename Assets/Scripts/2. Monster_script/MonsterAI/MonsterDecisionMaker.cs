@@ -16,6 +16,18 @@ public class MonsterDecisionMaker : MonoBehaviour
         actions.Add(action);
     }
 
+    // 외부에서 액션 리스트를 한 번에 주입하기 위한 함수
+    public void SetActions(List<IMonsterAction> actionList)
+    {
+        actions = actionList ?? new List<IMonsterAction>();
+    }
+
+    // 액션 리스트 초기화
+    public void ClearActions()
+    {
+        actions.Clear();
+    }
+
     void Update()
     {
         context.UpdateContext();
