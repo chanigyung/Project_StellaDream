@@ -21,6 +21,9 @@ public class MonsterContext
     public float traceReleaseTimer = 0f;           // 추적 해제까지 남은 시간
     public bool isCastingSkill = false;
 
+    // 상태이상일때 몬스터 추적용 플래그
+    public bool attackMonster = false;
+
     // === 업데이트 계산 변수 ===
     public Vector2 directionToTarget { get; private set; }
     public float distanceToTarget { get; private set; }

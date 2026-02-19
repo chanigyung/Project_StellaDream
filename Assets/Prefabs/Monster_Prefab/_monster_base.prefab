@@ -139,87 +139,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1729734114861102264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1098514916370791119
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6257504288753668411}
-  - component: {fileID: 5569422209121004889}
-  - component: {fileID: 3225100477767387894}
-  m_Layer: 21
-  m_Name: TraceZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6257504288753668411
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098514916370791119}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1729734114861102264}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5569422209121004889
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098514916370791119}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 4096
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 8
---- !u!114 &3225100477767387894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098514916370791119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e14a4983df057f4468ef47f333aa67b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  traceReleaseDelay: 1
 --- !u!1 &1403194512258924742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,6 +946,7 @@ GameObject:
   - component: {fileID: 7029715973547977330}
   - component: {fileID: 7985708820985115783}
   - component: {fileID: 5694127208388331815}
+  - component: {fileID: 2000835822463926287}
   m_Layer: 12
   m_Name: _monster_base
   m_TagString: Monster
@@ -1050,7 +970,6 @@ Transform:
   - {fileID: 704632068511633736}
   - {fileID: 7298635696147437977}
   - {fileID: 1475110515420491438}
-  - {fileID: 6257504288753668411}
   - {fileID: 6575413785344020660}
   - {fileID: 7112094622704033392}
   - {fileID: 1155088704519306552}
@@ -1293,3 +1212,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7177577, y: 0.8929127}
   m_EdgeRadius: 0
+--- !u!114 &2000835822463926287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14a4983df057f4468ef47f333aa67b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  candidateLayers:
+    serializedVersion: 2
+    m_Bits: 4608
+  detectRadius: 6
+  loseRadius: 8
+  pollInterval: 0.1
+  traceReleaseDelay: 1
+  tracingSpeedMultiplier: 1.5
+  pendingSpeedMultiplier: 1
+  overlapBufferSize: 32
