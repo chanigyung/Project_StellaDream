@@ -37,6 +37,8 @@ public class MonsterController : UnitController
         //의사결정 트리와 추적 로직에 context연결
         var decisionMaker = GetComponent<MonsterDecisionMaker>();
         decisionMaker?.Initialize(context);
+        context.skillAI = GetComponent<MonsterSkillAI>();
+        context.skillAI?.Initialize(context);
 
         GetComponentInChildren<MonsterTraceHandler>()?.Initialize(context);
 
@@ -73,13 +75,13 @@ public class MonsterController : UnitController
     }
 
     // ActionType -> IMonsterAction 생성
-    private IMonsterAction CreateAction(ActionType type)
+    private IMonsterAction CreateAction(MonsterActionType type)
     {
         return type switch
         {
-            ActionType.Trace => new TraceAction(),
-            ActionType.Wander => new WanderAction(),
-            // ActionType.Attack => new AttackAction(), // AttackAction 단계에서 연결 예정
+            MonsterActionType.Trace => new TraceAction(),
+            MonsterActionType.Wander => new WanderAction(),
+            MonsterActionType.Attack => new AttackAction(), // AttackAction 단계에서 연결 예정
             _ => null,
         };
     }

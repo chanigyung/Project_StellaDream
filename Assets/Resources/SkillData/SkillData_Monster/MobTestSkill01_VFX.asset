@@ -17,7 +17,6 @@ MonoBehaviour:
     hook: 1
     anchor: 0
     spawnPointType: 1
-    spawnOffset: {x: 0, y: 0}
+    spawnOffset: {x: 0.5, y: 0}
     animator: {fileID: 9100000, guid: 6931d3c40f2b6da49a147b35be88de98, type: 2}
-    useDirection: 0
-    trigger: 
+    useDirection: 1

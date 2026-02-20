@@ -21,10 +21,10 @@ MonoBehaviour:
   jumpPower: 0
   knockbackImmune: 0
   knockbackResistance: 0
-  actionTypes: 0100000002000000
+  actionTypes: 000000000100000002000000
   skillList:
   - maxRange: 1.5
-    skillData: {fileID: 11400000, guid: 57d48e713b4ce39429da246a125b670c, type: 2}
+    skillData: {fileID: 11400000, guid: 29998b7492338fc4c88bec68c79d6099, type: 2}
   deathAnimator: {fileID: 9100000, guid: fac1f15ba92400b47bae3e07f44880b1, type: 2}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
   tags:

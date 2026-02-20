@@ -23,6 +23,7 @@ public class MonsterContext
 
     // 상태이상일때 몬스터 추적용 플래그
     public bool attackMonster = false;
+    public MonsterSkillAI skillAI;
 
     // === 업데이트 계산 변수 ===
     public Vector2 directionToTarget { get; private set; }

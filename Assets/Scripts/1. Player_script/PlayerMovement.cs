@@ -56,7 +56,11 @@ public class PlayerMovement : MonoBehaviour, IMovementController
 
     void FixedUpdate()
     {
-        if (isRooted || isStunned || isPowerKnockbacked)
+        if (playerController == null) return;
+        if (playerInstance == null)
+            playerInstance = playerController.instance as PlayerInstance;
+
+        if (isRooted || isStunned || isPowerKnockbacked || (playerInstance != null && playerInstance.IsKnockbackActive))
             return;
         
         Move();
@@ -65,6 +69,9 @@ public class PlayerMovement : MonoBehaviour, IMovementController
 
     void Move()
     {
+        if (playerInstance != null && playerInstance.IsKnockbackActive)
+            return;
+        
         float inputX = playerController.moveInput.x;
         float moveSpeed = playerInstance.GetCurrentMoveSpeed();
 

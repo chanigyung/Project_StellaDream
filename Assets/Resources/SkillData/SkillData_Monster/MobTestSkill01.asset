@@ -18,10 +18,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc30af26d5a92ac498f3a3b1c3b72591, type: 2}
   - {fileID: 11400000, guid: 6f88fe50b93ed7749bc224debe1b0fe1, type: 2}
   cooldown: 2
-  delay: 0.5
+  delay: 0.3
   postDelay: 0.5
   activationType: 0
-  spawnPointType: 0
+  spawnPointType: 1
   statusEffects: []
   rotateSkill: 1
   flipSpriteY: 1

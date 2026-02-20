@@ -150,7 +150,6 @@ GameObject:
   - component: {fileID: 1475110515420491438}
   - component: {fileID: 2168568124286636173}
   - component: {fileID: 9139898628550529418}
-  - component: {fileID: 8733420801661053479}
   m_Layer: 13
   m_Name: MonsterBodyAttack
   m_TagString: Untagged
@@ -219,19 +218,6 @@ BoxCollider2D:
   m_Size: {x: 0.78540295, y: 0.89565253}
   m_EdgeRadius: 0
 --- !u!114 &9139898628550529418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1403194512258924742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6e5a29af392fe94eaac686683300bc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 5
---- !u!114 &8733420801661053479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -19,7 +19,7 @@ public class MonsterData : ScriptableObject
     public float knockbackResistance = 0f;
 
     [Header("패턴")]
-    public List<ActionType> actionTypes = new();
+    public List<MonsterActionType> actionTypes = new();
 
     public List<MonsterSkillList> skillList;
 

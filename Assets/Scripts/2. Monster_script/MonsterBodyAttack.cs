@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterBodyAttack : MonoBehaviour
 {
     [SerializeField] private float damage = 5f;
-    private Vector2 knockbackForce = new Vector2(15f, 7f);
+    private Vector2 knockbackForce = new Vector2(5f, 5f);
     private float hitCooldown = 0.8f;
 
     private Dictionary<GameObject, float> lastHitTime = new();

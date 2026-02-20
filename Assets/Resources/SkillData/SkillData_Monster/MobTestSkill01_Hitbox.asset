@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitboxPrefab: {fileID: 2216451094903520163, guid: 5df8fa38e43687c4bab69055f3161c1a, type: 3}
   hitboxSize: {x: 1, y: 1}
-  spawnOffset: {x: 0, y: 0}
+  spawnOffset: {x: 0.5, y: 0}
   lifetime: 0.2

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb88bac64736eb419e9052542fc8568, type: 3}
   m_Name: MobTestSkill01_KB
   m_EditorClassIdentifier: 
-  knockbackX: 10
-  knockbackY: 2
+  knockbackX: 5
+  knockbackY: 5

@@ -17,9 +17,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a1d8c8041b15fa647a170fef19e97996, type: 2}
   cooldown: 3
   delay: 0.3
-  postDelay: 0
+  postDelay: 0.5
   activationType: 0
-  spawnPointType: 0
+  spawnPointType: 1
   statusEffects: []
   rotateSkill: 1
   flipSpriteY: 1

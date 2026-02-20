@@ -21,7 +21,7 @@ public class VFXEntry
     public RuntimeAnimatorController animator;
 
     [Header("방향")]
-    public bool useDirection;
+    public bool useDirection = true;
 }
 
 [CreateAssetMenu(menuName = "SkillModule/VFX")]
