@@ -19,8 +19,11 @@ public static class SkillUtils
         float dir = Mathf.Sign(target.transform.position.x - attacker.transform.position.x);
         Vector2 force = new Vector2(dir * knockbackX, knockbackY);
 
-        rb.velocity = Vector2.zero;
-        rb.AddForce(force, ForceMode2D.Impulse);
+        if (target.TryGetComponent<IKnockbackable>(out var knockbackable))
+        {
+            knockbackable.ApplyKnockback(force);
+            return;
+        }
     }
 
     // 상태이상 적용
