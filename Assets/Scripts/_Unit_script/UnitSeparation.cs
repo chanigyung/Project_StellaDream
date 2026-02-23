@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class UnitSeparation : MonoBehaviour
 {
-    [Header("Target")]
+    [Header("밀어낼 레이어 지정")]
     [SerializeField] private LayerMask unitLayerMask;
 
-    [Header("Separation (Fixed Push)")]
+    [Header("밀어내기 변수")]
     [SerializeField] private float overlapRadius = 0.75f;
     [SerializeField] private float minSeparationX = 0.7f;
     [SerializeField] private float pushSpeed = 3.0f;
     [SerializeField] private float maxSepDeltaXPerFrame = 1.5f;
 
-    [Header("Optional")]
+    [Header("self")]
     [SerializeField] private Rigidbody2D rigid;
 
     // 내부 재사용 버퍼
