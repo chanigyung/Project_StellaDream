@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour, IMovementController
         }
         else
         {
-            //  공중에서는 부드럽게 보간 (자연스러운 공중 제어감 유지)
+            // 공중에서는 부드럽게 보간 (자연스러운 공중 제어감 유지)
             float targetX = inputX * moveSpeed;
             velocity.x = Mathf.Lerp(velocity.x, targetX, 0.1f); // Lerp 비율은 취향에 맞게 조절
         }

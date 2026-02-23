@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
-  m_Name: tabiFan_Test
+  m_Name: 2_lizeFan_Test
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: 289e58d7d433f9a49bffdef356884a33, type: 3}
-  animatorController: {fileID: 9100000, guid: 3c8c06424fd2742438ae6c95432207ba, type: 2}
-  monsterName: "\uBFE1\uB315\uC774"
+  animatorController: {fileID: 9100000, guid: 409362d796789bb4e809ab2bb0b872b6, type: 2}
+  monsterName: "\uD53C\uC5D4\uB098"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1
@@ -25,7 +25,9 @@ MonoBehaviour:
   skillList:
   - maxRange: 1.5
     skillData: {fileID: 11400000, guid: 29998b7492338fc4c88bec68c79d6099, type: 2}
-  deathAnimator: {fileID: 9100000, guid: fe084f28f0959104e9062e78809f6750, type: 2}
+  - maxRange: 5
+    skillData: {fileID: 11400000, guid: 7347fe9fc508c5b4e98173eb0364d781, type: 2}
+  deathAnimator: {fileID: 9100000, guid: f60590bfa933fba4eb467ebd13c6a4f7, type: 2}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
   tags:
   - Class2

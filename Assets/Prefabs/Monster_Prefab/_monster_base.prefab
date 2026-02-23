@@ -933,6 +933,7 @@ GameObject:
   - component: {fileID: 7985708820985115783}
   - component: {fileID: 5694127208388331815}
   - component: {fileID: 2000835822463926287}
+  - component: {fileID: 6638874892228506039}
   m_Layer: 12
   m_Name: _monster_base
   m_TagString: Monster
@@ -1220,3 +1221,23 @@ MonoBehaviour:
   tracingSpeedMultiplier: 1.5
   pendingSpeedMultiplier: 1
   overlapBufferSize: 32
+--- !u!114 &6638874892228506039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a134397a1d08540bfa4df85b88422a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  overlapRadius: 0.75
+  minSeparationX: 0.5
+  pushSpeed: 3
+  maxSepDeltaXPerFrame: 1.5
+  rigid: {fileID: 7985708820985115783}
