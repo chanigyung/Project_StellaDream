@@ -21,6 +21,9 @@ public class MonsterContext
     public float traceReleaseTimer = 0f;           // 추적 해제까지 남은 시간
     public bool isCastingSkill = false;
 
+    // === 센서 관련 변수 ===
+    public bool isGrounded = false;
+
     // 상태이상일때 몬스터 추적용 플래그
     public bool attackMonster = false;
     public MonsterSkillAI skillAI;

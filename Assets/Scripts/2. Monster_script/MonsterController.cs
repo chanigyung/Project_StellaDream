@@ -11,6 +11,8 @@ public class MonsterController : UnitController
     private MonsterContext context;
     public MonsterContext Context => context;
 
+    private MonsterCensor censor; // [ADD] 1단계: grounded 판정 연동
+
     public override void Initialize(IUnitInstance instance)
     {
         base.Initialize(instance);
@@ -27,6 +29,9 @@ public class MonsterController : UnitController
         context.animator = GetComponent<MonsterAnimator>();
         context.instance = instance as MonsterInstance;
 
+        //censor 생성과 캐싱
+        censor = GetComponentInChildren<MonsterCensor>();
+
         //몬스터 애니메이션 설정(데이터 기반)
         var animatorComponent = GetComponentInChildren<Animator>();
         if (animatorComponent != null && context.instance?.data?.animatorController != null)
@@ -39,6 +44,7 @@ public class MonsterController : UnitController
         decisionMaker?.Initialize(context);
         context.skillAI = GetComponent<MonsterSkillAI>();
         context.skillAI?.Initialize(context);
+        censor?.Initialize(context);
 
         GetComponentInChildren<MonsterTraceHandler>()?.Initialize(context);
 

@@ -8,8 +8,12 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
 
     private Rigidbody2D rigid;
 
+    // move 관련 변수
     private float desiredDirX;
     private bool hasMoveInput;
+
+    // jump 관련 변수
+    private bool jumped = false;
 
     private bool isRooted = false;
     private bool isStunned = false;
@@ -91,12 +95,41 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
 
         float newVelX = Mathf.MoveTowards(rigid.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
         rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
+
+        // 점프, 착지시 점프변수 초기화
+        if (context != null && context.isGrounded)
+            jumped = false;
     }
 
+    public bool TryJump()
+    {
+        if (context == null || instance == null)
+            return false;
+
+        // trace 상태에서만 점프(사양)
+        if (!context.isTracing)
+            return false;
+
+        if (!context.isGrounded)
+            return false;
+
+        if (jumped)
+            return false;
+
+        if (isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
+            return false;
+
+        Jump();
+        jumped = true;
+        return true;
+    }
 
     public void Jump()
     {
-        if (instance == null || isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
+        if (rigid == null || instance == null)
+            return;
+
+        if (isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
             return;
 
         float jumpPower = instance.GetCurrentJumpPower();

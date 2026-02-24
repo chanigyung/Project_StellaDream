@@ -18,7 +18,7 @@ MonoBehaviour:
   grade: 0
   maxHealth: 1000
   moveSpeed: 2
-  jumpPower: 0
+  jumpPower: 10
   knockbackImmune: 0
   knockbackResistance: 0
   actionTypes: 000000000100000002000000
