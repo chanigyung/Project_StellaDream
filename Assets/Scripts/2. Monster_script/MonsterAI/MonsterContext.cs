@@ -24,6 +24,8 @@ public class MonsterContext
     // === 센서 관련 변수 ===
     public Transform selfGroundPoint;
     public bool isGrounded = false;
+    public bool hasWallAhead = false;
+    public float facingDirectionX = 1f;
 
     // 상태이상일때 몬스터 추적용 플래그
     public bool attackMonster = false;

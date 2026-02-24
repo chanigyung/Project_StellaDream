@@ -64,6 +64,9 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
         hasMoveInput = true;
         desiredDirX = Mathf.Sign(dirX);
 
+        if (context != null)
+            context.facingDirectionX = desiredDirX;
+
         context.selfTransform.localScale = (desiredDirX < 0f) ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
         context.animator?.PlayMoving(true);
 
@@ -93,8 +96,21 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
             targetVelX = desiredDirX * speed;
         }
 
-        float newVelX = Mathf.MoveTowards(rigid.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
-        rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
+        // float newVelX = Mathf.MoveTowards(rigid.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
+        // rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
+
+        bool grounded = (context != null && context.isGrounded);
+
+        if (grounded)
+        {
+            float newVelX = Mathf.MoveTowards(rigid.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
+            rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
+        }
+        else
+        {
+            float newVelX = Mathf.Lerp(rigid.velocity.x, targetVelX, 0.1f);
+            rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
+        }
 
         // 점프, 착지시 점프변수 초기화
         if (context != null && context.isGrounded)

@@ -16,14 +16,15 @@ public class TraceAction : IMonsterAction
 
         context.movement?.Move(moveDirection);
 
-        UnitController targetUnit = context.target.GetComponent<UnitController>();
-
-        if (targetUnit != null && context.selfGroundPoint != null)
+        if (context.hasWallAhead && context.target != null && context.selfGroundPoint != null)
         {
-            float deltaY = targetUnit.GroundPoint.position.y - context.selfGroundPoint.position.y;
-
-            if (deltaY > JumpTriggerHeight)
-                context.movement?.TryJump();
+            UnitController targetUnit = context.target.GetComponent<UnitController>();
+            if (targetUnit != null)
+            {
+                float deltaY = targetUnit.GroundPoint.position.y - context.selfGroundPoint.position.y;
+                if (deltaY > JumpTriggerHeight)
+                    context.movement?.TryJump();
+            }
         }
     }
 }
