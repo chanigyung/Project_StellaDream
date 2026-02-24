@@ -20,6 +20,7 @@ public class MonsterController : UnitController
         healthUI = GetComponent<MonsterHealthUI>();
         deathHandler = GetComponent<MonsterDeathHandler>();
         animator = GetComponent<MonsterAnimator>();
+        UnitController unit = GetComponent<UnitController>();
 
         //context 생성 및 오브젝트 동기화, 컴포넌트 캐싱
         context = new MonsterContext();
@@ -28,6 +29,7 @@ public class MonsterController : UnitController
         context.movement.Initialize(context);
         context.animator = GetComponent<MonsterAnimator>();
         context.instance = instance as MonsterInstance;
+        context.selfGroundPoint = unit != null ? unit.GroundPoint : transform;
 
         //censor 생성과 캐싱
         censor = GetComponentInChildren<MonsterCensor>();

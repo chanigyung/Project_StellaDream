@@ -12,16 +12,18 @@ public class TraceAction : IMonsterAction
 
     public void Execute(MonsterContext context)
     {
-        if (context.target != null)
-        {
-            float deltaY = context.target.transform.position.y - context.selfTransform.position.y;
-            if (deltaY > JumpTriggerHeight)
-                context.movement?.TryJump();
-        }
-
         Vector3 moveDirection = context.directionToTarget.x < 0 ? Vector3.left : Vector3.right;
 
         context.movement?.Move(moveDirection);
-        // 걷기/추적 애니메이션은 MonsterMovement.Move() 내부에서 처리
+
+        UnitController targetUnit = context.target.GetComponent<UnitController>();
+
+        if (targetUnit != null && context.selfGroundPoint != null)
+        {
+            float deltaY = targetUnit.GroundPoint.position.y - context.selfGroundPoint.position.y;
+
+            if (deltaY > JumpTriggerHeight)
+                context.movement?.TryJump();
+        }
     }
 }

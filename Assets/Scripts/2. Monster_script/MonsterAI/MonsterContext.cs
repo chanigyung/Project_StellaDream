@@ -22,6 +22,7 @@ public class MonsterContext
     public bool isCastingSkill = false;
 
     // === 센서 관련 변수 ===
+    public Transform selfGroundPoint;
     public bool isGrounded = false;
 
     // 상태이상일때 몬스터 추적용 플래그

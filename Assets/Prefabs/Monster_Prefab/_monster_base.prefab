@@ -108,37 +108,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1729734114861102264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &776795063951612931
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8678910876371455250}
-  m_Layer: 12
-  m_Name: wallCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8678910876371455250
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776795063951612931}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.437, y: -0.323, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1729734114861102264}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1403194512258924742
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,37 +466,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1729734114861102264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6229733634576477124
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 164746061437018516}
-  m_Layer: 12
-  m_Name: groundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &164746061437018516
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6229733634576477124}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.036, y: -0.674, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1729734114861102264}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6610593712909003657
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,37 +817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09af6fc53dc32fc449201fca81993c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8413692978970770666
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2059103968672486565}
-  m_Layer: 0
-  m_Name: gapCheckRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2059103968672486565
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8413692978970770666}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: -0.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1729734114861102264}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8636453946240967842
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,9 +868,6 @@ Transform:
   - {fileID: 6575413785344020660}
   - {fileID: 7112094622704033392}
   - {fileID: 1155088704519306552}
-  - {fileID: 164746061437018516}
-  - {fileID: 8678910876371455250}
-  - {fileID: 2059103968672486565}
   - {fileID: 1868537016833756426}
   - {fileID: 2388118274120476319}
   - {fileID: 4892033715618190658}
@@ -982,6 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17283dc17160ac349a93af43e6f0feb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundPoint: {fileID: 2388118274120476319}
   floatingDamagePrefab: {fileID: 2815997251442472599, guid: 7fc3999940d7fe4489eea9833d97530a, type: 3}
   floatingDamageAnchor: {fileID: 1155088704519306552}
 --- !u!114 &7359253294164213039
@@ -996,7 +901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fa3703349665c47be1a40d1c7d7e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckPoint: {fileID: 164746061437018516}
+  groundCheckPoint: {fileID: 2388118274120476319}
   groundCheckRadius: 0.15
   groundLayer:
     serializedVersion: 2

@@ -1065,6 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03af161f74611d547b52776139dfc213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundPoint: {fileID: 8276392092178303177}
   floatingDamagePrefab: {fileID: 2815997251442472599, guid: 7fc3999940d7fe4489eea9833d97530a, type: 3}
   floatingDamageAnchor: {fileID: 3370189000564465030}
   playerData: {fileID: 0}

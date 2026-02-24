@@ -6,10 +6,12 @@ public class UnitController : MonoBehaviour, IDamageable, IKnockbackable
 
     protected Rigidbody2D rigid;
 
+    [SerializeField] protected Transform groundPoint;
     [SerializeField] protected GameObject floatingDamagePrefab;
     [SerializeField] protected Transform floatingDamageAnchor;
 
     private float knockbackTimer = 0f;
+    public Transform GroundPoint => groundPoint != null ? groundPoint : transform;
 
     public virtual void Initialize(IUnitInstance instance)
     {
