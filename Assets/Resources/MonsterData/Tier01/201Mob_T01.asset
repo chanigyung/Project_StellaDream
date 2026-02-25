@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
+  m_Name: 201Mob_T01
+  m_EditorClassIdentifier: 
+  monsterPrefab: {fileID: 8636453946240967842, guid: 289e58d7d433f9a49bffdef356884a33, type: 3}
+  animatorController: {fileID: 9100000, guid: 45947b8a141a5554eb513e4c7ac37c53, type: 2}
+  monsterName: "\uD574\uB465\uC774"
+  grade: 0
+  maxHealth: 1000
+  moveSpeed: 1.5
+  jumpPower: 13
+  knockbackImmune: 0
+  knockbackResistance: 0
+  actionTypes: 000000000100000002000000
+  skillList:
+  - maxRange: 1.5
+    skillData: {fileID: 11400000, guid: 29998b7492338fc4c88bec68c79d6099, type: 2}
+  - maxRange: 5
+    skillData: {fileID: 11400000, guid: 7347fe9fc508c5b4e98173eb0364d781, type: 2}
+  deathAnimator: {fileID: 9100000, guid: 8959b28ac64d6d043a0c827d197ebc38, type: 2}
+  dieEffectPrefab: {fileID: 3068963375615690777, guid: 236a9aed17eafb643815bb009ffbc724, type: 3}
+  tags:
+  - test
+  dropFilters: []

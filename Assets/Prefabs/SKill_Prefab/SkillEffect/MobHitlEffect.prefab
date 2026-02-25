@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 660148467950499075}
   - component: {fileID: 5523759805287583434}
   m_Layer: 0
-  m_Name: MonsterHitlEffect
+  m_Name: MobHitlEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

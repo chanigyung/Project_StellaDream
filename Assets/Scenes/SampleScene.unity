@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ffdf866f3b29a4ab3f7f56913fd1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterTag: Class3
+  monsterTag: test
   spawnOffset: {x: 0, y: 0}
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &982595044
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ffdf866f3b29a4ab3f7f56913fd1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterTag: Class2
+  monsterTag: test
   spawnOffset: {x: 0, y: 0}
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1033256678
@@ -568,6 +568,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1520102084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1520102085}
+  - component: {fileID: 1520102086}
+  m_Layer: 0
+  m_Name: SpawnPoint3_2 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1520102085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520102084}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.72, y: 6.83, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1589747950}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1520102086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520102084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ffdf866f3b29a4ab3f7f56913fd1b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterTag: test
+  spawnOffset: {x: 0, y: 0}
+  gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1589747949
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,6 +649,7 @@ Transform:
   - {fileID: 1028316702}
   - {fileID: 1617650182}
   - {fileID: 835044363}
+  - {fileID: 1520102085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1589747951
@@ -616,11 +664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1e7b4203aaf1d44bafb7f6448c0459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterDataList:
-  - {fileID: 11400000, guid: a7d90aefeac47c24392b8d953cfaa0c7, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  monsterDataList: []
 --- !u!1 &1617650181
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ffdf866f3b29a4ab3f7f56913fd1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterTag: Class3
+  monsterTag: test
   spawnOffset: {x: 0, y: 0}
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1702371168
@@ -758,7 +802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ffdf866f3b29a4ab3f7f56913fd1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterTag: Class2
+  monsterTag: test
   spawnOffset: {x: 0, y: 0}
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1937572068
@@ -6972,7 +7016,7 @@ PlatformEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1053184
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 1

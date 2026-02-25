@@ -79,10 +79,13 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
     //실제 이동
     private void FixedUpdate()
     {
-        if (rigid == null)
+        if (rigid == null || instance == null || context == null)
             return;
 
-        if (!CanMoveNow() || !hasMoveInput)
+        if (instance.IsKnockbackActive || isPowerKnockbacked || isStunned)
+            return;
+
+        if (isPowerKnockbacked || isRooted || !hasMoveInput)
         {
             rigid.velocity = new Vector2(0f, rigid.velocity.y);
             return;
@@ -132,7 +135,7 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
         if (jumped)
             return false;
 
-        if (isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
+        if (!CanMoveNow())
             return false;
 
         Jump();

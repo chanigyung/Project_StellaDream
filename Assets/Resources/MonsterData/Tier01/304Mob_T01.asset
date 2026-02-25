@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
-  m_Name: 3_nanaFan_Test
+  m_Name: 304Mob_T01
   m_EditorClassIdentifier: 
   monsterPrefab: {fileID: 8636453946240967842, guid: 289e58d7d433f9a49bffdef356884a33, type: 3}
-  animatorController: {fileID: 9100000, guid: 177638afa12ff91489df2d917bd4f33f, type: 2}
-  monsterName: "\uD398\uD1A0"
+  animatorController: {fileID: 9100000, guid: 018b790a5ce691c44bc047db259f4491, type: 2}
+  monsterName: "\uCE58\uCF54"
   grade: 0
   maxHealth: 1000
   moveSpeed: 1.5
@@ -23,12 +23,10 @@ MonoBehaviour:
   knockbackResistance: 0
   actionTypes: 000000000100000002000000
   skillList:
-  - maxRange: 1.5
+  - maxRange: 2
     skillData: {fileID: 11400000, guid: 29998b7492338fc4c88bec68c79d6099, type: 2}
-  - maxRange: 5
-    skillData: {fileID: 11400000, guid: 7347fe9fc508c5b4e98173eb0364d781, type: 2}
-  deathAnimator: {fileID: 9100000, guid: 23218138995d0d4468d7dc4cc18776ae, type: 2}
-  dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
+  deathAnimator: {fileID: 9100000, guid: ac197dc344bc9a14db78c3cb919df29d, type: 2}
+  dieEffectPrefab: {fileID: 3068963375615690777, guid: 236a9aed17eafb643815bb009ffbc724, type: 3}
   tags:
-  - Class3
+  - test
   dropFilters: []
