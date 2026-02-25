@@ -12,7 +12,11 @@ public class TraceAction : IMonsterAction
 
     public void Execute(MonsterContext context)
     {
-        Vector3 moveDirection = context.directionToTarget.x < 0 ? Vector3.left : Vector3.right;
+        float dirX = context.directionToTarget.x;
+        if (Mathf.Abs(dirX) < 0.01f)
+            dirX = context.facingDirectionX;
+
+        Vector3 moveDirection = (dirX < 0f) ? Vector3.left : Vector3.right;
 
         context.movement?.Move(moveDirection);
 
