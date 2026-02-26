@@ -24,7 +24,7 @@ MonoBehaviour:
   actionTypes: 000000000100000002000000
   skillList:
   - maxRange: 1.5
-    skillData: {fileID: 11400000, guid: 29998b7492338fc4c88bec68c79d6099, type: 2}
+    skillData: {fileID: 11400000, guid: 0124acc550a700d40a623953d3291b7f, type: 2}
   deathAnimator: {fileID: 9100000, guid: b4c01233a71cc4a478aaf9d9e5e704eb, type: 2}
   dieEffectPrefab: {fileID: 3068963375615690777, guid: 236a9aed17eafb643815bb009ffbc724, type: 3}
   tags:
