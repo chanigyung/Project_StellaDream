@@ -39,13 +39,12 @@ public class MonsterSkillAI : MonoBehaviour
     public bool CanCastNow()
     {
         if (context == null || context.instance == null) return false;
-        if (context.target == null) return false;
-        if (!context.isTracing || context.isCastingSkill) return false;
+        if (!context.canAttack || context.isCastingSkill) return false;
 
         if (IsBlocked()) return false;
         if (Time.time < stunOrKnockbackRecoverTime) return false;
 
-        float dist = context.distanceToTarget;
+        float dist = (context.target != null) ? context.distanceToTarget : 0f;
         return SelectCastSkill(dist, out _, out _);
     }
 
@@ -53,19 +52,29 @@ public class MonsterSkillAI : MonoBehaviour
     public bool TryUseSkill()
     {
         if (context == null || context.instance == null) return false;
-        if (context.target == null) return false;
-        if (!context.isTracing || context.isCastingSkill) return false;
+        if (!context.canAttack || context.isCastingSkill) return false;
 
         if (IsBlocked()) return false;
         if (Time.time < stunOrKnockbackRecoverTime) return false;
 
-        float dist = context.distanceToTarget;
+        float dist = (context.target != null) ? context.distanceToTarget : 0f;
+
         if (!SelectCastSkill(dist, out SkillInstance skill, out float maxRange))
             return false;
 
-        // 좌우 방향 계산(현재는 X축 기반. 추후 2D 전방/에임 방식으로 확장 가능)
-        float xDiff = context.target.transform.position.x - transform.position.x;
-        Vector2 dir = new Vector2(Mathf.Sign(xDiff), 0f);
+        // 좌우 방향 계산(x축 좌우만, target이 있으면 target방향으로 없으면 보던 방향으로)
+        Vector2 dir;
+        if (context.target != null)
+        {
+            float xDiff = context.target.transform.position.x - transform.position.x;
+            dir = new Vector2(Mathf.Sign(xDiff), 0f);
+        }
+        else
+        {
+            float fx = context.facingDirectionX;
+            if (Mathf.Approximately(fx, 0f)) fx = 1f;
+            dir = new Vector2(Mathf.Sign(fx), 0f);
+        }
 
         StartCoroutine(CastSkillWithDelay(skill, dir));
         return true;

@@ -20,6 +20,7 @@ public class MonsterContext
     public bool isTraceReleasedPending = false;    // 추적 해제 대기시간중인지?
     public float traceReleaseTimer = 0f;           // 추적 해제까지 남은 시간
     public bool isCastingSkill = false;
+    public bool canAttack;
 
     // === 센서 관련 변수 ===
     public Transform selfGroundPoint;
@@ -56,5 +57,6 @@ public class MonsterContext
 
         canMove = !isStunned && !isRooted && !isKnockbacked && !isCastingSkill;
         canAct  = !isStunned && !isKnockbacked;
+        canAttack = isTracing;
     }
 }

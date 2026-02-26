@@ -90,6 +90,7 @@ public class MonsterController : UnitController
             MonsterActionType.Trace => new TraceAction(),
             MonsterActionType.Wander => new WanderAction(),
             MonsterActionType.Attack => new AttackAction(), // AttackAction 단계에서 연결 예정
+            MonsterActionType.WanderSkill => new WanderSkillAction(),
             _ => null,
         };
     }
