@@ -111,7 +111,7 @@ public class SkillExecutor : MonoBehaviour
     // 후딜용 코루틴
     private IEnumerator heldSkillPostDelay(SkillInstance skill, Vector2 direction)
     {
-        skill.PostDelay(gameObject, Vector2.right);
+        skill.PostDelay(gameObject, direction);
 
         if (skill.postDelay > 0f)
             yield return new WaitForSeconds(skill.postDelay);

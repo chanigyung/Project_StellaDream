@@ -122,28 +122,29 @@ public class MonsterSkillAI : MonoBehaviour
     {
         context.isCastingSkill = true;
         context.UpdateContext();
-        //정지하고 공격 애니메이션
+
+        // 정지하고 공격 애니메이션
         context.movement?.Stop();
         context.animator?.PlayAttack();
 
-        //딜레이 대기후에
-        yield return new WaitForSeconds(skill.delay);
-
-        //스킬 실행
+        // 변경: 몬스터 쪽에서 delay/postDelay를 직접 기다리지 않는다.
+        //       실제 딜레이 처리는 SkillExecutor(UseSkill 내부)에서만 담당한다.
+        //       여기서는 "몬스터가 캐스팅 중" 상태를 유지하기 위한 시간만 기다린다.
         bool success = skillExecutor.UseSkill(skill, dir);
 
-        //실행됐다면 쿨타임 적용
         if (success)
         {
+            // 변경: 스킬이 '시작'되었다면 즉시 쿨타임을 기록(중복 시전 방지)
             lastUsedTimes[skill] = Time.time;
             lastGlobalSkillUseTime = Time.time;
-        }
-        //스킬 후딜레이
-        context.movement?.Stop();
-        yield return new WaitForSeconds(skill.postDelay);
-        //캐스팅 상태 종료
-        context.isCastingSkill = false;
 
+            float totalCastTime = Mathf.Max(0f, skill.delay) + Mathf.Max(0f, skill.postDelay);
+            if (totalCastTime > 0f)
+                yield return new WaitForSeconds(totalCastTime);
+        }
+
+        // 캐스팅 상태 종료
+        context.isCastingSkill = false;
         context.UpdateContext();
     }
 
