@@ -13,7 +13,7 @@ public class AreaHitboxModule : SkillModuleBase
     {
         if (owner.data.activationType == SkillActivationType.WhileHeld)
             {
-                if (owner.spawnedHitbox != null) return;
+                if (owner.HasSpawnedHitbox()) return;
             }
 
         SkillUtils.SpawnAreaHitbox(attacker, owner, direction, data);

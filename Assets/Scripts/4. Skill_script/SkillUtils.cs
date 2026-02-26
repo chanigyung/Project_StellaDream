@@ -61,7 +61,7 @@ public static class SkillUtils
         }
 
         Object.Destroy(hitbox, data.lifetime);
-        skill.spawnedHitbox = hitbox;
+        skill.RegisterSpawnedObject(hitbox);
     }
 
     //투사체 생성(원거리)
@@ -78,7 +78,7 @@ public static class SkillUtils
             proj.Initialize(attacker,skill,direction,data.speed,data.lifetime);
         }
 
-        skill.spawnedProjectile = projectile;
+        skill.RegisterSpawnedObject(projectile);
     }
 
     //장판스킬 히트박스 생성
@@ -101,7 +101,7 @@ public static class SkillUtils
             area.Initialize(attacker, skill, data);
         }
 
-        skill.spawnedHitbox = hitboxObj;
+        skill.RegisterSpawnedObject(hitboxObj);
     }
 
     //스킬 소환되는 좌표 계산
@@ -127,6 +127,7 @@ public static class SkillUtils
         CalculateSpawnTransform(spawnOwner, skill, direction, entry.spawnPointType, entry.spawnOffset, out var pos, out var rot, out var spawnPoint);
 
         GameObject vfx = Object.Instantiate(entry.prefab, pos, rot);
+        skill.RegisterSpawnedObject(vfx);
 
         if (skill.RotateEffect && direction.x < 0f && skill.FlipSpriteY)
         {

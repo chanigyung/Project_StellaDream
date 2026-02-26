@@ -53,7 +53,6 @@ public class SkillExecutor : MonoBehaviour
         return true;
     }
 
-    // [변경] ExecuteSkillWithDelay -> ExecuteSkillDelay
     private IEnumerator ExecuteSkillDelay(SkillInstance skill, Vector2 direction, bool skipPostDelay)
     {
         // 스킬 딜레이 적용
@@ -98,10 +97,11 @@ public class SkillExecutor : MonoBehaviour
 
         heldSkill.Remove(skillInstance);
 
-        if (skillInstance.spawnedHitbox != null)
+        var hitboxObj = skillInstance.FindFirstSpawnedHitboxObject();
+        if (hitboxObj != null)
         {
-            Destroy(skillInstance.spawnedHitbox);
-            skillInstance.spawnedHitbox = null;
+            skillInstance.UnregisterSpawnedObject(hitboxObj);
+            Destroy(hitboxObj);
         }
 
         // 종료 순간에만 후딜 처리
