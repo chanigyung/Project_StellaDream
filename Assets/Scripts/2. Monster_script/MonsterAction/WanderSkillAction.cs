@@ -35,17 +35,17 @@ public class WanderSkillAction : IMonsterAction
                 _ => Vector3.right,
             };
 
-            directionChangeTimer = 3f;
+            directionChangeTimer = 2f;
         }
 
         if (moveDirection == Vector3.zero)
         {
-            context.facingDirectionX = Mathf.Sign(moveDirection.x);
             context.instance.selfSpeedMultiplier = 1f;
             context.movement?.Move(moveDirection);
         }
         else
         {
+            context.facingDirectionX = Mathf.Sign(moveDirection.x);
             context.instance.selfSpeedMultiplier = 1f;
             context.movement?.Move(moveDirection);
         }

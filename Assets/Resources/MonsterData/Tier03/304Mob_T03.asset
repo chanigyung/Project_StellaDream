@@ -23,7 +23,7 @@ MonoBehaviour:
   knockbackResistance: 0
   actionTypes: 03000000
   skillList:
-  - maxRange: 20
+  - maxRange: 1
     skillData: {fileID: 11400000, guid: 3ee1201db28180543a62925f53343e8f, type: 2}
   deathAnimator: {fileID: 9100000, guid: ac197dc344bc9a14db78c3cb919df29d, type: 2}
   dieEffectPrefab: {fileID: 3068963375615690777, guid: 236a9aed17eafb643815bb009ffbc724, type: 3}

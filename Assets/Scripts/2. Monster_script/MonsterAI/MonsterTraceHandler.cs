@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class MonsterTraceHandler : MonoBehaviour
 {
-    [Header("Detection")]
+    [Header("추적 대상과 범위")]
     [SerializeField] private LayerMask candidateLayers;
     [SerializeField] private float detectRadius = 6f;       // 탐지 시작 범위
     [SerializeField] private float loseRadius = 8f;         // 추적 유지(해제) 범위
     [SerializeField] private float pollInterval = 0.1f;     // 폴링 주기(초)
 
-    [Header("Trace")]
+    [Header("추적 관련 변수")]
     [SerializeField] private float traceReleaseDelay = 1f;  // 이탈 후 추적 해제 대기
     [SerializeField] private float tracingSpeedMultiplier = 1.5f;
     [SerializeField] private float pendingSpeedMultiplier = 1f; // 해제 대기 중엔 원래 속도로 계속 따라감
+    //TraceAction에서 읽어가는용
+    public float TraceReleaseDelay => traceReleaseDelay;
+    public float TracingSpeedMultiplier => tracingSpeedMultiplier;
+    public float PendingSpeedMultiplier => pendingSpeedMultiplier;
+
+    private GameObject desiredTarget;
+    private bool damagedTriggered;
+
+    public GameObject DesiredTarget => desiredTarget;
+    public bool HasDamagedTrigger => damagedTriggered;
 
     [Header("Buffer")]
     [SerializeField] private int overlapBufferSize = 24;
@@ -44,37 +54,19 @@ public class MonsterTraceHandler : MonoBehaviour
         if (pollTimer <= 0f)
         {
             pollTimer = pollInterval;
-            EvaluateDetectionAndTarget();
-        }
-
-        // 추적 해제 대기 타이머 처리
-        if (context.isTraceReleasedPending)
-        {
-            context.traceReleaseTimer -= Time.deltaTime;
-            if (context.traceReleaseTimer <= 0f)
-                EndTrace();
+            desiredTarget = SelectDesiredTarget();
         }
     }
 
     // 공격받으면 무조건 추적 + 영구 추적
     public void NotifyDamaged()
     {
-        if (!context.isTracing)
-        {
-            // 공격받을 때도 타겟을 잡아주기 위해 평가 1회
-            EvaluateDetectionAndTarget();
+        if (context == null) return;
 
-            // 혹시 주변 후보가 없더라도 기본 플레이어 타겟은 유지
-            if (context.target == null)
-                context.target = GameObject.FindWithTag("Player");
+        damagedTriggered = true;
 
-            BeginTrace(context.target);
-        }
-
-        context.isTracePermanent = true;
-        context.isTraceReleasedPending = false;
-        context.traceReleaseTimer = 0f;
-        context.instance.selfSpeedMultiplier = tracingSpeedMultiplier;
+        // 피격 시 즉시 1회 갱신해서 desiredTarget을 빠르게 확보(선택)
+        desiredTarget = SelectDesiredTarget();
     }
 
     // 상태이상에서 on/off 할 수 있도록 공개 API
@@ -87,44 +79,6 @@ public class MonsterTraceHandler : MonoBehaviour
     // -------------------------
     // 내부 로직
     // -------------------------
-
-    private void EvaluateDetectionAndTarget()
-    {
-        GameObject desiredTarget = SelectDesiredTarget();
-
-        if (desiredTarget != null)
-        {
-            if (!context.isTracing)
-            {
-                BeginTrace(desiredTarget);
-                return;
-            }
-
-            // 추적 중이면 타겟 전환(상태이상에 의한 전환 포함)
-            if (context.target != desiredTarget)
-                context.target = desiredTarget;
-
-            // 해제 대기 중이었다면 취소
-            if (context.isTraceReleasedPending)
-            {
-                context.isTraceReleasedPending = false;
-                context.traceReleaseTimer = 0f;
-                context.instance.selfSpeedMultiplier = tracingSpeedMultiplier;
-            }
-
-            return;
-        }
-
-        // 후보가 없으면: 영구추적이 아니면 추적 해제 대기 시작
-        if (context.isTracing && !context.isTracePermanent && !context.isTraceReleasedPending)
-        {
-            context.isTraceReleasedPending = true;
-            context.traceReleaseTimer = traceReleaseDelay;
-
-            // 요구사항: 해제 대기 중엔 원래 속도로 계속 따라감
-            context.instance.selfSpeedMultiplier = pendingSpeedMultiplier;
-        }
-    }
 
     private GameObject SelectDesiredTarget()
     {
@@ -200,25 +154,12 @@ public class MonsterTraceHandler : MonoBehaviour
         return monsterInstance != null;
     }
 
-    private void BeginTrace(GameObject targetObj)
+    //traceAction에서 사용, 데미지 입을때 trace트리거용
+    public bool DamagedTrigger()
     {
-        context.isTracing = true;
-        context.isTraceReleasedPending = false;
-        context.traceReleaseTimer = 0f;
-
-        context.target = targetObj != null ? targetObj : GameObject.FindWithTag("Player");
-        context.instance.selfSpeedMultiplier = tracingSpeedMultiplier;
-    }
-
-    private void EndTrace()
-    {
-        context.isTracing = false;
-        context.isTraceReleasedPending = false;
-        context.traceReleaseTimer = 0f;
-
-        context.instance.selfSpeedMultiplier = 1f;
-        context.target = null;
-        context.isTracePermanent = false; // [변경] 완전히 추적이 끝났으니 초기화
+        if (!damagedTriggered) return false;
+        damagedTriggered = false;
+        return true;
     }
 
 #if UNITY_EDITOR

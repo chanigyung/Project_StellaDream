@@ -48,7 +48,9 @@ public class MonsterController : UnitController
         context.skillAI?.Initialize(context);
         censor?.Initialize(context);
 
-        GetComponentInChildren<MonsterTraceHandler>()?.Initialize(context);
+        var traceHandler = GetComponentInChildren<MonsterTraceHandler>();
+        context.traceHandler = traceHandler;
+        traceHandler?.Initialize(context);
 
         BuildActions(decisionMaker);
 
@@ -100,7 +102,7 @@ public class MonsterController : UnitController
         base.TakeDamage(damage);
         healthUI?.SetHealth(instance.CurrentHealth);
 
-        GetComponentInChildren<MonsterTraceHandler>()?.NotifyDamaged();
+        context.traceHandler?.NotifyDamaged();
     }
 
     protected override void HandleDeath()

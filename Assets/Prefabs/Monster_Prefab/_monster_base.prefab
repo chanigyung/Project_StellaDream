@@ -1164,6 +1164,6 @@ MonoBehaviour:
     m_Bits: 4096
   overlapRadius: 0.75
   minSeparationX: 0.5
-  pushSpeed: 3
+  pushSpeed: 2
   maxSepDeltaXPerFrame: 1.5
   rigid: {fileID: 7985708820985115783}

@@ -8,6 +8,7 @@ public class MonsterContext
     public MonsterMovement movement;
     public MonsterAnimator animator;
     public MonsterInstance instance;
+    public MonsterTraceHandler traceHandler;
 
     // === 상태이상 관련 변수 ===
     public bool isStunned;
