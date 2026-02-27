@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3910252992785891657}
   - component: {fileID: 8601813032602276296}
   m_Layer: 13
-  m_Name: Mob_Melee
+  m_Name: Mob_Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
