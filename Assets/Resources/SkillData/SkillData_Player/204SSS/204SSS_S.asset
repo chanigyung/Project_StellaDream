@@ -16,13 +16,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 70d1c4e70014e7e4a91234c5a3efcedd, type: 2}
   - {fileID: 11400000, guid: 2f2cbae10c3dc2144b74d00e8449fbc1, type: 2}
   - {fileID: 11400000, guid: 31f96181a535b5149ae001a711e48dd9, type: 2}
-  cooldown: 1
+  cooldown: 3
   delay: 0
   postDelay: 0
   activationType: 0
   spawnPointType: 0
-  spawnOffset: {x: 0, y: 0}
-  attachToSpawnPoint: 0
   statusEffects: []
   rotateSkill: 1
   flipSpriteY: 1

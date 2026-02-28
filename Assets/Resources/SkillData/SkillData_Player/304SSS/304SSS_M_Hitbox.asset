@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 304SSS_M_Hitbox
   m_EditorClassIdentifier: 
   hitboxPrefab: {fileID: 2216451094903520163, guid: d80a129014591244da3eb0168322f997, type: 3}
-  hitboxSize: {x: 10, y: 3}
-  spawnOffset: {x: 0, y: -0.6}
+  hitboxSize: {x: 8, y: 2}
+  spawnOffset: {x: 0, y: 1}
   lifetime: 0.2

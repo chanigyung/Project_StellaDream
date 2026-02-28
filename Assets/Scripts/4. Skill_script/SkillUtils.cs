@@ -129,7 +129,8 @@ public static class SkillUtils
         GameObject vfx = Object.Instantiate(entry.prefab, pos, rot);
         skill.RegisterSpawnedObject(vfx);
 
-        if (skill.RotateEffect && direction.x < 0f && skill.FlipSpriteY)
+        // if (skill.RotateEffect && direction.x < 0f && skill.FlipSpriteY)
+        if (direction.x < 0f && skill.FlipSpriteY)
         {
             Vector3 scale = vfx.transform.localScale;
             scale.y *= -1f;
@@ -159,7 +160,8 @@ public static class SkillUtils
         Vector2 dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
         Vector2 perp = new Vector2(-dir.y, dir.x);
 
-        if (skill.RotateEffect && dir.x < 0f && skill.FlipSpriteY)
+        // if (skill.RotateEffect && dir.x < 0f && skill.FlipSpriteY)
+        if (dir.x < 0f && skill.FlipSpriteY)
         {
             offset.y *= -1f;
         }

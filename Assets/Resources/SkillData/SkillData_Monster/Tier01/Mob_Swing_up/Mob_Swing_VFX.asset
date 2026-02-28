@@ -18,5 +18,5 @@ MonoBehaviour:
     anchor: 0
     spawnPointType: 1
     spawnOffset: {x: 0.75, y: 0}
-    animator: {fileID: 9100000, guid: fe212119b44f8a348920f0ca1f04814e, type: 2}
+    animator: {fileID: 9100000, guid: fef68e2ebfd7d2f45a65d69f53ca071a, type: 2}
     useDirection: 1
