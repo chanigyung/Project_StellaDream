@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77cd8b27951ac7b45a890f1a21bd5cfd, type: 3}
-  m_Name: testDMG
+  m_Script: {fileID: 11500000, guid: 649d5780c4507004e85d561a0a611d73, type: 3}
+  m_Name: MeleeTestHitbox
   m_EditorClassIdentifier: 
-  damage: 20
+  hitboxPrefab: {fileID: 2216451094903520163, guid: d80a129014591244da3eb0168322f997, type: 3}
+  hitboxSize: {x: 2, y: 1}
+  spawnOffset: {x: 1, y: 0}
+  lifetime: 0.3

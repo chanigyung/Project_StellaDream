@@ -17,13 +17,13 @@ MonoBehaviour:
   monsterName: "\uB9C8\uB85C"
   grade: 0
   maxHealth: 1000
-  moveSpeed: 1.5
+  moveSpeed: 2
   jumpPower: 13
   knockbackImmune: 0
   knockbackResistance: 0
   actionTypes: 000000000100000002000000
   skillList:
-  - maxRange: 1.5
+  - maxRange: 3
     skillData: {fileID: 11400000, guid: a49deb426e81bee4fb60d952d19f41cc, type: 2}
   deathAnimator: {fileID: 9100000, guid: fac1f15ba92400b47bae3e07f44880b1, type: 2}
   dieEffectPrefab: {fileID: 3068963375615690777, guid: 236a9aed17eafb643815bb009ffbc724, type: 3}

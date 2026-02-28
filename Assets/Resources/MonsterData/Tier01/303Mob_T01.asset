@@ -17,7 +17,7 @@ MonoBehaviour:
   monsterName: "\uD398\uD1A0"
   grade: 0
   maxHealth: 1000
-  moveSpeed: 1.5
+  moveSpeed: 2
   jumpPower: 13
   knockbackImmune: 0
   knockbackResistance: 0

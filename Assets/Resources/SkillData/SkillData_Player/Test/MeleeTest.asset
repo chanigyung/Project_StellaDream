@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
-  m_Name: Mob_Swing_up
+  m_Name: MeleeTest
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: 8c5ffc81256e0c8428bb81a0fc368741, type: 2}
-  - {fileID: 11400000, guid: e60ef7ce5c4e0e24192a5a236568fe0e, type: 2}
-  - {fileID: 11400000, guid: a718d2e92e489874fa56910e1295306f, type: 2}
-  - {fileID: 11400000, guid: a3d02b096291c2f4c89b5998deeee1ad, type: 2}
-  cooldown: 2
-  delay: 0.7
-  postDelay: 0.5
+  - {fileID: 11400000, guid: eb8b5b7134131124ba7864a5936d171a, type: 2}
+  - {fileID: 11400000, guid: b72d7be68873dc94d84e24f77da6a681, type: 2}
+  - {fileID: 11400000, guid: 2c5d59d41578a8248a625bcd0196aea8, type: 2}
+  cooldown: 0
+  delay: 0
+  postDelay: 0
   activationType: 0
   spawnPointType: 1
   statusEffects: []
