@@ -21,7 +21,7 @@ MonoBehaviour:
     animator: {fileID: 9100000, guid: cf131d474ae4cd843aa6c4d80db7b3be, type: 2}
     useDirection: 1
   - prefab: {fileID: 3068963375615690777, guid: b39b5ab57169bbf4ab31f7a569603653, type: 3}
-    hook: 1
+    hook: 3
     anchor: 1
     spawnPointType: 0
     spawnOffset: {x: 0, y: 0}
