@@ -91,6 +91,18 @@ public class TraceAction : IMonsterAction
             dirX = context.facingDirectionX;
 
         Vector3 moveDirection = (dirX < 0f) ? Vector3.left : Vector3.right;
+
+        if (context.isGrounded)
+        {
+            bool hasGround = (moveDirection == Vector3.left) ? context.hasGroundLeft : context.hasGroundRight;
+            if (!hasGround)
+            {
+                // [추가] 애니메이션 상태는 건드리지 않고 "이동만" 멈추기
+                context.movement?.Stop();
+                return;
+            }
+        }
+
         context.movement?.Move(moveDirection);
 
         // 점프 판정(기존 로직 유지)

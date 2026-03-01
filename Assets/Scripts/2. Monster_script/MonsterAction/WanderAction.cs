@@ -16,15 +16,7 @@ public class WanderAction : IMonsterAction
 
         if (directionChangeTimer <= 0f)
         {
-            int choice = Random.Range(0, 3); // 0: 정지, 1: 왼쪽, 2: 오른쪽
-            // string choiceDirection;
-            // choiceDirection = choice switch
-            // {
-            //     0 => "정지",
-            //     1 => "왼쪽",
-            //     _ => "오른쪽",
-            // };
-            // Debug.Log($"[{context.instance.data.monsterName}] WanderAction 선택: {choiceDirection}");
+            int choice = Random.Range(0, 3);
             moveDirection = choice switch
             {
                 0 => Vector3.zero,
@@ -34,14 +26,30 @@ public class WanderAction : IMonsterAction
             directionChangeTimer = 3f;
         }
 
-        if (moveDirection == Vector3.zero)
+        Vector3 finalDirection = moveDirection;
+
+        if (context.isGrounded && finalDirection != Vector3.zero)
+        {
+            if (finalDirection == Vector3.left && !context.hasGroundLeft)
+            {
+                finalDirection = context.hasGroundRight ? Vector3.right : Vector3.zero;
+            }
+            else if (finalDirection == Vector3.right && !context.hasGroundRight)
+            {
+                finalDirection = context.hasGroundLeft ? Vector3.left : Vector3.zero;
+            }
+        }
+
+        // 절벽 체크로 방향이 바뀐 경우, 다음 프레임도 유지되도록 갱신
+        moveDirection = finalDirection;
+
+        if (finalDirection == Vector3.zero)
         {
             context.movement?.Stop();
+            return;
         }
-        else
-        {
-            context.instance.selfSpeedMultiplier = 1f;
-            context.movement?.Move(moveDirection);
-        }
+
+        context.instance.selfSpeedMultiplier = 1f;
+        context.movement?.Move(finalDirection);
     }
 }
