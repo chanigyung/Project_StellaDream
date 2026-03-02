@@ -28,5 +28,5 @@ MonoBehaviour:
   deathAnimator: {fileID: 9100000, guid: fe084f28f0959104e9062e78809f6750, type: 2}
   dieEffectPrefab: {fileID: 3068963375615690777, guid: 236a9aed17eafb643815bb009ffbc724, type: 3}
   tags:
-  - Class101
+  - Class1
   dropFilters: []
