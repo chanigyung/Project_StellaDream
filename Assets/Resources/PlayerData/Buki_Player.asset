@@ -18,6 +18,6 @@ MonoBehaviour:
   visualData: {fileID: 11400000, guid: 14e717aadbe7aab4483d8cc87251d4a7, type: 2}
   maxHealth: 100
   moveSpeed: 5
-  jumpPower: 17
+  jumpPower: 19
   knockbackImmune: 0
   knockbackResistance: 0

@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77cd8b27951ac7b45a890f1a21bd5cfd, type: 3}
-  m_Name: 203SSS_DMG
+  m_Name: 203SSS_S_DMG
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 500

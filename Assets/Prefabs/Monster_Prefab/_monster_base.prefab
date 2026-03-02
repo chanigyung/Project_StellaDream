@@ -908,7 +908,7 @@ MonoBehaviour:
     m_Bits: 192
   wallCheckPoint: {fileID: 4892033715618190658}
   wallCheckRadius: 0.15
-  ledgeCheckForwardDistance: 0.5
+  ledgeCheckForwardDistance: 0.35
   maxDropDistance: 1.5
 --- !u!114 &7358252084151330119
 MonoBehaviour:

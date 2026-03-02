@@ -92,6 +92,18 @@ public class TraceAction : IMonsterAction
 
         Vector3 moveDirection = (dirX < 0f) ? Vector3.left : Vector3.right;
 
+        // 점프 판정(기존 로직 유지)
+        if (context.hasWallAhead && context.selfGroundPoint != null)
+        {
+            UnitController targetUnit = context.target.GetComponent<UnitController>();
+            if (targetUnit != null)
+            {
+                float deltaY = targetUnit.GroundPoint.position.y - context.selfGroundPoint.position.y;
+                if (deltaY > JumpTriggerHeight)
+                    context.movement?.TryJump();
+            }
+        }
+
         if (context.isGrounded)
         {
             bool hasGround = (moveDirection == Vector3.left) ? context.hasGroundLeft : context.hasGroundRight;
@@ -104,18 +116,6 @@ public class TraceAction : IMonsterAction
         }
 
         context.movement?.Move(moveDirection);
-
-        // 점프 판정(기존 로직 유지)
-        if (context.hasWallAhead && context.selfGroundPoint != null)
-        {
-            UnitController targetUnit = context.target.GetComponent<UnitController>();
-            if (targetUnit != null)
-            {
-                float deltaY = targetUnit.GroundPoint.position.y - context.selfGroundPoint.position.y;
-                if (deltaY > JumpTriggerHeight)
-                    context.movement?.TryJump();
-            }
-        }
     }
 
     private void BeginTrace(MonsterContext context, GameObject targetObj)

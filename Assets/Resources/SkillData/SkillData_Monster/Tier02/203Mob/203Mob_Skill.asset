@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
-  m_Name: 203SSS_M
+  m_Name: 203Mob_Skill
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: ae8c07b4fa39c7043a4b5ebcea8e75f3, type: 2}
-  - {fileID: 11400000, guid: 04c6156d887920144a707ca6ec694cec, type: 2}
-  - {fileID: 11400000, guid: 11bed8cadf1468740973bceb1ba38864, type: 2}
-  - {fileID: 11400000, guid: 95d5d0ffd312bf244b487c8c6f6b19bd, type: 2}
-  cooldown: 0
-  delay: 0
+  - {fileID: 11400000, guid: 5ceb10d3eb1f9084bbd64d0514a97edd, type: 2}
+  - {fileID: 11400000, guid: c17d5c3e8f9bf00428ac04b5ad1bee09, type: 2}
+  cooldown: 6
+  delay: 0.2
   postDelay: 0
   activationType: 0
   spawnPointType: 1
