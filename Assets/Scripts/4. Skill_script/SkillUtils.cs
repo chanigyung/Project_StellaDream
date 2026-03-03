@@ -44,7 +44,7 @@ public static class SkillUtils
     public static void SpawnHitbox(GameObject attacker, SkillInstance skill, Vector2 direction, HitboxModuleData data)
     {
         Vector2 offset = data.spawnOffset;
-        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
         GameObject hitbox = Object.Instantiate(data.hitboxPrefab, pos, Quaternion.identity);
 
@@ -54,31 +54,27 @@ public static class SkillUtils
             box.offset = Vector2.zero;
         }
 
-        // 방향/회전/플립은 SkillHitbox가 처리
+        // [변경] 방향/회전/플립/수명/OnObjectSpawned는 SkillHitbox(SkillObjectBase)가 처리
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
-            hitboxComp.Initialize(attacker, skill, direction);
+            hitboxComp.Initialize(attacker, skill, direction, data.lifetime);
         }
 
-        skill.OnObjectSpawned(attacker, hitbox, direction);
+        // [변경] Register는 SkillUtils가 유지
         skill.RegisterSpawnedObject(hitbox);
-
-        Object.Destroy(hitbox, data.lifetime);
     }
 
     //투사체 생성(원거리)
     public static void SpawnProjectile(GameObject attacker, SkillInstance skill, Vector2 direction, ProjectileModuleData data)
     {
         Vector2 offset = data.spawnOffset;
-        CalculateSpawnTransform(attacker,skill,direction, skill.data.spawnPointType,offset, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
         GameObject projectile = Object.Instantiate(data.projectilePrefab, pos, Quaternion.identity);
 
-        // 이동/회전/플립/수명은 Projectile이 처리
         if (projectile.TryGetComponent(out Projectile proj))
         {
-            proj.Initialize(attacker,skill,direction,data.speed,data.lifetime);
-            skill.OnObjectSpawned(attacker, projectile, direction);
+            proj.Initialize(attacker, skill, direction, data.speed, data.lifetime);
         }
 
         skill.RegisterSpawnedObject(projectile);
@@ -87,25 +83,26 @@ public static class SkillUtils
     //장판스킬 히트박스 생성
     public static void SpawnAreaHitbox( GameObject attacker, SkillInstance skill, Vector2 direction, AreaHitboxModuleData data)
     {
-        Vector2 offset = data.spawnOffset;
-        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
+        // Vector2 offset = data.spawnOffset;
+        // CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
-        GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
+        // GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
 
-        if (hitboxObj.TryGetComponent(out BoxCollider2D col))
-        {
-            col.isTrigger = true;
-            col.size = data.size;
-            col.offset = Vector2.zero;
-        }
+        // if (hitboxObj.TryGetComponent(out BoxCollider2D col))
+        // {
+        //     col.isTrigger = true;
+        //     col.size = data.size;
+        //     col.offset = Vector2.zero;
+        // }
 
-        if (hitboxObj.TryGetComponent(out AreaHitbox area))
-        {
-            area.Initialize(attacker, skill, data);
-            skill.OnObjectSpawned(attacker, hitboxObj, direction);
-        }
+        // // [변경] OnObjectSpawned는 AreaHitbox(SkillObjectBase)가 InitializeCommon에서 처리
+        // if (hitboxObj.TryGetComponent(out AreaHitbox area))
+        // {
+        //     area.Initialize(attacker, skill, direction, data);
+        // }
 
-        skill.RegisterSpawnedObject(hitboxObj);
+        // // [변경] Register는 SkillUtils가 유지
+        // skill.RegisterSpawnedObject(hitboxObj);
     }
 
     //스킬 소환되는 좌표 계산

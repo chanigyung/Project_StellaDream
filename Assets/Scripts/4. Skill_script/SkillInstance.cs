@@ -114,7 +114,7 @@ public class SkillInstance
 
             // hitbox 계열 판정(근접/장판)
             if (obj.GetComponent<SkillHitbox>() != null) return true;
-            if (obj.GetComponent<AreaHitbox>() != null) return true;
+            // if (obj.GetComponent<AreaHitbox>() != null) return true;
         }
 
         return false;
@@ -130,7 +130,7 @@ public class SkillInstance
             if (obj == null) continue;
 
             if (obj.GetComponent<SkillHitbox>() != null) return obj;
-            if (obj.GetComponent<AreaHitbox>() != null) return obj;
+            // if (obj.GetComponent<AreaHitbox>() != null) return obj;
         }
 
         return null;
