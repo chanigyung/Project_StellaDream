@@ -11,6 +11,7 @@ public abstract class SkillModuleBase : ISkillModule
 
     public virtual void OnDelay(GameObject attacker, Vector2 direction) { }
     public virtual void OnExecute(GameObject attacker, Vector2 direction) { }
+    public virtual void OnObjectSpawned(GameObject attacker, GameObject sourceObject, Vector2 direction) { }
     public virtual void OnHit(GameObject attacker, GameObject target) { }
     public virtual void OnTick(GameObject attacker, GameObject target, GameObject sourceObject) { }
     public virtual void OnExpire(GameObject attacker, GameObject sourceObject) { }

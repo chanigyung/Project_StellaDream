@@ -30,6 +30,13 @@ public class VFXModule : SkillModuleBase
         Play(VFXHook.Execute, ctx);
     }
 
+    public override void OnObjectSpawned(GameObject attacker, GameObject sourceObject, Vector2 direction)
+    {
+        // [추가] 스폰된 오브젝트(히트박스/투사체/장판 등)를 기준으로 VFX를 재생
+        var ctx = new VFXContext { caster = attacker, sourceObject = sourceObject, direction = direction, hasDirection = true };
+        Play(VFXHook.SourceSpawned, ctx);
+    }
+
     public override void OnPostDelay(GameObject attacker, Vector2 direction)
     {
         var ctx = new VFXContext { caster = attacker, direction = direction, hasDirection = true };

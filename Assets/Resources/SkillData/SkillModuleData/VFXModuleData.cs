@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum VFXHook { Delay, Execute, PostDelay, Hit, Tick, Expire }
+public enum VFXHook { Delay, Execute, SourceSpawned, PostDelay, Hit, Tick, Expire }
 
 public enum VFXAnchor { Caster, Target, SourceObject, }
 
@@ -15,6 +15,7 @@ public class VFXEntry
     public VFXHook hook;
     public VFXAnchor anchor;
     public SkillSpawnPointType spawnPointType = SkillSpawnPointType.Center;
+    public bool attachToSpawnPoint = false;
     public Vector2 spawnOffset = Vector2.zero;
 
     [Header("애니메이터")]

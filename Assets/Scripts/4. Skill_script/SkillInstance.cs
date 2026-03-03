@@ -60,6 +60,12 @@ public class SkillInstance
             modules[i].OnExecute(attacker, direction);
     }
 
+    public void OnObjectSpawned(GameObject attacker, GameObject sourceObject, Vector2 direction)
+    {
+        for (int i = 0; i < modules.Count; i++)
+            modules[i].OnObjectSpawned(attacker, sourceObject, direction);
+    }
+
     public void OnHit(GameObject attacker, GameObject target)
     {
         for (int i = 0; i < modules.Count; i++)

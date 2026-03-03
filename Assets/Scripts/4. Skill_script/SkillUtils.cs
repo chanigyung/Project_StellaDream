@@ -60,8 +60,10 @@ public static class SkillUtils
             hitboxComp.Initialize(attacker, skill, direction);
         }
 
-        Object.Destroy(hitbox, data.lifetime);
+        skill.OnObjectSpawned(attacker, hitbox, direction);
         skill.RegisterSpawnedObject(hitbox);
+
+        Object.Destroy(hitbox, data.lifetime);
     }
 
     //투사체 생성(원거리)
@@ -76,6 +78,7 @@ public static class SkillUtils
         if (projectile.TryGetComponent(out Projectile proj))
         {
             proj.Initialize(attacker,skill,direction,data.speed,data.lifetime);
+            skill.OnObjectSpawned(attacker, projectile, direction);
         }
 
         skill.RegisterSpawnedObject(projectile);
@@ -99,6 +102,7 @@ public static class SkillUtils
         if (hitboxObj.TryGetComponent(out AreaHitbox area))
         {
             area.Initialize(attacker, skill, data);
+            skill.OnObjectSpawned(attacker, hitboxObj, direction);
         }
 
         skill.RegisterSpawnedObject(hitboxObj);
@@ -129,7 +133,11 @@ public static class SkillUtils
         GameObject vfx = Object.Instantiate(entry.prefab, pos, rot);
         skill.RegisterSpawnedObject(vfx);
 
-        // if (skill.RotateEffect && direction.x < 0f && skill.FlipSpriteY)
+        if (entry.attachToSpawnPoint && spawnPoint != null)
+        {
+            vfx.transform.SetParent(spawnPoint, true);
+        }
+        
         if (direction.x < 0f && skill.FlipSpriteY)
         {
             Vector3 scale = vfx.transform.localScale;
