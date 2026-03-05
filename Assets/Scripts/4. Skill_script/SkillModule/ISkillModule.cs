@@ -7,6 +7,6 @@ public interface ISkillModule
     void OnObjectSpawned(GameObject attacker, GameObject sourceObject, Vector2 direction);
     void OnHit(GameObject attacker, GameObject target);
     void OnTick(GameObject attacker, GameObject target, GameObject sourceObject);
-    void OnExpire(GameObject attacker, GameObject sourceObject);
+    void OnExpire(GameObject attacker, GameObject sourceObject, Vector3 sourcePosition, Quaternion sourceRotation);
     void OnPostDelay(GameObject attacker, Vector2 direction);
 }

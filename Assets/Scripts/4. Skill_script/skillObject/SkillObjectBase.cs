@@ -10,6 +10,8 @@ public abstract class SkillObjectBase : MonoBehaviour
     protected bool initialized;
     private Coroutine lifetimeRoutine;
 
+    private bool expired; // 오브젝트 expire 중복호출 방지용
+
     public void Initialize(GameObject attacker, SkillInstance skill, Vector2 direction, float lifetime)
     {
         this.attacker = attacker;
@@ -29,7 +31,24 @@ public abstract class SkillObjectBase : MonoBehaviour
 
     protected virtual void OnInitialize() { }
     protected virtual void OnTick() { }
-    protected virtual void OnExpire() { }
+    protected virtual void OnExpire()
+    {
+        if (skill == null) return;
+
+        Vector3 pos = transform.position;
+        Quaternion rot = transform.rotation;
+        skill.OnExpire(attacker, gameObject, pos, rot);
+    }
+
+    // 외부에서 즉시 Expire+오브젝트 파괴용
+    protected void ExpireNowAndDestroy()
+    {
+        if (expired) return;
+        expired = true;
+
+        OnExpire();
+        Destroy(gameObject);
+    }
 
     /// lifetime 코루틴을 중단(히트 등으로 즉시 파괴되는 경우)
     protected void StopLifetime()
@@ -42,7 +61,6 @@ public abstract class SkillObjectBase : MonoBehaviour
     {
         yield return new WaitForSeconds(lifetime);
 
-        OnExpire();
-        Destroy(gameObject);
+        ExpireNowAndDestroy();
     }
 }

@@ -78,10 +78,10 @@ public class SkillInstance
             modules[i].OnTick(attacker, target, sourceObject);
     }
 
-    public void OnExpire(GameObject attacker, GameObject sourceObject)
+    public void OnExpire(GameObject attacker, GameObject sourceObject, Vector3 sourcePosition, Quaternion sourceRotation)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnExpire(attacker, sourceObject);
+            modules[i].OnExpire(attacker, sourceObject, sourcePosition, sourceRotation);
     }
 
     public void PostDelay(GameObject attacker, Vector2 direction)
