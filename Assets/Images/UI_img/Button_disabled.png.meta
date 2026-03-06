@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6be2b26417b961547a612ef3e130d9bf
+guid: 1cc4d7fa5416dc04084b5672a56c06da
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,43 +93,9 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Server
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: hotbar1_1
-      rect:
-        serializedVersion: 2
-        x: 233
-        y: 48
-        width: 1
-        height: 1
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7cf96a48cc6af18428c2b0be6beaf16b
-      internalID: 1641995107
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -140,44 +106,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      hotbar1_0: 2021708259
-      hotbar1_1: 1641995107
-      hotbar1_10: 1482937215
-      hotbar1_11: 699815818
-      hotbar1_12: -324056477
-      hotbar1_13: 2023719982
-      hotbar1_14: 1495901390
-      hotbar1_15: -1999164191
-      hotbar1_16: -1707204115
-      hotbar1_17: 2043285906
-      hotbar1_18: -253554282
-      hotbar1_19: 595718005
-      hotbar1_2: -1795215854
-      hotbar1_20: 1551445636
-      hotbar1_21: -149436432
-      hotbar1_22: -305211332
-      hotbar1_23: 1123147803
-      hotbar1_24: 639290641
-      hotbar1_25: 1897273680
-      hotbar1_26: 781639374
-      hotbar1_27: -830762980
-      hotbar1_28: 1165279670
-      hotbar1_29: 112322661
-      hotbar1_3: -1179596774
-      hotbar1_30: 1093797744
-      hotbar1_31: -500760666
-      hotbar1_32: -941713518
-      hotbar1_33: -964695156
-      hotbar1_34: 190198610
-      hotbar1_35: 586844319
-      hotbar1_36: 1122115438
-      hotbar1_4: 1039182646
-      hotbar1_5: -1351114772
-      hotbar1_6: -692867753
-      hotbar1_7: 2040271060
-      hotbar1_8: 394606071
-      hotbar1_9: -483690376
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
