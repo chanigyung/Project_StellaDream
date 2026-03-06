@@ -7,7 +7,6 @@ public class Projectile : SkillObjectBase
     protected float speed;
 
     public int HitCount { get; protected set; }
-    private bool isHit;
 
     private readonly HashSet<GameObject> alreadyHit = new();
 
@@ -22,7 +21,6 @@ public class Projectile : SkillObjectBase
     {
         alreadyHit.Clear();
         HitCount = 0;
-        isHit = false;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
@@ -81,15 +79,8 @@ public class Projectile : SkillObjectBase
         skill.OnHit(attacker, target);
 
         HitCount++;
-        isHit = true;
 
         StopLifetime();
-        Destroy(gameObject);
-    }
-
-    protected override void OnExpire()
-    {
-        if (skill == null) return;
-        skill.OnExpire(attacker, gameObject);
+        ExpireNowAndDestroy();
     }
 }

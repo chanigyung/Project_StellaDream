@@ -55,7 +55,7 @@ public class VFXModule : SkillModuleBase
         Play(VFXHook.Tick, ctx);
     }
 
-    public override void OnExpire(GameObject attacker, GameObject sourceObject)
+    public override void OnExpire(GameObject attacker, GameObject sourceObject, Vector3 sourcePosition, Quaternion sourceRotation)
     {
         var ctx = new VFXContext { caster = attacker, sourceObject = sourceObject, hasDirection = false };
         Play(VFXHook.Expire, ctx);
