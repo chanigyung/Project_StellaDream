@@ -10,9 +10,9 @@ public class HitboxModule : SkillModuleBase
         this.data = data;
     }
 
-    public override void OnExecute(GameObject attacker, Vector2 direction)
+    public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnHitbox(attacker, owner, direction, data);
+        SkillUtils.SpawnHitbox(context, owner, data);
     }
 }
 

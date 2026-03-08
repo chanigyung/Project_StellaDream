@@ -3,6 +3,7 @@ using UnityEngine;
 
 public abstract class SkillObjectBase : MonoBehaviour
 {
+    protected SkillContext context;
     protected GameObject attacker;
     protected SkillInstance skill;
     protected Vector2 direction;
@@ -12,18 +13,24 @@ public abstract class SkillObjectBase : MonoBehaviour
 
     private bool expired; // 오브젝트 expire 중복호출 방지용
 
-    public void Initialize(GameObject attacker, SkillInstance skill, Vector2 direction, float lifetime)
+    public void Initialize(SkillContext context, SkillInstance skill, float lifetime)
     {
-        this.attacker = attacker;
+        this.context = context;
+        this.attacker = context.attacker;
         this.skill = skill;
-        this.direction = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        this.direction = context.hasDirection && context.direction.sqrMagnitude > 0.0001f
+            ? context.direction.normalized : Vector2.right;
 
         initialized = true;
 
         OnInitialize();
 
         if (this.skill != null)
-            this.skill.OnObjectSpawned(this.attacker, gameObject, this.direction);
+        {
+            SkillContext spawnedContext = CreateSpawnedContext();
+            this.context = spawnedContext;
+            this.skill.OnObjectSpawned(spawnedContext);
+        }
 
         if (lifetime > 0f)
             lifetimeRoutine = StartCoroutine(LifetimeRoutine(lifetime));
@@ -31,14 +38,6 @@ public abstract class SkillObjectBase : MonoBehaviour
 
     protected virtual void OnInitialize() { }
     protected virtual void OnTick() { }
-    protected virtual void OnExpire()
-    {
-        if (skill == null) return;
-
-        Vector3 pos = transform.position;
-        Quaternion rot = transform.rotation;
-        skill.OnExpire(attacker, gameObject, pos, rot);
-    }
 
     // 외부에서 즉시 Expire+오브젝트 파괴용
     protected void ExpireNowAndDestroy()
@@ -46,7 +45,12 @@ public abstract class SkillObjectBase : MonoBehaviour
         if (expired) return;
         expired = true;
 
-        OnExpire();
+        if (skill != null)
+        {
+            SkillContext expireContext = CreateExpireContext();
+            skill.OnExpire(expireContext);
+        }
+
         Destroy(gameObject);
     }
 
@@ -62,5 +66,63 @@ public abstract class SkillObjectBase : MonoBehaviour
         yield return new WaitForSeconds(lifetime);
 
         ExpireNowAndDestroy();
+    }
+
+    // 생성 직후 기본 컨텍스트 생성
+    protected virtual SkillContext CreateSpawnedContext()
+    {
+        SkillContext spawnedContext = context.Clone();
+
+        spawnedContext.contextOwner = gameObject;
+        spawnedContext.sourceObject = gameObject;
+        spawnedContext.targetObject = null;
+        spawnedContext.position = transform.position;
+        spawnedContext.rotation = transform.rotation;
+        spawnedContext.spawnPointType = context.spawnPointType;
+
+        if (context.hasDirection && context.direction.sqrMagnitude > 0.0001f)
+        {
+            spawnedContext.direction = context.direction.normalized;
+            spawnedContext.hasDirection = true;
+        }
+        else
+        {
+            spawnedContext.direction = direction;
+            spawnedContext.hasDirection = false;
+        }
+
+        return spawnedContext;
+    }
+
+    // 피격 시 기본 컨텍스트 생성
+    protected virtual SkillContext CreateHitContext(GameObject targetObject)
+    {
+        SkillContext hitContext = context.Clone();
+
+        hitContext.contextOwner = targetObject != null ? targetObject : gameObject;
+        hitContext.sourceObject = gameObject;
+        hitContext.targetObject = targetObject;
+        hitContext.position = transform.position;
+        hitContext.rotation = transform.rotation;
+        hitContext.direction = direction;
+        hitContext.hasDirection = true;
+
+        return hitContext;
+    }
+
+    // 만료 시 기본 컨텍스트 생성
+    protected virtual SkillContext CreateExpireContext()
+    {
+        SkillContext expireContext = context.Clone();
+
+        expireContext.contextOwner = gameObject;
+        expireContext.sourceObject = gameObject;
+        expireContext.targetObject = null;
+        expireContext.position = transform.position;
+        expireContext.rotation = transform.rotation;
+        expireContext.direction = direction;
+        expireContext.hasDirection = context.hasDirection;
+
+        return expireContext;
     }
 }

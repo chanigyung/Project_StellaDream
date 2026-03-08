@@ -10,11 +10,11 @@ public class Projectile : SkillObjectBase
 
     private readonly HashSet<GameObject> alreadyHit = new();
 
-    public virtual void Initialize(GameObject attacker, SkillInstance skill, Vector2 direction, float speed, float lifetime)
+    public virtual void Initialize(SkillContext context, SkillInstance skill, float speed, float lifetime)
     {
         this.speed = speed;
 
-        base.Initialize(attacker, skill, direction, lifetime);
+        base.Initialize(context, skill, lifetime);
     }
 
     protected override void OnInitialize()
@@ -76,11 +76,40 @@ public class Projectile : SkillObjectBase
     protected virtual void HandleHit(GameObject target)
     {
         if (skill != null)
-        skill.OnHit(attacker, target);
+        {
+            SkillContext hitContext = CreateHitContext(target);
+            skill.OnHit(hitContext);
+        }
 
         HitCount++;
 
         StopLifetime();
         ExpireNowAndDestroy();
+    }
+
+    // 투사체 전용 피격 컨텍스트 생성
+    protected override SkillContext CreateHitContext(GameObject targetObject)
+    {
+        SkillContext hitContext = base.CreateHitContext(targetObject);
+
+        hitContext.position = transform.position;
+        hitContext.rotation = transform.rotation;
+        hitContext.direction = direction;
+        hitContext.hasDirection = true;
+
+        return hitContext;
+    }
+
+    // 투사체 전용 만료 컨텍스트 생성
+    protected override SkillContext CreateExpireContext()
+    {
+        SkillContext expireContext = base.CreateExpireContext();
+
+        expireContext.position = transform.position;
+        expireContext.rotation = transform.rotation;
+        expireContext.direction = direction;
+        expireContext.hasDirection = context.hasDirection;
+
+        return expireContext;
     }
 }

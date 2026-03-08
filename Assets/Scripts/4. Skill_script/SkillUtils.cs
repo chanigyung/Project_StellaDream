@@ -13,6 +13,8 @@ public static class SkillUtils
     // 넉백 적용
     public static void ApplyKnockback(GameObject attacker, GameObject target, float knockbackX, float knockbackY)
     {
+        if (target == null) return;
+        if (attacker == null) return;
         if (!target.TryGetComponent<Rigidbody2D>(out var rb))
             return;
 
@@ -41,10 +43,10 @@ public static class SkillUtils
     // }
 
     //히트박스 생성(근접)
-    public static void SpawnHitbox(GameObject attacker, SkillInstance skill, Vector2 direction, HitboxModuleData data)
+    public static void SpawnHitbox(SkillContext context, SkillInstance skill, HitboxModuleData data)
     {
         Vector2 offset = data.spawnOffset;
-        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
         GameObject hitbox = Object.Instantiate(data.hitboxPrefab, pos, Quaternion.identity);
 
@@ -54,56 +56,56 @@ public static class SkillUtils
             box.offset = Vector2.zero;
         }
 
-        // [변경] 방향/회전/플립/수명/OnObjectSpawned는 SkillHitbox(SkillObjectBase)가 처리
+        // 방향/회전/플립/수명/OnObjectSpawned는 SkillHitbox(SkillObjectBase)가 처리
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
-            hitboxComp.Initialize(attacker, skill, direction, data.lifetime);
+            hitboxComp.Initialize(context, skill, data.lifetime);
         }
 
-        // [변경] Register는 SkillUtils가 유지
+        // Register는 SkillUtils가 유지
         skill.RegisterSpawnedObject(hitbox);
     }
 
-    //투사체 생성(원거리)
-    public static void SpawnProjectile(GameObject attacker, SkillInstance skill, Vector2 direction, ProjectileModuleData data)
+    // 투사체 생성(원거리)
+    public static void SpawnProjectile(SkillContext context, SkillInstance skill, ProjectileModuleData data)
     {
         Vector2 offset = data.spawnOffset;
-        CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
         GameObject projectile = Object.Instantiate(data.projectilePrefab, pos, Quaternion.identity);
 
         if (projectile.TryGetComponent(out Projectile proj))
         {
-            proj.Initialize(attacker, skill, direction, data.speed, data.lifetime);
+            proj.Initialize(context, skill, data.speed, data.lifetime);
         }
 
         skill.RegisterSpawnedObject(projectile);
     }
 
-    //장판스킬 히트박스 생성
-    public static void SpawnAreaHitbox( GameObject attacker, SkillInstance skill, Vector2 direction, AreaHitboxModuleData data)
-    {
-        // Vector2 offset = data.spawnOffset;
-        // CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
+    // 장판스킬 히트박스 생성
+    // public static void SpawnAreaHitbox( GameObject attacker, SkillInstance skill, Vector2 direction, AreaHitboxModuleData data)
+    // {
+    //     Vector2 offset = data.spawnOffset;
+    //     CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
-        // GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
+    //     GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
 
-        // if (hitboxObj.TryGetComponent(out BoxCollider2D col))
-        // {
-        //     col.isTrigger = true;
-        //     col.size = data.size;
-        //     col.offset = Vector2.zero;
-        // }
+    //     if (hitboxObj.TryGetComponent(out BoxCollider2D col))
+    //     {
+    //         col.isTrigger = true;
+    //         col.size = data.size;
+    //         col.offset = Vector2.zero;
+    //     }
 
-        // // [변경] OnObjectSpawned는 AreaHitbox(SkillObjectBase)가 InitializeCommon에서 처리
-        // if (hitboxObj.TryGetComponent(out AreaHitbox area))
-        // {
-        //     area.Initialize(attacker, skill, direction, data);
-        // }
+    //     // OnObjectSpawned는 AreaHitbox(SkillObjectBase)가 InitializeCommon에서 처리
+    //     if (hitboxObj.TryGetComponent(out AreaHitbox area))
+    //     {
+    //         area.Initialize(attacker, skill, direction, data);
+    //     }
 
-        // // [변경] Register는 SkillUtils가 유지
-        // skill.RegisterSpawnedObject(hitboxObj);
-    }
+    //     // Register는 SkillUtils가 유지
+    //     skill.RegisterSpawnedObject(hitboxObj);
+    // }
 
     //스킬 소환되는 좌표 계산
     public static Transform GetSpawnPoint(GameObject spawnOwner, SkillSpawnPointType type)
@@ -121,11 +123,14 @@ public static class SkillUtils
     }
 
     // VFX 실행
-    public static GameObject SpawnVFX(GameObject spawnOwner, SkillInstance skill, Vector2 direction, VFXEntry entry)
+    public static GameObject SpawnVFX(SkillContext context, SkillInstance skill, VFXEntry entry)
     {
         if (entry == null || entry.prefab == null) return null;
 
-        CalculateSpawnTransform(spawnOwner, skill, direction, entry.spawnPointType, entry.spawnOffset, out var pos, out var rot, out var spawnPoint);
+        SkillContext vfxContext = context.Clone();
+        vfxContext.spawnPointType = entry.spawnPointType;
+
+        CalculateSpawnTransform(vfxContext, skill, entry.spawnPointType, entry.spawnOffset, out var pos, out var rot, out var spawnPoint);
 
         GameObject vfx = Object.Instantiate(entry.prefab, pos, rot);
         skill.RegisterSpawnedObject(vfx);
@@ -135,7 +140,7 @@ public static class SkillUtils
             vfx.transform.SetParent(spawnPoint, true);
         }
         
-        if (direction.x < 0f && skill.FlipSpriteY)
+        if (context.direction.x < 0f && skill.FlipSpriteY)
         {
             Vector3 scale = vfx.transform.localScale;
             scale.y *= -1f;
@@ -151,18 +156,15 @@ public static class SkillUtils
     }
 
     // 스킬orVFX 스폰 위치 및 방향 계산
-    public static void CalculateSpawnTransform(GameObject spawnOwner,SkillInstance skill, Vector2 direction,
+    public static void CalculateSpawnTransform(SkillContext context, SkillInstance skill, 
         SkillSpawnPointType spawnPointType, Vector2 offset, out Vector3 position, out Quaternion rotation, out Transform spawnPoint)
     {
+        GameObject spawnOwner = context.contextOwner;
         spawnPoint = GetSpawnPoint(spawnOwner, spawnPointType);
-        if (spawnPoint == null)
-        {
-            position = Vector3.zero;
-            rotation = Quaternion.identity;
-            return;
-        }
 
-        Vector2 dir = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        Vector2 dir = context.hasDirection && context.direction.sqrMagnitude > 0.0001f
+            ? context.direction.normalized
+            : Vector2.right;
         Vector2 perp = new Vector2(-dir.y, dir.x);
 
         // if (skill.RotateEffect && dir.x < 0f && skill.FlipSpriteY)
@@ -173,14 +175,12 @@ public static class SkillUtils
 
         Vector3 worldOffset = (Vector3)(dir * offset.x + perp * offset.y);
 
-        position = spawnPoint.position + worldOffset;
+        if (spawnPoint != null)
+            position = spawnPoint.position + worldOffset;
+        else
+            position = context.position + worldOffset;
 
-        rotation = Quaternion.identity;
-        if (skill.RotateEffect)
-        {
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            rotation = Quaternion.Euler(0, 0, angle);
-        }
+        rotation = skill.RotateEffect ? Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg): context.rotation;
     }
 
     //카메라 시야 내의 몬스터들 찾아서 List로 반환

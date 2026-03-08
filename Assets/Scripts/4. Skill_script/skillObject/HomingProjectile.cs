@@ -39,9 +39,9 @@ public class HomingProjectile : Projectile
     private const float CameraRetargetInterval = 0.08f;
 
     /// 투사체 초기화 (Homing은 lifetime을 사용하지 않음)
-    public override void Initialize(GameObject attacker, SkillInstance skill, Vector2 direction, float speed, float lifetime)
+    public override void Initialize(SkillContext context, SkillInstance skill, float speed, float lifetime)
     {
-        base.Initialize(attacker, skill, direction, speed, 0f);
+        base.Initialize(context, skill, speed, 0f);
 
         caster = attacker != null ? attacker.transform : null;
 
@@ -130,6 +130,7 @@ public class HomingProjectile : Projectile
 
         // 5) 직선 이동
         Vector2 dir = toTarget.normalized;
+        direction = dir; //?
         transform.right = dir;
         transform.position += (Vector3)dir * (speed * Time.deltaTime);
     }
@@ -146,6 +147,7 @@ public class HomingProjectile : Projectile
         }
 
         Vector2 dir = toCaster.normalized;
+        direction = dir;
         transform.right = dir;
         transform.position += (Vector3)dir * (speed * Time.deltaTime);
     }
@@ -259,7 +261,11 @@ public class HomingProjectile : Projectile
     /// 타겟에 히트했을 때의 처리 (체인/귀환 분기)
     protected override void HandleHit(GameObject targetObj)
     {
-        skill.OnHit(attacker, targetObj);
+        if (skill != null)
+        {
+            SkillContext hitContext = base.CreateHitContext(targetObj);
+            skill.OnHit(hitContext);
+        }
 
         HitCount++;
         hasFirstHit = true;

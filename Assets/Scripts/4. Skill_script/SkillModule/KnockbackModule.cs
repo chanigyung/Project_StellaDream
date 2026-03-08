@@ -10,13 +10,8 @@ public class KnockbackModule : SkillModuleBase
         this.data = data;
     }
 
-    public override void OnHit(GameObject attacker, GameObject target)
+    public override void OnHit(SkillContext context)
     {
-        SkillUtils.ApplyKnockback(
-            attacker,
-            target,
-            data.knockbackX,
-            data.knockbackY
-        );
+        SkillUtils.ApplyKnockback(context.attacker, context.targetObject, data.knockbackX, data.knockbackY);
     }
 }

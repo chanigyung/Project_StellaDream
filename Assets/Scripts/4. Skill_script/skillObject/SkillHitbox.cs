@@ -35,6 +35,7 @@ public class SkillHitbox : SkillObjectBase
 
         alreadyHit.Add(target);
 
-        skill.OnHit(attacker, target);
+        SkillContext hitContext = CreateHitContext(target);
+        skill.OnHit(hitContext);
     }
 }

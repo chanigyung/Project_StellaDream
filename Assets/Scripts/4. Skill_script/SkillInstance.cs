@@ -34,7 +34,6 @@ public class SkillInstance
         delay = data.delay;
         postDelay = data.postDelay;
 
-        // 모듈 인스턴스 생성 (핵심)
         if (data.modules != null)
         {
             foreach (var moduleData in data.modules)
@@ -48,46 +47,46 @@ public class SkillInstance
         }
     }
 
-    public void Delay(GameObject attacker, Vector2 direction)
+    public void Delay(SkillContext context)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnDelay(attacker, direction);
+            modules[i].OnDelay(context);
     }
 
-    public void Execute(GameObject attacker, Vector2 direction)
+    public void Execute(SkillContext context)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnExecute(attacker, direction);
+            modules[i].OnExecute(context);
     }
 
-    public void OnObjectSpawned(GameObject attacker, GameObject sourceObject, Vector2 direction)
+    public void OnObjectSpawned(SkillContext context)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnObjectSpawned(attacker, sourceObject, direction);
+            modules[i].OnObjectSpawned(context);
     }
 
-    public void OnHit(GameObject attacker, GameObject target)
+    public void OnHit(SkillContext context)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnHit(attacker, target);
+            modules[i].OnHit(context);
     }
 
-    public void OnTick(GameObject attacker, GameObject target, GameObject sourceObject)
+    public void OnTick(SkillContext context)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnTick(attacker, target, sourceObject);
+            modules[i].OnTick(context);
     }
 
-    public void OnExpire(GameObject attacker, GameObject sourceObject, Vector3 sourcePosition, Quaternion sourceRotation)
+    public void OnExpire(SkillContext context)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnExpire(attacker, sourceObject, sourcePosition, sourceRotation);
+            modules[i].OnExpire(context);
     }
 
-    public void PostDelay(GameObject attacker, Vector2 direction)
+    public void PostDelay(SkillContext context)
     {
         for (int i = 0; i < modules.Count; i++)
-            modules[i].OnPostDelay(attacker, direction);
+            modules[i].OnPostDelay(context);
     }
 
     public void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)

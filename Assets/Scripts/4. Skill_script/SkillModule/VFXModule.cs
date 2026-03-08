@@ -1,14 +1,5 @@
 using UnityEngine;
 
-public struct VFXContext
-{
-    public GameObject caster;
-    public GameObject target;
-    public GameObject sourceObject;
-    public Vector2 direction;
-    public bool hasDirection;
-}
-
 public class VFXModule : SkillModuleBase
 {
     private readonly VFXModuleData data;
@@ -18,50 +9,42 @@ public class VFXModule : SkillModuleBase
         this.data = data;
     }
 
-    public override void OnDelay(GameObject attacker, Vector2 direction)
+    public override void OnDelay(SkillContext context)
     {
-        var ctx = new VFXContext { caster = attacker, direction = direction, hasDirection = true };
-        Play(VFXHook.Delay, ctx);
+        Play(VFXHook.Delay, context);
     }
 
-    public override void OnExecute(GameObject attacker, Vector2 direction)
+    public override void OnExecute(SkillContext context)
     {
-        var ctx = new VFXContext { caster = attacker, direction = direction, hasDirection = true };
-        Play(VFXHook.Execute, ctx);
+        Play(VFXHook.Execute, context);
     }
 
-    public override void OnObjectSpawned(GameObject attacker, GameObject sourceObject, Vector2 direction)
+    public override void OnObjectSpawned(SkillContext context)
     {
-        // [추가] 스폰된 오브젝트(히트박스/투사체/장판 등)를 기준으로 VFX를 재생
-        var ctx = new VFXContext { caster = attacker, sourceObject = sourceObject, direction = direction, hasDirection = true };
-        Play(VFXHook.SourceSpawned, ctx);
+        Play(VFXHook.SourceSpawned, context);
     }
 
-    public override void OnPostDelay(GameObject attacker, Vector2 direction)
+    public override void OnPostDelay(SkillContext context)
     {
-        var ctx = new VFXContext { caster = attacker, direction = direction, hasDirection = true };
-        Play(VFXHook.PostDelay, ctx);
+        Play(VFXHook.PostDelay, context);
     }
 
-    public override void OnHit(GameObject attacker, GameObject target)
+    public override void OnHit(SkillContext context)
     {
-        var ctx = new VFXContext { caster = attacker, target = target, hasDirection = false };
-        Play(VFXHook.Hit, ctx);
+        Play(VFXHook.Hit, context);
     }
 
-    public override void OnTick(GameObject attacker, GameObject target, GameObject sourceObject)
+    public override void OnTick(SkillContext context)
     {
-        var ctx = new VFXContext { caster = attacker, target = target, sourceObject = sourceObject, hasDirection = false };
-        Play(VFXHook.Tick, ctx);
+        Play(VFXHook.Tick, context);
     }
 
-    public override void OnExpire(GameObject attacker, GameObject sourceObject, Vector3 sourcePosition, Quaternion sourceRotation)
+    public override void OnExpire(SkillContext context)
     {
-        var ctx = new VFXContext { caster = attacker, sourceObject = sourceObject, hasDirection = false };
-        Play(VFXHook.Expire, ctx);
+        Play(VFXHook.Expire, context);
     }
 
-    private void Play(VFXHook hook, VFXContext ctx)
+    private void Play(VFXHook hook, SkillContext context)
     {
         if (data == null || data.vfxEntryList == null || data.vfxEntryList.Count == 0) return;
 
@@ -72,46 +55,62 @@ public class VFXModule : SkillModuleBase
             if (entry.hook != hook) continue;
             if (entry.prefab == null) continue;
 
-            GameObject spawnOwner = ResolveAnchorOwner(entry.anchor, ctx);
+            GameObject anchorOwner = ResolveAnchorOwner(entry.anchor, context);
 
-            Vector2 dir = ResolveVFXDirection(entry.useDirection, ctx);
+            // [추가] Target / SourceObject anchor인데 해당 오브젝트가 없으면 출력 안 함
+            if (anchorOwner == null) continue;
 
-            SkillUtils.SpawnVFX(spawnOwner, owner, dir, entry);
+            SkillContext vfxContext = CreateSkillContextForEntry(entry, context, anchorOwner);
+            SkillUtils.SpawnVFX(vfxContext, owner, entry);
         }
     }
 
-    private GameObject ResolveAnchorOwner(VFXAnchor anchor, VFXContext ctx)
+    // VFX Anchor에 맞춰 스폰용 SkillContext 재구성
+    private SkillContext CreateSkillContextForEntry(VFXEntry entry, SkillContext context, GameObject anchorOwner)
+    {
+        Vector2 dir = ResolveVFXDirection(entry.useDirection, context);
+
+        SkillContext vfxContext = context.Clone();
+        vfxContext.contextOwner = anchorOwner;
+        vfxContext.position = anchorOwner != null ? anchorOwner.transform.position : context.position;
+        vfxContext.rotation = anchorOwner != null ? anchorOwner.transform.rotation : context.rotation;
+        vfxContext.direction = dir;
+        vfxContext.hasDirection = entry.useDirection;
+        vfxContext.spawnPointType = entry.spawnPointType;
+
+        return vfxContext;
+    }
+
+    private GameObject ResolveAnchorOwner(VFXAnchor anchor, SkillContext context)
     {
         switch (anchor)
         {
             case VFXAnchor.Target:
-                return ctx.target != null ? ctx.target : ctx.caster;
+                return context.targetObject;
 
             case VFXAnchor.SourceObject:
-                return ctx.sourceObject != null ? ctx.sourceObject : ctx.caster;
+                return context.sourceObject;
 
             default:
-                return ctx.caster;
+                return context.attacker;
         }
     }
 
-    private Vector2 ResolveVFXDirection(bool useDirection, VFXContext ctx)
+    private Vector2 ResolveVFXDirection(bool useDirection, SkillContext context)
     {
         if (!useDirection)
-            return Vector2.right;
+        return Vector2.right;
 
-        if (ctx.hasDirection)
-            return ctx.direction;
+        if (context.hasDirection && context.direction.sqrMagnitude > 0.0001f)
+            return context.direction.normalized;
 
-        // hit/tick/expire 훅에서 방향이 필요하다면, 타겟이 있으면 caster->target 방향을 사용
-        if (ctx.caster != null && ctx.target != null)
+        if (context.attacker != null && context.targetObject != null)
         {
-            Vector2 dir = (ctx.target.transform.position - ctx.caster.transform.position);
+            Vector2 dir = context.targetObject.transform.position - context.attacker.transform.position;
             if (dir.sqrMagnitude > 0.0001f)
                 return dir.normalized;
         }
 
-        // fallback
         return Vector2.right;
     }
 

@@ -10,9 +10,9 @@ public class ProjectileModule : SkillModuleBase
         this.data = data;
     }
 
-    public override void OnExecute(GameObject attacker, Vector2 direction)
+    public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnProjectile(attacker, owner, direction, data);
+        SkillUtils.SpawnProjectile(context, owner, data);
     }
 }
 
