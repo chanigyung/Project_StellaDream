@@ -12,7 +12,7 @@ public class SkillExecutor : MonoBehaviour
     // 외부에서 현재 락 여부 확인시
     public bool IsCastLocked => activeSkill != null;
 
-    public bool UseSkill(SkillInstance skillInstance, Vector2 direction, bool skipPostDelay = false)
+    public bool UseSkill(SkillInstance skillInstance, SkillContext context)
     {
         if (skillInstance == null) return false;
 
@@ -38,46 +38,34 @@ public class SkillExecutor : MonoBehaviour
         if (!skillInstance.data.ignoreCastLock)
             activeSkill = skillInstance;
 
-        SkillContext castContext = CreateCastContext(skillInstance, direction);
-
-        if (skillInstance.delay <= 0f && (skillInstance.postDelay <= 0f || skipPostDelay))
-        {
-            skillInstance.Execute(castContext);
-
-            if (!skipPostDelay)
-                ReleaseActiveSkill(skillInstance);
-
-            return true;
-        }
+        // if (skillInstance.delay <= 0f && (skillInstance.postDelay <= 0f))
+        // {
+        //     skillInstance.Execute(context);
+        //     ReleaseActiveSkill(skillInstance);
+        //     return true;
+        // }
 
         // 하나라도 딜레이가 있으면 코루틴 실행
-        StartCoroutine(ExecuteSkillDelay(skillInstance, castContext, skipPostDelay));
+        StartCoroutine(ExecuteSkillDelay(skillInstance, context));
         return true;
     }
 
-    private IEnumerator ExecuteSkillDelay(SkillInstance skill, SkillContext context, bool skipPostDelay)
+    private IEnumerator ExecuteSkillDelay(SkillInstance skill, SkillContext context)
     {
-        // 스킬 딜레이 적용
         if (skill.delay > 0f)
         {
             skill.Delay(context);
             yield return new WaitForSeconds(skill.delay);
-        }  
+        }
 
-        // 실행
         skill.Execute(context);
 
-        // 후딜 (WhileHeld 유지 중이면 스킵)
-        if (!skipPostDelay)
-        {
-            skill.PostDelay(context);
+        skill.PostDelay(context);
 
-            if (skill.postDelay > 0f)
-                yield return new WaitForSeconds(skill.postDelay);
+        if (skill.postDelay > 0f)
+            yield return new WaitForSeconds(skill.postDelay);
 
-            // 후딜까지 끝났으면 락 해제
-            ReleaseActiveSkill(skill);
-        }
+        ReleaseActiveSkill(skill);
     }
 
     // 홀드형 스킬 시작시 호출
@@ -92,7 +80,7 @@ public class SkillExecutor : MonoBehaviour
     }
 
     // 홀드형 스킬 종료시 호출
-    public void EndHeldSkill(SkillInstance skillInstance, Vector2 direction)
+    public void EndHeldSkill(SkillInstance skillInstance)
     {
         if (skillInstance == null) return;
         if (!heldSkill.Contains(skillInstance)) return;
@@ -106,41 +94,7 @@ public class SkillExecutor : MonoBehaviour
             Destroy(hitboxObj);
         }
 
-        SkillContext endContext = CreateCastContext(skillInstance, direction);
-
-        // 종료 순간에만 후딜 처리
-        StartCoroutine(heldSkillPostDelay(skillInstance, endContext));
-    }
-
-    // 후딜용 코루틴
-    private IEnumerator heldSkillPostDelay(SkillInstance skill, SkillContext context)
-    {
-        skill.PostDelay(context);
-
-        if (skill.postDelay > 0f)
-            yield return new WaitForSeconds(skill.postDelay);
-
-        ReleaseActiveSkill(skill);
-    }
-
-    //스킬 컨텍스트 생성
-    private SkillContext CreateCastContext(SkillInstance skillInstance, Vector2 inputDirection)
-    {
-        Vector2 normalizedDirection = inputDirection.sqrMagnitude > 0.0001f ? inputDirection.normalized : Vector2.right;
-        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
-
-        return new SkillContext
-        {
-            attacker = gameObject,
-            contextOwner = gameObject,
-            sourceObject = null,
-            targetObject = null,
-            position = transform.position,
-            rotation = Quaternion.Euler(0f, 0f, angle),
-            direction = normalizedDirection,
-            hasDirection = true,
-            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
-        };
+        ReleaseActiveSkill(skillInstance);
     }
 
     // activeSkill 해제 공통 함수

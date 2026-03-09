@@ -31,7 +31,7 @@ public class PlayerSkillController : MonoBehaviour
             return;
         }
 
-        var dir = GetMouseDirection();
+        SkillContext skillContext = CreateCastContext(skillToUse);
 
         // 바로시전 / 누르다 떼는순간 시전 / 누르는내내 시전
         switch (skillToUse.data.activationType)
@@ -39,7 +39,7 @@ public class PlayerSkillController : MonoBehaviour
             case SkillActivationType.OnPress:
                 if (Input.GetMouseButtonDown(button))
                 {
-                    if (skillExecutor.UseSkill(skillToUse, dir))
+                    if (skillExecutor.UseSkill(skillToUse, skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
                         if (weapon != null && weapon.isTemporary)
@@ -51,7 +51,7 @@ public class PlayerSkillController : MonoBehaviour
             case SkillActivationType.OnRelease:
                 if (Input.GetMouseButtonUp(button))
                 {
-                    if (skillExecutor.UseSkill(skillToUse, dir))
+                    if (skillExecutor.UseSkill(skillToUse, skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
                         if (weapon != null && weapon.isTemporary)
@@ -69,7 +69,7 @@ public class PlayerSkillController : MonoBehaviour
                 // [수정] 유지 중 발동은 후딜 스킵
                 if (Input.GetMouseButton(button))
                 {
-                    if (skillExecutor.UseSkill(skillToUse, dir, skipPostDelay: true))
+                    if (skillExecutor.UseSkill(skillToUse, skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
                         if (weapon != null && weapon.isTemporary)
@@ -80,10 +80,30 @@ public class PlayerSkillController : MonoBehaviour
                 // [추가] Held 종료 순간에만 후딜 실행
                 if (Input.GetMouseButtonUp(button))
                 {
-                    skillExecutor.EndHeldSkill(skillToUse, dir);
+                    skillExecutor.EndHeldSkill(skillToUse);
                 }
                 break;
         }
+    }
+
+    private SkillContext CreateCastContext(SkillInstance skillInstance)
+    {
+        Vector2 direction = GetMouseDirection();
+        Vector2 normalizedDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
+
+        return new SkillContext
+        {
+            attacker = gameObject,
+            contextOwner = gameObject,
+            sourceObject = null,
+            targetObject = null,
+            position = transform.position,
+            rotation = Quaternion.Euler(0f, 0f, angle),
+            direction = normalizedDirection,
+            hasDirection = true,
+            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
+        };
     }
 
     //마우스 좌표 받아와 방향 설정

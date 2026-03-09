@@ -62,22 +62,42 @@ public class MonsterSkillAI : MonoBehaviour
         if (!SelectCastSkill(dist, out SkillInstance skill, out float maxRange))
             return false;
 
-        // 좌우 방향 계산(x축 좌우만, target이 있으면 target방향으로 없으면 보던 방향으로)
-        Vector2 dir;
+        SkillContext skillContext = CreateCastContext(skill);
+        StartCoroutine(CastSkillWithDelay(skill, skillContext));
+        return true;
+    }
+
+    private SkillContext CreateCastContext(SkillInstance skillInstance)
+    {
+        //direction은 x좌표기준 좌, 우만
+        Vector2 direction;
         if (context.target != null)
         {
             float xDiff = context.target.transform.position.x - transform.position.x;
-            dir = new Vector2(Mathf.Sign(xDiff), 0f);
+            direction = new Vector2(Mathf.Sign(xDiff), 0f);
         }
         else
         {
             float fx = context.facingDirectionX;
             if (Mathf.Approximately(fx, 0f)) fx = 1f;
-            dir = new Vector2(Mathf.Sign(fx), 0f);
+            direction = new Vector2(Mathf.Sign(fx), 0f);
         }
 
-        StartCoroutine(CastSkillWithDelay(skill, dir));
-        return true;
+        Vector2 normalizedDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
+        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
+
+        return new SkillContext
+        {
+            attacker = gameObject,
+            contextOwner = gameObject,
+            sourceObject = null,
+            targetObject = context.target,
+            position = transform.position,
+            rotation = Quaternion.Euler(0f, 0f, angle),
+            direction = normalizedDirection,
+            hasDirection = true,
+            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
+        };
     }
 
     // 변경: 기절/파워넉백 상태면 스킬 사용 차단 (기존 로직 유지)
@@ -127,7 +147,7 @@ public class MonsterSkillAI : MonoBehaviour
         return false;
     }
 
-    private IEnumerator CastSkillWithDelay(SkillInstance skill, Vector2 dir)
+    private IEnumerator CastSkillWithDelay(SkillInstance skill, SkillContext skillContext)
     {
         context.isCastingSkill = true;
         context.UpdateContext();
@@ -139,7 +159,7 @@ public class MonsterSkillAI : MonoBehaviour
         // 변경: 몬스터 쪽에서 delay/postDelay를 직접 기다리지 않는다.
         //       실제 딜레이 처리는 SkillExecutor(UseSkill 내부)에서만 담당한다.
         //       여기서는 "몬스터가 캐스팅 중" 상태를 유지하기 위한 시간만 기다린다.
-        bool success = skillExecutor.UseSkill(skill, dir);
+        bool success = skillExecutor.UseSkill(skill, skillContext);
 
         if (success)
         {
