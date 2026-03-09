@@ -12,10 +12,11 @@ public class SkillExecutor : MonoBehaviour
     // 외부에서 현재 락 여부 확인시
     public bool IsCastLocked => activeSkill != null;
 
-    public bool UseSkill(SkillInstance skillInstance, SkillContext context)
+    public bool UseSkill(SkillContext context)
     {
-        if (skillInstance == null) return false;
+        SkillInstance skillInstance = context.skillInstance;
 
+        if (skillInstance == null) return false;
         if (skillInstance.skillLock) return false;
 
         if (activeSkill != null &&
@@ -46,12 +47,13 @@ public class SkillExecutor : MonoBehaviour
         // }
 
         // 하나라도 딜레이가 있으면 코루틴 실행
-        StartCoroutine(ExecuteSkillDelay(skillInstance, context));
+        StartCoroutine(ExecuteSkillDelay(context));
         return true;
     }
 
-    private IEnumerator ExecuteSkillDelay(SkillInstance skill, SkillContext context)
+    private IEnumerator ExecuteSkillDelay(SkillContext context)
     {
+        SkillInstance skill = context.skillInstance;
         if (skill.delay > 0f)
         {
             skill.Delay(context);

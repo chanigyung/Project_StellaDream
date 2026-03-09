@@ -43,8 +43,11 @@ public static class SkillUtils
     // }
 
     //히트박스 생성(근접)
-    public static void SpawnHitbox(SkillContext context, SkillInstance skill, HitboxModuleData data)
+    public static void SpawnHitbox(SkillContext context, HitboxModuleData data)
     {
+        SkillInstance skill = context.skillInstance;
+        if (skill == null) return;
+
         Vector2 offset = data.spawnOffset;
         CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
@@ -59,7 +62,7 @@ public static class SkillUtils
         // 방향/회전/플립/수명/OnObjectSpawned는 SkillHitbox(SkillObjectBase)가 처리
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
-            hitboxComp.Initialize(context, skill, data.lifetime);
+            hitboxComp.Initialize(context, data.lifetime);
         }
 
         // Register는 SkillUtils가 유지
@@ -67,8 +70,11 @@ public static class SkillUtils
     }
 
     // 투사체 생성(원거리)
-    public static void SpawnProjectile(SkillContext context, SkillInstance skill, ProjectileModuleData data)
+    public static void SpawnProjectile(SkillContext context, ProjectileModuleData data)
     {
+        SkillInstance skill = context.skillInstance;
+        if (skill == null) return;
+
         Vector2 offset = data.spawnOffset;
         CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
@@ -76,7 +82,7 @@ public static class SkillUtils
 
         if (projectile.TryGetComponent(out Projectile proj))
         {
-            proj.Initialize(context, skill, data.speed, data.lifetime);
+            proj.Initialize(context, data.speed, data.lifetime);
         }
 
         skill.RegisterSpawnedObject(projectile);

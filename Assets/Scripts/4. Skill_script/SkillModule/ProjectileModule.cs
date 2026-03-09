@@ -12,7 +12,7 @@ public class ProjectileModule : SkillModuleBase
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnProjectile(context, owner, data);
+        SkillUtils.SpawnProjectile(context, data);
     }
 }
 

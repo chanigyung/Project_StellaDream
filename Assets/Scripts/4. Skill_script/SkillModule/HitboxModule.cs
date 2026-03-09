@@ -12,7 +12,7 @@ public class HitboxModule : SkillModuleBase
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnHitbox(context, owner, data);
+        SkillUtils.SpawnHitbox(context, data);
     }
 }
 

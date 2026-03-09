@@ -13,11 +13,11 @@ public abstract class SkillObjectBase : MonoBehaviour
 
     private bool expired; // 오브젝트 expire 중복호출 방지용
 
-    public void Initialize(SkillContext context, SkillInstance skill, float lifetime)
+    public void Initialize(SkillContext context, float lifetime)
     {
         this.context = context;
         this.attacker = context.attacker;
-        this.skill = skill;
+        this.skill = context.skillInstance;
         this.direction = context.hasDirection && context.direction.sqrMagnitude > 0.0001f
             ? context.direction.normalized : Vector2.right;
 

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public struct SkillContext
 {
+    public SkillInstance skillInstance;
+
     public GameObject attacker;
     public GameObject contextOwner;
     public GameObject sourceObject;
@@ -14,7 +16,6 @@ public struct SkillContext
 
     public SkillSpawnPointType spawnPointType;
 
-    // [추가] 현재 컨텍스트를 복사한 뒤 일부 값만 교체해서 파생 컨텍스트를 만들 때 사용
     public SkillContext Clone()
     {
         return this;

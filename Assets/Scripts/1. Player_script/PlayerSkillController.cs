@@ -14,9 +14,7 @@ public class PlayerSkillController : MonoBehaviour
         
         if (InputBlocker.IsBlocked) return;
 
-        // 아무 입력 없으면 리턴
         int button = playerController.GetPressedButton();
-        // int button = GetPressedButton();
         if (button == -1) return; 
 
         SkillInstance skillToUse = (button == 0) ? weaponManager.GetMainSkill() : weaponManager.GetSubSkill();
@@ -31,15 +29,14 @@ public class PlayerSkillController : MonoBehaviour
             return;
         }
 
-        SkillContext skillContext = CreateCastContext(skillToUse);
-
         // 바로시전 / 누르다 떼는순간 시전 / 누르는내내 시전
         switch (skillToUse.data.activationType)
         {
             case SkillActivationType.OnPress:
                 if (Input.GetMouseButtonDown(button))
                 {
-                    if (skillExecutor.UseSkill(skillToUse, skillContext))
+                    SkillContext skillContext = CreateCastContext(skillToUse);
+                    if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
                         if (weapon != null && weapon.isTemporary)
@@ -51,7 +48,8 @@ public class PlayerSkillController : MonoBehaviour
             case SkillActivationType.OnRelease:
                 if (Input.GetMouseButtonUp(button))
                 {
-                    if (skillExecutor.UseSkill(skillToUse, skillContext))
+                    SkillContext skillContext = CreateCastContext(skillToUse);
+                    if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
                         if (weapon != null && weapon.isTemporary)
@@ -66,10 +64,10 @@ public class PlayerSkillController : MonoBehaviour
                     skillExecutor.BeginHeldSkill(skillToUse);
                 }
 
-                // [수정] 유지 중 발동은 후딜 스킵
                 if (Input.GetMouseButton(button))
                 {
-                    if (skillExecutor.UseSkill(skillToUse, skillContext))
+                    SkillContext skillContext = CreateCastContext(skillToUse);
+                    if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
                         if (weapon != null && weapon.isTemporary)
@@ -77,7 +75,6 @@ public class PlayerSkillController : MonoBehaviour
                     }
                 }
 
-                // [추가] Held 종료 순간에만 후딜 실행
                 if (Input.GetMouseButtonUp(button))
                 {
                     skillExecutor.EndHeldSkill(skillToUse);
@@ -94,6 +91,7 @@ public class PlayerSkillController : MonoBehaviour
 
         return new SkillContext
         {
+            skillInstance = skillInstance,
             attacker = gameObject,
             contextOwner = gameObject,
             sourceObject = null,

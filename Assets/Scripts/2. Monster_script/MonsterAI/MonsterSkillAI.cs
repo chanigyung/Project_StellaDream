@@ -88,6 +88,7 @@ public class MonsterSkillAI : MonoBehaviour
 
         return new SkillContext
         {
+            skillInstance = skillInstance,
             attacker = gameObject,
             contextOwner = gameObject,
             sourceObject = null,
@@ -159,7 +160,7 @@ public class MonsterSkillAI : MonoBehaviour
         // 변경: 몬스터 쪽에서 delay/postDelay를 직접 기다리지 않는다.
         //       실제 딜레이 처리는 SkillExecutor(UseSkill 내부)에서만 담당한다.
         //       여기서는 "몬스터가 캐스팅 중" 상태를 유지하기 위한 시간만 기다린다.
-        bool success = skillExecutor.UseSkill(skill, skillContext);
+        bool success = skillExecutor.UseSkill(skillContext);
 
         if (success)
         {

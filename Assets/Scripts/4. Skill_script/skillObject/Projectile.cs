@@ -10,11 +10,10 @@ public class Projectile : SkillObjectBase
 
     private readonly HashSet<GameObject> alreadyHit = new();
 
-    public virtual void Initialize(SkillContext context, SkillInstance skill, float speed, float lifetime)
+    public virtual void Initialize(SkillContext context, float speed, float lifetime)
     {
         this.speed = speed;
-
-        base.Initialize(context, skill, lifetime);
+        base.Initialize(context, lifetime);
     }
 
     protected override void OnInitialize()
