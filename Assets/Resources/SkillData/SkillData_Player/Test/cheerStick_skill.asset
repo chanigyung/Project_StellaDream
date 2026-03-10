@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
-  m_Name: AreaTest
+  m_Name: cheerStick_skill
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: 26f7236110a24f54a8f362a9bd6e5015, type: 2}
-  - {fileID: 11400000, guid: 18fb13ce6728e20419873dbdc4f1c66b, type: 2}
-  - {fileID: 11400000, guid: eb8b5b7134131124ba7864a5936d171a, type: 2}
-  cooldown: 0
+  - {fileID: 11400000, guid: e6f95356880460749b762fc7152242f5, type: 2}
+  - {fileID: 11400000, guid: 67a05a988d005194787d6caaa1379c8c, type: 2}
+  - {fileID: 11400000, guid: 91d9bfc233361044e991ddd69169949b, type: 2}
+  - {fileID: 11400000, guid: 95d5d0ffd312bf244b487c8c6f6b19bd, type: 2}
+  cooldown: 0.5
   delay: 0
   postDelay: 0
-  activationType: 2
-  spawnPointType: 1
-  spawnOffset: {x: 3, y: 0}
+  activationType: 0
+  spawnPointType: 0
   statusEffects: []
   rotateSkill: 1
   flipSpriteY: 1
