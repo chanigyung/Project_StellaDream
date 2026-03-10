@@ -4,8 +4,7 @@ public class HitboxModule : SkillModuleBase
 {
     private readonly HitboxModuleData data;
 
-    public HitboxModule(SkillInstance owner, HitboxModuleData data)
-        : base(owner)
+    public HitboxModule(HitboxModuleData data)
     {
         this.data = data;
     }

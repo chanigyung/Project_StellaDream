@@ -4,8 +4,7 @@ public class ProjectileModule : SkillModuleBase
 {
     private readonly ProjectileModuleData data;
 
-    public ProjectileModule(SkillInstance owner, ProjectileModuleData data)
-        : base(owner)
+    public ProjectileModule(ProjectileModuleData data)
     {
         this.data = data;
     }

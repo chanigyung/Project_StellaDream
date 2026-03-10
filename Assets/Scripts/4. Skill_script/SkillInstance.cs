@@ -40,7 +40,7 @@ public class SkillInstance
             {
                 if (moduleData == null) continue;
 
-                var module = moduleData.CreateModule(this);
+                var module = moduleData.CreateModule();
                 if (module != null)
                     modules.Add(module);
             }

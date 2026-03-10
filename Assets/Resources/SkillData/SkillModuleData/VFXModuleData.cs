@@ -31,8 +31,8 @@ public class VFXModuleData : SkillModuleData
     [Header("VFX Entries")]
     public List<VFXEntry> vfxEntryList = new();
 
-    public override ISkillModule CreateModule(SkillInstance owner)
+    public override ISkillModule CreateModule()
     {
-        return new VFXModule(owner, this);
+        return new VFXModule(this);
     }
 }

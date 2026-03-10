@@ -6,8 +6,8 @@ public class KnockbackModuleData : SkillModuleData
     public float knockbackX = 5f;
     public float knockbackY = 2f;
 
-    public override ISkillModule CreateModule(SkillInstance owner)
+    public override ISkillModule CreateModule()
     {
-        return new KnockbackModule(owner, this);
+        return new KnockbackModule(this);
     }
 }

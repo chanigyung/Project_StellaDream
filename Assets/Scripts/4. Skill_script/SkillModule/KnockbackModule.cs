@@ -4,8 +4,7 @@ public class KnockbackModule : SkillModuleBase
 {
     private readonly KnockbackModuleData data;
 
-    public KnockbackModule(SkillInstance owner, KnockbackModuleData data)
-        : base(owner)
+    public KnockbackModule(KnockbackModuleData data)
     {
         this.data = data;
     }

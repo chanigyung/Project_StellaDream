@@ -129,10 +129,13 @@ public static class SkillUtils
     }
 
     // VFX 실행
-    public static GameObject SpawnVFX(SkillContext context, SkillInstance skill, VFXEntry entry)
+    public static GameObject SpawnVFX(SkillContext context, VFXEntry entry)
     {
         if (entry == null || entry.prefab == null) return null;
 
+        SkillInstance skill = context.skillInstance;
+        if (skill == null) return null;
+        
         SkillContext vfxContext = context.Clone();
         vfxContext.spawnPointType = entry.spawnPointType;
 

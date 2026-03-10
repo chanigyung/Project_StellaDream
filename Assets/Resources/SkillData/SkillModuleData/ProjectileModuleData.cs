@@ -9,8 +9,8 @@ public class ProjectileModuleData : SkillModuleData
 
     public Vector2 spawnOffset = Vector2.zero;
 
-    public override ISkillModule CreateModule(SkillInstance owner)
+    public override ISkillModule CreateModule()
     {
-        return new ProjectileModule(owner, this);
+        return new ProjectileModule(this);
     }
 }

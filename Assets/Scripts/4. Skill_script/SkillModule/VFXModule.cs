@@ -4,7 +4,7 @@ public class VFXModule : SkillModuleBase
 {
     private readonly VFXModuleData data;
 
-    public VFXModule(SkillInstance owner, VFXModuleData data) : base(owner)
+    public VFXModule(VFXModuleData data)
     {
         this.data = data;
     }
@@ -61,7 +61,7 @@ public class VFXModule : SkillModuleBase
             if (anchorOwner == null) continue;
 
             SkillContext vfxContext = CreateSkillContextForEntry(entry, context, anchorOwner);
-            SkillUtils.SpawnVFX(vfxContext, owner, entry);
+            SkillUtils.SpawnVFX(vfxContext, entry);
         }
     }
 

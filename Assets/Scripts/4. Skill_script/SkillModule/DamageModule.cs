@@ -4,7 +4,7 @@ public class DamageModule : SkillModuleBase
 {
     private readonly float damage;
 
-    public DamageModule(SkillInstance owner, float damage) : base(owner)
+    public DamageModule(float damage)
     {
         this.damage = damage;
     }

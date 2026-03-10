@@ -8,8 +8,8 @@ public class HitboxModuleData : SkillModuleData
     public Vector2 spawnOffset = Vector2.zero;
     public float lifetime = 0.2f;
 
-    public override ISkillModule CreateModule(SkillInstance owner)
+    public override ISkillModule CreateModule()
     {
-        return new HitboxModule(owner, this);
+        return new HitboxModule(this);
     }
 }

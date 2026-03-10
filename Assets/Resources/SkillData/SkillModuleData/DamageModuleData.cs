@@ -5,8 +5,8 @@ public class DamageModuleData : SkillModuleData
 {
     public float damage = 5f;
 
-    public override ISkillModule CreateModule(SkillInstance owner)
+    public override ISkillModule CreateModule()
     {
-        return new DamageModule(owner, damage);
+        return new DamageModule(damage);
     }
 }
