@@ -55,25 +55,31 @@ public class VFXModule : SkillModuleBase
             if (entry.hook != hook) continue;
             if (entry.prefab == null) continue;
 
-            GameObject anchorOwner = ResolveAnchorOwner(entry.anchor, context);
-
-            // Target / SourceObject anchor인데 해당 오브젝트가 없으면 출력 안 함
-            if (anchorOwner == null) continue;
-
-            SkillContext vfxContext = CreateSkillContextForEntry(entry, context, anchorOwner);
+            SkillContext vfxContext = CreateVFXContextForEntry(entry, context);
             SkillUtils.SpawnVFX(vfxContext, entry);
         }
     }
 
     // VFX Anchor에 맞춰 스폰용 SkillContext 재구성
-    private SkillContext CreateSkillContextForEntry(VFXEntry entry, SkillContext context, GameObject anchorOwner)
+    private SkillContext CreateVFXContextForEntry(VFXEntry entry, SkillContext context)
     {
+        GameObject anchorObject = ResolveAnchorObject(entry.anchor, context);
         Vector2 dir = ResolveVFXDirection(entry.useDirection, context);
 
         SkillContext vfxContext = context.Clone();
-        vfxContext.contextOwner = anchorOwner;
-        vfxContext.position = anchorOwner != null ? anchorOwner.transform.position : context.position;
-        vfxContext.rotation = anchorOwner != null ? anchorOwner.transform.rotation : context.rotation;
+        vfxContext.contextOwner = anchorObject;
+
+        if (anchorObject != null)
+        {
+            vfxContext.position = anchorObject.transform.position;
+            vfxContext.rotation = anchorObject.transform.rotation;
+        }
+        else
+        {
+            vfxContext.position = context.position;
+            vfxContext.rotation = context.rotation;
+        }
+
         vfxContext.direction = dir;
         vfxContext.hasDirection = entry.useDirection;
         vfxContext.spawnPointType = entry.spawnPointType;
@@ -81,20 +87,21 @@ public class VFXModule : SkillModuleBase
         return vfxContext;
     }
 
-    private GameObject ResolveAnchorOwner(VFXAnchor anchor, SkillContext context)
+    private GameObject ResolveAnchorObject(VFXAnchor anchor, SkillContext context)
     {
         switch (anchor)
         {
             case VFXAnchor.Target:
                 return context.targetObject;
 
-            case VFXAnchor.SourceObject:
+            case VFXAnchor.Object:
                 return context.sourceObject;
 
             default:
                 return context.attacker;
         }
     }
+
 
     private Vector2 ResolveVFXDirection(bool useDirection, SkillContext context)
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum VFXHook { Delay, Execute, SourceSpawned, PostDelay, Hit, Tick, Expire }
 
-public enum VFXAnchor { Caster, Target, SourceObject, }
+public enum VFXAnchor { Caster, Target, Object, }
 
 [System.Serializable]
 public class VFXEntry

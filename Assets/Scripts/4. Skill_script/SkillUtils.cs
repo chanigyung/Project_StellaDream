@@ -135,11 +135,8 @@ public static class SkillUtils
 
         SkillInstance skill = context.skillInstance;
         if (skill == null) return null;
-        
-        SkillContext vfxContext = context.Clone();
-        vfxContext.spawnPointType = entry.spawnPointType;
 
-        CalculateSpawnTransform(vfxContext, skill, entry.spawnPointType, entry.spawnOffset, out var pos, out var rot, out var spawnPoint);
+        CalculateSpawnTransform(context, skill, entry.spawnPointType, entry.spawnOffset, out var pos, out var rot, out var spawnPoint);
 
         GameObject vfx = Object.Instantiate(entry.prefab, pos, rot);
         skill.RegisterSpawnedObject(vfx);
