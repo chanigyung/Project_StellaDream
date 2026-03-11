@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
+  m_Name: 302MobSkill_01
+  m_EditorClassIdentifier: 
+  modules:
+  - {fileID: 11400000, guid: cf2ec4cb61f9e034991d521a8e310721, type: 2}
+  - {fileID: 11400000, guid: 880a4c35f2c821b408bbd8c8883eae34, type: 2}
+  - {fileID: 11400000, guid: cdb619154a1b2214aaf93666aad5ffad, type: 2}
+  - {fileID: 11400000, guid: 59e4d65d958599f448e6a87cc15682ec, type: 2}
+  cooldown: 2
+  delay: 0.3
+  postDelay: 0
+  activationType: 0
+  spawnPointType: 1
+  statusEffects: []
+  rotateSkill: 1
+  flipSpriteY: 1
+  ignoreCastLock: 0
+  references:
+    version: 2
+    RefIds: []

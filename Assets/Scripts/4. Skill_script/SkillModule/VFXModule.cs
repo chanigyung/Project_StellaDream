@@ -57,7 +57,7 @@ public class VFXModule : SkillModuleBase
 
             GameObject anchorOwner = ResolveAnchorOwner(entry.anchor, context);
 
-            // [추가] Target / SourceObject anchor인데 해당 오브젝트가 없으면 출력 안 함
+            // Target / SourceObject anchor인데 해당 오브젝트가 없으면 출력 안 함
             if (anchorOwner == null) continue;
 
             SkillContext vfxContext = CreateSkillContextForEntry(entry, context, anchorOwner);
