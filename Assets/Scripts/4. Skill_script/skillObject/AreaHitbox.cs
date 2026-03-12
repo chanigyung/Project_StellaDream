@@ -1,183 +1,93 @@
-// using System.Collections.Generic;
-// using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 
-// public class AreaHitbox : MonoBehaviour
-// {
-//     private GameObject attacker;
-//     private SkillInstance skill;
-//     private AreaHitboxModuleData data; 
+public class AreaHitbox : SkillHitbox
+{
+    protected readonly HashSet<GameObject> insideTargetSet = new();
 
-//     private SkillSpawnPointType spawnPointType;
-//     private Vector2 spawnOffset;
+    private float tickInterval;
+    private float tickTimer;
 
-//     private float tickInterval;
-//     private float tickTimer;
-//     private float duration;
+    protected override void OnInitialize()
+    {
+        base.OnInitialize();
 
-//     private readonly HashSet<GameObject> targetSet = new();
+        insideTargetSet.Clear();
+        tickTimer = 0f;
+        tickInterval = ResolveTickInterval();
+    }
 
-//     private bool initialized;
+    private float ResolveTickInterval()
+    {
+        if (skill == null || skill.data == null || skill.data.modules == null)
+            return 0f;
 
-//     private bool followWhileHeld;
-//     private bool rotateWhileHeld;
-//     // duration <= 0 무한 유지 지원 + Invoke 취소/중복 방지용
-//     // private bool hasExpireTimer;
+        for (int i = 0; i < skill.data.modules.Count; i++)
+        {
+            if (skill.data.modules[i] is AreaHitboxModuleData areaData)
+                return areaData.tickInterval;
+        }
 
-//     //히트박스 이미지 렌더러
-//     [SerializeField] private Animator hitboxAnimator;
-//     [SerializeField] private Animator startEndAnimator;
-//     [SerializeField] private Animator endEndAnimator;
-//     private bool endAnchorsInitialized; // 시작, 끝 지점 중 하나 있으면 true
+        return 0f;
+    }
 
-//     public void Initialize(GameObject attacker, SkillInstance skill, AreaHitboxModuleData data)
-//     {
-//         this.attacker = attacker;
-//         this.skill = skill;
-//         this.data = data;
+    protected override void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!initialized) return;
+        if (!TryGetDamageableTarget(other, out GameObject target)) return;
 
-//         spawnPointType = skill.data.spawnPointType;
-//         spawnOffset = data.spawnOffset;
+        insideTargetSet.Add(target);
 
-//         initialized = true;
+        if (alreadyHit.Contains(target)) return;
 
-//         tickInterval = Mathf.Max(0.01f, data.tickInterval);
-//         duration = data.duration;
-//         followWhileHeld = data.followWhileHeld;
-//         rotateWhileHeld = data.rotateWhileHeld;
+        alreadyHit.Add(target);
+        HandleHitTarget(target);
+    }
 
-//         if (hitboxAnimator != null && data.hitboxAnimator != null)
-//         {
-//             hitboxAnimator.runtimeAnimatorController = data.hitboxAnimator;
-//             hitboxAnimator.enabled = true;
-//         }
+    protected virtual void OnTriggerExit2D(Collider2D other)
+    {
+        if (!TryGetDamageableTarget(other, out GameObject target)) return;
 
-//         ApplyOptionalAnimator(startEndAnimator, data.startEndAnimator);
-//         ApplyOptionalAnimator(endEndAnimator, data.endEndAnimator);
+        insideTargetSet.Remove(target);
+    }
 
-//         // 시작 지점 있으면 애니메이션 앵커 이동
-//         if (startEndAnimator != null)
-//         {
-//             if (!TryGetComponent(out BoxCollider2D col)) return;
+    private void FixedUpdate()
+    {
+        if (!initialized) return;
+        if (tickInterval <= 0f) return;
+        if (insideTargetSet.Count == 0) return;
 
-//             float halfX = col.size.x * 0.5f;
+        tickTimer += Time.fixedDeltaTime;
+        if (tickTimer < tickInterval) return;
 
-//             startEndAnimator.transform.localPosition = new Vector3(-halfX, 0f, 0f);
-//             endEndAnimator.transform.localPosition   = new Vector3( halfX, 0f, 0f);
-//         }
+        tickTimer = 0f;
+        ProcessTick();
+    }
 
-//         if (duration > 0f)
-//         {
-//             Invoke(nameof(Expire), duration);
-//         }
-//     }
+    private void ProcessTick()
+    {
+        if (insideTargetSet.Count == 0) return;
 
-//     private void Update()
-//     {
-//         if (!initialized) return;
+        List<GameObject> removeTargetList = null;
 
-//         if (skill != null &&
-//         skill.data.activationType == SkillActivationType.WhileHeld &&
-//         (followWhileHeld || rotateWhileHeld))
-//         {
-//             Vector2 dir = GetMouseDirFromAttacker();
-//             SkillUtils.CalculateSpawnTransform(attacker, skill, dir, spawnPointType, spawnOffset, out var pos, out var rot, out _);
+        foreach (GameObject target in insideTargetSet)
+        {
+            if (target == null)
+            {
+                removeTargetList ??= new List<GameObject>();
+                removeTargetList.Add(target);
+                continue;
+            }
 
-//             if (followWhileHeld)
-//                 transform.position = pos;
+            SkillContext tickContext = CreateTickContext(target);
+            skill.OnTick(tickContext);
+        }
 
-//             if (rotateWhileHeld && skill.RotateEffect)
-//                 transform.rotation = rot;
-//         }
+        if (removeTargetList == null) return;
 
-//         tickTimer += Time.deltaTime;
-//         if (tickTimer < tickInterval) return;
-
-//         tickTimer = 0f;
-//         Tick();
-//     }
-
-//     private void Tick()
-//     {
-//         skill.OnTick(attacker, null, gameObject); // [변경/추가]
-
-//         if (targetSet.Count == 0) return;
-
-//         List<GameObject> removeList = null;
-
-//         foreach (var target in targetSet)
-//         {
-//             if (target == null)
-//             {
-//                 removeList ??= new List<GameObject>();
-//                 removeList.Add(target);
-//                 continue;
-//             }
-
-//             skill.OnHit(attacker, target); // [변경/추가]
-//         }
-
-//         if (removeList != null)
-//         {
-//             for (int i = 0; i < removeList.Count; i++)
-//                 targetSet.Remove(removeList[i]);
-//         }
-//     }
-
-//     private void Expire()
-//     {
-//         if (!initialized) return;
-
-//         initialized = false;
-
-//         skill.OnExpire(attacker, gameObject);
-
-//         Destroy(gameObject);
-//     }
-
-//     private void OnTriggerEnter2D(Collider2D other)
-//     {
-//         if (!initialized) return;
-
-//         Component damageable = other.GetComponentInParent<IDamageable>() as Component;
-//         if (damageable == null) return;
-//         if (damageable.gameObject == attacker) return;
-
-//         targetSet.Add(damageable.gameObject);
-//     }
-
-//     private void OnTriggerExit2D(Collider2D other)
-//     {
-//         if (!initialized) return;
-
-//         Component damageable = other.GetComponentInParent<IDamageable>() as Component;
-//         if (damageable == null) return;
-//         if (damageable.gameObject == attacker) return;
-
-//         targetSet.Remove(damageable.gameObject);
-//     }
-
-//     private Vector2 GetMouseDirFromAttacker()
-//     {
-//         if (attacker == null || Camera.main == null) return Vector2.right;
-
-//         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-//         Vector2 dir = (Vector2)(mouseWorld - attacker.transform.position);
-
-//         return dir.sqrMagnitude > 0.0001f ? dir.normalized : Vector2.right;
-//     }
-
-//     // 레이저 스킬일 경우 시작지점/끝지점 이펙트 불여주기
-//     private void ApplyOptionalAnimator(Animator anim, RuntimeAnimatorController controller)
-//     {
-//         if (anim == null) return;
-
-//         if (controller == null)
-//         {
-//             anim.enabled = false;
-//             return;
-//         }
-
-//         anim.runtimeAnimatorController = controller;
-//         anim.enabled = true;
-//     }
-// }
+        for (int i = 0; i < removeTargetList.Count; i++)
+        {
+            insideTargetSet.Remove(removeTargetList[i]);
+        }
+    }
+}

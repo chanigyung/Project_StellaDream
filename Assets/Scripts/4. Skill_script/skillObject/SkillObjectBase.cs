@@ -110,6 +110,21 @@ public abstract class SkillObjectBase : MonoBehaviour
         return hitContext;
     }
 
+    protected virtual SkillContext CreateTickContext(GameObject targetObject)
+    {
+        SkillContext tickContext = context.Clone();
+
+        tickContext.contextOwner = targetObject != null ? targetObject : gameObject;
+        tickContext.sourceObject = gameObject;
+        tickContext.targetObject = targetObject;
+        tickContext.position = transform.position;
+        tickContext.rotation = transform.rotation;
+        tickContext.direction = direction;
+        tickContext.hasDirection = true;
+
+        return tickContext;
+    }
+
     // 만료 시 기본 컨텍스트 생성
     protected virtual SkillContext CreateExpireContext()
     {

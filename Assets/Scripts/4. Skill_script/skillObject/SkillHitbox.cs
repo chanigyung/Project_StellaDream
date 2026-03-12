@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SkillHitbox : SkillObjectBase
 {
-    private readonly HashSet<GameObject> alreadyHit = new();
+    protected readonly HashSet<GameObject> alreadyHit = new();
 
     protected override void OnInitialize()
     {
@@ -23,18 +23,31 @@ public class SkillHitbox : SkillObjectBase
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (!initialized) return;
-
-        Component damageable = other.GetComponentInParent<IDamageable>() as Component;
-        if (damageable == null) return;
-
-        GameObject target = damageable.gameObject;
+        if (!TryGetDamageableTarget(other, out GameObject target)) return;
         if (alreadyHit.Contains(target)) return;
 
         alreadyHit.Add(target);
+        HandleHitTarget(target);
+    }
 
+    // 충돌한 Collider에서 실제 피격 대상 GameObject 추출
+    protected bool TryGetDamageableTarget(Collider2D other, out GameObject target)
+    {
+        target = null;
+
+        Component damageable = other.GetComponentInParent<IDamageable>() as Component;
+        if (damageable == null) return false;
+
+        target = damageable.gameObject;
+        return target != null;
+    }
+
+    // 일반 Hit 처리 공통 함수
+    protected virtual void HandleHitTarget(GameObject target)
+    {
         SkillContext hitContext = CreateHitContext(target);
         skill.OnHit(hitContext);
     }
