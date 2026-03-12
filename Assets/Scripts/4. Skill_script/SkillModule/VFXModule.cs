@@ -102,7 +102,6 @@ public class VFXModule : SkillModuleBase
         }
     }
 
-
     private Vector2 ResolveVFXDirection(bool useDirection, SkillContext context)
     {
         if (!useDirection)

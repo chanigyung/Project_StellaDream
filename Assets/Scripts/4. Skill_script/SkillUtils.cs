@@ -43,26 +43,26 @@ public static class SkillUtils
     // }
 
     //히트박스 생성(근접)
-    public static void SpawnHitbox(SkillContext context, HitboxModuleData data)
+    public static void SpawnHitbox(SkillContext context, GameObject hitboxPrefab, Vector2 spawnOffset, Vector2 hitboxSize, float lifetime) 
     {
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
 
-        Vector2 offset = data.spawnOffset;
+        Vector2 offset = spawnOffset;
         CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
-        GameObject hitbox = Object.Instantiate(data.hitboxPrefab, pos, Quaternion.identity);
+        GameObject hitbox = Object.Instantiate(hitboxPrefab, pos, Quaternion.identity);
 
         if (hitbox.TryGetComponent(out BoxCollider2D box))
         {
-            box.size = data.hitboxSize;
+            box.size = hitboxSize;
             box.offset = Vector2.zero;
         }
 
         // 방향/회전/플립/수명/OnObjectSpawned는 SkillHitbox(SkillObjectBase)가 처리
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
-            hitboxComp.Initialize(context, data.lifetime);
+            hitboxComp.Initialize(context, lifetime);
         }
 
         // Register는 SkillUtils가 유지
@@ -70,19 +70,19 @@ public static class SkillUtils
     }
 
     // 투사체 생성(원거리)
-    public static void SpawnProjectile(SkillContext context, ProjectileModuleData data)
+    public static void SpawnProjectile(SkillContext context, GameObject projectilePrefab, Vector2 spawnOffset, float speed, float lifetime)
     {
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
 
-        Vector2 offset = data.spawnOffset;
+        Vector2 offset = spawnOffset;
         CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
 
-        GameObject projectile = Object.Instantiate(data.projectilePrefab, pos, Quaternion.identity);
+        GameObject projectile = Object.Instantiate(projectilePrefab, pos, Quaternion.identity);
 
         if (projectile.TryGetComponent(out Projectile proj))
         {
-            proj.Initialize(context, data.speed, data.lifetime);
+            proj.Initialize(context, speed, lifetime);
         }
 
         skill.RegisterSpawnedObject(projectile);

@@ -17,13 +17,15 @@ MonoBehaviour:
     hook: 1
     anchor: 0
     spawnPointType: 1
+    attachToSpawnPoint: 0
     spawnOffset: {x: 1, y: 0}
     animator: {fileID: 9100000, guid: cf131d474ae4cd843aa6c4d80db7b3be, type: 2}
     useDirection: 1
   - prefab: {fileID: 3068963375615690777, guid: b39b5ab57169bbf4ab31f7a569603653, type: 3}
-    hook: 3
+    hook: 4
     anchor: 1
     spawnPointType: 0
+    attachToSpawnPoint: 0
     spawnOffset: {x: 0, y: 0}
     animator: {fileID: 9100000, guid: 9c30825dc13cbdb4c8ff61b2d5b10a6c, type: 2}
     useDirection: 1
