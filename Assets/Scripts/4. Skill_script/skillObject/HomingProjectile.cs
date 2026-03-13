@@ -64,7 +64,7 @@ public class HomingProjectile : Projectile
 
         if (caster == null)
         {
-            Destroy(gameObject);
+            ExpireNowAndDestroy();
             return;
         }
 
@@ -142,7 +142,7 @@ public class HomingProjectile : Projectile
 
         if (toCaster.sqrMagnitude <= returnStopDistance * returnStopDistance)
         {
-            Destroy(gameObject);
+            ExpireNowAndDestroy();
             return;
         }
 

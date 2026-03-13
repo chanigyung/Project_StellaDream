@@ -88,14 +88,6 @@ public class SkillExecutor : MonoBehaviour
         if (!heldSkill.Contains(skillInstance)) return;
 
         heldSkill.Remove(skillInstance);
-
-        var hitboxObj = skillInstance.FindFirstSpawnedHitboxObject();
-        if (hitboxObj != null)
-        {
-            skillInstance.UnregisterSpawnedObject(hitboxObj);
-            Destroy(hitboxObj);
-        }
-
         ReleaseActiveSkill(skillInstance);
     }
 

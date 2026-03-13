@@ -49,6 +49,7 @@ public abstract class SkillObjectBase : MonoBehaviour
         {
             SkillContext expireContext = CreateExpireContext();
             skill.OnExpire(expireContext);
+            skill.UnregisterSpawnedObject(gameObject);
         }
 
         Destroy(gameObject);
