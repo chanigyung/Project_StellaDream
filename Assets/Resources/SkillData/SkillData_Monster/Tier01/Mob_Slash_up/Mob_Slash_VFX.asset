@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfxEntryList:
   - prefab: {fileID: 3068963375615690777, guid: 30d71de409c3ab74ba6535f103e871ba, type: 3}
-    hook: 1
-    anchor: 0
-    spawnPointType: 1
-    spawnOffset: {x: 0.75, y: 0}
+    hook: 2
+    anchor: 2
+    spawnPointType: 0
+    attachToSpawnPoint: 0
+    spawnOffset: {x: 0, y: 0}
     animator: {fileID: 9100000, guid: 48b01b24d0bae13408e10a0b0723acd5, type: 2}
     useDirection: 1
