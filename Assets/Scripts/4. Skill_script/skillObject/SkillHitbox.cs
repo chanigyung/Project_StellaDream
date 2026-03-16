@@ -3,11 +3,15 @@ using UnityEngine;
 
 public class SkillHitbox : SkillObjectBase
 {
+    [SerializeField] private BoxCollider2D hitboxCollider;
+    [SerializeField] private SkillSpawnPoints spawnPoints;
+
     protected readonly HashSet<GameObject> alreadyHit = new();
 
     protected override void OnInitialize()
     {
         alreadyHit.Clear();
+        UpdateDynamicSpawnPoints();
 
         if (skill != null && skill.RotateEffect)
         {
@@ -50,5 +54,35 @@ public class SkillHitbox : SkillObjectBase
     {
         SkillContext hitContext = CreateHitContext(target);
         skill.OnHit(hitContext);
+    }
+
+    // 추가: 현재 collider 크기/offset 기준으로 spawn point들의 localPosition 갱신
+    protected virtual void UpdateDynamicSpawnPoints()
+    {
+        if (hitboxCollider == null) return;
+        if (spawnPoints == null) return;
+
+        Vector2 size = hitboxCollider.size;
+        Vector2 offset = hitboxCollider.offset;
+
+        if (spawnPoints.centerPoint != null)
+        {
+            spawnPoints.centerPoint.localPosition = offset;
+        }
+
+        if (spawnPoints.leftPoint != null)
+        {
+            spawnPoints.leftPoint.localPosition = offset + new Vector2(-size.x * 0.5f, 0f);
+        }
+
+        if (spawnPoints.rightPoint != null)
+        {
+            spawnPoints.rightPoint.localPosition = offset + new Vector2(size.x * 0.5f, 0f);
+        }
+
+        if (spawnPoints.groundPoint != null)
+        {
+            spawnPoints.groundPoint.localPosition = offset + new Vector2(0f, -size.y * 0.5f);
+        }
     }
 }

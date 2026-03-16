@@ -65,7 +65,6 @@ public static class SkillUtils
             hitboxComp.Initialize(context, lifetime);
         }
 
-        // Register는 SkillUtils가 유지
         skill.RegisterSpawnedObject(hitbox);
     }
 
@@ -87,31 +86,6 @@ public static class SkillUtils
 
         skill.RegisterSpawnedObject(projectile);
     }
-
-    // 장판스킬 히트박스 생성
-    // public static void SpawnAreaHitbox( GameObject attacker, SkillInstance skill, Vector2 direction, AreaHitboxModuleData data)
-    // {
-    //     Vector2 offset = data.spawnOffset;
-    //     CalculateSpawnTransform(attacker, skill, direction, skill.data.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
-
-    //     GameObject hitboxObj = Object.Instantiate(data.hitboxPrefab, pos, rot);
-
-    //     if (hitboxObj.TryGetComponent(out BoxCollider2D col))
-    //     {
-    //         col.isTrigger = true;
-    //         col.size = data.size;
-    //         col.offset = Vector2.zero;
-    //     }
-
-    //     // OnObjectSpawned는 AreaHitbox(SkillObjectBase)가 InitializeCommon에서 처리
-    //     if (hitboxObj.TryGetComponent(out AreaHitbox area))
-    //     {
-    //         area.Initialize(attacker, skill, direction, data);
-    //     }
-
-    //     // Register는 SkillUtils가 유지
-    //     skill.RegisterSpawnedObject(hitboxObj);
-    // }
 
     //스킬 소환되는 좌표 계산
     public static Transform GetSpawnPoint(GameObject spawnOwner, SkillSpawnPointType type)
