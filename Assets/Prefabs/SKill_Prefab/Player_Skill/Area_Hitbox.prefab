@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db1e555d7b8e2c4589b768303c8a2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitboxCollider: {fileID: 0}
-  spawnPoints: {fileID: 0}
+  hitboxCollider: {fileID: 7300661320585817938}
+  spawnPoints: {fileID: 2853246912564210147}
 --- !u!1 &2977001288006389766
 GameObject:
   m_ObjectHideFlags: 0

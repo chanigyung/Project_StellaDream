@@ -9,6 +9,9 @@ public class ProjectileModuleData : SkillModuleData
 
     public Vector2 spawnOffset = Vector2.zero;
 
+    public SkillSpawnPointType ownerSpawnPointType = SkillSpawnPointType.Left;
+    public SkillSpawnPointType prefabSpawnPointType = SkillSpawnPointType.Left;
+
     public override ISkillModule CreateModule()
     {
         return new ProjectileModule(this);

@@ -43,15 +43,17 @@ public static class SkillUtils
     // }
 
     //히트박스 생성(근접)
-    public static void SpawnHitbox(SkillContext context, GameObject hitboxPrefab, Vector2 spawnOffset, Vector2 hitboxSize, float lifetime) 
+    public static void SpawnHitbox(SkillContext context, HitboxModuleData data, Vector2 spawnOffset, Vector2 hitboxSize, float lifetime) 
     {
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
 
-        Vector2 offset = spawnOffset;
-        CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
+        Vector3 ownerWorldPoint = GetOwnerWorldPoint(context, data.ownerSpawnPointType);
 
-        GameObject hitbox = Object.Instantiate(hitboxPrefab, pos, Quaternion.identity);
+        CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
+            Vector2.zero, out var basePos, out var rot, out var spawnPoint);
+
+        GameObject hitbox = Object.Instantiate(data.hitboxPrefab, ownerWorldPoint, Quaternion.identity);
 
         if (hitbox.TryGetComponent(out BoxCollider2D box))
         {
@@ -59,31 +61,54 @@ public static class SkillUtils
             box.offset = Vector2.zero;
         }
 
-        // 방향/회전/플립/수명/OnObjectSpawned는 SkillHitbox(SkillObjectBase)가 처리
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
             hitboxComp.Initialize(context, lifetime);
         }
 
+        // 추가: owner 기준점에 hitbox 프리팹 기준점 정렬
+        AlignSpawnedObject(hitbox, ownerWorldPoint, data.prefabSpawnPointType);
+
+        // 추가: 정렬 후 방향성 offset 적용
+        Vector2 offset = spawnOffset;
+        CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
+            offset, out var finalPos, out rot, out spawnPoint);
+
+        hitbox.transform.position += finalPos - ownerWorldPoint;
+
+        hitboxComp?.ObjectSpawned();
         skill.RegisterSpawnedObject(hitbox);
     }
 
     // 투사체 생성(원거리)
-    public static void SpawnProjectile(SkillContext context, GameObject projectilePrefab, Vector2 spawnOffset, float speed, float lifetime)
+    public static void SpawnProjectile(SkillContext context, ProjectileModuleData data, Vector2 spawnOffset, float speed, float lifetime)
     {
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
 
-        Vector2 offset = spawnOffset;
-        CalculateSpawnTransform(context, skill, context.spawnPointType, offset, out var pos, out var rot, out var spawnPoint);
+        Vector3 ownerWorldPoint = GetOwnerWorldPoint(context, data.ownerSpawnPointType);
 
-        GameObject projectile = Object.Instantiate(projectilePrefab, pos, Quaternion.identity);
+        CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
+            Vector2.zero, out var basePos, out var rot, out var spawnPoint);
+
+        GameObject projectile = Object.Instantiate(data.projectilePrefab, ownerWorldPoint, Quaternion.identity);
 
         if (projectile.TryGetComponent(out Projectile proj))
         {
             proj.Initialize(context, speed, lifetime);
         }
 
+        // 추가: owner 기준점에 projectile 프리팹 기준점 정렬
+        AlignSpawnedObject(projectile, ownerWorldPoint, data.prefabSpawnPointType);
+
+        // 추가: 정렬 후 방향성 offset 적용
+        Vector2 offset = spawnOffset;
+        CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
+            offset, out var finalPos, out rot, out spawnPoint);
+
+        projectile.transform.position += finalPos - ownerWorldPoint;
+
+        proj.ObjectSpawned();
         skill.RegisterSpawnedObject(projectile);
     }
 
@@ -133,6 +158,44 @@ public static class SkillUtils
         }
 
         return vfx;
+    }
+
+    // owner의 spawn point 월드 좌표 반환
+    public static Vector3 GetOwnerWorldPoint(SkillContext context, SkillSpawnPointType type)
+    {
+        GameObject spawnOwner = context.contextOwner;
+
+        if (spawnOwner == null)
+            return context.position;
+
+        SkillSpawnPoints spawnPoints = spawnOwner.GetComponent<SkillSpawnPoints>();
+        if (spawnPoints == null)
+            return spawnOwner.transform.position;
+
+        return spawnPoints.GetWorldPoint(type);
+    }
+
+    // 생성된 프리팹의 spawn point 월드 좌표 반환
+    public static Vector3 GetPrefabWorldPoint(GameObject spawnedObject, SkillSpawnPointType type)
+    {
+        if (spawnedObject == null)
+            return Vector3.zero;
+
+        SkillSpawnPoints spawnPoints = spawnedObject.GetComponent<SkillSpawnPoints>();
+        if (spawnPoints == null)
+            return spawnedObject.transform.position;
+
+        return spawnPoints.GetWorldPoint(type);
+    }
+
+    // owner 기준점에 prefab 기준점을 맞추는 위치 보정
+    public static void AlignSpawnedObject(GameObject spawnedObject, Vector3 ownerWorldPoint, SkillSpawnPointType prefabSpawnPointType)
+    {
+        if (spawnedObject == null) return;
+
+        Vector3 prefabWorldPoint = GetPrefabWorldPoint(spawnedObject, prefabSpawnPointType);
+        Vector3 correction = ownerWorldPoint - prefabWorldPoint;
+        spawnedObject.transform.position += correction;
     }
 
     // 스킬orVFX 스폰 위치 및 방향 계산

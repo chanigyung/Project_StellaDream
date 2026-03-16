@@ -18,6 +18,6 @@ public class AreaHitboxModule : SkillModuleBase
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnHitbox(context, data.hitboxPrefab, spawnOffset, hitboxSize, lifetime);
+        SkillUtils.SpawnHitbox(context, data, spawnOffset, hitboxSize, lifetime);
     }
 }

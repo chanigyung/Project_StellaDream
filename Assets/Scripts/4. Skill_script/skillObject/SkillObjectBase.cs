@@ -25,15 +25,16 @@ public abstract class SkillObjectBase : MonoBehaviour
 
         OnInitialize();
 
-        if (this.skill != null)
-        {
-            SkillContext spawnedContext = CreateSpawnedContext();
-            this.context = spawnedContext;
-            this.skill.OnObjectSpawned(spawnedContext);
-        }
-
         if (lifetime > 0f)
             lifetimeRoutine = StartCoroutine(LifetimeRoutine(lifetime));
+    }
+
+    public void ObjectSpawned()
+    {
+        if (skill == null) return;
+
+        SkillContext spawnedContext = CreateSpawnedContext();
+        skill.OnObjectSpawned(spawnedContext);
     }
 
     protected virtual void OnInitialize() { }

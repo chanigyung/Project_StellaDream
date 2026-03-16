@@ -16,3 +16,5 @@ MonoBehaviour:
   hitboxSize: {x: 2, y: 2}
   spawnOffset: {x: 1, y: 0}
   lifetime: 0.3
+  ownerSpawnPointType: 1
+  prefabSpawnPointType: 1

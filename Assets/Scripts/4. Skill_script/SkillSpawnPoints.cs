@@ -18,4 +18,10 @@ public class SkillSpawnPoints : MonoBehaviour
             _ => centerPoint
         };
     }
+
+    public Vector3 GetWorldPoint(SkillSpawnPointType type)
+    {
+        Transform point = GetPoint(type);
+        return point != null ? point.position : transform.position;
+    }
 }

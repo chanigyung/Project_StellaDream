@@ -15,3 +15,6 @@ MonoBehaviour:
   projectilePrefab: {fileID: 516866753298579258, guid: 48c6cf4f35a72ae44bac4bb030f94025, type: 3}
   speed: 30
   lifetime: 0.3
+  spawnOffset: {x: 0, y: 0}
+  ownerSpawnPointType: 1
+  prefabSpawnPointType: 1

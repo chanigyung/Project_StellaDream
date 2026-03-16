@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2847b4dbd90114649bb4325531395e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitboxCollider: {fileID: 7300661320585817938}
+  spawnPoints: {fileID: 8601813032602276296}
 --- !u!61 &7300661320585817938
 BoxCollider2D:
   m_ObjectHideFlags: 0

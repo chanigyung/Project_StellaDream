@@ -17,7 +17,7 @@ public class ProjectileModule : SkillModuleBase
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnProjectile(context, data.projectilePrefab, spawnOffset, speed, lifetime);
+        SkillUtils.SpawnProjectile(context, data, spawnOffset, speed, lifetime);
     }
 }
 
