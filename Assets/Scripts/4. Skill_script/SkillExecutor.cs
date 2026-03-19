@@ -97,4 +97,64 @@ public class SkillExecutor : MonoBehaviour
         if (activeSkill == skillInstance)
             activeSkill = null;
     }
+
+    public SkillContext CreateCastContext(
+    SkillInstance skillInstance,
+    GameObject attacker,
+    GameObject targetObject,
+    Vector3 position,
+    Vector2 direction)
+    {
+        Vector2 normalizedDirection = direction.sqrMagnitude > 0.0001f
+            ? direction.normalized
+            : Vector2.right;
+
+        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
+
+        SkillContext context = new SkillContext
+        {
+            skillInstance = skillInstance,
+            attacker = attacker,
+            contextOwner = attacker,
+            sourceObject = null,
+            targetObject = targetObject,
+            position = position,
+            rotation = Quaternion.Euler(0f, 0f, angle),
+            direction = normalizedDirection,
+            hasDirection = true,
+            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
+        };
+
+        SkillUtils.FillContextSpawnPoints(ref context, attacker);
+        return context;
+    }
+
+    public SkillContext CreateCastContext(
+        SkillInstance skillInstance,
+        GameObject attacker,
+        Vector2 direction)
+    {
+        return CreateCastContext(
+            skillInstance,
+            attacker,
+            null,
+            attacker != null ? attacker.transform.position : Vector3.zero,
+            direction
+        );
+    }
+
+    public SkillContext CreateCastContext(
+        SkillInstance skillInstance,
+        GameObject attacker,
+        GameObject targetObject,
+        Vector2 direction)
+    {
+        return CreateCastContext(
+            skillInstance,
+            attacker,
+            targetObject,
+            attacker != null ? attacker.transform.position : Vector3.zero,
+            direction
+        );
+    }
 }

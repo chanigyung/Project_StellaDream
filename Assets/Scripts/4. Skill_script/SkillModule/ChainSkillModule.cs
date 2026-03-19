@@ -29,7 +29,6 @@ public class ChainSkillModule : SkillModuleBase
     private void TriggerChainSkill(SkillContext context)
     {
         if (data.reactionSkillData == null) return;
-        if (context.sourceObject == null) return;
         if (context.attacker == null) return;
 
         SkillExecutor executor = context.attacker.GetComponent<SkillExecutor>();
@@ -48,7 +47,7 @@ public class ChainSkillModule : SkillModuleBase
         SkillContext reactionContext = context.Clone();
 
         reactionContext.skillInstance = reactionSkillInstance;
-        reactionContext.contextOwner = context.sourceObject;
+        reactionContext.contextOwner = null;
         reactionContext.sourceObject = context.sourceObject;
         reactionContext.targetObject = context.targetObject;
         reactionContext.attacker = context.attacker;

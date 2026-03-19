@@ -48,7 +48,7 @@ public static class SkillUtils
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
 
-        Vector3 ownerWorldPoint = GetOwnerWorldPoint(context, data.ownerSpawnPointType);
+        Vector3 ownerWorldPoint = GetSpawnPoint(context, data.ownerSpawnPointType);
 
         CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
             Vector2.zero, out var basePos, out var rot, out var spawnPoint);
@@ -66,10 +66,10 @@ public static class SkillUtils
             hitboxComp.Initialize(context, lifetime);
         }
 
-        // 추가: owner 기준점에 hitbox 프리팹 기준점 정렬
+        // owner 기준점에 hitbox 프리팹 기준점 정렬
         AlignSpawnedObject(hitbox, ownerWorldPoint, data.prefabSpawnPointType);
 
-        // 추가: 정렬 후 방향성 offset 적용
+        // 정렬 후 방향성 offset 적용
         Vector2 offset = spawnOffset;
         CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
             offset, out var finalPos, out rot, out spawnPoint);
@@ -86,7 +86,7 @@ public static class SkillUtils
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
 
-        Vector3 ownerWorldPoint = GetOwnerWorldPoint(context, data.ownerSpawnPointType);
+        Vector3 ownerWorldPoint = GetSpawnPoint(context, data.ownerSpawnPointType);
 
         CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
             Vector2.zero, out var basePos, out var rot, out var spawnPoint);
@@ -98,10 +98,10 @@ public static class SkillUtils
             proj.Initialize(context, speed, lifetime);
         }
 
-        // 추가: owner 기준점에 projectile 프리팹 기준점 정렬
+        // owner 기준점에 projectile 프리팹 기준점 정렬
         AlignSpawnedObject(projectile, ownerWorldPoint, data.prefabSpawnPointType);
 
-        // 추가: 정렬 후 방향성 offset 적용
+        // 정렬 후 방향성 offset 적용
         Vector2 offset = spawnOffset;
         CalculateSpawnTransform(context, skill, data.ownerSpawnPointType, 
             offset, out var finalPos, out rot, out spawnPoint);
@@ -125,6 +125,17 @@ public static class SkillUtils
         }
 
         return spawnPoint.GetPoint(type);
+    }
+
+    public static Vector3 GetSpawnPoint(SkillContext context, SkillSpawnPointType type)
+    {
+        return type switch
+        {
+            SkillSpawnPointType.Ground => context.groundPoint,
+            SkillSpawnPointType.Left => context.leftPoint,
+            SkillSpawnPointType.Right => context.rightPoint,
+            _ => context.position
+        };
     }
 
     // VFX 실행
@@ -158,21 +169,6 @@ public static class SkillUtils
         }
 
         return vfx;
-    }
-
-    // owner의 spawn point 월드 좌표 반환
-    public static Vector3 GetOwnerWorldPoint(SkillContext context, SkillSpawnPointType type)
-    {
-        GameObject spawnOwner = context.contextOwner;
-
-        if (spawnOwner == null)
-            return context.position;
-
-        SkillSpawnPoints spawnPoints = spawnOwner.GetComponent<SkillSpawnPoints>();
-        if (spawnPoints == null)
-            return spawnOwner.transform.position;
-
-        return spawnPoints.GetWorldPoint(type);
     }
 
     // 생성된 프리팹의 spawn point 월드 좌표 반환
@@ -218,12 +214,34 @@ public static class SkillUtils
 
         Vector3 worldOffset = (Vector3)(dir * offset.x + perp * offset.y);
 
-        if (spawnPoint != null)
-            position = spawnPoint.position + worldOffset;
-        else
-            position = context.position + worldOffset;
+        position = GetSpawnPoint(context, spawnPointType) + worldOffset;
 
         rotation = skill.RotateEffect ? Quaternion.Euler(0f, 0f, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg): context.rotation;
+    }
+
+    public static void FillContextSpawnPoints(ref SkillContext context, GameObject pointOwner)
+    {
+        Vector3 fallback = context.position;
+
+        context.groundPoint = fallback;
+        context.leftPoint = fallback;
+        context.rightPoint = fallback;
+
+        if (pointOwner == null)
+            return;
+
+        SkillSpawnPoints spawnPoints = pointOwner.GetComponent<SkillSpawnPoints>();
+        if (spawnPoints == null)
+            return;
+
+        if (spawnPoints.groundPoint != null)
+            context.groundPoint = spawnPoints.groundPoint.position;
+
+        if (spawnPoints.leftPoint != null)
+            context.leftPoint = spawnPoints.leftPoint.position;
+
+        if (spawnPoints.rightPoint != null)
+            context.rightPoint = spawnPoints.rightPoint.position;
     }
 
     //카메라 시야 내의 몬스터들 찾아서 List로 반환

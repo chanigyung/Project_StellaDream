@@ -92,6 +92,7 @@ public abstract class SkillObjectBase : MonoBehaviour
             spawnedContext.direction = direction;
             spawnedContext.hasDirection = false;
         }
+        SkillUtils.FillContextSpawnPoints(ref spawnedContext, spawnedContext.contextOwner);
 
         return spawnedContext;
     }
@@ -108,6 +109,7 @@ public abstract class SkillObjectBase : MonoBehaviour
         hitContext.rotation = transform.rotation;
         hitContext.direction = direction;
         hitContext.hasDirection = true;
+        SkillUtils.FillContextSpawnPoints(ref hitContext, hitContext.contextOwner);
 
         return hitContext;
     }
@@ -123,6 +125,7 @@ public abstract class SkillObjectBase : MonoBehaviour
         tickContext.rotation = transform.rotation;
         tickContext.direction = direction;
         tickContext.hasDirection = true;
+        SkillUtils.FillContextSpawnPoints(ref tickContext, tickContext.contextOwner);
 
         return tickContext;
     }
@@ -139,6 +142,7 @@ public abstract class SkillObjectBase : MonoBehaviour
         expireContext.rotation = transform.rotation;
         expireContext.direction = direction;
         expireContext.hasDirection = context.hasDirection;
+        SkillUtils.FillContextSpawnPoints(ref expireContext, expireContext.contextOwner);
 
         return expireContext;
     }

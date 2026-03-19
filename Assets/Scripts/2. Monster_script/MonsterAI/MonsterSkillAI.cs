@@ -32,7 +32,6 @@ public class MonsterSkillAI : MonoBehaviour
                     lastUsedTimes[skill] = -999f;
             }
         }
-        Debug.Log($"[SkillAI] skillInstances={context.instance.skillInstances.Count}, skillList={context.instance.data.skillList.Count}");
     }
 
     // 변경: AttackAction이 "지금 당장 시전 시작이 가능한지"만 빠르게 확인할 수 있도록 제공
@@ -62,43 +61,25 @@ public class MonsterSkillAI : MonoBehaviour
         if (!SelectCastSkill(dist, out SkillInstance skill, out float maxRange))
             return false;
 
-        SkillContext skillContext = CreateCastContext(skill);
+        Vector2 direction = GetCastDirection();
+        SkillContext skillContext = skillExecutor.CreateCastContext(skill, gameObject, context.target, direction);
+
         StartCoroutine(CastSkillWithDelay(skill, skillContext));
         return true;
     }
 
-    private SkillContext CreateCastContext(SkillInstance skillInstance)
+    private Vector2 GetCastDirection()//스킬 사용방향 계산
     {
-        //direction은 x좌표기준 좌, 우만
-        Vector2 direction;
         if (context.target != null)
         {
             float xDiff = context.target.transform.position.x - transform.position.x;
-            direction = new Vector2(Mathf.Sign(xDiff), 0f);
-        }
-        else
-        {
-            float fx = context.facingDirectionX;
-            if (Mathf.Approximately(fx, 0f)) fx = 1f;
-            direction = new Vector2(Mathf.Sign(fx), 0f);
+            return new Vector2(Mathf.Sign(xDiff), 0f);
         }
 
-        Vector2 normalizedDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
-        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
+        float fx = context.facingDirectionX;
+        if (Mathf.Approximately(fx, 0f)) fx = 1f;
 
-        return new SkillContext
-        {
-            skillInstance = skillInstance,
-            attacker = gameObject,
-            contextOwner = gameObject,
-            sourceObject = null,
-            targetObject = context.target,
-            position = transform.position,
-            rotation = Quaternion.Euler(0f, 0f, angle),
-            direction = normalizedDirection,
-            hasDirection = true,
-            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
-        };
+        return new Vector2(Mathf.Sign(fx), 0f);
     }
 
     // 변경: 기절/파워넉백 상태면 스킬 사용 차단 (기존 로직 유지)

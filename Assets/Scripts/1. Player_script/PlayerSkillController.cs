@@ -35,7 +35,7 @@ public class PlayerSkillController : MonoBehaviour
             case SkillActivationType.OnPress:
                 if (Input.GetMouseButtonDown(button))
                 {
-                    SkillContext skillContext = CreateCastContext(skillToUse);
+                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, GetMouseDirection());
                     if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
@@ -48,7 +48,7 @@ public class PlayerSkillController : MonoBehaviour
             case SkillActivationType.OnRelease:
                 if (Input.GetMouseButtonUp(button))
                 {
-                    SkillContext skillContext = CreateCastContext(skillToUse);
+                    SkillContext skillContext =skillExecutor.CreateCastContext(skillToUse, gameObject, GetMouseDirection());
                     if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
@@ -66,7 +66,7 @@ public class PlayerSkillController : MonoBehaviour
 
                 if (Input.GetMouseButton(button))
                 {
-                    SkillContext skillContext = CreateCastContext(skillToUse);
+                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, GetMouseDirection());
                     if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
@@ -81,27 +81,6 @@ public class PlayerSkillController : MonoBehaviour
                 }
                 break;
         }
-    }
-
-    private SkillContext CreateCastContext(SkillInstance skillInstance)
-    {
-        Vector2 direction = GetMouseDirection();
-        Vector2 normalizedDirection = direction.sqrMagnitude > 0.0001f ? direction.normalized : Vector2.right;
-        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
-
-        return new SkillContext
-        {
-            skillInstance = skillInstance,
-            attacker = gameObject,
-            contextOwner = gameObject,
-            sourceObject = null,
-            targetObject = null,
-            position = transform.position,
-            rotation = Quaternion.Euler(0f, 0f, angle),
-            direction = normalizedDirection,
-            hasDirection = true,
-            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
-        };
     }
 
     //마우스 좌표 받아와 방향 설정

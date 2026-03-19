@@ -83,6 +83,7 @@ public class VFXModule : SkillModuleBase
         vfxContext.direction = dir;
         vfxContext.hasDirection = entry.useDirection;
         vfxContext.spawnPointType = entry.spawnPointType;
+        SkillUtils.FillContextSpawnPoints(ref vfxContext, anchorObject);
 
         return vfxContext;
     }

@@ -95,6 +95,7 @@ public class Projectile : SkillObjectBase
         hitContext.rotation = transform.rotation;
         hitContext.direction = direction;
         hitContext.hasDirection = true;
+        SkillUtils.FillContextSpawnPoints(ref hitContext, hitContext.contextOwner);
 
         return hitContext;
     }
@@ -108,6 +109,7 @@ public class Projectile : SkillObjectBase
         expireContext.rotation = transform.rotation;
         expireContext.direction = direction;
         expireContext.hasDirection = context.hasDirection;
+        SkillUtils.FillContextSpawnPoints(ref expireContext, expireContext.contextOwner);
 
         return expireContext;
     }

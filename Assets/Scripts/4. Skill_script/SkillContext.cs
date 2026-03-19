@@ -10,6 +10,10 @@ public struct SkillContext
     public GameObject targetObject;
 
     public Vector3 position;
+    public Vector3 groundPoint;
+    public Vector3 leftPoint;
+    public Vector3 rightPoint; 
+
     public Quaternion rotation;
     public Vector2 direction;
     public bool hasDirection;
