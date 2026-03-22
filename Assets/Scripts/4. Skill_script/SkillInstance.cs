@@ -21,8 +21,9 @@ public class SkillInstance
     // 모듈 인스턴스들
     private readonly List<ISkillModule> modules = new();
 
-    // 스킬 잠금(선딜레이 등)
-    public bool skillLock;
+    // 스킬 잠금 관련
+    private readonly HashSet<SkillLockReason> lockReasonSet = new();
+    public bool IsLocked => lockReasonSet.Count > 0;
 
     public SkillInstance(SkillData data)
     {
@@ -90,6 +91,30 @@ public class SkillInstance
     public void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)
     {
         
+    }
+
+    // ------------------------------ 스킬 잠금 관련 메서드 ---------------------------//
+    public void AddLock(SkillLockReason reason)
+    {
+        lockReasonSet.Add(reason);
+    }
+
+    // 추가: Lock reason 해제
+    public void RemoveLock(SkillLockReason reason)
+    {
+        lockReasonSet.Remove(reason);
+    }
+
+    // 추가: 특정 reason 보유 여부 확인
+    public bool HasLockReason(SkillLockReason reason)
+    {
+        return lockReasonSet.Contains(reason);
+    }
+
+    // 추가: 전체 Lock 해제 필요 시 사용
+    public void ClearAllLocks()
+    {
+        lockReasonSet.Clear();
     }
 
     // ------------ 스킬이 사용하는 오브젝트 등록 및 해제 메서드들(프로토타입) ------------ //

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SkillModule/Knockback")]
+[CreateAssetMenu(menuName = "SkillModule/Offense/Knockback")]
 public class KnockbackModuleData : SkillModuleData
 {
     public float knockbackX = 5f;

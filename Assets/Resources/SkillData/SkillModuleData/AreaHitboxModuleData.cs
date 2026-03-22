@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SkillModule/AreaHitbox")]
+[CreateAssetMenu(menuName = "SkillModule/Object/AreaHitbox")]
 public class AreaHitboxModuleData : HitboxModuleData
 {
     public float tickInterval = 0.5f;

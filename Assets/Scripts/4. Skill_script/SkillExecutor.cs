@@ -17,7 +17,7 @@ public class SkillExecutor : MonoBehaviour
         SkillInstance skillInstance = context.skillInstance;
 
         if (skillInstance == null) return false;
-        if (skillInstance.skillLock) return false;
+        if (skillInstance.IsLocked) return false;
 
         if (activeSkill != null &&
             activeSkill != skillInstance &&
@@ -38,13 +38,6 @@ public class SkillExecutor : MonoBehaviour
         // 캐스팅 락을 무시하는 스킬은 activeSkill로 등록X
         if (!skillInstance.data.ignoreCastLock)
             activeSkill = skillInstance;
-
-        // if (skillInstance.delay <= 0f && (skillInstance.postDelay <= 0f))
-        // {
-        //     skillInstance.Execute(context);
-        //     ReleaseActiveSkill(skillInstance);
-        //     return true;
-        // }
 
         // 하나라도 딜레이가 있으면 코루틴 실행
         StartCoroutine(ExecuteSkillDelay(context));

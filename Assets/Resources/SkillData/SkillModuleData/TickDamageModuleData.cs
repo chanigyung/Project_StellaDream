@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Skill/Module/TickDamage")]
+[CreateAssetMenu(menuName = "SkillModule/Offense/TickDamage")]
 public class TickDamageModuleData : SkillModuleData
 {
     public float damage = 20f;

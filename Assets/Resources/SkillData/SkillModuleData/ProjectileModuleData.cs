@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SkillModule/Projectile")]
+[CreateAssetMenu(menuName = "SkillModule/Object/Projectile")]
 public class ProjectileModuleData : SkillModuleData
 {
     public GameObject projectilePrefab;

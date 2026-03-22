@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SkillModule/Hitbox")]
+[CreateAssetMenu(menuName = "SkillModule/Object/Hitbox")]
 public class HitboxModuleData : SkillModuleData
 {
     public GameObject hitboxPrefab;
