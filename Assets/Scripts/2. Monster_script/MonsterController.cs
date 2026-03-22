@@ -25,11 +25,12 @@ public class MonsterController : UnitController
         //context 생성 및 오브젝트 동기화, 컴포넌트 캐싱
         context = new MonsterContext();
         context.selfTransform = transform;
-        context.movement = GetComponent<MonsterMovement>();
-        context.movement.Initialize(context);
-        context.animator = GetComponent<MonsterAnimator>();
         context.instance = instance as MonsterInstance;
+        context.movement = GetComponent<MonsterMovement>();
+        context.animator = GetComponent<MonsterAnimator>();
         context.selfGroundPoint = unit != null ? unit.GroundPoint : transform;
+
+        context.movement.Initialize(context);
 
         //censor 생성과 캐싱
         censor = GetComponentInChildren<MonsterCensor>();

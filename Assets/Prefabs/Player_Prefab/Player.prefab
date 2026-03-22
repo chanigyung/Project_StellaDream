@@ -1015,6 +1015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8315906823629270547}
   - component: {fileID: 2067049299834656840}
+  - component: {fileID: 5628426992619112131}
   - component: {fileID: 4814346733939116900}
   - component: {fileID: 3989590534973415119}
   - component: {fileID: 1287427657936829974}
@@ -1024,9 +1025,9 @@ GameObject:
   - component: {fileID: 2518215653612312739}
   - component: {fileID: 7589833968211789952}
   - component: {fileID: 7074031245736625342}
+  - component: {fileID: 1209730309362031024}
   - component: {fileID: 2132571895182991110}
   - component: {fileID: 8970223490355038521}
-  - component: {fileID: 2659941255917182158}
   - component: {fileID: 3110194569496512230}
   m_Layer: 9
   m_Name: Player
@@ -1071,6 +1072,21 @@ MonoBehaviour:
   playerData: {fileID: 0}
   jumpKey: 119
   actionKey: 102
+--- !u!114 &5628426992619112131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5675558720561331785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e560218484efd346acd27942b094f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useInstantGroundMove: 1
+  accel: 30
+  airLerpFactor: 0.1
 --- !u!114 &4814346733939116900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1083,6 +1099,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecef175d11cfbbe409558f7256e3d8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 2067049299834656840}
+  playerAC: {fileID: 1287427657936829974}
+  animator: {fileID: 7074031245736625342}
+  unitMovement: {fileID: 5628426992619112131}
+  playerCensor: {fileID: 1209730309362031024}
   isJumping: 0
   isGrounded: 1
   jumpedBefore: 0
@@ -1246,6 +1267,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfa56762f920d73419664ee1a0e1927b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1209730309362031024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5675558720561331785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 183ea5ba5a708c840868b7568edcf914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckPoint: {fileID: 8276392092178303177}
+  groundCheckRadius: 0.15
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!114 &2132571895182991110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,51 +1323,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &2659941255917182158
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5675558720561331785}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.005335331, y: -0.5206718}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.39700985, y: 0.114721894}
-  m_EdgeRadius: 0
 --- !u!61 &3110194569496512230
 BoxCollider2D:
   m_ObjectHideFlags: 0

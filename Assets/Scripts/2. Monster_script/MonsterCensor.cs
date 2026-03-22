@@ -15,6 +15,7 @@ public class MonsterCensor : MonoBehaviour
     [SerializeField] private float ledgeCheckForwardDistance = 0.35f; // 발 전방 거리
     [SerializeField] private float maxDropDistance = 0.8f; // 아래 거리
 
+    [SerializeField] private UnitMovement unitMovement;
     private MonsterContext context;
 
     public void Initialize(MonsterContext ctx)
@@ -39,6 +40,7 @@ public class MonsterCensor : MonoBehaviour
 
         bool grounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
         context.isGrounded = grounded;
+        unitMovement?.SetGrounded(grounded);
     }
 
     // 전방 벽 판정

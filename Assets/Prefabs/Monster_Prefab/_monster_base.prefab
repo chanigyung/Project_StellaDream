@@ -834,6 +834,7 @@ GameObject:
   - component: {fileID: 6632916101516864826}
   - component: {fileID: 72482468766992822}
   - component: {fileID: 6872308342932762091}
+  - component: {fileID: 1680953618033819593}
   - component: {fileID: 6303476861000532347}
   - component: {fileID: 8084018932126541268}
   - component: {fileID: 1592050569521716108}
@@ -910,6 +911,7 @@ MonoBehaviour:
   wallCheckRadius: 0.15
   ledgeCheckForwardDistance: 0.35
   maxDropDistance: 3
+  unitMovement: {fileID: 1680953618033819593}
 --- !u!114 &7358252084151330119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,7 +924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cba22d926452a74397328bef566190b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accel: 40
+  unitMovement: {fileID: 1680953618033819593}
 --- !u!114 &1915722454801272030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -992,6 +994,21 @@ MonoBehaviour:
   dropHandler: {fileID: 6303476861000532347}
   dieEffectPrefab: {fileID: 4524745967369701591, guid: 24bd76baacd7ae649824ae8f1c0be65a, type: 3}
   deathAnimatorController: {fileID: 0}
+--- !u!114 &1680953618033819593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e560218484efd346acd27942b094f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useInstantGroundMove: 0
+  accel: 30
+  airLerpFactor: 0.1
 --- !u!114 &6303476861000532347
 MonoBehaviour:
   m_ObjectHideFlags: 0

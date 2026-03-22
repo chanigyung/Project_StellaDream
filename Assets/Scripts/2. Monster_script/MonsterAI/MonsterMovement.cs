@@ -1,42 +1,20 @@
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
-public class MonsterMovement : MonoBehaviour, IMovementController // IInterruptable
+public class MonsterMovement : MonoBehaviour
 {
     private MonsterContext context;
     private BaseUnitInstance instance => context?.instance;
-
-    private Rigidbody2D rigid;
-
-    // move 관련 변수
-    private float desiredDirX;
-    private bool hasMoveInput;
-
-    // jump 관련 변수
-    private bool jumped = false;
-
-    private bool isRooted = false;
-    private bool isStunned = false;
-    private bool isPowerKnockbacked = false;
-
-    // 이동속도 목표값에 도달하는 속도 제어를 위한 변수
-    // 클수록 목표 이동속도에 도달하는 속도가 빨라짐. *(이속2 기준 20이면 0.1초)
-    // 추후 monsterInstance 또는 monsterContext등과 연계될 수 있도록 외부 변수로 뺄 것
-    [SerializeField] private float accel = 30f;
+    [SerializeField] private UnitMovement unitMovement;
 
     public void Initialize(MonsterContext ctx)
     {
         context = ctx;
     }
 
-    private void Awake()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-    }
-
     private bool CanMoveNow()
     {
-        if (instance == null || isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
+        if (unitMovement == null || !unitMovement.CanMoveNow())
             return false;
 
         return context != null && context.canMove;
@@ -46,8 +24,7 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
     {
         if (!CanMoveNow())
         {
-            hasMoveInput = false;
-            desiredDirX = 0f;
+            unitMovement?.Stop();
             context.animator?.PlayMoving(false);
             return;
         }
@@ -55,14 +32,14 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
         float dirX = direction.x;
         if (Mathf.Abs(dirX) < 0.01f)
         {
-            hasMoveInput = false;
-            desiredDirX = 0f;
+            unitMovement?.Stop();
             context.animator?.PlayMoving(false);
             return;
         }
 
-        hasMoveInput = true;
-        desiredDirX = Mathf.Sign(dirX);
+        unitMovement?.Move(direction);
+
+        float desiredDirX = Mathf.Sign(dirX);
 
         if (context != null)
             context.facingDirectionX = desiredDirX;
@@ -79,100 +56,38 @@ public class MonsterMovement : MonoBehaviour, IMovementController // IInterrupta
     //실제 이동
     private void FixedUpdate()
     {
-        if (rigid == null || instance == null || context == null)
+        if (context == null || unitMovement == null)
             return;
 
-        if (instance.IsKnockbackActive || isPowerKnockbacked || isStunned)
-            return;
-
-        if (isPowerKnockbacked || isRooted || !hasMoveInput)
-        {
-            rigid.velocity = new Vector2(0f, rigid.velocity.y);
-            return;
-        }
-
-        float targetVelX = 0f;
-
-        if (CanMoveNow() && hasMoveInput)
-        {
-            float speed = instance.GetCurrentMoveSpeed();
-            targetVelX = desiredDirX * speed;
-        }
-
-        // float newVelX = Mathf.MoveTowards(rigid.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
-        // rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
-
-        bool grounded = (context != null && context.isGrounded);
-
-        if (grounded)
-        {
-            float newVelX = Mathf.MoveTowards(rigid.velocity.x, targetVelX, accel * Time.fixedDeltaTime);
-            rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
-        }
-        else
-        {
-            float newVelX = Mathf.Lerp(rigid.velocity.x, targetVelX, 0.1f);
-            rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
-        }
-
-        // 점프, 착지시 점프변수 초기화
-        if (context != null && context.isGrounded)
-            jumped = false;
+        unitMovement.SetGrounded(context.isGrounded);
+        unitMovement.TickMove();
     }
 
     public bool TryJump()
     {
-        if (context == null || instance == null)
+        if (context == null || instance == null || unitMovement == null)
             return false;
 
-        // trace 상태에서만 점프(사양)
         if (!context.isTracing)
             return false;
 
         if (!context.isGrounded)
             return false;
 
-        if (jumped)
-            return false;
-
         if (!CanMoveNow())
             return false;
 
-        Jump();
-        jumped = true;
-        return true;
+        return unitMovement.TryJump();
     }
 
     public void Jump()
     {
-        if (rigid == null || instance == null)
-            return;
-
-        if (isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
-            return;
-
-        float jumpPower = instance.GetCurrentJumpPower();
-
-        rigid.velocity = new Vector2(rigid.velocity.x, 0);
-        rigid.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
+        unitMovement?.Jump();
     }
 
     public void Stop()
     {
-        hasMoveInput = false;
-        desiredDirX = 0f;
-
-        if (rigid != null)
-            rigid.velocity = new Vector2(0f, rigid.velocity.y);
-
+        unitMovement?.Stop();
         context.animator?.PlayMoving(false);
     }
-    
-    public void SetRooted(bool value) => isRooted = value;
-    public void SetStunned(bool value)
-    {
-        isStunned = value;
-        context.animator?.PlayStunned(value);
-    }
-    public void SetPowerKnockbacked(bool value) => isPowerKnockbacked = value;
 }
