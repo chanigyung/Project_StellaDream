@@ -6,10 +6,13 @@ public class PlayerController : UnitController
     public static PlayerController Instance { get; private set;}
     public PlayerData playerData;
 
-    public Vector2 moveInput { get; private set; }
-    public bool jumpPressed { get; private set; }
-    public int mouseButton { get; private set; }
-    public bool interactPressed { get; private set; }
+    private PlayerContext context;
+    public PlayerContext Context => context;
+
+    public Vector2 moveInput => context != null ? context.moveInput : Vector2.zero;
+    public bool jumpPressed => context != null && context.jumpPressed;
+    public int mouseButton => context != null ? context.mouseButton : -1;
+    public bool interactPressed => context != null && context.interactPressed;
 
     public KeyCode jumpKey = KeyCode.W;
     public KeyCode actionKey = KeyCode.F;
@@ -39,7 +42,42 @@ public class PlayerController : UnitController
         }
 
         this.playerData = instance.data;
+     
         Initialize(instance);
+    }
+
+    public override void Initialize(IUnitInstance instance) // [추가]
+    {
+        base.Initialize(instance);
+
+        Instance = this;
+
+        PlayerInstance playerInstance = instance as PlayerInstance;
+        if (playerInstance == null)
+        {
+            Debug.LogError("PlayerController.Initialize에 PlayerInstance가 아닙니다.");
+            return;
+        }
+
+        playerData = playerInstance.data;
+
+        context = new PlayerContext();
+        context.selfTransform = transform;
+        context.instance = playerInstance;
+        context.unitMovement = GetComponent<UnitMovement>();
+        context.selfGroundPoint = GroundPoint;
+
+        context.controller = this;
+        context.movement = GetComponent<PlayerMovement>();
+        context.animator = GetComponent<PlayerAnimator>();
+        context.armControl = GetComponent<PlayerArmControl>();
+        context.skillController = GetComponent<PlayerSkillController>();
+        context.interactor = GetComponent<PlayerInteractor>();
+
+        context.movement?.Initialize(context); // [추가]
+
+        UnitCensor censor = GetComponentInChildren<UnitCensor>(); // [추가]
+        censor?.Initialize(context); // [추가]
     }
 
     protected override void Update()
@@ -48,21 +86,92 @@ public class PlayerController : UnitController
 
         if (IsInputBlocked()) return;
 
-        moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
-        jumpPressed = Input.GetKeyDown(jumpKey);
-        interactPressed = Input.GetKeyDown(actionKey);
+        HandleInput(); // 입력 수집
+        context.UpdateContext(); // Context 상태 계산
     }
 
     //마우스 클릭시 호출 함수
     public int GetPressedButton()
     {
-        if (IsInputBlocked()) return -1;
+        return context != null ? context.mouseButton : -1; // [수정] context 기반으로 반환
+    }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0) || Input.GetMouseButton(0))
-            return 0; // 좌클릭
-        if (Input.GetMouseButtonDown(1) || Input.GetMouseButtonUp(1) || Input.GetMouseButton(1))
-            return 1; // 우클릭
-        return -1; // 입력 없음
+    private void HandleInput()
+    {
+        context.isInputBlocked = IsInputBlocked();
+
+        // 입력 차단 상태 처리
+        if (context.isInputBlocked)
+        {
+            ClearInput();
+            return;
+        }
+
+        // 이동 입력
+        context.moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
+        context.jumpPressed = Input.GetKeyDown(jumpKey);
+        context.interactPressed = Input.GetKeyDown(actionKey);
+
+        // 마우스 입력
+        context.leftMouseDown = Input.GetMouseButtonDown(0);
+        context.leftMouseHeld = Input.GetMouseButton(0);
+        context.leftMouseUp = Input.GetMouseButtonUp(0);
+
+        context.rightMouseDown = Input.GetMouseButtonDown(1);
+        context.rightMouseHeld = Input.GetMouseButton(1);
+        context.rightMouseUp = Input.GetMouseButtonUp(1);
+
+        context.mouseButton = ResolveMouseButton();
+
+        // 조준 방향 계산
+        UpdateAim();
+    }
+
+    private void ClearInput()
+    {
+        // 입력 차단 시 모든 입력값 초기화
+        context.moveInput = Vector2.zero;
+        context.jumpPressed = false;
+        context.interactPressed = false;
+
+        context.leftMouseDown = false;
+        context.leftMouseHeld = false;
+        context.leftMouseUp = false;
+
+        context.rightMouseDown = false;
+        context.rightMouseHeld = false;
+        context.rightMouseUp = false;
+
+        context.mouseButton = -1;
+    }
+
+    // 마우스 위치 기반 조준 방향 계산 함수
+    private void UpdateAim()
+    {
+        Camera cam = Camera.main;
+        if (cam == null)
+        {
+            context.mouseWorldPosition = context.selfTransform.position;
+            context.aimDirection = Vector2.right;
+            return;
+        }
+
+        context.mouseWorldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
+
+        Vector2 dir = context.mouseWorldPosition - context.selfTransform.position;
+        if (dir.sqrMagnitude > 0.0001f)
+            context.aimDirection = dir.normalized;
+    }
+
+    private int ResolveMouseButton() // [추가]
+    {
+        if (context.leftMouseDown || context.leftMouseUp || context.leftMouseHeld)
+            return 0;
+
+        if (context.rightMouseDown || context.rightMouseUp || context.rightMouseHeld)
+            return 1;
+
+        return -1;
     }
 
     private bool IsInputBlocked()

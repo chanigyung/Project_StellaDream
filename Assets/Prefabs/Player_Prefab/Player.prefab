@@ -1130,10 +1130,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecef175d11cfbbe409558f7256e3d8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAC: {fileID: 1287427657936829974}
-  animator: {fileID: 7074031245736625342}
-  unitMovement: {fileID: 5628426992619112131}
-  playerCensor: {fileID: 0}
   isJumping: 0
   isGrounded: 1
   jumpedBefore: 0
@@ -1169,7 +1165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckPoint: {fileID: 8276392092178303177}
-  groundCheckRadius: 0.15
+  groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 192

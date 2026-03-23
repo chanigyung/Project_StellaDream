@@ -10,19 +10,21 @@ public class PlayerSkillController : MonoBehaviour
 
     void Update()
     {
-        //나중에 좌클릭우클릭 동시에 못하는 처리 해야함
-        
-        if (InputBlocker.IsBlocked) return;
+        PlayerContext context = playerController != null ? playerController.Context : null;
+        if (context == null)
+            return;
 
-        int button = playerController.GetPressedButton();
-        if (button == -1) return; 
+        if (InputBlocker.IsBlocked || context.isInputBlocked) return;
+
+        int button = context.mouseButton;
+        if (button == -1) return;
 
         SkillInstance skillToUse = (button == 0) ? weaponManager.GetMainSkill() : weaponManager.GetSubSkill();
 
         //무기 미장착시 예외처리
         if (skillToUse == null)
         {
-            if (Input.GetMouseButtonDown(button))
+            if (context.IsMouseDown(button))
             {
                 Debug.Log($"{(button == 0 ? "주무기" : "보조무기")} 미장착 상태");
             }
@@ -33,9 +35,9 @@ public class PlayerSkillController : MonoBehaviour
         switch (skillToUse.data.activationType)
         {
             case SkillActivationType.OnPress:
-                if (Input.GetMouseButtonDown(button))
+                if (context.IsMouseDown(button))
                 {
-                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, GetMouseDirection());
+                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, context.aimDirection);
                     if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
@@ -46,9 +48,9 @@ public class PlayerSkillController : MonoBehaviour
                 break;
 
             case SkillActivationType.OnRelease:
-                if (Input.GetMouseButtonUp(button))
+                if (context.IsMouseUp(button))
                 {
-                    SkillContext skillContext =skillExecutor.CreateCastContext(skillToUse, gameObject, GetMouseDirection());
+                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, context.aimDirection);
                     if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
@@ -59,14 +61,14 @@ public class PlayerSkillController : MonoBehaviour
                 break;
 
             case SkillActivationType.WhileHeld:
-                if (Input.GetMouseButtonDown(button))
+                if (context.IsMouseDown(button))
                 {
                     skillExecutor.BeginHeldSkill(skillToUse);
                 }
 
-                if (Input.GetMouseButton(button))
+                if (context.IsMouseHeld(button))
                 {
-                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, GetMouseDirection());
+                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, context.aimDirection);
                     if (skillExecutor.UseSkill(skillContext))
                     {
                         var weapon = weaponManager.GetWeaponBySkill(skillToUse);
@@ -75,19 +77,12 @@ public class PlayerSkillController : MonoBehaviour
                     }
                 }
 
-                if (Input.GetMouseButtonUp(button))
+                if (context.IsMouseUp(button))
                 {
                     skillExecutor.EndHeldSkill(skillToUse);
                 }
                 break;
         }
-    }
-
-    //마우스 좌표 받아와 방향 설정
-    Vector2 GetMouseDirection()
-    {
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return (mouseWorld - transform.position).normalized;
     }
 
     private void HandleDurabilityAfterSkill(WeaponInstance weaponInstance) //스킬 사용 후 무기 내구도 1 줄이기

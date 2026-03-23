@@ -10,6 +10,10 @@ public class PlayerInteractor : MonoBehaviour
 
     void Update()
     {
+        PlayerContext context = playerController != null ? playerController.Context : null; 
+        if (context == null)
+            return;
+
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange, interactLayer);
         if (hits.Length == 0)
         {
@@ -44,7 +48,7 @@ public class PlayerInteractor : MonoBehaviour
             currentTarget = interactable;
         }
 
-        if (playerController.interactPressed)
+        if (context.interactPressed)
         {
             interactable.Interact();
             currentTarget = null;
