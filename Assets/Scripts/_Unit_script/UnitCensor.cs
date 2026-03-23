@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MonsterCensor : MonoBehaviour
+public class UnitCensor : MonoBehaviour
 {
     [Header("바닥 체크")]
     [SerializeField] private Transform groundCheckPoint;
@@ -16,9 +16,9 @@ public class MonsterCensor : MonoBehaviour
     [SerializeField] private float maxDropDistance = 0.8f; // 아래 거리
 
     [SerializeField] private UnitMovement unitMovement;
-    private MonsterContext context;
+    private UnitContext context; // 1단계에서는 MonsterContext 그대로 사용
 
-    public void Initialize(MonsterContext ctx)
+    public void Initialize(UnitContext ctx) // 1단계에서는 MonsterContext 그대로 사용
     {
         context = ctx;
     }
@@ -43,9 +43,8 @@ public class MonsterCensor : MonoBehaviour
         unitMovement?.SetGrounded(grounded);
     }
 
-    // 전방 벽 판정
     private void UpdateWallAhead()
-    {   
+    {
         if (wallCheckPoint == null)
             return;
 
@@ -53,7 +52,6 @@ public class MonsterCensor : MonoBehaviour
         context.hasWallAhead = hasWall;
     }
 
-    // 낙하 여부 판정
     private void UpdateGroundAhead()
     {
         if (groundCheckPoint == null)
@@ -63,7 +61,6 @@ public class MonsterCensor : MonoBehaviour
         context.hasGroundRight = CheckGroundInDirection(1f);
     }
 
-    // dirX(-1:왼쪽, +1:오른쪽) 방향으로 한 발 앞에서 아래로 바닥을 탐색한다.
     private bool CheckGroundInDirection(float dirX)
     {
         Vector2 origin = (Vector2)groundCheckPoint.position + Vector2.right * (dirX * ledgeCheckForwardDistance);
@@ -74,12 +71,10 @@ public class MonsterCensor : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (groundCheckPoint != null)
-        Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
+            Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
 
         if (wallCheckPoint != null)
-        {
             Gizmos.DrawWireSphere(wallCheckPoint.position, wallCheckRadius);
-        }
 
         if (groundCheckPoint != null)
         {

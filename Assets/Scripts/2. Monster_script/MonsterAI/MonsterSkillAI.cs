@@ -24,9 +24,9 @@ public class MonsterSkillAI : MonoBehaviour
 
         // 초기화: 인스턴스의 스킬별 마지막 사용 시간 기록
         lastUsedTimes.Clear();
-        if (context?.instance?.skillInstances != null)
+        if (context?.monsterInstance?.skillInstances != null)
         {
-            foreach (var skill in context.instance.skillInstances)
+            foreach (var skill in context.monsterInstance.skillInstances)
             {
                 if (skill != null)
                     lastUsedTimes[skill] = -999f;
@@ -107,16 +107,16 @@ public class MonsterSkillAI : MonoBehaviour
 
         // skillList와 skillInstances는 인덱스가 대응된다는 전제(기존 구조 유지)
         // 변경: 데이터 리스트 길이 불일치 방어
-        int instanceCount = context.instance.skillInstances.Count;
-        int dataCount = context.instance.data.skillList != null ? context.instance.data.skillList.Count : 0;
+        int instanceCount = context.monsterInstance.skillInstances.Count;
+        int dataCount = context.monsterInstance.data.skillList != null ? context.monsterInstance.data.skillList.Count : 0;
         int count = Mathf.Min(instanceCount, dataCount);
 
         for (int i = 0; i < count; i++)
         {
-            SkillInstance skill = context.instance.skillInstances[i];
+            SkillInstance skill = context.monsterInstance.skillInstances[i];
             if (skill == null) continue;
 
-            float range = context.instance.data.skillList[i].maxRange;
+            float range = context.monsterInstance.data.skillList[i].maxRange;
             if (dist > range) continue;
             if (Time.time < lastUsedTimes[skill] + skill.cooldown) continue;
             if (Time.time < lastGlobalSkillUseTime + globalSkillCooldown) continue;

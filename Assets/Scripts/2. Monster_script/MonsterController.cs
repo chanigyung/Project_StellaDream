@@ -11,7 +11,7 @@ public class MonsterController : UnitController
     private MonsterContext context;
     public MonsterContext Context => context;
 
-    private MonsterCensor censor; // [ADD] 1단계: grounded 판정 연동
+    private UnitCensor censor;
 
     public override void Initialize(IUnitInstance instance)
     {
@@ -26,6 +26,7 @@ public class MonsterController : UnitController
         context = new MonsterContext();
         context.selfTransform = transform;
         context.instance = instance as MonsterInstance;
+        context.unitMovement = GetComponent<UnitMovement>();
         context.movement = GetComponent<MonsterMovement>();
         context.animator = GetComponent<MonsterAnimator>();
         context.selfGroundPoint = unit != null ? unit.GroundPoint : transform;
@@ -33,13 +34,13 @@ public class MonsterController : UnitController
         context.movement.Initialize(context);
 
         //censor 생성과 캐싱
-        censor = GetComponentInChildren<MonsterCensor>();
+        censor = GetComponentInChildren<UnitCensor>();
 
         //몬스터 애니메이션 설정(데이터 기반)
         var animatorComponent = GetComponentInChildren<Animator>();
-        if (animatorComponent != null && context.instance?.data?.animatorController != null)
+        if (animatorComponent != null && context.monsterInstance?.data?.animatorController != null)
         {
-            animatorComponent.runtimeAnimatorController = context.instance.data.animatorController;
+            animatorComponent.runtimeAnimatorController = context.monsterInstance.data.animatorController;
         }
 
         //의사결정 트리와 추적 로직에 context연결
@@ -55,19 +56,19 @@ public class MonsterController : UnitController
 
         BuildActions(decisionMaker);
 
-        deathHandler?.InitFromData(context.instance.data);
+        deathHandler?.InitFromData(context.monsterInstance.data);
     }
 
     // MonsterData.actionTypes 기반으로 액션 조립 후 DecisionMaker에 주입
     private void BuildActions(MonsterDecisionMaker decisionMaker)
     {
-        if (decisionMaker == null || context == null || context.instance == null || context.instance.data == null)
+        if (decisionMaker == null || context == null || context.monsterInstance == null || context.monsterInstance.data == null)
             return;
 
         List<IMonsterAction> actionList = new();
 
         // MonsterData에 actionTypes가 비어있으면 안전 기본값 적용
-        if (context.instance.data.actionTypes == null || context.instance.data.actionTypes.Count == 0)
+        if (context.monsterInstance.data.actionTypes == null || context.monsterInstance.data.actionTypes.Count == 0)
         {
             actionList.Add(new TraceAction());
             actionList.Add(new WanderAction());
@@ -75,7 +76,7 @@ public class MonsterController : UnitController
             return;
         }
 
-        foreach (var type in context.instance.data.actionTypes)
+        foreach (var type in context.monsterInstance.data.actionTypes)
         {
             IMonsterAction action = CreateAction(type);
             if (action != null)

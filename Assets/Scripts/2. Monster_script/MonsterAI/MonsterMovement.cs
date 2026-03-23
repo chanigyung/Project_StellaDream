@@ -5,7 +5,6 @@ public class MonsterMovement : MonoBehaviour
 {
     private MonsterContext context;
     private BaseUnitInstance instance => context?.instance;
-    [SerializeField] private UnitMovement unitMovement;
 
     public void Initialize(MonsterContext ctx)
     {
@@ -14,7 +13,7 @@ public class MonsterMovement : MonoBehaviour
 
     private bool CanMoveNow()
     {
-        if (unitMovement == null || !unitMovement.CanMoveNow())
+        if (context == null || context.unitMovement == null || !context.unitMovement.CanMoveNow())
             return false;
 
         return context != null && context.canMove;
@@ -24,7 +23,7 @@ public class MonsterMovement : MonoBehaviour
     {
         if (!CanMoveNow())
         {
-            unitMovement?.Stop();
+            context.unitMovement?.Stop();
             context.animator?.PlayMoving(false);
             return;
         }
@@ -32,12 +31,12 @@ public class MonsterMovement : MonoBehaviour
         float dirX = direction.x;
         if (Mathf.Abs(dirX) < 0.01f)
         {
-            unitMovement?.Stop();
+            context.unitMovement?.Stop();
             context.animator?.PlayMoving(false);
             return;
         }
 
-        unitMovement?.Move(direction);
+        context.unitMovement?.Move(direction);
 
         float desiredDirX = Mathf.Sign(dirX);
 
@@ -56,16 +55,16 @@ public class MonsterMovement : MonoBehaviour
     //실제 이동
     private void FixedUpdate()
     {
-        if (context == null || unitMovement == null)
+        if (context == null || context.unitMovement == null)
             return;
 
-        unitMovement.SetGrounded(context.isGrounded);
-        unitMovement.TickMove();
+        context.unitMovement.SetGrounded(context.isGrounded);
+        context.unitMovement.TickMove();
     }
 
     public bool TryJump()
     {
-        if (context == null || instance == null || unitMovement == null)
+        if (context == null || instance == null || context.unitMovement == null)
             return false;
 
         if (!context.isTracing)
@@ -77,17 +76,17 @@ public class MonsterMovement : MonoBehaviour
         if (!CanMoveNow())
             return false;
 
-        return unitMovement.TryJump();
+        return context.unitMovement.TryJump();
     }
 
     public void Jump()
     {
-        unitMovement?.Jump();
+        context.unitMovement?.Jump();
     }
 
     public void Stop()
     {
-        unitMovement?.Stop();
+        context.unitMovement?.Stop();
         context.animator?.PlayMoving(false);
     }
 }

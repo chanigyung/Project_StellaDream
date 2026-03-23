@@ -57,7 +57,7 @@ public class WanderSkillAction : IMonsterAction
 
         // 변경: 이 Action 실행 중에는 스킬 사용 게이트를 강제로 열어준다.
         // (MonsterContext.UpdateContext()에서 canAttack이 매 프레임 isTracing으로 기본 세팅되므로, 여기서만 true로 덮어쓰기)
-        context.canAttack = true;
+        context.ForceCanAttack(true);
 
         context.skillAI.TryUseSkill();
     }

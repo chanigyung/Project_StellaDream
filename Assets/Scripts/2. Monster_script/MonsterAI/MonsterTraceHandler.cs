@@ -150,7 +150,7 @@ public class MonsterTraceHandler : MonoBehaviour
         // MonsterController가 MonsterContext를 들고 있다고 가정(현재 업로드된 구조 기준)
         if (controller.Context == null) return false;
 
-        monsterInstance = controller.Context.instance;
+        monsterInstance = controller.Context.monsterInstance;
         return monsterInstance != null;
     }
 
