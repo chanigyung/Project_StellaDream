@@ -23,7 +23,6 @@ public class MonsterMovement : MonoBehaviour
     {
         if (!CanMoveNow())
         {
-            context.unitMovement?.Stop();
             context.animator?.PlayMoving(false);
             return;
         }
@@ -60,6 +59,12 @@ public class MonsterMovement : MonoBehaviour
 
         context.unitMovement.SetGrounded(context.isGrounded);
         context.unitMovement.TickMove();
+    }
+
+    public void ClearMove()
+    {
+        context.unitMovement?.ClearMoveInput();
+        context.animator?.PlayMoving(false);
     }
 
     public bool TryJump()

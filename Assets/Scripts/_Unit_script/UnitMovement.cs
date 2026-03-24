@@ -57,10 +57,16 @@ public class UnitMovement : MonoBehaviour
         desiredDirX = Mathf.Sign(dirX);
     }
 
-    public void Stop()
+    // 이동 의도 제거 / 속도는 건드리지 않음
+    public void ClearMoveInput()
     {
         hasMoveInput = false;
         desiredDirX = 0f;
+    }
+
+    public void Stop()
+    {
+        ClearMoveInput();
 
         if (rigid != null)
             rigid.velocity = new Vector2(0f, rigid.velocity.y);
@@ -71,7 +77,10 @@ public class UnitMovement : MonoBehaviour
         if (rigid == null || instance == null)
             return;
 
-        if (instance.IsKnockbackActive || isPowerKnockbacked || isStunned)
+        if (isPowerKnockbacked || isStunned)
+            return;
+
+        if (unitController != null && unitController.BlockByKnockback() && instance.IsKnockbackActive)
             return;
 
         if (isPowerKnockbacked || isRooted || !hasMoveInput)
@@ -140,8 +149,11 @@ public class UnitMovement : MonoBehaviour
     {
         if (instance == null)
             return false;
-
-        if (isStunned || isPowerKnockbacked || isRooted || instance.IsKnockbackActive)
+        //일반 넉백
+        if (unitController != null && unitController.BlockByKnockback() && instance.IsKnockbackActive)
+            return false;
+        //상태이상
+        if (isStunned || isPowerKnockbacked || isRooted)
             return false;
 
         return true;

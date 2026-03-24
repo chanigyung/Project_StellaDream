@@ -11,7 +11,7 @@ public static class SkillUtils
     }
 
     // 넉백 적용
-    public static void ApplyKnockback(GameObject attacker, GameObject target, float knockbackX, float knockbackY)
+    public static void ApplyKnockback(GameObject attacker, GameObject target, float knockbackX, float knockbackY, float duration = 0.3f)
     {
         if (target == null) return;
         if (attacker == null) return;
@@ -23,7 +23,7 @@ public static class SkillUtils
 
         if (target.TryGetComponent<IKnockbackable>(out var knockbackable))
         {
-            knockbackable.ApplyKnockback(force);
+            knockbackable.ApplyKnockback(force, duration);
             return;
         }
     }

@@ -37,7 +37,9 @@ public class PlayerContext : UnitContext
     {
         base.UpdateContext();
 
-        canAttack = canAct && !isInputBlocked; // [추가] 입력 차단 시 공격 불가
+        canMove = !isStunned && !isRooted && !isCastingSkill && !isInputBlocked;
+        canAct = !isStunned && !isInputBlocked;
+        canAttack = canAct && !isInputBlocked; // 입력 차단 시 공격 불가
     }
 
     public bool IsMouseDown(int button)

@@ -32,6 +32,8 @@ public class UnitContext
 
     public virtual void UpdateContext()
     {
+        isKnockbacked = instance != null && instance.IsKnockbackActive;
+
         if (target != null)
         {
             Vector2 delta = target.transform.position - selfTransform.position;
@@ -45,10 +47,6 @@ public class UnitContext
             distanceToTarget = float.MaxValue;
             targetDirectionX = 1f;
         }
-
-        canMove = !isStunned && !isRooted && !isKnockbacked && !isCastingSkill;
-        canAct = !isStunned && !isKnockbacked;
-        canAttack = canAct;
     }
 
     public void ForceCanAttack(bool value) // [추가] WanderSkillAction 같은 예외용

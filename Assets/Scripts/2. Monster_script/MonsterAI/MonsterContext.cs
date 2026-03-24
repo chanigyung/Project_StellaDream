@@ -23,6 +23,9 @@ public class MonsterContext : UnitContext
     {
         base.UpdateContext();
 
+        // 몬스터는 넉백 중 이동/행동 차단 유지
+        canMove = !isStunned && !isRooted && !isKnockbacked && !isCastingSkill;
+        canAct = !isStunned && !isKnockbacked;
         // 몬스터는 추적 중일 때만 공격 가능
         canAttack = isTracing && canAct;
     }

@@ -129,9 +129,25 @@ public class MonsterController : UnitController
         deathHandler?.Die(); // 몬스터 전용 사망 처리
     }
 
-    public override void ApplyKnockback(Vector2 force)
+    public override void ApplyKnockback(Vector2 force, float duration)
     {
-        base.ApplyKnockback(force);
-        animator.PlayHit();
+        base.ApplyKnockback(force, duration);
+        // animator?.PlayHit();
+    }
+
+    public override bool BlockByKnockback()
+    {
+        return true;
+    }
+
+    protected override void OnKnockbackStarted()
+    {
+        context?.movement?.ClearMove();
+        animator?.PlayStunned(true);
+    }
+
+    protected override void OnKnockbackEnded()
+    {
+        animator?.PlayStunned(false);
     }
 }

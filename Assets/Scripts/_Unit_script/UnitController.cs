@@ -10,7 +10,6 @@ public class UnitController : MonoBehaviour, IDamageable, IKnockbackable
     [SerializeField] protected GameObject floatingDamagePrefab;
     [SerializeField] protected Transform floatingDamageAnchor;
 
-    private float knockbackTimer = 0f;
     public Transform GroundPoint => groundPoint != null ? groundPoint : transform;
 
     public virtual void Initialize(IUnitInstance instance)
@@ -22,12 +21,15 @@ public class UnitController : MonoBehaviour, IDamageable, IKnockbackable
 
     protected virtual void Update()
     {
-        if (instance.IsKnockbackActive)
+        if (instance == null)
+            return;
+
+        if (instance is BaseUnitInstance baseInstance)
         {
-            knockbackTimer -= Time.deltaTime;
-            if (knockbackTimer <= 0f)
+            bool knockbackEnded = baseInstance.TickKnockback(Time.deltaTime);
+            if (knockbackEnded)
             {
-                instance.IsKnockbackActive = false;
+                OnKnockbackEnded();
             }
         }
     }
@@ -60,7 +62,7 @@ public class UnitController : MonoBehaviour, IDamageable, IKnockbackable
         obj.GetComponent<FloatingDamage>()?.Initialize(damage);
     }
 
-    public virtual void ApplyKnockback(Vector2 force)
+    public virtual void ApplyKnockback(Vector2 force, float duration)
     {
         if (instance.IsKnockbackImmune()) return;
 
@@ -81,7 +83,30 @@ public class UnitController : MonoBehaviour, IDamageable, IKnockbackable
         rigid.velocity = new Vector2(0, rigid.velocity.y);
         rigid.AddForce(finalForce, ForceMode2D.Impulse);
 
-        instance.IsKnockbackActive = true;
-        knockbackTimer = 0.3f * (1f - instance.GetKnockbackResistance());
+        float finalDuration = duration * (1f - instance.GetKnockbackResistance());
+
+        if (instance is BaseUnitInstance baseInstance)
+        {
+            bool isKnockbackActive = baseInstance.IsKnockbackActive;
+            baseInstance.StartKnockback(finalDuration);
+
+            if (!isKnockbackActive && baseInstance.IsKnockbackActive)
+            {
+                OnKnockbackStarted();
+            }
+        }
+        else
+        {
+            instance.IsKnockbackActive = true;
+            OnKnockbackStarted();
+        }
     }
+
+    public virtual bool BlockByKnockback()
+    {
+        return false;
+    }
+
+    protected virtual void OnKnockbackStarted() { }
+    protected virtual void OnKnockbackEnded() { }
 }

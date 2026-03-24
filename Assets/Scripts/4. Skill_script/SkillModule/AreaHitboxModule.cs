@@ -7,7 +7,6 @@ public class AreaHitboxModule : SkillModuleBase
     private readonly Vector2 spawnOffset;
     private readonly float lifetime;
 
-
     public AreaHitboxModule(AreaHitboxModuleData data)
     {
         this.data = data;
