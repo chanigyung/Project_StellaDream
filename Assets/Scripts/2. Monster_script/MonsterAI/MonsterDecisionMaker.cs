@@ -28,14 +28,11 @@ public class MonsterDecisionMaker : MonoBehaviour
         actions.Clear();
     }
 
-    void Update()
-    {
-        context.UpdateContext();
-        DecideAndExecute();
-    }
-
     public void DecideAndExecute()
     {
+        if (context == null || actions == null || actions.Count == 0)
+            return;
+            
         foreach (var action in actions)
         {
             if (action.CanExecute(context))

@@ -16,8 +16,8 @@ MonoBehaviour:
   - prefab: {fileID: 3068963375615690777, guid: 30d71de409c3ab74ba6535f103e871ba, type: 3}
     hook: 2
     anchor: 2
-    spawnPointType: 0
+    spawnPointType: 3
     attachToSpawnPoint: 0
-    spawnOffset: {x: 0, y: 0.45}
+    spawnOffset: {x: 0, y: 0}
     animator: {fileID: 9100000, guid: 65bf61df2c3bc2141994f81e33f31768, type: 2}
     useDirection: 1

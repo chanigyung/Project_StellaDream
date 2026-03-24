@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MonsterController : UnitController
 {
+    private MonsterDecisionMaker decisionMaker;
     private MonsterHealthUI healthUI;
     private MonsterDeathHandler deathHandler;
     private MonsterAnimator animator;
@@ -44,8 +45,9 @@ public class MonsterController : UnitController
         }
 
         //의사결정 트리와 추적 로직에 context연결
-        var decisionMaker = GetComponent<MonsterDecisionMaker>();
+        decisionMaker = GetComponent<MonsterDecisionMaker>();
         decisionMaker?.Initialize(context);
+
         context.skillAI = GetComponent<MonsterSkillAI>();
         context.skillAI?.Initialize(context);
         censor?.Initialize(context);
@@ -57,6 +59,21 @@ public class MonsterController : UnitController
         BuildActions(decisionMaker);
 
         deathHandler?.InitFromData(context.monsterInstance.data);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        if (context == null)
+            return;
+
+        context.UpdateContext();
+
+        if (context.skillAI != null && context.skillAI.TryUseSkill())
+            return;
+
+        decisionMaker?.DecideAndExecute();
     }
 
     // MonsterData.actionTypes 기반으로 액션 조립 후 DecisionMaker에 주입
