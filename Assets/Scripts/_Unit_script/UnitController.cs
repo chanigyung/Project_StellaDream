@@ -102,11 +102,6 @@ public class UnitController : MonoBehaviour, IDamageable, IKnockbackable
         }
     }
 
-    public virtual bool BlockByKnockback()
-    {
-        return false;
-    }
-
     protected virtual void OnKnockbackStarted() { }
     protected virtual void OnKnockbackEnded() { }
 }

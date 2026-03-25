@@ -77,17 +77,8 @@ public class UnitMovement : MonoBehaviour
         if (rigid == null || instance == null)
             return;
 
-        if (isPowerKnockbacked || isStunned)
+        if (instance.IsKnockbackActive)
             return;
-
-        if (unitController != null && unitController.BlockByKnockback() && instance.IsKnockbackActive)
-            return;
-
-        if (isPowerKnockbacked || isRooted || !hasMoveInput)
-        {
-            rigid.velocity = new Vector2(0f, rigid.velocity.y);
-            return;
-        }
 
         float targetVelX = desiredDirX * instance.GetCurrentMoveSpeed();
 
@@ -150,10 +141,7 @@ public class UnitMovement : MonoBehaviour
         if (instance == null)
             return false;
         //일반 넉백
-        if (unitController != null && unitController.BlockByKnockback() && instance.IsKnockbackActive)
-            return false;
-        //상태이상
-        if (isStunned || isPowerKnockbacked || isRooted)
+        if (unitController != null && instance.IsKnockbackActive)
             return false;
 
         return true;

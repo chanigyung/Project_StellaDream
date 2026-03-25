@@ -135,11 +135,6 @@ public class MonsterController : UnitController
         // animator?.PlayHit();
     }
 
-    public override bool BlockByKnockback()
-    {
-        return true;
-    }
-
     protected override void OnKnockbackStarted()
     {
         context?.movement?.ClearMove();

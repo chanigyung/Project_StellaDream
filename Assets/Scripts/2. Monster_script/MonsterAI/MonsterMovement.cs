@@ -11,17 +11,9 @@ public class MonsterMovement : MonoBehaviour
         context = ctx;
     }
 
-    private bool CanMoveNow()
-    {
-        if (context == null || context.unitMovement == null || !context.unitMovement.CanMoveNow())
-            return false;
-
-        return context != null && context.canMove;
-    }
-
     public void Move(Vector3 direction)
     {
-        if (!CanMoveNow())
+        if (context == null || context.unitMovement == null || !context.canMove || !context.unitMovement.CanMoveNow())
         {
             context.animator?.PlayMoving(false);
             return;
@@ -78,7 +70,7 @@ public class MonsterMovement : MonoBehaviour
         if (!context.isGrounded)
             return false;
 
-        if (!CanMoveNow())
+        if (!context.canMove || !context.unitMovement.CanMoveNow())
             return false;
 
         return context.unitMovement.TryJump();

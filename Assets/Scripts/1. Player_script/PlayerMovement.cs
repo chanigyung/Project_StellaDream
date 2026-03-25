@@ -56,10 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     // 좌우 이동 처리
     private void Move()
-    {
-        if (context.playerInstance != null && context.playerInstance.IsKnockbackActive)
-            return;
-            
+    {  
         context.unitMovement.Move(new Vector3(context.moveInput.x, 0f, 0f));
         context.unitMovement.TickMove();
     }
