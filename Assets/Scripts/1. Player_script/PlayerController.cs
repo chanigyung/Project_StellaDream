@@ -84,8 +84,6 @@ public class PlayerController : UnitController
     {
         base.Update();
 
-        if (IsInputBlocked()) return;
-
         HandleInput(); // 입력 수집
         context.UpdateContext(); // Context 상태 계산
     }
@@ -98,15 +96,6 @@ public class PlayerController : UnitController
 
     private void HandleInput()
     {
-        context.isInputBlocked = IsInputBlocked();
-
-        // 입력 차단 상태 처리
-        if (context.isInputBlocked)
-        {
-            ClearInput();
-            return;
-        }
-
         // 이동 입력
         context.moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
         context.jumpPressed = Input.GetKeyDown(jumpKey);
@@ -172,11 +161,6 @@ public class PlayerController : UnitController
             return 1;
 
         return -1;
-    }
-
-    private bool IsInputBlocked()
-    {
-        return false;
     }
 
     protected override void HandleDeath()

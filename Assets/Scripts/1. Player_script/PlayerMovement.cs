@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
         if (context == null || context.playerInstance == null || context.unitMovement == null)
             return false;
 
-        if (context.isInputBlocked || !context.canMove)
+        if (!context.canMove)
         {
             context.unitMovement.Stop();
             context.animator?.PlayMove(0);

@@ -9,18 +9,15 @@ public class MonsterSkillAI : MonoBehaviour
 
     private MonsterContext context;
     private float lastGlobalSkillUseTime;
-    private StatusEffectManager eManager;
 
     private Dictionary<SkillInstance, float> lastUsedTimes = new();
 
-    private float recoverBlockDuration = 0.5f; // 기절/넉백 회복 후 0.5초간 스킬 금지
-    private float stunOrKnockbackRecoverTime = -999f; //초기값
+    // private float recoverBlockDuration = 0.5f; // 기절/넉백 회복 후 0.5초간 스킬 금지
 
     // 변경: MonsterController에서 context를 주입받는 초기화 함수(AttackAction에서 호출 가능하도록 준비)
     public void Initialize(MonsterContext ctx)
     {
         context = ctx;
-        eManager = GetComponent<StatusEffectManager>();
 
         // 초기화: 인스턴스의 스킬별 마지막 사용 시간 기록
         lastUsedTimes.Clear();
@@ -40,9 +37,6 @@ public class MonsterSkillAI : MonoBehaviour
         if (context == null || context.instance == null) return false;
         if (!context.canAttack || context.isCastingSkill) return false;
 
-        if (IsBlocked()) return false;
-        if (Time.time < stunOrKnockbackRecoverTime) return false;
-
         float dist = (context.target != null) ? context.distanceToTarget : 0f;
         return SelectCastSkill(dist, out _, out _);
     }
@@ -52,9 +46,6 @@ public class MonsterSkillAI : MonoBehaviour
     {
         if (context == null || context.instance == null) return false;
         if (!context.canAttack || context.isCastingSkill) return false;
-
-        if (IsBlocked()) return false;
-        if (Time.time < stunOrKnockbackRecoverTime) return false;
 
         float dist = (context.target != null) ? context.distanceToTarget : 0f;
 
@@ -80,23 +71,6 @@ public class MonsterSkillAI : MonoBehaviour
         if (Mathf.Approximately(fx, 0f)) fx = 1f;
 
         return new Vector2(Mathf.Sign(fx), 0f);
-    }
-
-    // 변경: 기절/파워넉백 상태면 스킬 사용 차단 (기존 로직 유지)
-    private bool IsBlocked()
-    {
-        if (eManager == null) return false;
-
-        foreach (var effect in eManager.GetActiveEffects())
-        {
-            if (effect.effectType == StatusEffectType.Stun ||
-                effect.effectType == StatusEffectType.PowerKnockback)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // 변경: 거리/쿨타임/공용쿨타임 조건으로 "지금 시전 가능한 스킬"을 선택
@@ -157,10 +131,5 @@ public class MonsterSkillAI : MonoBehaviour
         // 캐스팅 상태 종료
         context.isCastingSkill = false;
         context.UpdateContext();
-    }
-
-    public void NotifyRecoverDelay()
-    {
-        stunOrKnockbackRecoverTime = Time.time + recoverBlockDuration;
     }
 }

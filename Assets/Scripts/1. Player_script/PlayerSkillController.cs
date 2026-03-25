@@ -14,7 +14,7 @@ public class PlayerSkillController : MonoBehaviour
         if (context == null)
             return;
 
-        if (InputBlocker.IsBlocked || context.isInputBlocked) return;
+        if (InputBlocker.IsBlocked) return;
 
         int button = context.mouseButton;
         if (button == -1) return;

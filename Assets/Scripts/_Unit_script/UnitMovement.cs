@@ -11,9 +11,9 @@ public class UnitMovement : MonoBehaviour
     private bool hasMoveInput;
     private bool jumped = false;
 
-    private bool isRooted = false;
-    private bool isStunned = false;
-    private bool isPowerKnockbacked = false;
+    // private bool isRooted = false;
+    // private bool isStunned = false;
+    // private bool isPowerKnockbacked = false;
 
     private bool isGrounded = true;
     public bool IsGrounded => isGrounded;
@@ -160,8 +160,4 @@ public class UnitMovement : MonoBehaviour
 
         return true;
     }
-
-    public void SetRooted(bool value) => isRooted = value;
-    public void SetStunned(bool value) => isStunned = value;
-    public void SetPowerKnockbacked(bool value) => isPowerKnockbacked = value;
 }

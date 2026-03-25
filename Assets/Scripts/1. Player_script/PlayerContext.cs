@@ -23,7 +23,6 @@ public class PlayerContext : UnitContext
     public bool rightMouseDown;
     public bool rightMouseHeld;
     public bool rightMouseUp;
-    public bool isInputBlocked;
 
     // === 조준 관련 ===
     public Vector3 mouseWorldPosition;
@@ -37,9 +36,9 @@ public class PlayerContext : UnitContext
     {
         base.UpdateContext();
 
-        canMove = !isStunned && !isRooted && !isCastingSkill && !isInputBlocked;
-        canAct = !isStunned && !isInputBlocked;
-        canAttack = canAct && !isInputBlocked; // 입력 차단 시 공격 불가
+        canMove = !isCastingSkill;
+        canAct = true;
+        canAttack = true;
     }
 
     public bool IsMouseDown(int button)
