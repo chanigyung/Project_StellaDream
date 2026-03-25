@@ -36,9 +36,9 @@ public class PlayerContext : UnitContext
     {
         base.UpdateContext();
 
-        canMove = !isCastingSkill;
-        canAct = true;
-        canAttack = true;
+        canMove = !isKnockbacked && !isMoveSkillActive;
+        canAct = !isKnockbacked && !isMoveSkillActive;
+        canAttack = !isCastingSkill && !isMoveSkillActive;
     }
 
     public bool IsMouseDown(int button)

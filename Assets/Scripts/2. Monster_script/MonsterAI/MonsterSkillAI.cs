@@ -14,7 +14,7 @@ public class MonsterSkillAI : MonoBehaviour
 
     // private float recoverBlockDuration = 0.5f; // 기절/넉백 회복 후 0.5초간 스킬 금지
 
-    // 변경: MonsterController에서 context를 주입받는 초기화 함수(AttackAction에서 호출 가능하도록 준비)
+    // MonsterController에서 context를 주입받는 초기화 함수(AttackAction에서 호출 가능하도록 준비)
     public void Initialize(MonsterContext ctx)
     {
         context = ctx;
@@ -31,7 +31,7 @@ public class MonsterSkillAI : MonoBehaviour
         }
     }
 
-    // 변경: AttackAction이 "지금 당장 시전 시작이 가능한지"만 빠르게 확인할 수 있도록 제공
+    // AttackAction이 "지금 당장 시전 시작이 가능한지"만 빠르게 확인할 수 있도록 제공
     public bool CanCastNow()
     {
         if (context == null || context.instance == null) return false;
@@ -41,7 +41,7 @@ public class MonsterSkillAI : MonoBehaviour
         return SelectCastSkill(dist, out _, out _);
     }
 
-    // 변경: AttackAction에서 호출. 실제로 시전을 "시작"하면 true 반환
+    // AttackAction에서 호출. 실제로 시전을 "시작"하면 true 반환
     public bool TryUseSkill()
     {
         if (context == null || context.instance == null) return false;
@@ -73,14 +73,14 @@ public class MonsterSkillAI : MonoBehaviour
         return new Vector2(Mathf.Sign(fx), 0f);
     }
 
-    // 변경: 거리/쿨타임/공용쿨타임 조건으로 "지금 시전 가능한 스킬"을 선택
+    // 거리/쿨타임/공용쿨타임 조건으로 "지금 시전 가능한 스킬"을 선택
     private bool SelectCastSkill(float dist, out SkillInstance pickedSkill, out float pickedRange)
     {
         pickedSkill = null;
         pickedRange = 0f;
 
         // skillList와 skillInstances는 인덱스가 대응된다는 전제(기존 구조 유지)
-        // 변경: 데이터 리스트 길이 불일치 방어
+        // 데이터 리스트 길이 불일치 방어
         int instanceCount = context.monsterInstance.skillInstances.Count;
         int dataCount = context.monsterInstance.data.skillList != null ? context.monsterInstance.data.skillList.Count : 0;
         int count = Mathf.Min(instanceCount, dataCount);
@@ -112,14 +112,14 @@ public class MonsterSkillAI : MonoBehaviour
         context.movement?.Stop();
         context.animator?.PlayAttack();
 
-        // 변경: 몬스터 쪽에서 delay/postDelay를 직접 기다리지 않는다.
-        //       실제 딜레이 처리는 SkillExecutor(UseSkill 내부)에서만 담당한다.
-        //       여기서는 "몬스터가 캐스팅 중" 상태를 유지하기 위한 시간만 기다린다.
+        // 몬스터 쪽에서 delay/postDelay를 직접 기다리지 않는다.
+        // 실제 딜레이 처리는 SkillExecutor(UseSkill 내부)에서만 담당한다.
+        // 여기서는 "몬스터가 캐스팅 중" 상태를 유지하기 위한 시간만 기다린다.
         bool success = skillExecutor.UseSkill(skillContext);
 
         if (success)
         {
-            // 변경: 스킬이 '시작'되었다면 즉시 쿨타임을 기록(중복 시전 방지)
+            // 스킬이 '시작'되었다면 즉시 쿨타임을 기록(중복 시전 방지)
             lastUsedTimes[skill] = Time.time;
             lastGlobalSkillUseTime = Time.time;
 

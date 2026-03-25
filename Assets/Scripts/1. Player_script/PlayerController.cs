@@ -74,10 +74,10 @@ public class PlayerController : UnitController
         context.skillController = GetComponent<PlayerSkillController>();
         context.interactor = GetComponent<PlayerInteractor>();
 
-        context.movement?.Initialize(context); // [추가]
+        context.movement?.Initialize(context);
 
-        UnitCensor censor = GetComponentInChildren<UnitCensor>(); // [추가]
-        censor?.Initialize(context); // [추가]
+        UnitCensor censor = GetComponentInChildren<UnitCensor>();
+        censor?.Initialize(context);
     }
 
     protected override void Update()
@@ -114,24 +114,6 @@ public class PlayerController : UnitController
 
         // 조준 방향 계산
         UpdateAim();
-    }
-
-    private void ClearInput()
-    {
-        // 입력 차단 시 모든 입력값 초기화
-        context.moveInput = Vector2.zero;
-        context.jumpPressed = false;
-        context.interactPressed = false;
-
-        context.leftMouseDown = false;
-        context.leftMouseHeld = false;
-        context.leftMouseUp = false;
-
-        context.rightMouseDown = false;
-        context.rightMouseHeld = false;
-        context.rightMouseUp = false;
-
-        context.mouseButton = -1;
     }
 
     // 마우스 위치 기반 조준 방향 계산 함수

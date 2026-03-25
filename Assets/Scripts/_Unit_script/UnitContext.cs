@@ -9,11 +9,10 @@ public class UnitContext
     public Transform selfGroundPoint;
     public UnitMovement unitMovement;
 
-    // === 상태이상 / 행동 차단 관련 ===
-    public bool isStunned;
-    public bool isRooted;
+    // === 공통 제어 상태 ===
     public bool isKnockbacked;
     public bool isCastingSkill = false;
+    public bool isMoveSkillActive = false;
 
     // === 센서 관련 변수 ===
     public bool isGrounded = false;
@@ -49,7 +48,7 @@ public class UnitContext
         }
     }
 
-    public void ForceCanAttack(bool value) // [추가] WanderSkillAction 같은 예외용
+    public void ForceCanAttack(bool value)
     {
         canAttack = value;
     }
