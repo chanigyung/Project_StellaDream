@@ -78,6 +78,7 @@ public class PlayerController : UnitController
 
         UnitCensor censor = GetComponentInChildren<UnitCensor>();
         censor?.Initialize(context);
+        context.unitMovement?.Initialize(context);
     }
 
     protected override void Update()

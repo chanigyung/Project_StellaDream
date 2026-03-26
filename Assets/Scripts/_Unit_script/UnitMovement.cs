@@ -22,10 +22,22 @@ public class UnitMovement : MonoBehaviour
     [SerializeField] private float accel = 30f;
     [SerializeField] private float airLerpFactor = 0.1f;
 
+    private UnitContext context;
+
+    private bool isMoveSkillRunning = false;
+    private Vector2 moveSkillDirection;
+    private float moveSkillSpeed = 0f;
+    private float moveSkillRemainingTime = 0f;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         unitController = GetComponent<UnitController>();
+    }
+
+    public void Initialize(UnitContext ctx)
+    {
+        context = ctx;
     }
 
     public void SetGrounded(bool value)
@@ -144,6 +156,9 @@ public class UnitMovement : MonoBehaviour
         if (unitController != null && instance.IsKnockbackActive)
             return false;
 
+        if (context != null && context.isMoveSkillActive) // [추가]
+            return false;
+
         return true;
     }
 
@@ -159,5 +174,76 @@ public class UnitMovement : MonoBehaviour
             return false;
 
         return true;
+     }
+
+     // ================================ 이동 스킬 관련 =========================== //
+    public bool StartMoveSkill(Vector2 direction, float distance, float duration)
+    {
+        if (rigid == null || instance == null || context == null)
+            return false;
+
+        if (isMoveSkillRunning)
+            return false;
+
+        if (direction.sqrMagnitude <= 0.0001f)
+            return false;
+
+        if (distance <= 0f || duration <= 0f)
+            return false;
+
+        ClearMoveInput();
+        rigid.velocity = Vector2.zero;
+
+        isMoveSkillRunning = true;
+        moveSkillDirection = direction.normalized;
+        moveSkillSpeed = distance / duration;
+        moveSkillRemainingTime = duration;
+
+        context.isMoveSkillActive = true;
+        context.UpdateContext();
+
+        return true;
+    }
+
+    public void TickMoveSkill()
+    {
+        if (!isMoveSkillRunning)
+            return;
+
+        if (rigid == null || context == null)
+        {
+            EndMoveSkill();
+            return;
+        }
+
+        float deltaTime = Time.fixedDeltaTime;
+        Vector2 deltaMove = moveSkillDirection * moveSkillSpeed * deltaTime;
+
+        rigid.MovePosition(rigid.position + deltaMove);
+        rigid.velocity = Vector2.zero;
+
+        moveSkillRemainingTime -= deltaTime;
+
+        if (moveSkillRemainingTime <= 0f)
+        {
+            EndMoveSkill();
+        }
+    }
+
+    private void EndMoveSkill()
+    {
+        isMoveSkillRunning = false;
+        moveSkillDirection = Vector2.zero;
+        moveSkillSpeed = 0f;
+        moveSkillRemainingTime = 0f;
+
+        if (rigid != null)
+            rigid.velocity = Vector2.zero;
+
+        if (context != null)
+        {
+            context.isMoveSkillActive = false;
+            context.UpdateContext();
+        }
     }
 }

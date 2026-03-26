@@ -10,17 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
-  m_Name: chainSkillTest01
+  m_Name: MoveTest
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: cbac23ca8add031439a623b5e702f05d, type: 2}
-  - {fileID: 11400000, guid: eb8b5b7134131124ba7864a5936d171a, type: 2}
-  - {fileID: 11400000, guid: 56b81736449e2784f941fff0d7e75e52, type: 2}
+  - {fileID: 11400000, guid: 600b0111155cc944cbbc99c57026ea1d, type: 2}
+  - {fileID: 11400000, guid: 0711363b63022bc4b83c6d638aa303ba, type: 2}
   cooldown: 0
   delay: 0
   postDelay: 0
   activationType: 0
-  spawnPointType: 1
+  spawnPointType: 0
   statusEffects: []
   rotateSkill: 1
   flipSpriteY: 1

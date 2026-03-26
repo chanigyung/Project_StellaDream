@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb7f952c6008ab24dba4522190d7ca16, type: 3}
-  m_Name: ChainSkill
+  m_Script: {fileID: 11500000, guid: 841f8da61137cf7499d9521ca012e841, type: 3}
+  m_Name: MoveTest_Move
   m_EditorClassIdentifier: 
-  triggerHook: 1
-  reactionSkillData: {fileID: 11400000, guid: 849b9ad95fa24b748a8d6017d5bbba5c, type: 2}
+  distance: 8
+  duration: 0.2

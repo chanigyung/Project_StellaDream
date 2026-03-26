@@ -44,6 +44,16 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (context == null || context.unitMovement == null)
+        return;
+
+        if (context.isMoveSkillActive)
+        {
+            context.unitMovement.TickMoveSkill();
+            SyncLegacyStateFromContext();
+            return;
+        }
+
         if (!CanProcess())
             return;
 

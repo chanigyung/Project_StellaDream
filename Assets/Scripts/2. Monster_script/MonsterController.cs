@@ -33,6 +33,7 @@ public class MonsterController : UnitController
         context.selfGroundPoint = unit != null ? unit.GroundPoint : transform;
 
         context.movement.Initialize(context);
+        context.unitMovement?.Initialize(context);
 
         //censor 생성과 캐싱
         censor = GetComponentInChildren<UnitCensor>();

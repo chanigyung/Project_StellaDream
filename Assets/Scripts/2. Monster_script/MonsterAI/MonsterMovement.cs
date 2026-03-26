@@ -50,6 +50,14 @@ public class MonsterMovement : MonoBehaviour
             return;
 
         context.unitMovement.SetGrounded(context.isGrounded);
+
+        if (context.isMoveSkillActive)
+        {
+            context.unitMovement.TickMoveSkill();
+            return;
+        }
+
+        context.unitMovement.SetGrounded(context.isGrounded);
         context.unitMovement.TickMove();
     }
 
