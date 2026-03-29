@@ -11,6 +11,8 @@ public class HitboxModuleData : SkillModuleData
     public SkillSpawnPointType ownerSpawnPointType = SkillSpawnPointType.Left;
     public SkillSpawnPointType prefabSpawnPointType = SkillSpawnPointType.Left;
 
+    public bool followOwner = false;
+
     public override ISkillModule CreateModule()
     {
         return new HitboxModule(this);

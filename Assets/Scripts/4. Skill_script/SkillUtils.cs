@@ -28,20 +28,6 @@ public static class SkillUtils
         }
     }
 
-    // 상태이상 적용
-    // public static void ApplyStatusEffects(GameObject attacker, GameObject target, SkillInstance skill)
-    // {
-    //     if (skill.statusEffects == null || skill.statusEffects.Count == 0) return;
-    //     if (!target.TryGetComponent<StatusEffectManager>(out var eManager)) return;
-
-    //     foreach (var effect in skill.statusEffects)
-    //     {
-    //         var instance = StatusEffectFactory.CreateEffectInstance(effect, target, attacker, eManager);
-    //         if (instance != null)
-    //             eManager.ApplyEffect(instance);
-    //     }
-    // }
-
     //히트박스 생성(근접)
     public static void SpawnHitbox(SkillContext context, HitboxModuleData data, Vector2 spawnOffset, Vector2 hitboxSize, float lifetime) 
     {
@@ -75,6 +61,11 @@ public static class SkillUtils
             offset, out var finalPos, out rot, out spawnPoint);
 
         hitbox.transform.position += finalPos - ownerWorldPoint;
+
+        if (data.followOwner && hitboxComp != null)
+        {
+            hitboxComp.EnableFollowOwner(data.ownerSpawnPointType);
+        }
 
         hitboxComp?.ObjectSpawned();
         skill.RegisterSpawnedObject(hitbox);

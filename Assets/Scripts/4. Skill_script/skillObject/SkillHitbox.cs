@@ -6,6 +6,11 @@ public class SkillHitbox : SkillObjectBase
     [SerializeField] private BoxCollider2D hitboxCollider;
     [SerializeField] private SkillSpawnPoints spawnPoints;
 
+    // owner 추적용 변수
+    protected bool followOwner;
+    protected SkillSpawnPointType followOwnerPointType;
+    protected Vector3 followOwnerOffset;
+
     protected readonly HashSet<GameObject> alreadyHit = new();
 
     protected override void OnInitialize()
@@ -25,6 +30,24 @@ public class SkillHitbox : SkillObjectBase
                 transform.localScale = scale;
             }
         }
+    }
+
+    protected virtual void Update()
+    {
+        if (!initialized) return;
+        if (!followOwner) return;
+        if (attacker == null) return;
+
+        RefreshFollowOwnerPosition();
+    }
+
+    // owner따라가기
+    protected void RefreshFollowOwnerPosition()
+    {
+        Transform ownerPoint = SkillUtils.GetSpawnPoint(attacker, followOwnerPointType);
+        if (ownerPoint == null) return;
+
+        transform.position = ownerPoint.position + followOwnerOffset;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
@@ -56,7 +79,7 @@ public class SkillHitbox : SkillObjectBase
         skill.OnHit(hitContext);
     }
 
-    // 추가: 현재 collider 크기/offset 기준으로 spawn point들의 localPosition 갱신
+    // 현재 collider 크기/offset 기준으로 spawn point들의 localPosition 갱신
     protected virtual void UpdateDynamicSpawnPoints()
     {
         if (hitboxCollider == null) return;
@@ -84,5 +107,18 @@ public class SkillHitbox : SkillObjectBase
         {
             spawnPoints.groundPoint.localPosition = offset + new Vector2(0f, -size.y * 0.5f);
         }
+    }
+
+    // 현재 배치된 위치를 기준으로 owner 추적 시작
+    public void EnableFollowOwner(SkillSpawnPointType ownerPointType)
+    {
+        if (attacker == null) return;
+
+        Transform ownerPoint = SkillUtils.GetSpawnPoint(attacker, ownerPointType);
+        if (ownerPoint == null) return;
+
+        followOwner = true;
+        followOwnerPointType = ownerPointType;
+        followOwnerOffset = transform.position - ownerPoint.position;
     }
 }
