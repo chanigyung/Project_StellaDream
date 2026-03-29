@@ -27,4 +27,22 @@ public class MoveSkillModule : SkillModuleBase
 
         movement.StartMoveSkill(moveDirection, data.distance, data.duration);
     }
+
+    public override void OnHit(SkillContext context)
+    {
+        if (data == null)
+            return;
+
+        if (!data.stopOnHit)
+            return;
+
+        if (context.attacker == null)
+            return;
+
+        UnitMovement movement = context.attacker.GetComponent<UnitMovement>();
+        if (movement == null)
+            return;
+
+        movement.StopMoveSkill();
+    }
 }

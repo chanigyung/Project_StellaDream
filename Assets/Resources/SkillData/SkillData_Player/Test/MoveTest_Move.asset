@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841f8da61137cf7499d9521ca012e841, type: 3}
   m_Name: MoveTest_Move
   m_EditorClassIdentifier: 
-  distance: 8
+  distance: 10
   duration: 0.5
+  stopOnHit: 0

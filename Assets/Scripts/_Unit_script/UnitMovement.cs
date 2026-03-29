@@ -11,10 +11,6 @@ public class UnitMovement : MonoBehaviour
     private bool hasMoveInput;
     private bool jumped = false;
 
-    // private bool isRooted = false;
-    // private bool isStunned = false;
-    // private bool isPowerKnockbacked = false;
-
     private bool isGrounded = true;
     public bool IsGrounded => isGrounded;
 
@@ -245,5 +241,14 @@ public class UnitMovement : MonoBehaviour
             context.isMoveSkillActive = false;
             context.UpdateContext();
         }
+    }
+
+    // 이동스킬 강제 중지시킬 경우 호출
+    public void StopMoveSkill()
+    {
+        if (!isMoveSkillRunning)
+            return;
+
+        EndMoveSkill();
     }
 }

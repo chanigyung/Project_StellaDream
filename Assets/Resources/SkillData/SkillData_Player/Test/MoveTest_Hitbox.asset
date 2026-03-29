@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 079aafead9404a44bb63ef784f66f5aa, type: 3}
-  m_Name: MoveTest_Attach
+  m_Script: {fileID: 11500000, guid: 649d5780c4507004e85d561a0a611d73, type: 3}
+  m_Name: MoveTest_Hitbox
   m_EditorClassIdentifier: 
-  hitboxPrefab: {fileID: 2216451094903520163, guid: c2693b7d54a4b244a964af1b22959d9c, type: 3}
+  hitboxPrefab: {fileID: 2216451094903520163, guid: d80a129014591244da3eb0168322f997, type: 3}
   hitboxSize: {x: 5, y: 2}
   spawnOffset: {x: 0, y: 0}
   lifetime: 0.5
   ownerSpawnPointType: 0
   prefabSpawnPointType: 0
   followOwner: 1
-  tickInterval: 0.1
