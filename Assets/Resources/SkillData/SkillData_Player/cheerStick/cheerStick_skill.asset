@@ -29,13 +29,13 @@ MonoBehaviour:
   skillAnimations:
     delayClip: {fileID: 0}
     delayLockArmControl: 1
-    executeClip: {fileID: 7400000, guid: c161c62a1cdca6445941d4d8f0708d27, type: 2}
+    executeClip: {fileID: 7400000, guid: 4ccd4878ebaa1864797a5ca3a23f47c9, type: 2}
     executeLockArmControl: 1
     hitClip: {fileID: 0}
     hitLockArmControl: 1
     tickClip: {fileID: 0}
     tickLockArmControl: 1
-    postDelayClip: {fileID: 7400000, guid: 4ccd4878ebaa1864797a5ca3a23f47c9, type: 2}
+    postDelayClip: {fileID: 0}
     postDelayLockArmControl: 1
   references:
     version: 2
