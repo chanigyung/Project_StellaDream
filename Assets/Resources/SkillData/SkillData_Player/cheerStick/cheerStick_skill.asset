@@ -18,8 +18,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea8a4144fda0ee144ae5980c7b06fe58, type: 2}
   - {fileID: 11400000, guid: 95d5d0ffd312bf244b487c8c6f6b19bd, type: 2}
   cooldown: 0.5
-  delay: 0
-  postDelay: 0
+  delay: 1
+  postDelay: 1
   activationType: 0
   spawnPointType: 1
   statusEffects: []
@@ -28,10 +28,15 @@ MonoBehaviour:
   ignoreCastLock: 0
   skillAnimations:
     delayClip: {fileID: 0}
-    executeClip: {fileID: 7400000, guid: 4ccd4878ebaa1864797a5ca3a23f47c9, type: 2}
+    delayLockArmControl: 1
+    executeClip: {fileID: 7400000, guid: c161c62a1cdca6445941d4d8f0708d27, type: 2}
+    executeLockArmControl: 1
     hitClip: {fileID: 0}
+    hitLockArmControl: 1
     tickClip: {fileID: 0}
-    postDelayClip: {fileID: 0}
+    tickLockArmControl: 1
+    postDelayClip: {fileID: 7400000, guid: 4ccd4878ebaa1864797a5ca3a23f47c9, type: 2}
+    postDelayLockArmControl: 1
   references:
     version: 2
     RefIds: []
