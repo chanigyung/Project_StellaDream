@@ -22,21 +22,27 @@ public class PlayerMovement : MonoBehaviour
 
         if (context.jumpPressed && context.isGrounded)
         {
-            context.isJumping = true; 
-            context.jumpedBefore = true; 
-            context.animator?.PlayJump();
+            context.isJumping = true;
+            context.jumpedBefore = true;
+
+            if (!context.animator.IsSkillAnimationPlaying)
+                context.animator?.PlayJump();
         }
 
         if (!context.isGrounded && !context.jumpedBefore)
         {
-            context.animator?.PlayJump();
-            context.jumpedBefore = true; 
+            if (!context.animator.IsSkillAnimationPlaying)
+                context.animator?.PlayJump();
+
+            context.jumpedBefore = true;
         }
 
         if (context.isGrounded)
         {
             context.jumpedBefore = false;
-            context.animator?.ExitJump();
+
+            if (!context.animator.IsSkillAnimationPlaying)
+                context.animator?.ExitJump();
         }
 
         SyncLegacyStateFromContext();
@@ -90,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
     // 이동 방향과 입력에 따른 애니메이션 처리 함수
     private void HandleAnimation()
     {
+        if (context.animator != null && context.animator.IsSkillAnimationPlaying)
+            return;
+
         float inputX = context.moveInput.x;
 
         if (Mathf.Abs(inputX) < 0.01f)
@@ -125,7 +134,9 @@ public class PlayerMovement : MonoBehaviour
         if (!context.canMove)
         {
             context.unitMovement.Stop();
-            context.animator?.PlayMove(0);
+            if (context.animator == null || !context.animator.IsSkillAnimationPlaying)
+                context.animator?.PlayMove(0);
+
             context.isJumping = false;
             return false;
         }

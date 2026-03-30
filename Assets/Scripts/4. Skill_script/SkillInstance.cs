@@ -48,12 +48,16 @@ public class SkillInstance
 
     public void Delay(SkillContext context)
     {
+        NotifyUnitAnimator(context, SkillHookType.Delay);
+
         for (int i = 0; i < modules.Count; i++)
             modules[i].OnDelay(context);
     }
 
     public void Execute(SkillContext context)
     {
+        NotifyUnitAnimator(context, SkillHookType.Execute);
+
         for (int i = 0; i < modules.Count; i++)
             modules[i].OnExecute(context);
     }
@@ -66,12 +70,16 @@ public class SkillInstance
 
     public void OnHit(SkillContext context)
     {
+        NotifyUnitAnimator(context, SkillHookType.Hit);
+
         for (int i = 0; i < modules.Count; i++)
             modules[i].OnHit(context);
     }
 
     public void OnTick(SkillContext context)
     {
+        NotifyUnitAnimator(context, SkillHookType.Tick);
+
         for (int i = 0; i < modules.Count; i++)
             modules[i].OnTick(context);
     }
@@ -84,6 +92,8 @@ public class SkillInstance
 
     public void PostDelay(SkillContext context)
     {
+        NotifyUnitAnimator(context, SkillHookType.PostDelay);
+
         for (int i = 0; i < modules.Count; i++)
             modules[i].OnPostDelay(context);
     }
@@ -170,5 +180,18 @@ public class SkillInstance
             if (spawnedObjectList[i] == null)
                 spawnedObjectList.RemoveAt(i);
         }
+    }
+
+    // ------------------------------ 애니메이션 재생용 ---------------------------//
+    private void NotifyUnitAnimator(SkillContext context, SkillHookType hookType)
+    {
+        if (context.attacker == null)
+            return;
+
+        UnitAnimator unitAnimator = context.attacker.GetComponent<UnitAnimator>();
+        if (unitAnimator == null)
+            return;
+
+        unitAnimator.TryPlaySkillAnimation(this, hookType);
     }
 }

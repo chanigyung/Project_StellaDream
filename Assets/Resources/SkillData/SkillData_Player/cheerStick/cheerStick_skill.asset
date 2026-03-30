@@ -26,6 +26,12 @@ MonoBehaviour:
   rotateSkill: 1
   flipSpriteY: 1
   ignoreCastLock: 0
+  skillAnimations:
+    delayClip: {fileID: 0}
+    executeClip: {fileID: 7400000, guid: 4ccd4878ebaa1864797a5ca3a23f47c9, type: 2}
+    hitClip: {fileID: 0}
+    tickClip: {fileID: 0}
+    postDelayClip: {fileID: 0}
   references:
     version: 2
     RefIds: []

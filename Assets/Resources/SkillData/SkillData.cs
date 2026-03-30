@@ -33,6 +33,9 @@ public class SkillData : ScriptableObject
     [Header("스킬 동시 사용 가능 여부")]
     public bool ignoreCastLock = false; 
 
+    [Header("스킬 훅 애니메이션")]
+    public SkillHookAnimationSet skillAnimations;
+
     public virtual SkillInstance CreateInstance()
     {
         return new SkillInstance(this);

@@ -23,7 +23,7 @@ public class PlayerArmControl : MonoBehaviour
         rightArmDefaultPos = rightArm.localPosition;
     }
 
-    void Update()
+    void LateUpdate()
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         isFacingLeft = mouseWorldPos.x < transform.position.x;
