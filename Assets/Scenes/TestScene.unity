@@ -250,6 +250,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 353026102612638639, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 866653807976311393, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
       propertyPath: m_Size.x
       value: 0.15625
@@ -260,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 866653807976311393, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3794098761502878117, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
       propertyPath: m_Controller
@@ -519,7 +523,7 @@ Animator:
   m_GameObject: {fileID: 884750542}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 65bf61df2c3bc2141994f81e33f31768, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9c30825dc13cbdb4c8ff61b2d5b10a6c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

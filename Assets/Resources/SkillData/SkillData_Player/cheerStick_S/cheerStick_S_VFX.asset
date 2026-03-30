@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e177b023e5c4774ea3b6c3fd8c3de37, type: 3}
-  m_Name: cheerStick_VFX
+  m_Name: cheerStick_S_VFX
   m_EditorClassIdentifier: 
   vfxEntryList:
   - prefab: {fileID: 3068963375615690777, guid: db181d683c9c0f44e8daadc553dd6d18, type: 3}
@@ -19,7 +19,7 @@ MonoBehaviour:
     spawnPointType: 1
     attachToSpawnPoint: 0
     spawnOffset: {x: 1, y: 0}
-    animator: {fileID: 9100000, guid: 9341d06fe904f124dabeb5349ce7dab4, type: 2}
+    animator: {fileID: 9100000, guid: cf131d474ae4cd843aa6c4d80db7b3be, type: 2}
     useDirection: 1
   - prefab: {fileID: 3068963375615690777, guid: b39b5ab57169bbf4ab31f7a569603653, type: 3}
     hook: 4
@@ -27,5 +27,5 @@ MonoBehaviour:
     spawnPointType: 0
     attachToSpawnPoint: 0
     spawnOffset: {x: 0, y: 0}
-    animator: {fileID: 9100000, guid: 9d49ad4d983e1784aad97411b0795003, type: 2}
+    animator: {fileID: 9100000, guid: 9c30825dc13cbdb4c8ff61b2d5b10a6c, type: 2}
     useDirection: 1
