@@ -52,6 +52,7 @@ public abstract class UnitAnimator : MonoBehaviour
         if (clip == null)
             return;
 
+        OnSkillAnimationStarted(skillInstance, hookType);
         PlaySkillHookAnimation(hookType, clip);
     }
 
@@ -125,8 +126,13 @@ public abstract class UnitAnimator : MonoBehaviour
             animator.SetLayerWeight(attackLayerIndex, 0f);
 
         skillAnimCoroutine = null;
+
+        OnSkillAnimationEnded();
         RestoreBaseAnimation();
     }
+
+    protected virtual void OnSkillAnimationStarted(SkillInstance skillInstance, SkillHookType hookType) {}
+    protected virtual void OnSkillAnimationEnded() {}
 
     protected virtual string GetPlaceholderClipName(SkillHookType hookType)
     {

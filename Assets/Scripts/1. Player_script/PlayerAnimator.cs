@@ -5,6 +5,8 @@ public class PlayerAnimator : UnitAnimator
     private PlayerController controller;
     private PlayerArmControl armControl;
 
+    private bool isAnimLockingArmControl = false;
+
     protected override void Awake()
     {
         base.Awake();
@@ -64,5 +66,40 @@ public class PlayerAnimator : UnitAnimator
         bool isFacingLeft = armControl != null && armControl.isFacingLeft;
 
         animator.SetInteger("moveState", isMovingLeft != isFacingLeft ? 2 : 1);
+    }
+
+    //애니메이션의 팔 회전 여부
+    private bool GetSkillHookArmControlLock(SkillInstance skillInstance, SkillHookType hookType)
+    {
+        SkillHookAnimationSet skillAnimations = skillInstance?.data?.skillAnimations;
+        if (skillAnimations == null)
+            return false;
+
+        return hookType switch
+        {
+            SkillHookType.Delay => skillAnimations.delayLockArmControl,
+            SkillHookType.Execute => skillAnimations.executeLockArmControl,
+            SkillHookType.Hit => skillAnimations.hitLockArmControl,
+            SkillHookType.Tick => skillAnimations.tickLockArmControl,
+            SkillHookType.PostDelay => skillAnimations.postDelayLockArmControl,
+            _ => false
+        };
+    }
+
+    protected override void OnSkillAnimationStarted(SkillInstance skillInstance, SkillHookType hookType)
+    {
+        isAnimLockingArmControl = GetSkillHookArmControlLock(skillInstance, hookType);
+
+        if (isAnimLockingArmControl)
+            armControl.SetArmControlLock(true);
+    }
+
+    protected override void OnSkillAnimationEnded()
+    {
+        if (!isAnimLockingArmControl)
+            return;
+
+        armControl.SetArmControlLock(false);
+        isAnimLockingArmControl = false;
     }
 }

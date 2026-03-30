@@ -17,6 +17,9 @@ public class PlayerArmControl : MonoBehaviour
     public float rightOffset = 0f;
     public float leftOffset = 0f;
 
+    // 애니메이션에서 팔 회전값을 사용할경우 코드 무효화
+    private bool isArmControlLocked = false;
+
     void Start()
     {
         leftArmDefaultPos = leftArm.localPosition;
@@ -25,6 +28,9 @@ public class PlayerArmControl : MonoBehaviour
 
     void LateUpdate()
     {
+        if (isArmControlLocked)
+            return;
+
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         isFacingLeft = mouseWorldPos.x < transform.position.x;
         body.localScale = new Vector3(isFacingLeft ? 1 : -1, 1, 1);
@@ -70,5 +76,10 @@ public class PlayerArmControl : MonoBehaviour
 
         // 방향에 따라 회전 반전 (일관된 대칭 회전을 위해)
         return isFacingLeft ? -angle + angleOffset : angle + angleOffset;
+    }
+
+    public void SetArmControlLock(bool isLocked)
+    {
+        isArmControlLocked = isLocked;
     }
 }
