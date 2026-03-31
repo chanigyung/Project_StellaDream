@@ -88,18 +88,18 @@ public class PlayerAnimator : UnitAnimator
 
     protected override void OnSkillAnimationStarted(SkillInstance skillInstance, SkillHookType hookType)
     {
-        isAnimLockingArmControl = GetSkillHookArmControlLock(skillInstance, hookType);
+        if (armControl == null)
+            return;
 
-        if (isAnimLockingArmControl)
+        if (GetSkillHookArmControlLock(skillInstance, hookType))
             armControl.SetArmControlLock(true);
     }
 
     protected override void OnSkillAnimationEnded()
     {
-        if (!isAnimLockingArmControl)
+        if (armControl == null)
             return;
 
         armControl.SetArmControlLock(false);
-        isAnimLockingArmControl = false;
     }
 }

@@ -1,6 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
+public enum SkillAnimState
+{
+    None = 0,
+    Reset = 1,
+    Delay = 2,
+    Execute = 3,
+    Hit = 4,
+    Tick = 5,
+    PostDelay = 6
+}
+
 public abstract class UnitAnimator : MonoBehaviour
 {
     protected Animator animator;
@@ -8,23 +19,27 @@ public abstract class UnitAnimator : MonoBehaviour
 
     private Coroutine skillAnimCoroutine;
     private int skillAnimToken = 0;
-    private int attackLayerIndex = -1;
+
+    // 추가: Animator 파라미터
+    private static readonly int SkillAnimStateHash = Animator.StringToHash("skillAnimState");
 
     public bool IsSkillAnimationPlaying { get; private set; }
+
+    // 추가: 다음 훅 예약용
+    private bool hasPendingHook = false;
+    private SkillInstance pendingSkillInstance;
+    private SkillHookType pendingHookType;
 
     protected virtual void Awake()
     {
         animator = GetComponentInChildren<Animator>();
         RefreshAnimatorOverride();
 
+        // 추가: 시작 기본값
         if (animator != null)
-            attackLayerIndex = animator.GetLayerIndex("Attack Layer");
-
-        if (animator != null && attackLayerIndex >= 0)
-            animator.SetLayerWeight(attackLayerIndex, 0f);
+            animator.SetInteger(SkillAnimStateHash, (int)SkillAnimState.None);
     }
 
-    // 몬스터처럼 런타임에 AnimatorController를 갈아끼우는 경우 다시 호출
     public void RefreshAnimatorOverride()
     {
         if (animator == null)
@@ -45,18 +60,26 @@ public abstract class UnitAnimator : MonoBehaviour
         animator.runtimeAnimatorController = overrideController;
     }
 
-    // SkillInstance에서 공용으로 호출할 진입점
     public void TryPlaySkillAnimation(SkillInstance skillInstance, SkillHookType hookType)
     {
         AnimationClip clip = GetSkillHookClip(skillInstance, hookType);
-        if (clip == null)
+        if (clip == null || animator == null)
             return;
 
-        OnSkillAnimationStarted(skillInstance, hookType);
-        PlaySkillHookAnimation(hookType, clip);
+        // 추가: 이미 재생 중이면 즉시 덮지 않고 예약 후 Reset 흐름으로 보냄
+        if (IsSkillAnimationPlaying)
+        {
+            pendingSkillInstance = skillInstance;
+            pendingHookType = hookType;
+            hasPendingHook = true;
+
+            RequestResetFromInterrupt();
+            return;
+        }
+
+        StartSkillAnimation(skillInstance, hookType, clip);
     }
 
-    // Hook -> SkillData clip 선택
     protected virtual AnimationClip GetSkillHookClip(SkillInstance skillInstance, SkillHookType hookType)
     {
         SkillHookAnimationSet skillAnimations = skillInstance?.data?.skillAnimations;
@@ -74,10 +97,11 @@ public abstract class UnitAnimator : MonoBehaviour
         };
     }
 
-    // 새 훅 애니메이션이 오면 즉시 덮어쓰기
-    protected virtual void PlaySkillHookAnimation(SkillHookType hookType, AnimationClip clip)
+    // 추가: 실제 훅 시작 공용 진입점
+    private void StartSkillAnimation(SkillInstance skillInstance, SkillHookType hookType, AnimationClip clip)
     {
-        if (clip == null || animator == null)
+        SkillAnimState animState = ConvertHookToAnimState(hookType);
+        if (animState == SkillAnimState.None)
             return;
 
         if (overrideController == null)
@@ -87,10 +111,11 @@ public abstract class UnitAnimator : MonoBehaviour
             return;
 
         string placeholderName = GetPlaceholderClipName(hookType);
-        string stateName = GetSkillStateName(hookType);
-
-        if (string.IsNullOrEmpty(placeholderName) || string.IsNullOrEmpty(stateName))
+        if (string.IsNullOrEmpty(placeholderName))
             return;
+
+        // 수정: 새 훅 시작 전에 이전 훅 종료 훅 정리
+        OnSkillAnimationStarted(skillInstance, hookType);
 
         overrideController[placeholderName] = clip;
 
@@ -98,37 +123,106 @@ public abstract class UnitAnimator : MonoBehaviour
         int currentToken = skillAnimToken;
 
         IsSkillAnimationPlaying = true;
-
-        int layerIndex = attackLayerIndex >= 0 ? attackLayerIndex : 0;
-
-        if (attackLayerIndex >= 0)
-            animator.SetLayerWeight(attackLayerIndex, 1f);
-
-        animator.Play(stateName, layerIndex, 0f);
+        animator.SetInteger(SkillAnimStateHash, (int)animState);
 
         if (skillAnimCoroutine != null)
             StopCoroutine(skillAnimCoroutine);
 
-        skillAnimCoroutine = StartCoroutine(EndSkillAnimationRoutine(clip.length, currentToken));
+        skillAnimCoroutine = StartCoroutine(PlayHookThenResolveRoutine(clip.length, currentToken));
     }
 
-    private IEnumerator EndSkillAnimationRoutine(float clipLength, int token)
+    // 수정: 자연 종료도 무조건 Reset으로 합류
+    private IEnumerator PlayHookThenResolveRoutine(float clipLength, int token)
     {
-        float waitTime = Mathf.Max(clipLength, 0.01f);
-        yield return new WaitForSeconds(waitTime);
+        float hookWaitTime = Mathf.Max(clipLength, 0.01f);
+        yield return new WaitForSeconds(hookWaitTime);
 
-        if (token != skillAnimToken)
+        if (token != skillAnimToken || animator == null)
             yield break;
 
-        IsSkillAnimationPlaying = false;
+        yield return RunResetAndResolveRoutine(token);
+    }
 
-        if (animator != null && attackLayerIndex >= 0)
-            animator.SetLayerWeight(attackLayerIndex, 0f);
+    // 추가: 강제 종료 시 호출. None으로 바로 안 보내고 Reset으로 합류
+    private void RequestResetFromInterrupt()
+    {
+        if (!IsSkillAnimationPlaying || animator == null)
+            return;
+
+        skillAnimToken++;
+        int currentToken = skillAnimToken;
+
+        if (skillAnimCoroutine != null)
+        {
+            StopCoroutine(skillAnimCoroutine);
+            skillAnimCoroutine = null;
+        }
+
+        // 추가: 이전 훅 종료 처리 먼저
+        OnSkillAnimationEnded();
+
+        skillAnimCoroutine = StartCoroutine(RunResetAndResolveRoutine(currentToken));
+    }
+
+    // 추가: 모든 종료 경로를 여기로 통일
+    private IEnumerator RunResetAndResolveRoutine(int token)
+    {
+        if (animator == null)
+            yield break;
+
+        animator.SetInteger(SkillAnimStateHash, (int)SkillAnimState.Reset);
+
+        // 추가: Reset이 실제 샘플링되도록 최소 1프레임 보장
+        yield return null;
+
+        if (token != skillAnimToken || animator == null)
+            yield break;
+
+        // 추가: 필요하면 한 프레임 더 보장
+        yield return null;
+
+        if (token != skillAnimToken || animator == null)
+            yield break;
+
+        // 추가: 예약된 훅이 있으면 Reset 뒤에 바로 실행
+        if (hasPendingHook)
+        {
+            SkillInstance nextSkillInstance = pendingSkillInstance;
+            SkillHookType nextHookType = pendingHookType;
+
+            hasPendingHook = false;
+            pendingSkillInstance = null;
+
+            AnimationClip nextClip = GetSkillHookClip(nextSkillInstance, nextHookType);
+
+            if (nextClip != null)
+            {
+                StartSkillAnimation(nextSkillInstance, nextHookType, nextClip);
+                yield break;
+            }
+        }
+
+        // 수정: 예약 훅이 없을 때만 None으로 종료
+        animator.SetInteger(SkillAnimStateHash, (int)SkillAnimState.None);
 
         skillAnimCoroutine = null;
+        IsSkillAnimationPlaying = false;
 
         OnSkillAnimationEnded();
         RestoreBaseAnimation();
+    }
+
+    protected virtual SkillAnimState ConvertHookToAnimState(SkillHookType hookType)
+    {
+        return hookType switch
+        {
+            SkillHookType.Delay => SkillAnimState.Delay,
+            SkillHookType.Execute => SkillAnimState.Execute,
+            SkillHookType.Hit => SkillAnimState.Hit,
+            SkillHookType.Tick => SkillAnimState.Tick,
+            SkillHookType.PostDelay => SkillAnimState.PostDelay,
+            _ => SkillAnimState.None
+        };
     }
 
     protected virtual void OnSkillAnimationStarted(SkillInstance skillInstance, SkillHookType hookType) {}
@@ -147,19 +241,5 @@ public abstract class UnitAnimator : MonoBehaviour
         };
     }
 
-    protected virtual string GetSkillStateName(SkillHookType hookType)
-    {
-        return hookType switch
-        {
-            SkillHookType.Delay => "Skill_Delay",
-            SkillHookType.Execute => "Skill_Execute",
-            SkillHookType.Hit => "Skill_Hit",
-            SkillHookType.Tick => "Skill_Tick",
-            SkillHookType.PostDelay => "Skill_PostDelay",
-            _ => null
-        };
-    }
-
-    // 스킬 애니메이션 종료 후 각 유닛의 기본 상태 복귀
     protected abstract void RestoreBaseAnimation();
 }
