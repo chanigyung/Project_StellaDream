@@ -93,15 +93,6 @@ public class HotbarUIManager : MonoBehaviour
         }
     }
 
-    public void UpdateDurabilityUI(WeaponInstance instance) //무기 내구도 바 개별 업데이트
-    {
-        int slotIndex = GetSlotIndexByWeapon(instance);
-        if (slotIndex != -1)
-        {
-            slots[slotIndex].UpdateDurabilityBar();
-        }
-    }
-
     public int GetSlotIndexByWeapon(WeaponInstance instance)
     {
         for (int i = 0; i < slots.Length; i++)

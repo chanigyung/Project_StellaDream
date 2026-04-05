@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-/// 스킬 발동을 담당하는 컴포넌트. 마우스 클릭 시 지정된 스킬을 실행한다.
 public class PlayerSkillController : MonoBehaviour
 {
     public PlayerController playerController;
     public PlayerWeaponManager weaponManager;
-    public SkillExecutor skillExecutor;
 
     void Update()
     {
@@ -14,98 +12,25 @@ public class PlayerSkillController : MonoBehaviour
         if (context == null)
             return;
 
-        if (InputBlocker.IsBlocked || !context.canAct) return;
-
-        int button = context.mouseButton;
-        if (button == -1) return;
-
-        SkillInstance skillToUse = (button == 0) ? weaponManager.GetMainSkill() : weaponManager.GetSubSkill();
-
-        //무기 미장착시 예외처리
-        if (skillToUse == null)
-        {
-            if (context.IsMouseDown(button))
-            {
-                Debug.Log($"{(button == 0 ? "주무기" : "보조무기")} 미장착 상태");
-            }
+        if (InputBlocker.IsBlocked || !context.canAct)
             return;
-        }
 
-        // 바로시전 / 누르다 떼는순간 시전 / 누르는내내 시전
-        switch (skillToUse.data.activationType)
-        {
-            case SkillActivationType.OnPress:
-                if (context.IsMouseDown(button))
-                {
-                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, context.aimDirection);
-                    if (skillExecutor.UseSkill(skillContext))
-                    {
-                        var weapon = weaponManager.GetWeaponBySkill(skillToUse);
-                        if (weapon != null && weapon.isTemporary)
-                            HandleDurabilityAfterSkill(weapon);
-                    }
-                }
-                break;
+        if (context.leftMouseDown)
+            weaponManager.HandleMainInput(WeaponSkillInputPhase.Pressed, context.aimDirection);
 
-            case SkillActivationType.OnRelease:
-                if (context.IsMouseUp(button))
-                {
-                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, context.aimDirection);
-                    if (skillExecutor.UseSkill(skillContext))
-                    {
-                        var weapon = weaponManager.GetWeaponBySkill(skillToUse);
-                        if (weapon != null && weapon.isTemporary)
-                            HandleDurabilityAfterSkill(weapon);
-                    }
-                }
-                break;
+        if (context.leftMouseHeld)
+            weaponManager.HandleMainInput(WeaponSkillInputPhase.Held, context.aimDirection);
 
-            case SkillActivationType.WhileHeld:
-                if (context.IsMouseDown(button))
-                {
-                    skillExecutor.BeginHeldSkill(skillToUse);
-                }
+        if (context.leftMouseUp)
+            weaponManager.HandleMainInput(WeaponSkillInputPhase.Released, context.aimDirection);
 
-                if (context.IsMouseHeld(button))
-                {
-                    SkillContext skillContext = skillExecutor.CreateCastContext(skillToUse, gameObject, context.aimDirection);
-                    if (skillExecutor.UseSkill(skillContext))
-                    {
-                        var weapon = weaponManager.GetWeaponBySkill(skillToUse);
-                        if (weapon != null && weapon.isTemporary)
-                            HandleDurabilityAfterSkill(weapon);
-                    }
-                }
+        if (context.rightMouseDown)
+            weaponManager.HandleSubInput(WeaponSkillInputPhase.Pressed, context.aimDirection);
 
-                if (context.IsMouseUp(button))
-                {
-                    skillExecutor.EndHeldSkill(skillToUse);
-                }
-                break;
-        }
-    }
+        if (context.rightMouseHeld)
+            weaponManager.HandleSubInput(WeaponSkillInputPhase.Held, context.aimDirection);
 
-    private void HandleDurabilityAfterSkill(WeaponInstance weaponInstance) //스킬 사용 후 무기 내구도 1 줄이기
-    {
-        if (weaponInstance == null || !weaponInstance.isTemporary) return;
-
-        bool stillUsable = weaponInstance.UseOnce();
-        Debug.Log("현재 내구도 : " + weaponInstance.currentDurability);
-
-        int slotIndex = HotbarUIManager.Instance.GetSlotIndexByWeapon(weaponInstance);
-        if (slotIndex != -1)
-        {
-            HotbarUIManager.Instance.UpdateDurabilityUI(weaponInstance);
-
-            if (!stillUsable)
-            {
-                HotbarController.Instance.ClearWeaponAt(slotIndex); // 데이터 제거
-                var wm = PlayerWeaponManager.Instance;
-                if (weaponInstance == wm.mainWeaponInstance)
-                    wm.UnequipMainWeapon();
-                if (weaponInstance == wm.subWeaponInstance)
-                    wm.UnequipSubWeapon();
-            }
-        }
+        if (context.rightMouseUp)
+            weaponManager.HandleSubInput(WeaponSkillInputPhase.Released, context.aimDirection);
     }
 }

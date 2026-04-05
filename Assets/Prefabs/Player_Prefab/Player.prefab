@@ -971,7 +971,6 @@ GameObject:
   - component: {fileID: 2518215653612312739}
   - component: {fileID: 7589833968211789952}
   - component: {fileID: 7074031245736625342}
-  - component: {fileID: 2132571895182991110}
   - component: {fileID: 8970223490355038521}
   - component: {fileID: 3110194569496512230}
   m_Layer: 9
@@ -1128,9 +1127,6 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
-    isTemporary: 0
-    maxDurability: 0
-    currentDurability: 0
   subWeaponInstance:
     data: {fileID: 0}
     uniqueID: 
@@ -1138,9 +1134,6 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
-    isTemporary: 0
-    maxDurability: 0
-    currentDurability: 0
   mainWeaponRenderer: {fileID: 866653807976311393}
   subWeaponRenderer: {fileID: 353026102612638639}
 --- !u!114 &1638534618350264654
@@ -1173,7 +1166,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 2067049299834656840}
   weaponManager: {fileID: 1741115383766889819}
-  skillExecutor: {fileID: 2132571895182991110}
 --- !u!114 &2518215653612312739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1227,18 +1219,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfa56762f920d73419664ee1a0e1927b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2132571895182991110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5675558720561331785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b5dd05c1c138ea499a1a4154e8a9e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!50 &8970223490355038521

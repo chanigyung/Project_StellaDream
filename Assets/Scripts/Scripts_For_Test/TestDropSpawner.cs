@@ -15,7 +15,7 @@ public class TestDropSpawner : MonoBehaviour
         Vector3 spawnPos = player.position + new Vector3(2f, 0f, 0f);
         GameObject drop = Instantiate(weaponDropPrefab, spawnPos, Quaternion.identity);
 
-        WeaponInstance weapon = new WeaponInstance(testWeapon.data, false);
+        WeaponInstance weapon = new WeaponInstance(testWeapon.data);
 
         weapon.ApplyUpgrade(testUpgradeInfo);
 

@@ -7,7 +7,6 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
     [Header("UI 참조")]
     public Image iconImage;
     public Image highlightImage; // 무기 장착 표시 이미지 출력용 image오브젝트
-    public Image durabilityBar; //내구도 표시용 바
 
     [Header("주무기 보조무기 장착 표시용 스프라이트")]
     public Sprite mainHighlightSprite; // 주무기 장착 표시
@@ -48,24 +47,8 @@ public class HotbarSlot : MonoBehaviour, IItemSlot, IPointerClickHandler, IBegin
             iconImage.color = new Color(1, 1, 1, 0); // 투명
         }
 
-        UpdateDurabilityBar();
         SetHighlight(false, false); // 기본값
     } 
-    
-    public void UpdateDurabilityBar() // 내구도 바 갱신 함수
-    {
-        if (durabilityBar == null) return;
-
-        if (weaponInstance != null && weaponInstance.isTemporary)
-        {
-            durabilityBar.gameObject.SetActive(true);
-            durabilityBar.fillAmount = weaponInstance.GetDurabilityPercent();
-        }
-        else
-        {
-            durabilityBar.gameObject.SetActive(false);
-        }
-    }
 
     public void SetHighlight(bool isMain,bool isActive) // 장착 무기 표시 UI 갱신 함수
     {

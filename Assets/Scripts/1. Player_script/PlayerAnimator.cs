@@ -5,8 +5,6 @@ public class PlayerAnimator : UnitAnimator
     private PlayerController controller;
     private PlayerArmControl armControl;
 
-    private bool isAnimLockingArmControl = false;
-
     protected override void Awake()
     {
         base.Awake();

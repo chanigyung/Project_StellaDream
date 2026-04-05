@@ -14,6 +14,11 @@ public class SkillExecutor : MonoBehaviour
 
     public bool UseSkill(SkillContext context)
     {
+        return TryExecuteSkill(context, true);
+    }
+
+    public bool TryExecuteSkill(SkillContext context, bool useInternalCooldown)
+    {
         SkillInstance skillInstance = context.skillInstance;
 
         if (skillInstance == null) return false;
@@ -26,20 +31,20 @@ public class SkillExecutor : MonoBehaviour
             return false;
         }
 
-        // 쿨타임 체크
-        if (lastUsedTimeDict.TryGetValue(skillInstance, out float lastUsed))
+        if (useInternalCooldown)
         {
-            if (Time.time < lastUsed + skillInstance.cooldown)
-                return false;
+            if (lastUsedTimeDict.TryGetValue(skillInstance, out float lastUsed))
+            {
+                if (Time.time < lastUsed + skillInstance.cooldown)
+                    return false;
+            }
+
+            lastUsedTimeDict[skillInstance] = Time.time;
         }
 
-        lastUsedTimeDict[skillInstance] = Time.time;
-
-        // 캐스팅 락을 무시하는 스킬은 activeSkill로 등록X
         if (!skillInstance.data.ignoreCastLock)
             activeSkill = skillInstance;
 
-        // 하나라도 딜레이가 있으면 코루틴 실행
         StartCoroutine(ExecuteSkillDelay(context));
         return true;
     }
