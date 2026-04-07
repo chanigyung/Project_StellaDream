@@ -15,7 +15,7 @@ public enum WeaponSkillSlot
     Sub
 }
 
-public class WeaponSkillBase
+public class WeaponControlBase
 {
     protected readonly WeaponInstance weaponInstance;
     protected readonly SkillExecutor skillExecutor;
@@ -23,14 +23,13 @@ public class WeaponSkillBase
     protected float mainCooldownEndTime;
     protected float subCooldownEndTime;
 
-    public WeaponSkillBase(WeaponInstance weaponInstance, SkillExecutor skillExecutor)
+    public WeaponControlBase(WeaponInstance weaponInstance, SkillExecutor skillExecutor)
     {
         this.weaponInstance = weaponInstance;
         this.skillExecutor = skillExecutor;
     }
 
-    // SingleSkill / DualSkill 호환용 생성자
-    protected WeaponSkillBase(WeaponInstance weaponInstance, GameObject owner, MonoBehaviour runner)
+    protected WeaponControlBase(WeaponInstance weaponInstance, GameObject owner, MonoBehaviour runner)
         : this(weaponInstance, ResolveSkillExecutor(owner, runner))
     {
     }

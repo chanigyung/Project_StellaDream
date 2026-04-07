@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum WeaponType { OneHanded, TwoHanded }
-public enum WeaponSkillType { Default, Combo, ModeSwitch }
+public enum WeaponControlType { Default, Combo, ModeSwitch }
 
 [CreateAssetMenu(fileName = "NewWeaponData", menuName = "WeaponData/Weapon")]
 
 public class WeaponData : ItemData
 {
     public WeaponType weaponType;
-    public WeaponSkillType weaponSkillType = WeaponSkillType.Default;
+    public WeaponControlType weaponSkillType = WeaponControlType.Default;
     
     //외형 및 UI에 쓰일 데이터들
     public Sprite weaponSprite;

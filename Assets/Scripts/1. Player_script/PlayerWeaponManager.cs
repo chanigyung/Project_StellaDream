@@ -13,8 +13,8 @@ public class PlayerWeaponManager : MonoBehaviour
     public SpriteRenderer mainWeaponRenderer;
     public SpriteRenderer subWeaponRenderer;
 
-    private WeaponSkillBase mainWeaponSkill;
-    private WeaponSkillBase subWeaponSkill;
+    private WeaponControlBase weaponMainSkillControl;
+    private WeaponControlBase weaponSubSkillControl;
 
     [SerializeField] private SkillExecutor skillExecutor;
 
@@ -128,49 +128,37 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public bool HandleMainInput(WeaponSkillInputPhase inputPhase, Vector2 aimDirection)
     {
-        if (mainWeaponSkill == null)
+        if (weaponMainSkillControl == null)
             return false;
 
-        return mainWeaponSkill.HandleMainInput(inputPhase, aimDirection);
+        return weaponMainSkillControl.HandleMainInput(inputPhase, aimDirection);
     }
 
     public bool HandleSubInput(WeaponSkillInputPhase inputPhase, Vector2 aimDirection)
     {
-        if (mainWeaponSkill == null)
+        if (weaponSubSkillControl == null)
             return false;
 
-        return mainWeaponSkill.HandleSubInput(inputPhase, aimDirection);
+        return weaponSubSkillControl.HandleSubInput(inputPhase, aimDirection);
     }
 
     private void RebuildWeaponSkills()
     {
-        mainWeaponSkill = CreateWeaponSkill(mainWeaponInstance);
-        subWeaponSkill = CreateWeaponSkill(subWeaponInstance);
+        weaponMainSkillControl = CreateWeaponSkill(mainWeaponInstance);
+        weaponSubSkillControl = CreateWeaponSkill(subWeaponInstance);
     }
 
-    private WeaponSkillBase CreateWeaponSkill(WeaponInstance weaponInstance)
+    private WeaponControlBase CreateWeaponSkill(WeaponInstance weaponInstance)
     {
         if (weaponInstance == null || weaponInstance.weaponData == null)
             return null;
 
         switch (weaponInstance.weaponData.weaponSkillType)
         {
-            case WeaponSkillType.Default:
+            case WeaponControlType.Default:
             default:
-                return new WeaponSkillBase(weaponInstance, skillExecutor);
+                return new WeaponControlBase(weaponInstance, skillExecutor);
         }
-    }
-
-    private WeaponSkillBase GetActiveSubWeaponSkill()
-    {
-        if (mainWeaponInstance != null &&
-            mainWeaponInstance.data != null &&
-            mainWeaponInstance.data.weaponType == WeaponType.TwoHanded)
-        {
-            return mainWeaponSkill;
-        }
-
-        return subWeaponSkill;
     }
 
     private void ShowWeapon(SpriteRenderer renderer, Sprite sprite, float rotationOffsetZ)
