@@ -969,6 +969,7 @@ GameObject:
   - component: {fileID: 1638534618350264654}
   - component: {fileID: 370225880124302853}
   - component: {fileID: 2518215653612312739}
+  - component: {fileID: 5384227653380469411}
   - component: {fileID: 7589833968211789952}
   - component: {fileID: 7074031245736625342}
   - component: {fileID: 8970223490355038521}
@@ -1121,14 +1122,14 @@ MonoBehaviour:
   rightArm: {fileID: 577482371824845381}
   leftArm: {fileID: 8921032385202094983}
   mainWeaponInstance:
-    data: {fileID: 0}
+    weaponData: {fileID: 0}
     uniqueID: 
     upgradeInfo:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
   subWeaponInstance:
-    data: {fileID: 0}
+    weaponData: {fileID: 0}
     uniqueID: 
     upgradeInfo:
       baseUpgradeLevel: 0
@@ -1136,6 +1137,7 @@ MonoBehaviour:
       masteryUpgradeLevel: 0
   mainWeaponRenderer: {fileID: 866653807976311393}
   subWeaponRenderer: {fileID: 353026102612638639}
+  skillExecutor: {fileID: 5384227653380469411}
 --- !u!114 &1638534618350264654
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1183,6 +1185,18 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 1048576
+--- !u!114 &5384227653380469411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5675558720561331785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b5dd05c1c138ea499a1a4154e8a9e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7589833968211789952
 MonoBehaviour:
   m_ObjectHideFlags: 0

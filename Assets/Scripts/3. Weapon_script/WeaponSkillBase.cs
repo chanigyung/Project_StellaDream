@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+// Scripts/3. Weapon_script/WeaponSkillBase.cs
+
 using UnityEngine;
 
 public enum WeaponSkillInputPhase
@@ -15,42 +15,46 @@ public enum WeaponSkillSlot
     Sub
 }
 
-public abstract class WeaponSkillBase
+public class WeaponSkillBase
 {
     protected readonly WeaponInstance weaponInstance;
-    protected readonly GameObject owner;
-    protected readonly MonoBehaviour runner;
+    protected readonly SkillExecutor skillExecutor;
 
     protected float mainCooldownEndTime;
     protected float subCooldownEndTime;
 
-    protected SkillInstance activeSkill = null;
-    protected readonly HashSet<SkillInstance> heldSkillSet = new();
-
-    protected WeaponSkillBase(WeaponInstance weaponInstance, GameObject owner, MonoBehaviour runner)
+    public WeaponSkillBase(WeaponInstance weaponInstance, SkillExecutor skillExecutor)
     {
         this.weaponInstance = weaponInstance;
-        this.owner = owner;
-        this.runner = runner;
+        this.skillExecutor = skillExecutor;
     }
 
-    // main 스킬 입력(눌림/홀드/뗌)을 받아 activationType에 맞게 처리한다.
+    // SingleSkill / DualSkill 호환용 생성자
+    protected WeaponSkillBase(WeaponInstance weaponInstance, GameObject owner, MonoBehaviour runner)
+        : this(weaponInstance, ResolveSkillExecutor(owner, runner))
+    {
+    }
+
     public virtual bool HandleMainInput(WeaponSkillInputPhase inputPhase, Vector2 direction)
     {
         return HandleSkillInput(GetMainSkillInstance(), WeaponSkillSlot.Main, inputPhase, direction);
     }
 
-    // main 스킬 입력(눌림/홀드/뗌)을 받아 activationType에 맞게 처리한다.
     public virtual bool HandleSubInput(WeaponSkillInputPhase inputPhase, Vector2 direction)
     {
         return HandleSkillInput(GetSubSkillInstance(), WeaponSkillSlot.Sub, inputPhase, direction);
     }
 
-    protected abstract SkillInstance GetMainSkillInstance();
-    protected abstract SkillInstance GetSubSkillInstance();
+    protected virtual SkillInstance GetMainSkillInstance()
+    {
+        return weaponInstance?.mainSkillInstance;
+    }
 
+    protected virtual SkillInstance GetSubSkillInstance()
+    {
+        return weaponInstance?.subSkillInstance;
+    }
 
-    // 입력 단계와 activationType을 비교해 실제 시전/홀드 시작/홀드 종료를 분기한다.
     protected virtual bool HandleSkillInput(SkillInstance skillInstance, WeaponSkillSlot skillSlot, WeaponSkillInputPhase inputPhase, Vector2 direction)
     {
         if (skillInstance == null)
@@ -70,10 +74,7 @@ public abstract class WeaponSkillBase
 
             case SkillActivationType.WhileHeld:
                 if (inputPhase == WeaponSkillInputPhase.Pressed)
-                {
-                    BeginHeldSkill(skillInstance);
-                    return false;
-                }
+                    return BeginHeldSkill(skillInstance, skillSlot);
 
                 if (inputPhase == WeaponSkillInputPhase.Held)
                     return TryCastSkill(skillInstance, skillSlot, direction);
@@ -89,19 +90,24 @@ public abstract class WeaponSkillBase
         return false;
     }
 
-    // 스킬 사용가능 여부 확인 후 context 생성 및 스킬 코루틴 실행
     protected virtual bool TryCastSkill(SkillInstance skillInstance, WeaponSkillSlot skillSlot, Vector2 direction)
     {
         if (!CanUseSkill(skillInstance, skillSlot))
             return false;
 
+        if (skillExecutor == null)
+            return false;
+
         SkillContext context = CreateSkillContext(skillInstance, direction);
 
-        if (!skillInstance.data.ignoreCastLock)
-            activeSkill = skillInstance;
+        // [수정] 실제 실행은 SkillExecutor가 담당하고,
+        // WeaponSkillBase는 슬롯 쿨타임만 관리한다.
+        bool success = skillExecutor.TryExecuteSkill(context, false);
+
+        if (!success)
+            return false;
 
         StartCooldown(skillSlot);
-        runner.StartCoroutine(ExecuteSkillDelay(context));
         return true;
     }
 
@@ -110,17 +116,29 @@ public abstract class WeaponSkillBase
         if (skillInstance == null)
             return false;
 
+        if (skillExecutor == null)
+            return false;
+
         if (skillInstance.IsLocked)
             return false;
 
-        if (activeSkill != null &&
-            activeSkill != skillInstance &&
-            !skillInstance.data.ignoreCastLock)
-        {
-            return false;
-        }
-
         return !IsOnCooldown(skillSlot);
+    }
+
+    protected virtual bool BeginHeldSkill(SkillInstance skillInstance, WeaponSkillSlot skillSlot)
+    {
+        if (!CanUseSkill(skillInstance, skillSlot))
+            return false;
+
+        return skillExecutor.BeginHeldSkill(skillInstance);
+    }
+
+    protected virtual void EndHeldSkill(SkillInstance skillInstance)
+    {
+        if (skillExecutor == null || skillInstance == null)
+            return;
+
+        skillExecutor.EndHeldSkill(skillInstance);
     }
 
     protected bool IsOnCooldown(WeaponSkillSlot skillSlot)
@@ -128,19 +146,16 @@ public abstract class WeaponSkillBase
         return GetCooldownRemaining(skillSlot) > 0f;
     }
 
-
-    //지정한 슬롯의 기본 쿨타임 값을 WeaponData에서 가져온다.
     protected virtual float GetBaseCooldown(WeaponSkillSlot skillSlot)
     {
-        if (weaponInstance == null || weaponInstance.data == null)
+        if (weaponInstance == null || weaponInstance.weaponData == null)
             return 0f;
 
         return skillSlot == WeaponSkillSlot.Main
-            ? weaponInstance.data.mainSkillCooldown
-            : weaponInstance.data.subSkillCooldown;
+            ? weaponInstance.weaponData.mainSkillCooldown
+            : weaponInstance.weaponData.subSkillCooldown;
     }
 
-    // 지정한 슬롯의 남은 쿨타임을 반환한다.
     protected float GetCooldownRemaining(WeaponSkillSlot skillSlot)
     {
         return skillSlot == WeaponSkillSlot.Main
@@ -148,7 +163,6 @@ public abstract class WeaponSkillBase
             : Mathf.Max(0f, subCooldownEndTime - Time.time);
     }
 
-    // 지정한 슬롯의 쿨타임을 현재 시각 기준으로 시작한다.
     protected void StartCooldown(WeaponSkillSlot skillSlot)
     {
         float cooldown = GetBaseCooldown(skillSlot);
@@ -160,77 +174,22 @@ public abstract class WeaponSkillBase
             subCooldownEndTime = endTime;
     }
 
-    protected virtual IEnumerator ExecuteSkillDelay(SkillContext context)
-    {
-        SkillInstance skill = context.skillInstance;
-
-        if (skill.delay > 0f)
-        {
-            skill.Delay(context);
-            yield return new WaitForSeconds(skill.delay);
-        }
-
-        skill.Execute(context);
-        skill.PostDelay(context);
-
-        if (skill.postDelay > 0f)
-            yield return new WaitForSeconds(skill.postDelay);
-
-        ReleaseActiveSkill(skill);
-    }
-
-    protected void BeginHeldSkill(SkillInstance skillInstance)
-    {
-        if (skillInstance == null)
-            return;
-
-        heldSkillSet.Add(skillInstance);
-
-        if (!skillInstance.data.ignoreCastLock)
-            activeSkill = skillInstance;
-    }
-
-    protected void EndHeldSkill(SkillInstance skillInstance)
-    {
-        if (skillInstance == null)
-            return;
-
-        if (!heldSkillSet.Contains(skillInstance))
-            return;
-
-        heldSkillSet.Remove(skillInstance);
-        ReleaseActiveSkill(skillInstance);
-    }
-
-    protected void ReleaseActiveSkill(SkillInstance skillInstance)
-    {
-        if (activeSkill == skillInstance)
-            activeSkill = null;
-    }
-
     protected virtual SkillContext CreateSkillContext(SkillInstance skillInstance, Vector2 direction)
     {
-        Vector2 normalizedDirection = direction.sqrMagnitude > 0.0001f
-            ? direction.normalized
-            : Vector2.right;
+        return skillExecutor.CreateCastContext(skillInstance, skillExecutor.gameObject, direction);
+    }
 
-        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
+    private static SkillExecutor ResolveSkillExecutor(GameObject owner, MonoBehaviour runner)
+    {
+        if (owner == null && runner == null)
+            return null;
 
-        SkillContext context = new SkillContext
-        {
-            skillInstance = skillInstance,
-            attacker = owner,
-            contextOwner = owner,
-            sourceObject = null,
-            targetObject = null,
-            position = owner != null ? owner.transform.position : Vector3.zero,
-            rotation = Quaternion.Euler(0f, 0f, angle),
-            direction = normalizedDirection,
-            hasDirection = true,
-            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
-        };
+        GameObject target = owner != null ? owner : runner.gameObject;
+        SkillExecutor executor = target.GetComponent<SkillExecutor>();
 
-        SkillUtils.FillContextSpawnPoints(ref context, owner);
-        return context;
+        if (executor == null)
+            executor = target.AddComponent<SkillExecutor>();
+
+        return executor;
     }
 }

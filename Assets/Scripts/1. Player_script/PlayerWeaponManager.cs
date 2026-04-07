@@ -16,10 +16,18 @@ public class PlayerWeaponManager : MonoBehaviour
     private WeaponSkillBase mainWeaponSkill;
     private WeaponSkillBase subWeaponSkill;
 
+    [SerializeField] private SkillExecutor skillExecutor;
+
     void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        if (skillExecutor == null)
+            skillExecutor = GetComponent<SkillExecutor>();
+
+        if (skillExecutor == null)
+            skillExecutor = gameObject.AddComponent<SkillExecutor>();
     }
 
     private void Start()
@@ -128,20 +136,10 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public bool HandleSubInput(WeaponSkillInputPhase inputPhase, Vector2 aimDirection)
     {
-        if (mainWeaponInstance != null &&mainWeaponInstance.data != null &&
-            mainWeaponInstance.data.weaponType == WeaponType.TwoHanded)
-        {
-            if (mainWeaponSkill == null)
-                return false;
-
-            return mainWeaponSkill.HandleSubInput(inputPhase, aimDirection);
-        }
-
-        // [수정] sub 슬롯에 장착된 한손무기는 우클릭으로 그 무기의 mainSkill 사용
-        if (subWeaponSkill == null)
+        if (mainWeaponSkill == null)
             return false;
 
-        return subWeaponSkill.HandleMainInput(inputPhase, aimDirection);
+        return mainWeaponSkill.HandleSubInput(inputPhase, aimDirection);
     }
 
     private void RebuildWeaponSkills()
@@ -152,14 +150,15 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private WeaponSkillBase CreateWeaponSkill(WeaponInstance weaponInstance)
     {
-        if (weaponInstance == null || weaponInstance.data == null)
+        if (weaponInstance == null || weaponInstance.weaponData == null)
             return null;
 
-        bool hasSubSkill = weaponInstance.subSkillInstance != null;
-
-        return hasSubSkill
-            ? new DualSkill(weaponInstance, gameObject, this)
-            : new SingleSkill(weaponInstance, gameObject, this);
+        switch (weaponInstance.weaponData.weaponSkillType)
+        {
+            case WeaponSkillType.Default:
+            default:
+                return new WeaponSkillBase(weaponInstance, skillExecutor);
+        }
     }
 
     private WeaponSkillBase GetActiveSubWeaponSkill()

@@ -4,7 +4,9 @@ using UnityEngine;
 [System.Serializable]
 public class WeaponInstance
 {
-    public WeaponData data;
+    public WeaponData weaponData;
+    public WeaponData data => weaponData;
+
     public string uniqueID;
 
     public WeaponUpgradeInfo upgradeInfo = new WeaponUpgradeInfo();
@@ -17,7 +19,7 @@ public class WeaponInstance
         if (data == null)
             Debug.LogError("WeaponInstance 생성 시 data가 null입니다!");
 
-        this.data = data;
+        this.weaponData = data;
         this.uniqueID = Guid.NewGuid().ToString();
 
         CreateSkillInstances();

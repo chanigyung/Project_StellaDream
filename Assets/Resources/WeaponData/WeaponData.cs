@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum WeaponType { OneHanded, TwoHanded }
+public enum WeaponSkillType { Default, Combo, ModeSwitch }
 
 [CreateAssetMenu(fileName = "NewWeaponData", menuName = "WeaponData/Weapon")]
 
 public class WeaponData : ItemData
 {
     public WeaponType weaponType;
+    public WeaponSkillType weaponSkillType = WeaponSkillType.Default;
     
     //외형 및 UI에 쓰일 데이터들
     public Sprite weaponSprite;
@@ -19,6 +21,9 @@ public class WeaponData : ItemData
     [Header("무기 스킬")]
     public SkillData mainSkill;
     public SkillData subSkill;
+    
+    [Header("특수 무기용 스킬 리스트")]
+    public List<SkillData> extraMainSkillList = new List<SkillData>();
 
     [Header("무기 기준 쿨타임")]
     public float mainSkillCooldown = 0f;

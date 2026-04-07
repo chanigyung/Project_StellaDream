@@ -69,14 +69,27 @@ public class SkillExecutor : MonoBehaviour
     }
 
     // 홀드형 스킬 시작시 호출
-    public void BeginHeldSkill(SkillInstance skillInstance)
+    public bool BeginHeldSkill(SkillInstance skillInstance)
     {
-        if (skillInstance == null) return;
+        if (skillInstance == null)
+            return false;
+
+        if (skillInstance.IsLocked)
+            return false;
+
+        if (activeSkill != null &&
+            activeSkill != skillInstance &&
+            !skillInstance.data.ignoreCastLock)
+        {
+            return false;
+        }
 
         heldSkill.Add(skillInstance);
 
         if (!skillInstance.data.ignoreCastLock)
             activeSkill = skillInstance;
+
+        return true;
     }
 
     // 홀드형 스킬 종료시 호출
