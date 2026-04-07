@@ -136,6 +136,16 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public bool HandleSubInput(WeaponSkillInputPhase inputPhase, Vector2 aimDirection)
     {
+        if (mainWeaponInstance != null &&
+            mainWeaponInstance.data != null &&
+            mainWeaponInstance.data.weaponType == WeaponType.TwoHanded)
+        {
+            if (weaponMainSkillControl == null)
+                return false;
+
+            return weaponMainSkillControl.HandleSubInput(inputPhase, aimDirection);
+        }
+
         if (weaponSubSkillControl == null)
             return false;
 
