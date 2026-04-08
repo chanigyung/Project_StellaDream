@@ -5,9 +5,17 @@ public enum SkillType { Melee, Projectile, Combo }
 public enum SkillActivationType { OnPress, OnRelease, WhileHeld }
 public enum SkillSpawnPointType {Center, Left, Right, Ground}
 
+public enum SkillUseType
+{
+    Instant,
+    Casting
+}
+
 [CreateAssetMenu(menuName = "Skill/SkillData")]
 public class SkillData : ScriptableObject
 {
+    public virtual SkillUseType UseType => SkillUseType.Instant;
+
     [Header("스킬 모듈")]
     public List<SkillModuleData> modules;
 
@@ -38,6 +46,6 @@ public class SkillData : ScriptableObject
 
     public virtual SkillInstance CreateInstance()
     {
-        return new SkillInstance(this);
+        return new InstantSkillInstance(this);
     }
 }

@@ -8,6 +8,11 @@ public class SkillInstance
     public bool RotateEffect => data.rotateSkill;
     public bool FlipSpriteY => data.flipSpriteY;
     public SkillSpawnPointType SpawnPointType => data.spawnPointType;
+    
+    // 스킬 사용 타입 getter
+    public virtual SkillUseType UseType => data != null ? data.UseType : SkillUseType.Instant;
+    public bool IsInstantSkill => UseType == SkillUseType.Instant;
+    public bool IsCastingSkill => UseType == SkillUseType.Casting;
 
     // 기본 스탯 (캐싱)
     public float cooldown;
@@ -98,7 +103,7 @@ public class SkillInstance
             modules[i].OnPostDelay(context);
     }
 
-    public void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)
+    public virtual void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)
     {
         
     }
