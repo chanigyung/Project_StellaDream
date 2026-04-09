@@ -6,6 +6,7 @@ public class CastingSkillData : SkillData
 {
     [Header("캐스팅 설정")]
     public float castTime = 0f;
+    public float castTickInterval = 0f;
 
     public override SkillUseType UseType => SkillUseType.Casting;
 

@@ -10,7 +10,7 @@ public class SkillInstance
     public SkillSpawnPointType SpawnPointType => data.spawnPointType;
     
     // 스킬 사용 타입 getter
-    public virtual SkillUseType UseType => data != null ? data.UseType : SkillUseType.Instant;
+    public virtual SkillUseType UseType => data.UseType;
     public bool IsInstantSkill => UseType == SkillUseType.Instant;
     public bool IsCastingSkill => UseType == SkillUseType.Casting;
 
@@ -29,6 +29,8 @@ public class SkillInstance
     // 스킬 잠금 관련
     private readonly HashSet<SkillLockReason> lockReasonSet = new();
     public bool IsLocked => lockReasonSet.Count > 0;
+    // 런타임 쿨타임상태
+    private float nextReadyTime; 
 
     public SkillInstance(SkillData data)
     {
@@ -106,6 +108,35 @@ public class SkillInstance
     public virtual void ApplyUpgrade(WeaponUpgradeInfo UpgradeInfo)
     {
         
+    }
+
+    // ------------------------------ 스킬 쿨타임 관련 메서드 ---------------------------//
+    public bool CanUse()
+    {
+        if (IsLocked)
+            return false;
+
+        return IsCooldownReady();
+    }
+
+    public bool IsCooldownReady()
+    {
+        return Time.time >= nextReadyTime;
+    }
+
+    public float GetCooldownRemaining()
+    {
+        return Mathf.Max(0f, nextReadyTime - Time.time);
+    }
+
+    public void StartCooldown()
+    {
+        nextReadyTime = Time.time + Mathf.Max(0f, cooldown);
+    }
+
+    public void ResetCooldown()
+    {
+        nextReadyTime = 0f;
     }
 
     // ------------------------------ 스킬 잠금 관련 메서드 ---------------------------//

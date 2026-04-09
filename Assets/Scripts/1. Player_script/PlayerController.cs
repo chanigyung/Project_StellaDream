@@ -104,11 +104,9 @@ public class PlayerController : UnitController
 
         // 마우스 입력
         context.leftMouseDown = Input.GetMouseButtonDown(0);
-        context.leftMouseHeld = Input.GetMouseButton(0);
         context.leftMouseUp = Input.GetMouseButtonUp(0);
 
         context.rightMouseDown = Input.GetMouseButtonDown(1);
-        context.rightMouseHeld = Input.GetMouseButton(1);
         context.rightMouseUp = Input.GetMouseButtonUp(1);
 
         context.mouseButton = ResolveMouseButton();
@@ -135,12 +133,12 @@ public class PlayerController : UnitController
             context.aimDirection = dir.normalized;
     }
 
-    private int ResolveMouseButton() // [추가]
+    private int ResolveMouseButton()
     {
-        if (context.leftMouseDown || context.leftMouseUp || context.leftMouseHeld)
+        if (context.leftMouseDown || context.leftMouseUp)
             return 0;
 
-        if (context.rightMouseDown || context.rightMouseUp || context.rightMouseHeld)
+        if (context.rightMouseDown || context.rightMouseUp)
             return 1;
 
         return -1;

@@ -1,80 +1,24 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using UnityEngine;
 
 public class SkillExecutor : MonoBehaviour
 {
-    private Dictionary<SkillInstance, float> lastUsedTimeDict = new();
+    private SkillInstance activeSkill = null;
 
-    private SkillInstance activeSkill = null; //사용중인 스킬
-    private readonly HashSet<SkillInstance> heldSkill = new();
+    private Coroutine castingCoroutine;
+    private CastingSkillInstance currentCastingSkill;
 
-    // 외부에서 현재 락 여부 확인시
+    public bool IsCasting => currentCastingSkill != null;
     public bool IsCastLocked => activeSkill != null;
 
     public bool UseSkill(SkillContext context)
     {
-        return TryExecuteSkill(context, true);
-    }
-
-    public bool TryExecuteSkill(SkillContext context, bool useInternalCooldown)
-    {
         SkillInstance skillInstance = context.skillInstance;
 
-        if (skillInstance == null) return false;
-        if (skillInstance.IsLocked) return false;
-
-        if (activeSkill != null &&
-            activeSkill != skillInstance &&
-            !skillInstance.data.ignoreCastLock)
-        {
-            return false;
-        }
-
-        if (useInternalCooldown)
-        {
-            if (lastUsedTimeDict.TryGetValue(skillInstance, out float lastUsed))
-            {
-                if (Time.time < lastUsed + skillInstance.cooldown)
-                    return false;
-            }
-
-            lastUsedTimeDict[skillInstance] = Time.time;
-        }
-
-        if (!skillInstance.data.ignoreCastLock)
-            activeSkill = skillInstance;
-
-        StartCoroutine(ExecuteSkillDelay(context));
-        return true;
-    }
-
-    private IEnumerator ExecuteSkillDelay(SkillContext context)
-    {
-        SkillInstance skill = context.skillInstance;
-        if (skill.delay > 0f)
-        {
-            skill.Delay(context);
-            yield return new WaitForSeconds(skill.delay);
-        }
-
-        skill.Execute(context);
-
-        skill.PostDelay(context);
-
-        if (skill.postDelay > 0f)
-            yield return new WaitForSeconds(skill.postDelay);
-
-        ReleaseActiveSkill(skill);
-    }
-
-    // 홀드형 스킬 시작시 호출
-    public bool BeginHeldSkill(SkillInstance skillInstance)
-    {
         if (skillInstance == null)
             return false;
 
-        if (skillInstance.IsLocked)
+        if (!skillInstance.CanUse())
             return false;
 
         if (activeSkill != null &&
@@ -84,88 +28,125 @@ public class SkillExecutor : MonoBehaviour
             return false;
         }
 
-        heldSkill.Add(skillInstance);
+        if (skillInstance is InstantSkillInstance instantSkillInstance)
+        {
+            skillInstance.StartCooldown();
 
-        if (!skillInstance.data.ignoreCastLock)
-            activeSkill = skillInstance;
+            if (!skillInstance.data.ignoreCastLock)
+                activeSkill = skillInstance;
 
-        return true;
+            StartCoroutine(ExecuteInstantSkill(context, instantSkillInstance));
+            return true;
+        }
+
+        if (skillInstance is CastingSkillInstance castingSkillInstance)
+        {
+            skillInstance.StartCooldown();
+
+            if (!skillInstance.data.ignoreCastLock)
+                activeSkill = skillInstance;
+
+            BeginCastingSkill(context, castingSkillInstance);
+            return true;
+        }
+
+        return false;
     }
 
-    // 홀드형 스킬 종료시 호출
-    public void EndHeldSkill(SkillInstance skillInstance)
+    public bool IsCurrentCastingSkill(SkillInstance skillInstance)
     {
-        if (skillInstance == null) return;
-        if (!heldSkill.Contains(skillInstance)) return;
+        return currentCastingSkill == skillInstance;
+    }
 
-        heldSkill.Remove(skillInstance);
+    public void CancelCurrentCasting()
+    {
+        if (currentCastingSkill == null)
+            return;
+
+        if (castingCoroutine != null)
+        {
+            StopCoroutine(castingCoroutine);
+            castingCoroutine = null;
+        }
+
+        CastingSkillInstance canceledSkill = currentCastingSkill;
+        currentCastingSkill = null;
+
+        canceledSkill.CancelCast();
+        ReleaseActiveSkill(canceledSkill);
+    }
+
+    private IEnumerator ExecuteInstantSkill(SkillContext context, InstantSkillInstance skillInstance)
+    {
+        if (skillInstance.delay > 0f)
+        {
+            skillInstance.Delay(context);
+            yield return new WaitForSeconds(skillInstance.delay);
+        }
+
+        skillInstance.Execute(context);
+        skillInstance.PostDelay(context);
+
+        if (skillInstance.postDelay > 0f)
+            yield return new WaitForSeconds(skillInstance.postDelay);
+
         ReleaseActiveSkill(skillInstance);
     }
 
-    // activeSkill 해제 공통 함수
+    private void BeginCastingSkill(SkillContext context, CastingSkillInstance skillInstance)
+    {
+        currentCastingSkill = skillInstance;
+
+        if (castingCoroutine != null)
+            StopCoroutine(castingCoroutine);
+
+        castingCoroutine = StartCoroutine(ExecuteCastingSkill(context, skillInstance));
+    }
+
+    private IEnumerator ExecuteCastingSkill(SkillContext context, CastingSkillInstance skillInstance)
+    {
+        skillInstance.BeginCast(context);
+
+        if (skillInstance.delay > 0f)
+            yield return new WaitForSeconds(skillInstance.delay);
+
+        skillInstance.StartCast(context);
+
+        float castElapsedTime = 0f;
+        float tickTimer = 0f;
+        float castDuration = skillInstance.CastTime;
+        float castTickInterval = skillInstance.CastTickInterval;
+
+        while (castElapsedTime < castDuration)
+        {
+            if (castTickInterval > 0f)
+            {
+                tickTimer += Time.deltaTime;
+
+                while (tickTimer >= castTickInterval)
+                {
+                    skillInstance.TickCast(context);
+                    tickTimer -= castTickInterval;
+                }
+            }
+
+            castElapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        skillInstance.EndCast(context);
+
+        if (skillInstance.postDelay > 0f)
+            yield return new WaitForSeconds(skillInstance.postDelay);
+
+        castingCoroutine = null;
+        currentCastingSkill = null;
+        ReleaseActiveSkill(skillInstance);
+    }
+
     private void ReleaseActiveSkill(SkillInstance skillInstance)
     {
         if (activeSkill == skillInstance)
             activeSkill = null;
-    }
-
-    public SkillContext CreateCastContext(
-    SkillInstance skillInstance,
-    GameObject attacker,
-    GameObject targetObject,
-    Vector3 position,
-    Vector2 direction)
-    {
-        Vector2 normalizedDirection = direction.sqrMagnitude > 0.0001f
-            ? direction.normalized
-            : Vector2.right;
-
-        float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) * Mathf.Rad2Deg;
-
-        SkillContext context = new SkillContext
-        {
-            skillInstance = skillInstance,
-            attacker = attacker,
-            contextOwner = attacker,
-            sourceObject = null,
-            targetObject = targetObject,
-            position = position,
-            rotation = Quaternion.Euler(0f, 0f, angle),
-            direction = normalizedDirection,
-            hasDirection = true,
-            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
-        };
-
-        SkillUtils.FillContextSpawnPoints(ref context, attacker);
-        return context;
-    }
-
-    public SkillContext CreateCastContext(
-        SkillInstance skillInstance,
-        GameObject attacker,
-        Vector2 direction)
-    {
-        return CreateCastContext(
-            skillInstance,
-            attacker,
-            null,
-            attacker != null ? attacker.transform.position : Vector3.zero,
-            direction
-        );
-    }
-
-    public SkillContext CreateCastContext(
-        SkillInstance skillInstance,
-        GameObject attacker,
-        GameObject targetObject,
-        Vector2 direction)
-    {
-        return CreateCastContext(
-            skillInstance,
-            attacker,
-            targetObject,
-            attacker != null ? attacker.transform.position : Vector3.zero,
-            direction
-        );
     }
 }

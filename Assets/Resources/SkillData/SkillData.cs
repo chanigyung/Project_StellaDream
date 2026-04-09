@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum SkillType { Melee, Projectile, Combo }
-public enum SkillActivationType { OnPress, OnRelease, WhileHeld }
 public enum SkillSpawnPointType {Center, Left, Right, Ground}
 
 public enum SkillUseType
@@ -14,8 +13,6 @@ public enum SkillUseType
 [CreateAssetMenu(menuName = "Skill/SkillData")]
 public class SkillData : ScriptableObject
 {
-    public virtual SkillUseType UseType => SkillUseType.Instant;
-
     [Header("스킬 모듈")]
     public List<SkillModuleData> modules;
 
@@ -24,8 +21,7 @@ public class SkillData : ScriptableObject
     public float delay = 0f;
     public float postDelay = 0f;
 
-    [Header("스킬 활성화 타입")]
-    public SkillActivationType activationType;
+    public virtual SkillUseType UseType => SkillUseType.Instant;
 
     [Header("스킬 위치 설정")]
     public SkillSpawnPointType spawnPointType = SkillSpawnPointType.Center; //스킬 소환 지점

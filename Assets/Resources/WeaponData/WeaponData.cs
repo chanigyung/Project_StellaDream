@@ -25,10 +25,6 @@ public class WeaponData : ItemData
     [Header("특수 무기용 스킬 리스트")]
     public List<SkillData> extraMainSkillList = new List<SkillData>();
 
-    [Header("무기 기준 쿨타임")]
-    public float mainSkillCooldown = 0f;
-    public float subSkillCooldown = 0f;
-
     //태그
     public List<string> tags = new List<String>();
 

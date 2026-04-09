@@ -162,6 +162,36 @@ public static class SkillUtils
         return vfx;
     }
 
+    // 실행시 스킬 컨텍스트 생성
+    public static SkillContext CreateSkillContext(SkillInstance skillInstance, GameObject attacker, Vector2 direction, GameObject targetObject = null)
+    {
+        SkillContext context = new SkillContext
+        {
+            skillInstance = skillInstance,
+            attacker = attacker,
+            contextOwner = attacker,
+            sourceObject = attacker,
+            targetObject = targetObject,
+            position = attacker != null ? attacker.transform.position : Vector3.zero,
+            rotation = attacker != null ? attacker.transform.rotation : Quaternion.identity,
+            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
+        };
+
+        if (direction.sqrMagnitude > 0.0001f)
+        {
+            context.direction = direction.normalized;
+            context.hasDirection = true;
+        }
+        else
+        {
+            context.direction = Vector2.right;
+            context.hasDirection = false;
+        }
+
+        FillContextSpawnPoints(ref context, attacker);
+        return context;
+    }
+
     // 생성된 프리팹의 spawn point 월드 좌표 반환
     public static Vector3 GetPrefabWorldPoint(GameObject spawnedObject, SkillSpawnPointType type)
     {

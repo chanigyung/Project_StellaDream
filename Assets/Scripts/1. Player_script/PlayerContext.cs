@@ -18,10 +18,8 @@ public class PlayerContext : UnitContext
     public int mouseButton = -1;
     public bool interactPressed;
     public bool leftMouseDown;
-    public bool leftMouseHeld;
     public bool leftMouseUp;
     public bool rightMouseDown;
-    public bool rightMouseHeld;
     public bool rightMouseUp;
 
     // === 조준 관련 ===
@@ -44,11 +42,6 @@ public class PlayerContext : UnitContext
     public bool IsMouseDown(int button)
     {
         return button == 0 ? leftMouseDown : rightMouseDown;
-    }
-
-    public bool IsMouseHeld(int button)
-    {
-        return button == 0 ? leftMouseHeld : rightMouseHeld;
     }
 
     public bool IsMouseUp(int button)

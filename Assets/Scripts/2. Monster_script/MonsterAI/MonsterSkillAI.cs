@@ -20,15 +20,15 @@ public class MonsterSkillAI : MonoBehaviour
         context = ctx;
 
         // 초기화: 인스턴스의 스킬별 마지막 사용 시간 기록
-        lastUsedTimes.Clear();
-        if (context?.monsterInstance?.skillInstances != null)
-        {
-            foreach (var skill in context.monsterInstance.skillInstances)
-            {
-                if (skill != null)
-                    lastUsedTimes[skill] = -999f;
-            }
-        }
+        // lastUsedTimes.Clear();
+        // if (context?.monsterInstance?.skillInstances != null)
+        // {
+        //     foreach (var skill in context.monsterInstance.skillInstances)
+        //     {
+        //         if (skill != null)
+        //             lastUsedTimes[skill] = -999f;
+        //     }
+        // }
     }
 
     // AttackAction이 "지금 당장 시전 시작이 가능한지"만 빠르게 확인할 수 있도록 제공
@@ -53,7 +53,7 @@ public class MonsterSkillAI : MonoBehaviour
             return false;
 
         Vector2 direction = GetCastDirection();
-        SkillContext skillContext = skillExecutor.CreateCastContext(skill, gameObject, context.target, direction);
+        SkillContext skillContext = SkillUtils.CreateSkillContext(skill, gameObject, direction, context.target);
 
         StartCoroutine(CastSkillWithDelay(skill, skillContext));
         return true;
@@ -92,7 +92,7 @@ public class MonsterSkillAI : MonoBehaviour
 
             float range = context.monsterInstance.data.skillList[i].maxRange;
             if (dist > range) continue;
-            if (Time.time < lastUsedTimes[skill] + skill.cooldown) continue;
+            if (!skill.CanUse()) continue;
             if (Time.time < lastGlobalSkillUseTime + globalSkillCooldown) continue;
 
             pickedSkill = skill;
@@ -120,10 +120,9 @@ public class MonsterSkillAI : MonoBehaviour
         if (success)
         {
             // 스킬이 '시작'되었다면 즉시 쿨타임을 기록(중복 시전 방지)
-            lastUsedTimes[skill] = Time.time;
             lastGlobalSkillUseTime = Time.time;
 
-            float totalCastTime = Mathf.Max(0f, skill.delay) + Mathf.Max(0f, skill.postDelay);
+            float totalCastTime = GetTotalSkillDuration(skill);
             if (totalCastTime > 0f)
                 yield return new WaitForSeconds(totalCastTime);
         }
@@ -131,5 +130,15 @@ public class MonsterSkillAI : MonoBehaviour
         // 캐스팅 상태 종료
         context.isCastingSkill = false;
         context.UpdateContext();
+    }
+
+    private float GetTotalSkillDuration(SkillInstance skill)
+    {
+        float totalDuration = Mathf.Max(0f, skill.delay) + Mathf.Max(0f, skill.postDelay);
+
+        if (skill is CastingSkillInstance castingSkill)
+            totalDuration += castingSkill.CastTime;
+
+        return totalDuration;
     }
 }
