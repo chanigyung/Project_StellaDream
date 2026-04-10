@@ -6,7 +6,7 @@ public class CastingSkillInstance : SkillInstance
 
     public override SkillUseType UseType => SkillUseType.Casting;
 
-    public float CastTime => castingData != null ? Mathf.Max(0f, castingData.castTime) : 0f;
+    public float MaxCastTime => castingData != null ? Mathf.Max(0f, castingData.maxCastTime) : 0f;
     public float CastTickInterval => castingData != null ? Mathf.Max(0f, castingData.castTickInterval) : 0f;
     
     public CastingSkillInstance(CastingSkillData data) : base(data)

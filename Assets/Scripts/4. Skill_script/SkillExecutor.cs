@@ -112,12 +112,12 @@ public class SkillExecutor : MonoBehaviour
 
         skillInstance.StartCast(context);
 
-        float castElapsedTime = 0f;
         float tickTimer = 0f;
-        float castDuration = skillInstance.CastTime;
+        float castDuration = skillInstance.MaxCastTime;
         float castTickInterval = skillInstance.CastTickInterval;
+        float castElapsedTime = 0f;
 
-        while (castElapsedTime < castDuration)
+        while (castDuration <= 0f || castElapsedTime < castDuration)
         {
             if (castTickInterval > 0f)
             {
@@ -130,7 +130,9 @@ public class SkillExecutor : MonoBehaviour
                 }
             }
 
-            castElapsedTime += Time.deltaTime;
+            if (castDuration > 0f)
+                castElapsedTime += Time.deltaTime;
+
             yield return null;
         }
 
@@ -138,6 +140,8 @@ public class SkillExecutor : MonoBehaviour
 
         if (skillInstance.postDelay > 0f)
             yield return new WaitForSeconds(skillInstance.postDelay);
+
+        skillInstance.ReleaseAllSpawnedObjects();
 
         castingCoroutine = null;
         currentCastingSkill = null;

@@ -52,6 +52,12 @@ public class MonsterSkillAI : MonoBehaviour
         if (!SelectCastSkill(dist, out SkillInstance skill, out float maxRange))
             return false;
 
+        if (skill is CastingSkillInstance castingSkill && castingSkill.MaxCastTime <= 0f)
+        {
+            Debug.LogWarning($"[MonsterSkillAI] Monster '{gameObject.name}' tried to use infinite casting skill '{castingSkill.data.name}'. Monsters do not support MaxCastTime <= 0.");
+            return false;
+        }
+
         Vector2 direction = GetCastDirection();
         SkillContext skillContext = SkillUtils.CreateSkillContext(skill, gameObject, direction, context.target);
 
@@ -137,7 +143,7 @@ public class MonsterSkillAI : MonoBehaviour
         float totalDuration = Mathf.Max(0f, skill.delay) + Mathf.Max(0f, skill.postDelay);
 
         if (skill is CastingSkillInstance castingSkill)
-            totalDuration += castingSkill.CastTime;
+            totalDuration += Mathf.Max(0f, castingSkill.MaxCastTime);
 
         return totalDuration;
     }

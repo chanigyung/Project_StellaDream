@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc64daac78612149a28861b69d346b0, type: 3}
+  m_Name: AreaTest_Cast
+  m_EditorClassIdentifier: 
+  modules:
+  - {fileID: 11400000, guid: d853b9a3bde4dfb4ba494475effe5e71, type: 2}
+  - {fileID: 11400000, guid: d8aa5270ad5615d4a9d844de8a30c511, type: 2}
+  - {fileID: 11400000, guid: 7325ceda5913e704f874c1c09a5625c0, type: 2}
+  - {fileID: 11400000, guid: 51cefa8e3380a0449814f8dfc48af528, type: 2}
+  cooldown: 0
+  delay: 0
+  postDelay: 0
+  spawnPointType: 0
+  statusEffects: []
+  rotateSkill: 1
+  flipSpriteY: 1
+  ignoreCastLock: 0
+  skillAnimations:
+    delayClip: {fileID: 0}
+    delayLockArmControl: 1
+    executeClip: {fileID: 0}
+    executeLockArmControl: 1
+    hitClip: {fileID: 0}
+    hitLockArmControl: 1
+    tickClip: {fileID: 0}
+    tickLockArmControl: 1
+    postDelayClip: {fileID: 0}
+    postDelayLockArmControl: 1
+  maxCastTime: 0
+  castTickInterval: 0
+  references:
+    version: 2
+    RefIds: []

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc64daac78612149a28861b69d346b0, type: 3}
+  m_Name: MoveTest_Cast
+  m_EditorClassIdentifier: 
+  modules:
+  - {fileID: 11400000, guid: 600b0111155cc944cbbc99c57026ea1d, type: 2}
+  - {fileID: 11400000, guid: 0711363b63022bc4b83c6d638aa303ba, type: 2}
+  - {fileID: 11400000, guid: 7b6617de60beea248b8b82fad245fc5f, type: 2}
+  - {fileID: 11400000, guid: 9b0fe3d38e355e84eb7c3f274841edc8, type: 2}
+  cooldown: 0
+  delay: 0
+  postDelay: 0
+  spawnPointType: 0
+  statusEffects: []
+  rotateSkill: 1
+  flipSpriteY: 1
+  ignoreCastLock: 0
+  skillAnimations:
+    delayClip: {fileID: 0}
+    delayLockArmControl: 1
+    executeClip: {fileID: 0}
+    executeLockArmControl: 1
+    hitClip: {fileID: 0}
+    hitLockArmControl: 1
+    tickClip: {fileID: 0}
+    tickLockArmControl: 1
+    postDelayClip: {fileID: 0}
+    postDelayLockArmControl: 1
+  maxCastTime: 0
+  castTickInterval: 0
+  references:
+    version: 2
+    RefIds: []
