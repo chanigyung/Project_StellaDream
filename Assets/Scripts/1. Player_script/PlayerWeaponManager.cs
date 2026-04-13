@@ -165,6 +165,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
         switch (weaponInstance.weaponData.weaponSkillType)
         {
+            case WeaponControlType.Combo:
+                return new ComboWeaponControl(weaponInstance, skillExecutor);
             case WeaponControlType.Default:
             default:
                 return new WeaponControlBase(weaponInstance, skillExecutor);

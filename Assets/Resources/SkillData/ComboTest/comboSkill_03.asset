@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d9445501bbfac149b4fe12d2ca49b98, type: 3}
+  m_Name: comboSkill_03
+  m_EditorClassIdentifier: 
+  modules:
+  - {fileID: 11400000, guid: eb6012c4d5e6f70819a2b3c4d5e6f708, type: 2}
+  - {fileID: 11400000, guid: fc7012d5e6f70819a2b3c4d5e6f70819, type: 2}
+  - {fileID: 11400000, guid: ad8012e6f70819a2b3c4d5e6f70819a2, type: 2}
+  - {fileID: 11400000, guid: e6ac880a6da5e1c4da430989ffab60b5, type: 2}
+  cooldown: 0
+  delay: 0
+  postDelay: 0
+  spawnPointType: 0
+  statusEffects: []
+  rotateSkill: 1
+  flipSpriteY: 1
+  ignoreCastLock: 0
+  skillAnimations:
+    delayClip: {fileID: 0}
+    delayLockArmControl: 1
+    executeClip: {fileID: 0}
+    executeLockArmControl: 1
+    hitClip: {fileID: 0}
+    hitLockArmControl: 1
+    tickClip: {fileID: 0}
+    tickLockArmControl: 1
+    postDelayClip: {fileID: 0}
+    postDelayLockArmControl: 1
+  references:
+    version: 2
+    RefIds: []

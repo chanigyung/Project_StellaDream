@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,6 +14,7 @@ public class WeaponInstance
 
     public SkillInstance mainSkillInstance;
     public SkillInstance subSkillInstance;
+    public readonly List<SkillInstance> extraSkillInstances = new();
 
     public WeaponInstance(WeaponData data)
     {
@@ -30,6 +32,8 @@ public class WeaponInstance
         if (data == null)
             return;
 
+        extraSkillInstances.Clear();
+
         if (data.mainSkill != null)
         {
             mainSkillInstance = data.mainSkill.CreateInstance();
@@ -40,6 +44,20 @@ public class WeaponInstance
         {
             subSkillInstance = data.subSkill.CreateInstance();
             subSkillInstance.ApplyUpgrade(upgradeInfo);
+        }
+
+        if (data.extraSkillList == null)
+            return;
+
+        for (int i = 0; i < data.extraSkillList.Count; i++)
+        {
+            SkillData extraSkillData = data.extraSkillList[i];
+            if (extraSkillData == null)
+                continue;
+
+            SkillInstance extraSkillInstance = extraSkillData.CreateInstance();
+            extraSkillInstance.ApplyUpgrade(upgradeInfo);
+            extraSkillInstances.Add(extraSkillInstance);
         }
     }
 
@@ -52,6 +70,37 @@ public class WeaponInstance
 
         if (subSkillInstance != null)
             subSkillInstance.ApplyUpgrade(upgradeInfo);
+
+        for (int i = 0; i < extraSkillInstances.Count; i++)
+        {
+            SkillInstance extraSkillInstance = extraSkillInstances[i];
+            if (extraSkillInstance == null)
+                continue;
+
+            extraSkillInstance.ApplyUpgrade(upgradeInfo);
+        }
+    }
+
+    public int GetMainComboSkillCount()
+    {
+        int count = mainSkillInstance != null ? 1 : 0;
+        count += extraSkillInstances.Count;
+        return count;
+    }
+
+    public SkillInstance GetMainComboSkillAt(int comboIndex)
+    {
+        if (comboIndex < 0)
+            return null;
+
+        if (comboIndex == 0)
+            return mainSkillInstance;
+
+        int extraSkillIndex = comboIndex - 1;
+        if (extraSkillIndex < 0 || extraSkillIndex >= extraSkillInstances.Count)
+            return null;
+
+        return extraSkillInstances[extraSkillIndex];
     }
 
     public string GetPrimaryTag()

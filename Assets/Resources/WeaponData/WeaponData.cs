@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum WeaponType { OneHanded, TwoHanded }
 public enum WeaponControlType { Default, Combo, ModeSwitch }
@@ -23,7 +24,9 @@ public class WeaponData : ItemData
     public SkillData subSkill;
     
     [Header("특수 무기용 스킬 리스트")]
-    public List<SkillData> extraMainSkillList = new List<SkillData>();
+    public List<SkillData> extraSkillList = new List<SkillData>();
+    [FormerlySerializedAs("comboChainWindow")]
+    public float ComboTimeLimit = 1f;
 
     //태그
     public List<string> tags = new List<String>();
