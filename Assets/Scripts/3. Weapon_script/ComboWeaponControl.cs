@@ -11,17 +11,11 @@ public class ComboWeaponControl : WeaponControlBase
     {
         get
         {
-            if (weaponInstance?.weaponData == null)
-                return 1f;
-
-            if (comboControlData != null)
-                return Mathf.Max(0f, comboControlData.comboTimeLimit);
-
-            return weaponInstance.weaponData.GetComboTimeLimit();
+            return Mathf.Max(0f, comboControlData.comboTimeLimit);
         }
     }
 
-    public ComboWeaponControl(WeaponInstance weaponInstance, SkillExecutor skillExecutor, ComboWeaponControlData comboControlData = null)
+    public ComboWeaponControl(WeaponInstance weaponInstance, SkillExecutor skillExecutor, ComboWeaponControlData comboControlData)
         : base(weaponInstance, skillExecutor)
     {
         this.comboControlData = comboControlData;

@@ -165,8 +165,11 @@ public class PlayerWeaponManager : MonoBehaviour
 
         WeaponData weaponData = weaponInstance.weaponData;
         WeaponControlData controlData = weaponData.controlData;
+        WeaponControlType controlType = controlData != null
+            ? controlData.ControlType
+            : WeaponControlType.Default;
 
-        switch (weaponData.ControlType)
+        switch (controlType)
         {
             case WeaponControlType.Combo:
                 return new ComboWeaponControl(weaponInstance, skillExecutor, controlData as ComboWeaponControlData);
