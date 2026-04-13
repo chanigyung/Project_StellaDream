@@ -11,7 +11,10 @@ public enum WeaponControlType { Default, Combo, ModeSwitch }
 public class WeaponData : ItemData
 {
     public WeaponType weaponType;
-    public WeaponControlType weaponSkillType = WeaponControlType.Default;
+    public WeaponControlData controlData;
+
+    [FormerlySerializedAs("weaponSkillType")]
+    [SerializeField, HideInInspector] private WeaponControlType legacyWeaponControlType = WeaponControlType.Default;
     
     //외형 및 UI에 쓰일 데이터들
     public Sprite weaponSprite;
@@ -25,11 +28,34 @@ public class WeaponData : ItemData
     
     [Header("특수 무기용 스킬 리스트")]
     public List<SkillData> extraSkillList = new List<SkillData>();
+    [FormerlySerializedAs("ComboTimeLimit")]
     [FormerlySerializedAs("comboChainWindow")]
-    public float ComboTimeLimit = 1f;
+    [SerializeField, HideInInspector] private float legacyComboTimeLimit = 1f;
 
     //태그
     public List<string> tags = new List<String>();
+
+    public WeaponControlType ControlType
+    {
+        get
+        {
+            if (controlData != null)
+                return controlData.ControlType;
+
+            return legacyWeaponControlType;
+        }
+    }
+
+    public float GetComboTimeLimit(float defaultValue = 1f)
+    {
+        if (controlData is ComboWeaponControlData comboControlData)
+            return Mathf.Max(0f, comboControlData.comboTimeLimit);
+
+        if (legacyComboTimeLimit > 0f)
+            return legacyComboTimeLimit;
+
+        return Mathf.Max(0f, defaultValue);
+    }
 
     // public RuntimeAnimatorController animatorOverride;
     private void OnEnable()

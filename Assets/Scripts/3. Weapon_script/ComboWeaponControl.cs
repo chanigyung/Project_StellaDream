@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ComboWeaponControl : WeaponControlBase
 {
+    private readonly ComboWeaponControlData comboControlData;
     private int comboStepIndex;
     private float lastComboSuccessTime = float.NegativeInfinity;
     private SkillInstance lastActivatedSkillInstance;
@@ -13,13 +14,16 @@ public class ComboWeaponControl : WeaponControlBase
             if (weaponInstance?.weaponData == null)
                 return 1f;
 
-            return Mathf.Max(0f, weaponInstance.weaponData.ComboTimeLimit);
+            if (comboControlData != null)
+                return Mathf.Max(0f, comboControlData.comboTimeLimit);
+
+            return weaponInstance.weaponData.GetComboTimeLimit();
         }
     }
 
-    public ComboWeaponControl(WeaponInstance weaponInstance, SkillExecutor skillExecutor)
         : base(weaponInstance, skillExecutor)
     {
+        this.comboControlData = comboControlData;
     }
 
     public override bool HandleMainInput(WeaponSkillInputPhase inputPhase, Vector2 direction)

@@ -163,10 +163,13 @@ public class PlayerWeaponManager : MonoBehaviour
         if (weaponInstance == null || weaponInstance.weaponData == null)
             return null;
 
-        switch (weaponInstance.weaponData.weaponSkillType)
+        WeaponData weaponData = weaponInstance.weaponData;
+        WeaponControlData controlData = weaponData.controlData;
+
+        switch (weaponData.ControlType)
         {
             case WeaponControlType.Combo:
-                return new ComboWeaponControl(weaponInstance, skillExecutor);
+                return new ComboWeaponControl(weaponInstance, skillExecutor, controlData as ComboWeaponControlData);
             case WeaponControlType.Default:
             default:
                 return new WeaponControlBase(weaponInstance, skillExecutor);

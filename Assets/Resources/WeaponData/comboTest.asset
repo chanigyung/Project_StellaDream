@@ -18,6 +18,7 @@ MonoBehaviour:
   rarity: 0
   description: Test combo weapon for combo control flow.
   weaponType: 0
+  controlData: {fileID: 11400000, guid: 94ef5537a419448ca47639b8a7ffec3b, type: 2}
   weaponSkillType: 1
   weaponSprite: {fileID: 21300000, guid: 4e5f41ab94c70e84db3a92ca41027d6c, type: 3}
   mainRotationOffsetZ: 0
