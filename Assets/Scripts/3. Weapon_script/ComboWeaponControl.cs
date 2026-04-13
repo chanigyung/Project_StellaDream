@@ -21,6 +21,7 @@ public class ComboWeaponControl : WeaponControlBase
         }
     }
 
+    public ComboWeaponControl(WeaponInstance weaponInstance, SkillExecutor skillExecutor, ComboWeaponControlData comboControlData = null)
         : base(weaponInstance, skillExecutor)
     {
         this.comboControlData = comboControlData;
