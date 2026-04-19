@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: MobTestSkill01
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: a1d8c8041b15fa647a170fef19e97996, type: 2}
   - {fileID: 11400000, guid: 08d10f512d0322d409e0e1c1c5d28325, type: 2}
-  - {fileID: 11400000, guid: cc30af26d5a92ac498f3a3b1c3b72591, type: 2}
   - {fileID: 11400000, guid: 6f88fe50b93ed7749bc224debe1b0fe1, type: 2}
   cooldown: 2
   delay: 0.3

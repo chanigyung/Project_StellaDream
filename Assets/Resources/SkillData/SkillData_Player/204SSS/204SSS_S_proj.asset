@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc214a65f15ad148ad58dcb9906ad30, type: 3}
   m_Name: 204SSS_S_proj
   m_EditorClassIdentifier: 
+  objectId: 
   projectilePrefab: {fileID: 516866753298579258, guid: e0f2ec96041168f4e93671345ba43a12, type: 3}
   speed: 20
   lifetime: 10
+  spawnOffset: {x: 0, y: 0}
+  ownerSpawnPointType: 1
+  prefabSpawnPointType: 1
+  hitEffect:
+    damage: 100
+    hitCount: 1
+    knockbackX: 0
+    knockbackY: 0
+    knockbackDuration: 0.3
+    statusEffects: []

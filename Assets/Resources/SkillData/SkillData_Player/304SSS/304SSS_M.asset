@@ -15,7 +15,6 @@ MonoBehaviour:
   modules:
   - {fileID: 11400000, guid: cc17cf59380bc4340881fbd8c45df0a4, type: 2}
   - {fileID: 11400000, guid: db94e730e5d15a949b79698c7b48bf8d, type: 2}
-  - {fileID: 11400000, guid: 56e26eef683f6e94c8698eef2b9d337f, type: 2}
   cooldown: 1
   delay: 0
   postDelay: 0

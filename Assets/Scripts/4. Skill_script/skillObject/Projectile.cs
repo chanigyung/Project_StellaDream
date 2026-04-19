@@ -10,10 +10,10 @@ public class Projectile : SkillObjectBase
 
     private readonly HashSet<GameObject> alreadyHit = new();
 
-    public virtual void Initialize(SkillContext context, float speed, float lifetime)
+    public virtual void Initialize(SkillContext context, float speed, float lifetime, hitEffect hitEffect = null)
     {
         this.speed = speed;
-        base.Initialize(context, lifetime);
+        base.Initialize(context, lifetime, hitEffect);
     }
 
     protected override void OnInitialize()
@@ -77,6 +77,7 @@ public class Projectile : SkillObjectBase
         if (skill != null)
         {
             SkillContext hitContext = CreateHitContext(target);
+            hitEffect?.Apply(hitContext);
             skill.OnHit(hitContext);
         }
 

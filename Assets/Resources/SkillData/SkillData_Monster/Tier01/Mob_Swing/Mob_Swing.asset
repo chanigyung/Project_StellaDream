@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Mob_Swing
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: 9a39f98d56aa6824688b3c828b59670d, type: 2}
   - {fileID: 11400000, guid: a9cf168a439ad054697d596a1fbde684, type: 2}
-  - {fileID: 11400000, guid: cc3cbdc47d0452a45b0aae0dafff9d0b, type: 2}
   - {fileID: 11400000, guid: b78fadb449fdc0c4d9f37432d12fda3b, type: 2}
   cooldown: 2
   delay: 0.3

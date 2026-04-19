@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: AreaTest
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: d853b9a3bde4dfb4ba494475effe5e71, type: 2}
   - {fileID: 11400000, guid: d8aa5270ad5615d4a9d844de8a30c511, type: 2}
   - {fileID: 11400000, guid: 51cefa8e3380a0449814f8dfc48af528, type: 2}
-  - {fileID: 11400000, guid: eb8b5b7134131124ba7864a5936d171a, type: 2}
-  - {fileID: 11400000, guid: 7325ceda5913e704f874c1c09a5625c0, type: 2}
   cooldown: 0
   delay: 0
   postDelay: 0

@@ -6,6 +6,8 @@ public class AreaHitboxModule : SkillModuleBase
     private readonly Vector2 hitboxSize;
     private readonly Vector2 spawnOffset;
     private readonly float lifetime;
+    private readonly hitEffect hitEffect;
+    private readonly hitEffect tickHitEffect;
 
     public AreaHitboxModule(AreaHitboxModuleData data)
     {
@@ -13,10 +15,12 @@ public class AreaHitboxModule : SkillModuleBase
         hitboxSize = data.hitboxSize;
         spawnOffset = data.spawnOffset;
         lifetime = data.lifetime; 
+        hitEffect = data.hitEffect?.Clone();
+        tickHitEffect = data.tickHitEffect?.Clone();
     }
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnHitbox(context, data, spawnOffset, hitboxSize, lifetime);
+        SkillUtils.SpawnHitbox(context, data, spawnOffset, hitboxSize, lifetime, hitEffect, tickHitEffect, data.tickInterval);
     }
 }

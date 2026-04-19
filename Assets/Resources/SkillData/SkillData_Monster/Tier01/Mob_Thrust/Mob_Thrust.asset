@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Mob_Thrust
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: 222618f953720624e853b1d06a067c94, type: 2}
   - {fileID: 11400000, guid: 8a9214dbce72cc04f9a0db314a14c317, type: 2}
-  - {fileID: 11400000, guid: 7f48c370188ba1546a4aeec781f2559f, type: 2}
   - {fileID: 11400000, guid: e36777989c9809446a95d5ddcdf7ebbc, type: 2}
   cooldown: 2
   delay: 0.8

@@ -7,17 +7,19 @@ public abstract class SkillObjectBase : MonoBehaviour
     protected GameObject attacker;
     protected SkillInstance skill;
     protected Vector2 direction;
+    protected hitEffect hitEffect;
 
     protected bool initialized;
     private Coroutine lifetimeRoutine;
 
     private bool expired; // 오브젝트 expire 중복호출 방지용
 
-    public void Initialize(SkillContext context, float lifetime)
+    public void Initialize(SkillContext context, float lifetime, hitEffect hitEffect = null)
     {
         this.context = context;
         this.attacker = context.attacker;
         this.skill = context.skillInstance;
+        this.hitEffect = hitEffect;
         this.direction = context.hasDirection && context.direction.sqrMagnitude > 0.0001f
             ? context.direction.normalized : Vector2.right;
 
