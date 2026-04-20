@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: 302MobSkill_01
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: cf2ec4cb61f9e034991d521a8e310721, type: 2}
   - {fileID: 11400000, guid: 880a4c35f2c821b408bbd8c8883eae34, type: 2}
   - {fileID: 11400000, guid: cdb619154a1b2214aaf93666aad5ffad, type: 2}
   - {fileID: 11400000, guid: 59e4d65d958599f448e6a87cc15682ec, type: 2}

@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Mob_Swing_up
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: 8c5ffc81256e0c8428bb81a0fc368741, type: 2}
   - {fileID: 11400000, guid: e60ef7ce5c4e0e24192a5a236568fe0e, type: 2}
-  - {fileID: 11400000, guid: a718d2e92e489874fa56910e1295306f, type: 2}
   - {fileID: 11400000, guid: a3d02b096291c2f4c89b5998deeee1ad, type: 2}
   cooldown: 2
   delay: 0.7

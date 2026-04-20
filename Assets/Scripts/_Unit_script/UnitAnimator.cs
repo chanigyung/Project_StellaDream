@@ -14,8 +14,6 @@ public enum SkillAnimState
 
 public abstract class UnitAnimator : MonoBehaviour
 {
-    [SerializeField] private Animator mainAnimator;
-
     protected Animator animator;
     protected AnimatorOverrideController overrideController;
 
@@ -34,7 +32,7 @@ public abstract class UnitAnimator : MonoBehaviour
 
     protected virtual void Awake()
     {
-        animator = mainAnimator != null ? mainAnimator : GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
         RefreshAnimatorOverride();
 
         // 추가: 시작 기본값

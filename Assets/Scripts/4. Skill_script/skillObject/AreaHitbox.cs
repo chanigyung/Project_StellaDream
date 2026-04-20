@@ -7,6 +7,17 @@ public class AreaHitbox : SkillHitbox
 
     private float tickInterval;
     private float tickTimer;
+    private hitEffect tickHitEffect;
+    private bool hasRuntimeTickInterval;
+
+    public void Initialize(SkillContext context, float lifetime, hitEffect hitEffect, hitEffect tickHitEffect, float tickInterval)
+    {
+        this.tickHitEffect = tickHitEffect;
+        this.tickInterval = tickInterval;
+        hasRuntimeTickInterval = true;
+
+        base.Initialize(context, lifetime, hitEffect);
+    }
 
     protected override void OnInitialize()
     {
@@ -14,7 +25,7 @@ public class AreaHitbox : SkillHitbox
 
         insideTargetSet.Clear();
         tickTimer = 0f;
-        tickInterval = ResolveTickInterval();
+        tickInterval = hasRuntimeTickInterval ? tickInterval : ResolveTickInterval();
     }
 
     private float ResolveTickInterval()
@@ -80,6 +91,7 @@ public class AreaHitbox : SkillHitbox
             }
 
             SkillContext tickContext = CreateTickContext(target);
+            tickHitEffect?.Apply(tickContext);
             skill.OnTick(tickContext);
         }
 

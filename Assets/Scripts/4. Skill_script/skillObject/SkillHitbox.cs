@@ -76,6 +76,7 @@ public class SkillHitbox : SkillObjectBase
     protected virtual void HandleHitTarget(GameObject target)
     {
         SkillContext hitContext = CreateHitContext(target);
+        hitEffect?.Apply(hitContext);
         skill.OnHit(hitContext);
     }
 

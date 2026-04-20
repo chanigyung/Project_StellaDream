@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modules:
   - {fileID: 11400000, guid: d41b5c6d7e8f9012a3b4c5d6e7f8091a, type: 2}
-  - {fileID: 11400000, guid: e51c6d7e8f9012a3b4c5d6e7f8091a2b, type: 2}
-  - {fileID: 11400000, guid: f61d7e8f9012a3b4c5d6e7f8091a2b3c, type: 2}
   - {fileID: 11400000, guid: 9df8d9b066559f8489e17b01ccd891c2, type: 2}
   cooldown: 1
   delay: 0

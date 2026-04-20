@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Mob_Slash_up
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: 5cc901db9fa4b284c9c3f9bf8192e8a4, type: 2}
   - {fileID: 11400000, guid: 0bedd7df4a9159a4ba46f5d61007390a, type: 2}
-  - {fileID: 11400000, guid: 79b0060e824741942b1c4c1d428931ae, type: 2}
   - {fileID: 11400000, guid: fcf4e1719d8e86847941d1e72a079f6d, type: 2}
   cooldown: 2
   delay: 0.7

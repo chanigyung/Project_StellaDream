@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: 302MobSkill_02
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: e404a46ddca09344a81eab5264e9e628, type: 2}
   - {fileID: 11400000, guid: 290d7c7f2ee377e4585dd02d7d5be8ac, type: 2}
   - {fileID: 11400000, guid: 9eee4684bd9eb074abc7cb5650047a51, type: 2}
   cooldown: 0

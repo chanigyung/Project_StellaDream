@@ -16,7 +16,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 600b0111155cc944cbbc99c57026ea1d, type: 2}
   - {fileID: 11400000, guid: 0711363b63022bc4b83c6d638aa303ba, type: 2}
   - {fileID: 11400000, guid: 7b6617de60beea248b8b82fad245fc5f, type: 2}
-  - {fileID: 11400000, guid: 9b0fe3d38e355e84eb7c3f274841edc8, type: 2}
   cooldown: 0
   delay: 0
   postDelay: 0

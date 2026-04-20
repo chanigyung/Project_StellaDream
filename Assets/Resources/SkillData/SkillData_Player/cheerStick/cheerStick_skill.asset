@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: cheerStick_skill
   m_EditorClassIdentifier: 
   modules:
-  - {fileID: 11400000, guid: e6f95356880460749b762fc7152242f5, type: 2}
   - {fileID: 11400000, guid: 67a05a988d005194787d6caaa1379c8c, type: 2}
   - {fileID: 11400000, guid: fc48e2302bdb62b4d9cb6b96604e56d6, type: 2}
-  - {fileID: 11400000, guid: 95d5d0ffd312bf244b487c8c6f6b19bd, type: 2}
   cooldown: 0.5
   delay: 0.3
   postDelay: 0

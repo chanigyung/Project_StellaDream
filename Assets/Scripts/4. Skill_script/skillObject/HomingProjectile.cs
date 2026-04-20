@@ -39,9 +39,9 @@ public class HomingProjectile : Projectile
     private const float CameraRetargetInterval = 0.08f;
 
     /// 투사체 초기화 (Homing은 lifetime을 사용하지 않음)
-    public override void Initialize(SkillContext context, float speed, float lifetime)
+    public override void Initialize(SkillContext context, float speed, float lifetime, hitEffect hitEffect = null)
     {
-        base.Initialize(context, speed, 0f);
+        base.Initialize(context, speed, 0f, hitEffect);
 
         caster = attacker != null ? attacker.transform : null;
 
@@ -264,6 +264,7 @@ public class HomingProjectile : Projectile
         if (skill != null)
         {
             SkillContext hitContext = base.CreateHitContext(targetObj);
+            hitEffect?.Apply(hitContext);
             skill.OnHit(hitContext);
         }
 

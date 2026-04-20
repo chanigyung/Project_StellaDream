@@ -43,7 +43,7 @@ public class PlayerWeaponManager : MonoBehaviour
             subWeaponInstance = mainWeaponInstance;
 
             if (subWeaponInstance != null)
-                ShowWeapon(subWeaponRenderer, subWeaponInstance.data.weaponSprite, subWeaponInstance.data.subRotationOffsetZ);
+                ShowWeapon(subWeaponRenderer, subWeaponInstance.data.weaponSprite);
             else
                 HideWeapon(subWeaponRenderer);
         }
@@ -52,7 +52,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (mainWeaponInstance != null && mainWeaponInstance.data != null)
         {
-            ShowWeapon(mainWeaponRenderer, mainWeaponInstance.data.weaponSprite, mainWeaponInstance.data.mainRotationOffsetZ);
+            ShowWeapon(mainWeaponRenderer, mainWeaponInstance.data.weaponSprite);
 
             if (mainWeaponInstance.data.weaponType == WeaponType.TwoHanded)
                 UnequipSubWeapon();
@@ -95,14 +95,14 @@ public class PlayerWeaponManager : MonoBehaviour
             mainWeaponInstance = subWeaponInstance;
 
             if (mainWeaponInstance != null)
-                ShowWeapon(mainWeaponRenderer, mainWeaponInstance.data.weaponSprite, mainWeaponInstance.data.mainRotationOffsetZ);
+                ShowWeapon(mainWeaponRenderer, mainWeaponInstance.data.weaponSprite);
             else
                 HideWeapon(mainWeaponRenderer);
         }
 
         subWeaponInstance = weaponInstance;
 
-        ShowWeapon(subWeaponRenderer, weaponInstance.data.weaponSprite, weaponInstance.data.subRotationOffsetZ);
+        ShowWeapon(subWeaponRenderer, weaponInstance.data.weaponSprite);
 
         RebuildWeaponSkills();
 
@@ -179,10 +179,9 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-    private void ShowWeapon(SpriteRenderer renderer, Sprite sprite, float rotationOffsetZ)
+    private void ShowWeapon(SpriteRenderer renderer, Sprite sprite)
     {
         renderer.sprite = sprite;
-        renderer.transform.localRotation = Quaternion.Euler(0, 0, rotationOffsetZ);
         renderer.enabled = true;
     }
 

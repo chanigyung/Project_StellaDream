@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 
   head: {fileID: -7233814028796474653, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
+  face: {fileID: 2974538831401086527, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   hair0: {fileID: -425454428819782067, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   hair1: {fileID: -6952339606831426529, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   hair2: {fileID: -3499515871971709126, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
+  body: {fileID: -3315822625570426926, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   leftArm: {fileID: -1005957146964133118, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   leftHand: {fileID: -2789466718906695224, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   rightArm: {fileID: 3661007306306815765, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
@@ -25,9 +27,3 @@ MonoBehaviour:
   leftFoot: {fileID: 4205240459013480037, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   rightLeg: {fileID: 5263543703670686019, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
   rightFoot: {fileID: 7766027383708702632, guid: fbcaea0be7c95e24abc5044af1bd7e22, type: 3}
-  faceClip: {fileID: 7400000, guid: c59b6de7a708414eab921efc57a4d4b9, type: 2}
-  bodyClip: {fileID: 7400000, guid: ce152397ae114b0bbeb9b3d49b8b7695, type: 2}
-  tailClip: {fileID: 0}
-  backEffectClip: {fileID: 0}
-
-

@@ -18,12 +18,10 @@ MonoBehaviour:
   rarity: 0
   description: 
   weaponType: 1
-  controlData: {fileID: 0}
+  weaponSkillType: 0
   weaponSprite: {fileID: 21300000, guid: 78cf53c38f17b1943ae16afee36030b3, type: 3}
-  mainRotationOffsetZ: 0
-  subRotationOffsetZ: 0
-  mainSkill: {fileID: 11400000, guid: f60a2ea40c0633c4296a1534d3fd6499, type: 2}
+  mainSkill: {fileID: 11400000, guid: 76ad13d1a28b3824bb7b7eb0da6111e0, type: 2}
   subSkill: {fileID: 11400000, guid: 0fa65698d304b4e4db9aadf6389c7058, type: 2}
-  extraSkillList: []
+  extraMainSkillList: []
   tags:
   - test

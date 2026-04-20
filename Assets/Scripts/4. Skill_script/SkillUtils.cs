@@ -29,7 +29,7 @@ public static class SkillUtils
     }
 
     //히트박스 생성(근접)
-    public static void SpawnHitbox(SkillContext context, HitboxModuleData data, Vector2 spawnOffset, Vector2 hitboxSize, float lifetime) 
+    public static void SpawnHitbox(SkillContext context, HitboxModuleData data, Vector2 spawnOffset, Vector2 hitboxSize, float lifetime, hitEffect hitEffect = null, hitEffect tickHitEffect = null, float tickInterval = 0f) 
     {
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
@@ -49,7 +49,10 @@ public static class SkillUtils
 
         if (hitbox.TryGetComponent(out SkillHitbox hitboxComp))
         {
-            hitboxComp.Initialize(context, lifetime);
+            if (hitboxComp is AreaHitbox areaHitbox)
+                areaHitbox.Initialize(context, lifetime, hitEffect, tickHitEffect, tickInterval);
+            else
+                hitboxComp.Initialize(context, lifetime, hitEffect);
         }
 
         // owner 기준점에 hitbox 프리팹 기준점 정렬
@@ -72,7 +75,7 @@ public static class SkillUtils
     }
 
     // 투사체 생성(원거리)
-    public static void SpawnProjectile(SkillContext context, ProjectileModuleData data, Vector2 spawnOffset, float speed, float lifetime)
+    public static void SpawnProjectile(SkillContext context, ProjectileModuleData data, Vector2 spawnOffset, float speed, float lifetime, hitEffect hitEffect = null)
     {
         SkillInstance skill = context.skillInstance;
         if (skill == null) return;
@@ -86,7 +89,7 @@ public static class SkillUtils
 
         if (projectile.TryGetComponent(out Projectile proj))
         {
-            proj.Initialize(context, speed, lifetime);
+            proj.Initialize(context, speed, lifetime, hitEffect);
         }
 
         // owner 기준점에 projectile 프리팹 기준점 정렬
