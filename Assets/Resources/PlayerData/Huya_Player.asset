@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f3dd85dcd0fb6641ae2f71adbc64f06, type: 3}
-  m_Name: Yuni_Player
+  m_Name: Huya_Player
   m_EditorClassIdentifier: 
-  characterID: Stella10
-  characterName: "\uC544\uC57C\uCE20\uB178 \uC720\uB2C8"
+  characterID: Stella11
+  characterName: "\uC0AC\uD0A4\uD558\uB124 \uD6C4\uC57C"
   characterPrefab: {fileID: 5675558720561331785, guid: b2cfc4998dfe38b40acd74d7e426f30b, type: 3}
-  visualData: {fileID: 11400000, guid: 0b3bb4ae8e5112c4ebf9c4e0ef195ce5, type: 2}
+  visualData: {fileID: 11400000, guid: d7d2de22c48bd9342a6f59fa483ab36a, type: 2}
   maxHealth: 100
   moveSpeed: 5
-  jumpPower: 17
+  jumpPower: 19
   knockbackImmune: 0
   knockbackResistance: 0

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0beb61b4b51c2f7458a476597e1ef0eb, type: 3}
+  m_Name: Huya_Visual
+  m_EditorClassIdentifier: 
+  characterID: 
+  head: {fileID: -1868122912739959846, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  hair0: {fileID: 7741419721602060184, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  hair1: {fileID: 735938539134573491, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  hair2: {fileID: -5891863099776211072, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  leftArm: {fileID: 4275183787051620482, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  leftHand: {fileID: 4658382386949328236, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  rightArm: {fileID: -1453451699327289893, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  rightHand: {fileID: -7658845842134231794, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  leftLeg: {fileID: -2637718158762251472, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  leftFoot: {fileID: 1670811586035031177, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  rightLeg: {fileID: -4162072826782523488, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  rightFoot: {fileID: -8393688410884978692, guid: 9ab92dedc9cab8b47aeeaa1b9f35985a, type: 3}
+  faceClip: {fileID: 7400000, guid: ca52aa4c5c1c546428790c9ca5aa35d0, type: 2}
+  bodyClip: {fileID: 7400000, guid: 2c79ffbd85191254b84094490b55e95c, type: 2}
+  tailClip: {fileID: 0}
+  backEffectClip: {fileID: 0}
