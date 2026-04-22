@@ -20,6 +20,9 @@ public class SkillExecutor : MonoBehaviour
         if (skillInstance == null)
             return false;
 
+        if (context.coreInstance != null)
+            context.coreInstance.ApplyValues(ref context);
+
         if (!skillInstance.CanUse())
             return false;
 

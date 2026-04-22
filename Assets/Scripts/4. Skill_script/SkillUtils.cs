@@ -179,6 +179,7 @@ public static class SkillUtils
         {
             skillInstance = skillInstance,
             weaponInstance = weaponInstance,
+            coreInstance = weaponInstance?.coreInstance,
             inputSlot = inputSlot,
             inputPhase = inputPhase,
             attacker = attacker,

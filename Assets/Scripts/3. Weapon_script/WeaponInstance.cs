@@ -15,6 +15,7 @@ public class WeaponInstance
     public SkillInstance mainSkillInstance;
     public SkillInstance subSkillInstance;
     public readonly List<SkillInstance> extraSkillInstances = new();
+    public CoreInstance coreInstance;
 
     public WeaponInstance(WeaponData data)
     {
@@ -106,6 +107,28 @@ public class WeaponInstance
     public string GetPrimaryTag()
     {
         return data != null && data.tags != null && data.tags.Count > 0 ? data.tags[0].ToString() : "default";
+    }
+
+    public bool CanEquipCore(CoreData coreData)
+    {
+        if (coreData == null || data == null || data.tags == null)
+            return false;
+
+        return data.tags.Contains(coreData.primaryTag);
+    }
+
+    public bool EquipCore(CoreData coreData)
+    {
+        if (!CanEquipCore(coreData))
+            return false;
+
+        coreInstance = coreData.CreateInstance();
+        return true;
+    }
+
+    public void UnequipCore()
+    {
+        coreInstance = null;
     }
 
     public override bool Equals(object obj)

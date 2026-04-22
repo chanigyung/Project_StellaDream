@@ -51,6 +51,7 @@ public struct SkillContext
 {
     public SkillInstance skillInstance;
     public WeaponInstance weaponInstance;
+    public CoreInstance coreInstance;
 
     public SkillInputSlot inputSlot;
     public SkillInputPhase inputPhase;
