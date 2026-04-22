@@ -17,6 +17,16 @@ public class HitboxModuleData : SkillModuleData
 
     public hitEffect hitEffect = new hitEffect();
 
+    protected virtual void OnEnable()
+    {
+        EnsureTags(SkillTag.Hitbox, SkillTag.Damage);
+    }
+
+    protected virtual void OnValidate()
+    {
+        EnsureTags(SkillTag.Hitbox, SkillTag.Damage);
+    }
+
     public override ISkillModule CreateModule()
     {
         return new HitboxModule(this);

@@ -1,0 +1,676 @@
+Project_STELLIVE Skill System Refactor Handoff
+=============================================
+
+Project / Assumptions
+---------------------
+
+- Unity project path: C:\github\Project_STELLIVE
+- Working rule: do not start code work unless the user explicitly says to do so.
+- Current goal: refactor the existing skill system so it can support weapon cores, buffs, and special behavior extensions.
+- Status effects are intentionally excluded from the current plan because they will be refactored separately later.
+- Existing system compatibility is not a strict requirement, but so far the refactor has been done in small steps that preserve current skill behavior.
+- Latest build command used: dotnet build Project_STELLIVE.sln
+- All changes so far have built successfully with 0 warnings / 0 errors.
+
+
+Final Design Direction
+----------------------
+
+Main flow:
+
+Player / Monster
+-> WeaponInstance
+-> WeaponControlBase
+-> SkillContext
+-> SkillExecutor
+-> SkillInstance
+-> SkillModule
+-> SkillObjectBase / Projectile / Hitbox / Area
+
+Core / buff extension flow:
+
+CoreInstance / BuffManager
+-> SkillModifier: numeric changes
+-> SkillBehavior: behavior additions / overrides
+
+Core concept:
+
+SkillModifier
+- Changes values through context.values.
+- Examples: damage increase, cooldown reduction, projectile speed increase, hitbox size increase.
+
+SkillBehavior
+- Injects behavior into skill, weapon, projectile, or execution hooks.
+- Examples: projectile bounce, area trail on movement, cast-to-charge conversion, reversed combo order.
+
+Important design conclusion:
+
+Skills should not contain every possible special-core behavior in advance.
+Skill / Projectile / WeaponControl / SkillExecutor should expose hook points where external behaviors can intervene.
+The actual special behavior should live in core behavior objects.
+
+Responsibility example:
+
+Projectile
+- Moves.
+- Detects collision.
+- Gives external IProjectileBehavior a chance to handle the collision.
+- If no behavior handles it, performs default destruction.
+
+ProjectileBounceBehavior
+- Checks whether bounce is possible.
+- Calculates reflection angle.
+- Calls Projectile.SetDirection().
+- Applies speed / size changes.
+- Decides whether to cancel default destruction.
+
+
+Original Big Plan
+-----------------
+
+1. Design SkillTag enum
+2. Unify SkillData / SkillInstance
+3. Redefine SkillContext / SkillRuntimeValues
+4. Rewrite SkillExecutor pipeline
+5. Update existing modules to use context.values
+6. Connect WeaponInstance / WeaponControl
+7. Add CoreData / CoreInstance / SkillModifier
+8. Add BuffData / BuffManager
+9. Clean up SkillObject registration / recall structure
+10. Connect status effect application
+11. Validate with 2-3 representative skills
+
+Current status:
+
+1. Done
+2. Not fully unified. Instant/Casting Data/Instance still exist. However, execution now uses common SkillContext / SkillRuntimeValues.
+3. Done
+4. Partially done. Existing Instant/Casting flow remains, but cooldown is now values-based.
+5. Main modules done.
+6. Done. WeaponInstance automatic tag collection was removed; WeaponData.tags is manually configured.
+7. Next big goal.
+8. Not done.
+9. Minimum foundation done.
+10. Excluded from current plan.
+11. User has validated behavior incrementally.
+
+
+Implemented Changes
+-------------------
+
+1. Added SkillTag
+
+File:
+Assets/Resources/SkillData/SkillData.cs
+
+Enum:
+
+public enum SkillTag
+{
+    Damage,
+    Hitbox,
+    Area,
+    Projectile,
+    HomingProjectile,
+    Install,
+    Move,
+    Cast,
+    Combo,
+    Chain,
+    VFX,
+    Lock
+}
+
+SkillData now has:
+
+[Header("Skill Tags")]
+public List<SkillTag> tags = new();
+
+
+2. Added SkillModuleData.tags
+
+File:
+Assets/Resources/SkillData/SkillModuleData/SkillModuleData.cs
+
+Added:
+
+[Header("Module Tags")]
+public List<SkillTag> tags = new();
+
+protected void EnsureTags(params SkillTag[] defaultTags)
+
+
+3. Added default module tag guarantees
+
+Each module data calls EnsureTags() in OnEnable / OnValidate.
+
+Default tags:
+
+HitboxModuleData      -> Hitbox, Damage
+AreaHitboxModuleData  -> Area, Hitbox, Damage, Install
+ProjectileModuleData  -> Projectile, Damage
+MoveSkillModuleData   -> Move
+VFXModuleData         -> VFX
+LockModuleData        -> Lock
+ChainSkillModuleData  -> Chain
+
+Files:
+
+Assets/Resources/SkillData/SkillModuleData/HitboxModuleData.cs
+Assets/Resources/SkillData/SkillModuleData/AreaHitboxModuleData.cs
+Assets/Resources/SkillData/SkillModuleData/ProjectileModuleData.cs
+Assets/Resources/SkillData/SkillModuleData/MoveSkillModuleData.cs
+Assets/Resources/SkillData/SkillModuleData/VFXModuleData.cs
+Assets/Resources/SkillData/SkillModuleData/LockModuleData.cs
+Assets/Resources/SkillData/SkillModuleData/ChainSkillModuleData.cs
+
+
+4. Changed WeaponData.tags to SkillTag list
+
+File:
+Assets/Resources/WeaponData/WeaponData.cs
+
+Current field:
+
+[Header("Weapon Tags")]
+public List<SkillTag> tags = new();
+
+Important:
+WeaponInstance does not automatically collect skill/module tags anymore.
+Weapon tags are manually configured on the WeaponData asset.
+
+
+5. Changed WeaponDropFilter.requiredTags
+
+File:
+Assets/Scripts/3. Weapon_script/WeaponDropFilter.cs
+
+Current field:
+
+public List<SkillTag> requiredTags;
+
+
+6. Expanded SkillContext
+
+File:
+Assets/Scripts/4. Skill_script/SkillContext.cs
+
+Added:
+
+public enum SkillInputSlot
+{
+    None,
+    Main,
+    Sub,
+    Extra
+}
+
+public enum SkillInputPhase
+{
+    None,
+    Pressed,
+    Released
+}
+
+public class SkillRuntimeValues
+{
+    public float damageMultiplier = 1f;
+    public float cooldownMultiplier = 1f;
+    public float hitboxSizeMultiplier = 1f;
+    public float projectileSpeedMultiplier = 1f;
+    public float lifetimeMultiplier = 1f;
+
+    public int additionalHitCount = 0;
+    public int pierceCount = 0;
+
+    public SkillRuntimeValues Clone()
+}
+
+SkillContext fields added:
+
+public WeaponInstance weaponInstance;
+public SkillInputSlot inputSlot;
+public SkillInputPhase inputPhase;
+public SkillRuntimeValues values;
+
+Added method:
+
+public void EnsureValues()
+
+Clone() now clones values too.
+
+VFX object tag helper:
+
+public static class SkillObjectTags
+{
+    public static readonly IReadOnlyList<SkillTag> VFX = new[] { SkillTag.VFX };
+}
+
+
+7. Expanded SkillUtils.CreateSkillContext()
+
+File:
+Assets/Scripts/4. Skill_script/SkillUtils.cs
+
+Additional parameters:
+
+WeaponInstance weaponInstance = null,
+SkillInputSlot inputSlot = SkillInputSlot.None,
+SkillInputPhase inputPhase = SkillInputPhase.None
+
+CreateSkillContext now sets weaponInstance, inputSlot, inputPhase, and values.
+
+
+8. Cleaned up WeaponControlBase input flow
+
+File:
+Assets/Scripts/3. Weapon_script/WeaponControlBase.cs
+
+HandleMainInput() and HandleSubInput() now go through:
+
+public virtual bool HandleInput(WeaponSkillSlot skillSlot, WeaponSkillInputPhase inputPhase, Vector2 direction)
+
+Added:
+
+protected virtual SkillInstance GetSkillInstance(WeaponSkillSlot skillSlot)
+
+CreateSkillContext() forwards weaponInstance, inputSlot, and inputPhase into SkillContext.
+
+
+9. Updated ComboWeaponControl
+
+File:
+Assets/Scripts/3. Weapon_script/ComboWeaponControl.cs
+
+Combo skill use now explicitly passes Main + current input phase:
+
+RequestSkillUse(currentComboSkill, WeaponSkillSlot.Main, inputPhase, direction);
+
+
+10. Updated MonsterSkillAI
+
+File:
+Assets/Scripts/2. Monster_script/MonsterAI/MonsterSkillAI.cs
+
+Monster skill context uses:
+
+weaponInstance = null
+inputSlot = SkillInputSlot.None
+inputPhase = SkillInputPhase.Pressed
+
+
+11. Connected SkillExecutor to SkillRuntimeValues cooldown
+
+File:
+Assets/Scripts/4. Skill_script/SkillExecutor.cs
+
+At UseSkill() entry:
+
+context.EnsureValues();
+
+For instant/casting skills:
+
+skillInstance.StartCooldown(context.values.cooldownMultiplier);
+
+
+12. Added SkillInstance.StartCooldown(float)
+
+File:
+Assets/Scripts/4. Skill_script/SkillInstance.cs
+
+Current shape:
+
+public void StartCooldown()
+{
+    StartCooldown(1f);
+}
+
+public void StartCooldown(float cooldownMultiplier)
+{
+    float finalCooldown = cooldown * Mathf.Max(0f, cooldownMultiplier);
+    nextReadyTime = Time.time + Mathf.Max(0f, finalCooldown);
+}
+
+
+13. hitEffect now uses SkillRuntimeValues
+
+File:
+Assets/Resources/SkillData/SkillModuleData/hitEffect.cs
+
+Uses:
+
+damageMultiplier
+additionalHitCount
+
+Calculation:
+
+finalHitCount = hitCount + context.values.additionalHitCount
+finalDamage = damage * context.values.damageMultiplier
+
+Status effects are still not connected.
+
+
+14. Main modules now use context.values
+
+Files:
+
+Assets/Scripts/4. Skill_script/SkillModule/HitboxModule.cs
+Assets/Scripts/4. Skill_script/SkillModule/AreaHitboxModule.cs
+Assets/Scripts/4. Skill_script/SkillModule/ProjectileModule.cs
+
+Applied values:
+
+HitboxModule:
+- hitboxSizeMultiplier
+- lifetimeMultiplier
+
+AreaHitboxModule:
+- hitboxSizeMultiplier
+- lifetimeMultiplier
+
+ProjectileModule:
+- projectileSpeedMultiplier
+- lifetimeMultiplier
+
+
+15. Renamed SkillObjectRecord to SkillObjectInfo
+
+File:
+Assets/Scripts/4. Skill_script/SkillInstance.cs
+
+Current class:
+
+public class SkillObjectInfo
+{
+    public GameObject gameObject;
+    public IReadOnlyList<SkillTag> tags;
+}
+
+SkillInstance internally uses List<SkillObjectInfo>.
+
+Added API:
+
+public IReadOnlyList<SkillObjectInfo> GetSpawnedObjects()
+
+Existing APIs kept:
+
+RegisterSpawnedObject(GameObject obj)
+RegisterSpawnedObject(GameObject obj, IReadOnlyList<SkillTag> tags)
+UnregisterSpawnedObject(GameObject obj)
+ReleaseSpawnedObject(GameObject obj)
+ReleaseAllSpawnedObjects()
+HasSpawnedObject()
+
+
+16. SkillUtils registers spawned objects with tags
+
+File:
+Assets/Scripts/4. Skill_script/SkillUtils.cs
+
+Hitbox / Area:
+
+skill.RegisterSpawnedObject(hitbox, data.tags);
+
+Projectile:
+
+skill.RegisterSpawnedObject(projectile, data.tags);
+
+VFX:
+
+skill.RegisterSpawnedObject(vfx, SkillObjectTags.VFX);
+
+Hitbox/projectile registration happens before ObjectSpawned() hook.
+
+
+17. Fixed move-skill lock bug
+
+Problem:
+After using a movement skill once, all non-movement skills stopped working. Movement skills still worked.
+
+Cause:
+UnitMovement.isMoveSkillRunning and UnitContext.isMoveSkillActive could desync, leaving player action permanently locked.
+
+Files:
+
+Assets/Scripts/_Unit_script/UnitMovement.cs
+Assets/Scripts/_Unit_script/UnitContext.cs
+
+Added to UnitMovement:
+
+public bool IsMoveSkillRunning => isMoveSkillRunning;
+
+TickMoveSkill() clears stale context if not actually running.
+
+UnitContext.UpdateContext() now syncs:
+
+if (unitMovement != null)
+    isMoveSkillActive = unitMovement.IsMoveSkillRunning;
+
+User confirmed the bug was fixed.
+
+
+User-Confirmed Validation
+-------------------------
+
+The user confirmed:
+
+- Movement skill lock bug fixed.
+- Phase 3 cooldown values connection works.
+- Phase 4 module values reflection works.
+- WeaponControl common input flow works.
+- SkillObjectInfo registration structure works.
+- WeaponInstance automatic tag collection removal builds and works.
+
+
+Current Design Decisions
+------------------------
+
+Weapon tags:
+
+WeaponData.tags are manually configured.
+WeaponInstance does not collect skill/module tags automatically.
+
+Module tags:
+
+ModuleData ensures default tags automatically through OnEnable / OnValidate.
+SkillObjectInfo receives module data tags.
+
+Future core equip check:
+
+Use WeaponData.tags directly.
+
+Example:
+
+weaponInstance.data.tags.Contains(core.primaryTag)
+
+
+Next Big Goal: Core System
+--------------------------
+
+Next implementation target:
+
+CoreData
+CoreInstance
+SkillModifierData / SkillModifier
+SkillBehaviorData / SkillBehavior or behavior interfaces
+WeaponInstance equipped core slot
+Core equip check using WeaponData.tags
+Core hooks into SkillExecutor / WeaponControl / SkillObject
+
+Important:
+Special cores should not only toggle pre-written options inside skills.
+They should be able to provide behavior objects.
+
+Do not make CoreData only like:
+
+CoreData
+- damageMultiplier
+- cooldownMultiplier
+
+That only supports normal cores.
+
+Recommended core shape:
+
+CoreData
+- coreType
+- primaryTag
+- modifiers
+- behaviors
+
+CoreInstance
+- CoreData
+- runtimeState
+- ApplyModifiers(context)
+- HandleBehaviorHook(...)
+
+
+Recommended Modifier / Behavior Split
+-------------------------------------
+
+SkillModifier
+- Numeric change.
+- Modifies context.values.
+- Examples: DamageUpModifier, CooldownReduceModifier, ProjectileSpeedModifier.
+
+SkillBehavior
+- Adds or replaces behavior.
+- Intervenes in hooks.
+- Examples: ProjectileBounceBehavior, ReverseComboBehavior, ChargeCastBehavior.
+
+Possible base:
+
+public abstract class SkillModifier
+{
+    public virtual void OnBuildValues(SkillContext context) {}
+}
+
+Behavior marker:
+
+public interface ISkillBehavior
+{
+}
+
+Possible specialized behavior interfaces:
+
+public interface IProjectileBehavior : ISkillBehavior
+{
+    bool OnProjectileCollision(Projectile projectile, Collision2D collision, SkillContext context);
+}
+
+public interface IWeaponControlBehavior : ISkillBehavior
+{
+    bool TrySelectSkill(...);
+}
+
+public interface ISkillExecutorBehavior : ISkillBehavior
+{
+    bool TryOverrideSkillFlow(SkillExecutor executor, SkillContext context);
+}
+
+
+Special Core Direction Examples
+-------------------------------
+
+Two one-handed weapons with the same core:
+- Equipment / weapon-level core effect.
+- Check in PlayerWeaponManager or core equip logic.
+
+Effect changes against status-effected targets:
+- Later, after status-effect refactor.
+- Use OnHit or BeforeHit hook.
+
+Area trail on movement skill:
+- Needs IMoveSkillBehavior or movement tick/end hook.
+
+Shorter projectile range + multi-shot:
+- Use SkillRuntimeValues lifetime/speed/count or OnBeforeModuleExecute behavior.
+
+Heal area around install object:
+- Use OnObjectSpawned, check install tag, spawn heal area.
+
+Replay skill in opposite direction after movement skill ends:
+- Needs OnMoveSkillEnd or OnExpire hook.
+
+Projectile bounce on platform + speed/size growth:
+- Use IProjectileBehavior.OnProjectileCollision().
+- Projectile detects collision, behavior handles reflection.
+
+Cast skill -> charge skill:
+- Needs SkillExecutor flow override. Higher difficulty.
+
+Reverse combo order:
+- Needs WeaponControlBase / ComboWeaponControl skill selection hook.
+
+After N final combo hits, final hit auto-casts first hit:
+- Needs WeaponControlBehavior + core runtime state.
+
+
+Projectile Bounce Design Conclusion
+-----------------------------------
+
+Bad direction:
+
+Projectile contains every possible bounce behavior and core only enables bounceCount.
+
+Better direction:
+
+Projectile detects collision and asks external behavior: "Do you want to handle this?"
+Bounce angle calculation, direction change, speed/size increase, and canceling default destruction live in BounceProjectileBehavior.
+
+Minimal Projectile API needed:
+
+public Vector2 Direction => direction;
+public int BounceCount { get; private set; }
+
+public void SetDirection(Vector2 dir)
+public void AddBounceCount()
+public void MultiplySpeed(float value)
+
+Possible collision flow:
+
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    if (context.behaviors.HandleProjectileCollision(this, collision, context))
+        return;
+
+    ExpireNowAndDestroy();
+}
+
+
+Recommended Prompt For New Chat
+-------------------------------
+
+Paste this in the new chat:
+
+"Project_STELLIVE 스킬 리팩토링 이어서 하자.
+현재까지 SkillTag, SkillRuntimeValues, SkillContext 확장, Module values 반영, WeaponControl 정리, SkillObjectInfo 등록 구조까지 완료했고 빌드 통과 상태야.
+상태이상은 제외했고, WeaponData.tags는 직접 세팅 방식으로 유지하기로 했어.
+다음 목표는 CoreData/CoreInstance/SkillModifier/SkillBehavior 구조 추가야.
+특수코어가 행동 자체를 제공할 수 있도록 Behavior 훅 기반으로 설계하고, 첫 구현은 데미지 증가 일반 코어 + 투사체 반사 특수코어가 들어갈 수 있는 구조로 잡자."
+
+
+Files To Inspect First In New Chat
+----------------------------------
+
+Assets/Scripts/4. Skill_script/SkillContext.cs
+Assets/Scripts/4. Skill_script/SkillInstance.cs
+Assets/Scripts/4. Skill_script/SkillExecutor.cs
+Assets/Scripts/4. Skill_script/SkillUtils.cs
+Assets/Scripts/4. Skill_script/skillObject/Projectile.cs
+Assets/Scripts/3. Weapon_script/WeaponInstance.cs
+Assets/Scripts/3. Weapon_script/WeaponControlBase.cs
+Assets/Scripts/3. Weapon_script/ComboWeaponControl.cs
+Assets/Resources/SkillData/SkillData.cs
+Assets/Resources/WeaponData/WeaponData.cs
+Assets/Resources/SkillData/SkillModuleData/SkillModuleData.cs
+
+
+Current Caveats
+---------------
+
+- SkillData / SkillInstance are not fully unified. InstantSkillData, CastingSkillData, InstantSkillInstance, CastingSkillInstance still exist.
+- SkillExecutor is not a full new pipeline yet; it retains existing Instant/Casting flow with values connected.
+- Status effects are excluded.
+- Core/buff systems are not implemented yet.
+- WeaponData.tags must be manually configured on assets.
+- Module tags are automatically ensured, but Unity may mark related assets dirty after validation.

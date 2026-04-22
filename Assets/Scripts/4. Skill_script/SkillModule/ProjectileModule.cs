@@ -19,7 +19,12 @@ public class ProjectileModule : SkillModuleBase
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnProjectile(context, data, spawnOffset, speed, lifetime, hitEffect);
+        context.EnsureValues();
+
+        float finalSpeed = speed * Mathf.Max(0f, context.values.projectileSpeedMultiplier);
+        float finalLifetime = lifetime * Mathf.Max(0f, context.values.lifetimeMultiplier);
+
+        SkillUtils.SpawnProjectile(context, data, spawnOffset, finalSpeed, finalLifetime, hitEffect);
     }
 }
 

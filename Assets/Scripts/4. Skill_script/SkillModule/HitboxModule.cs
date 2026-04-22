@@ -19,7 +19,12 @@ public class HitboxModule : SkillModuleBase
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnHitbox(context, data, spawnOffset, hitboxSize, lifetime, hitEffect);
+        context.EnsureValues();
+
+        Vector2 finalHitboxSize = hitboxSize * Mathf.Max(0f, context.values.hitboxSizeMultiplier);
+        float finalLifetime = lifetime * Mathf.Max(0f, context.values.lifetimeMultiplier);
+
+        SkillUtils.SpawnHitbox(context, data, spawnOffset, finalHitboxSize, finalLifetime, hitEffect);
     }
 }
 

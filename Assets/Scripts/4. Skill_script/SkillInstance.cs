@@ -1,6 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class SkillObjectInfo
+{
+    public GameObject gameObject;
+    public IReadOnlyList<SkillTag> tags;
+
+    public SkillObjectInfo(GameObject gameObject, IReadOnlyList<SkillTag> tags)
+    {
+        this.gameObject = gameObject;
+        this.tags = tags;
+    }
+}
+
 public class SkillInstance
 {
     // 원본 데이터
@@ -21,7 +33,7 @@ public class SkillInstance
     public float postDelay;
 
     // 런타임 캐싱 오브젝트
-    private readonly List<GameObject> spawnedObjectList = new();
+    private readonly List<SkillObjectInfo> spawnedObjectList = new();
 
     // 모듈 인스턴스들
     private readonly List<ISkillModule> modules = new();
@@ -172,12 +184,17 @@ public class SkillInstance
     // ------------ 스킬이 사용하는 오브젝트 등록 및 해제 메서드들(프로토타입) ------------ //
     public void RegisterSpawnedObject(GameObject obj)
     {
+        RegisterSpawnedObject(obj, null);
+    }
+
+    public void RegisterSpawnedObject(GameObject obj, IReadOnlyList<SkillTag> tags)
+    {
         if (obj == null) return;
 
         CleanupNullSpawnedObjects();
 
-        if (spawnedObjectList.Contains(obj)) return;
-        spawnedObjectList.Add(obj);
+        if (FindSpawnedObjectRecordIndex(obj) >= 0) return;
+        spawnedObjectList.Add(new SkillObjectInfo(obj, tags));
     }
 
     public bool HasSpawnedObject()
@@ -186,10 +203,19 @@ public class SkillInstance
         return spawnedObjectList.Count > 0;
     }
 
+    public IReadOnlyList<SkillObjectInfo> GetSpawnedObjects()
+    {
+        CleanupNullSpawnedObjects();
+        return spawnedObjectList;
+    }
+
     public void UnregisterSpawnedObject(GameObject obj)
     {
         if (obj == null) return;
-        spawnedObjectList.Remove(obj);
+
+        int index = FindSpawnedObjectRecordIndex(obj);
+        if (index >= 0)
+            spawnedObjectList.RemoveAt(index);
     }
 
     public void ReleaseSpawnedObject(GameObject obj)
@@ -206,7 +232,7 @@ public class SkillInstance
 
         for (int i = spawnedObjectList.Count - 1; i >= 0; i--)
         {
-            GameObject obj = spawnedObjectList[i];
+            GameObject obj = spawnedObjectList[i].gameObject;
             if (obj == null) continue;
 
             Object.Destroy(obj);
@@ -219,9 +245,20 @@ public class SkillInstance
     {
         for (int i = spawnedObjectList.Count - 1; i >= 0; i--)
         {
-            if (spawnedObjectList[i] == null)
+            if (spawnedObjectList[i] == null || spawnedObjectList[i].gameObject == null)
                 spawnedObjectList.RemoveAt(i);
         }
+    }
+
+    private int FindSpawnedObjectRecordIndex(GameObject obj)
+    {
+        for (int i = 0; i < spawnedObjectList.Count; i++)
+        {
+            if (spawnedObjectList[i] != null && spawnedObjectList[i].gameObject == obj)
+                return i;
+        }
+
+        return -1;
     }
 
     // ------------------------------ 애니메이션 재생용 ---------------------------//

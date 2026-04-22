@@ -70,8 +70,8 @@ public static class SkillUtils
             hitboxComp.EnableFollowOwner(data.ownerSpawnPointType);
         }
 
+        skill.RegisterSpawnedObject(hitbox, data.tags);
         hitboxComp?.ObjectSpawned();
-        skill.RegisterSpawnedObject(hitbox);
     }
 
     // 투사체 생성(원거리)
@@ -102,8 +102,8 @@ public static class SkillUtils
 
         projectile.transform.position += finalPos - ownerWorldPoint;
 
+        skill.RegisterSpawnedObject(projectile, data.tags);
         proj.ObjectSpawned();
-        skill.RegisterSpawnedObject(projectile);
     }
 
     //스킬 소환되는 좌표 계산
@@ -143,7 +143,7 @@ public static class SkillUtils
         CalculateSpawnTransform(context, skill, entry.spawnPointType, entry.spawnOffset, out var pos, out var rot, out var spawnPoint);
 
         GameObject vfx = Object.Instantiate(entry.prefab, pos, rot);
-        skill.RegisterSpawnedObject(vfx);
+        skill.RegisterSpawnedObject(vfx, SkillObjectTags.VFX);
 
         if (entry.attachToSpawnPoint && spawnPoint != null)
         {

@@ -31,6 +31,16 @@ public class VFXModuleData : SkillModuleData
     [Header("VFX Entries")]
     public List<VFXEntry> vfxEntryList = new();
 
+    private void OnEnable()
+    {
+        EnsureTags(SkillTag.VFX);
+    }
+
+    private void OnValidate()
+    {
+        EnsureTags(SkillTag.VFX);
+    }
+
     public override ISkillModule CreateModule()
     {
         return new VFXModule(this);

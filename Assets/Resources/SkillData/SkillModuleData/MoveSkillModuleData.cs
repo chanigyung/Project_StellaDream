@@ -8,6 +8,16 @@ public class MoveSkillModuleData : SkillModuleData
 
     public bool stopOnHit = false;
 
+    private void OnEnable()
+    {
+        EnsureTags(SkillTag.Move);
+    }
+
+    private void OnValidate()
+    {
+        EnsureTags(SkillTag.Move);
+    }
+
     public override ISkillModule CreateModule()
     {
         return new MoveSkillModule(this);

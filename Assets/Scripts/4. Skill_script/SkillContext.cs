@@ -1,4 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
+
+public static class SkillObjectTags
+{
+    public static readonly IReadOnlyList<SkillTag> VFX = new[] { SkillTag.VFX };
+}
 
 public enum SkillInputSlot
 {

@@ -32,12 +32,18 @@ public class WeaponControlBase
 
     public virtual bool HandleMainInput(WeaponSkillInputPhase inputPhase, Vector2 direction)
     {
-        return HandleSkillInput(GetMainSkillInstance(), WeaponSkillSlot.Main, inputPhase, direction);
+        return HandleInput(WeaponSkillSlot.Main, inputPhase, direction);
     }
 
     public virtual bool HandleSubInput(WeaponSkillInputPhase inputPhase, Vector2 direction)
     {
-        return HandleSkillInput(GetSubSkillInstance(), WeaponSkillSlot.Sub, inputPhase, direction);
+        return HandleInput(WeaponSkillSlot.Sub, inputPhase, direction);
+    }
+
+    public virtual bool HandleInput(WeaponSkillSlot skillSlot, WeaponSkillInputPhase inputPhase, Vector2 direction)
+    {
+        SkillInstance skillInstance = GetSkillInstance(skillSlot);
+        return HandleSkillInput(skillInstance, skillSlot, inputPhase, direction);
     }
 
     protected virtual SkillInstance GetMainSkillInstance()
@@ -48,6 +54,16 @@ public class WeaponControlBase
     protected virtual SkillInstance GetSubSkillInstance()
     {
         return weaponInstance?.subSkillInstance;
+    }
+
+    protected virtual SkillInstance GetSkillInstance(WeaponSkillSlot skillSlot)
+    {
+        return skillSlot switch
+        {
+            WeaponSkillSlot.Main => GetMainSkillInstance(),
+            WeaponSkillSlot.Sub => GetSubSkillInstance(),
+            _ => null
+        };
     }
 
     protected virtual bool HandleSkillInput(SkillInstance skillInstance, WeaponSkillSlot skillSlot, WeaponSkillInputPhase inputPhase, Vector2 direction)

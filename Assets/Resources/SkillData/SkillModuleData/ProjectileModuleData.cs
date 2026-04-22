@@ -16,6 +16,16 @@ public class ProjectileModuleData : SkillModuleData
 
     public hitEffect hitEffect = new hitEffect();
 
+    private void OnEnable()
+    {
+        EnsureTags(SkillTag.Projectile, SkillTag.Damage);
+    }
+
+    private void OnValidate()
+    {
+        EnsureTags(SkillTag.Projectile, SkillTag.Damage);
+    }
+
     public override ISkillModule CreateModule()
     {
         return new ProjectileModule(this);

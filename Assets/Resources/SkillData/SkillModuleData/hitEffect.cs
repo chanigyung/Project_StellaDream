@@ -24,11 +24,18 @@ public class hitEffect
     {
         if (context.targetObject == null) return;
         if (damage <= 0f) return;
-        if (hitCount <= 0) return;
 
-        for (int i = 0; i < hitCount; i++)
+        context.EnsureValues();
+
+        int finalHitCount = Mathf.Max(0, hitCount + context.values.additionalHitCount);
+        if (finalHitCount <= 0) return;
+
+        float finalDamage = damage * Mathf.Max(0f, context.values.damageMultiplier);
+        if (finalDamage <= 0f) return;
+
+        for (int i = 0; i < finalHitCount; i++)
         {
-            SkillUtils.ApplyDamage(context.targetObject, damage);
+            SkillUtils.ApplyDamage(context.targetObject, finalDamage);
         }
     }
 

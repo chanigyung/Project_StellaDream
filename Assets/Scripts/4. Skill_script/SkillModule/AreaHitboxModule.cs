@@ -21,6 +21,11 @@ public class AreaHitboxModule : SkillModuleBase
 
     public override void OnExecute(SkillContext context)
     {
-        SkillUtils.SpawnHitbox(context, data, spawnOffset, hitboxSize, lifetime, hitEffect, tickHitEffect, data.tickInterval);
+        context.EnsureValues();
+
+        Vector2 finalHitboxSize = hitboxSize * Mathf.Max(0f, context.values.hitboxSizeMultiplier);
+        float finalLifetime = lifetime * Mathf.Max(0f, context.values.lifetimeMultiplier);
+
+        SkillUtils.SpawnHitbox(context, data, spawnOffset, finalHitboxSize, finalLifetime, hitEffect, tickHitEffect, data.tickInterval);
     }
 }

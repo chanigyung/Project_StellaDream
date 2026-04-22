@@ -16,6 +16,16 @@ public class LockModuleData : SkillModuleData
     [Header("Hook별 Lock 추가/해제 규칙")]
     public List<LockRule> ruleList = new();
 
+    private void OnEnable()
+    {
+        EnsureTags(SkillTag.Lock);
+    }
+
+    private void OnValidate()
+    {
+        EnsureTags(SkillTag.Lock);
+    }
+
     public override ISkillModule CreateModule()
     {
         return new LockModule(this);

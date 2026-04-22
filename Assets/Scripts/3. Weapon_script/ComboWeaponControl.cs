@@ -51,7 +51,7 @@ public class ComboWeaponControl : WeaponControlBase
             return false;
         }
 
-        bool success = RequestSkillUse(currentComboSkill, direction);
+        bool success = RequestSkillUse(currentComboSkill, WeaponSkillSlot.Main, inputPhase, direction);
         if (!success)
             return false;
 
