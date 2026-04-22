@@ -131,7 +131,13 @@ public class SkillInstance
 
     public void StartCooldown()
     {
-        nextReadyTime = Time.time + Mathf.Max(0f, cooldown);
+        StartCooldown(1f);
+    }
+
+    public void StartCooldown(float cooldownMultiplier)
+    {
+        float finalCooldown = cooldown * Mathf.Max(0f, cooldownMultiplier);
+        nextReadyTime = Time.time + Mathf.Max(0f, finalCooldown);
     }
 
     public void ResetCooldown()

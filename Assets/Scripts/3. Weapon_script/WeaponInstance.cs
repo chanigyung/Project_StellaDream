@@ -105,7 +105,7 @@ public class WeaponInstance
 
     public string GetPrimaryTag()
     {
-        return data != null && data.tags != null && data.tags.Count > 0 ? data.tags[0] : "default";
+        return data != null && data.tags != null && data.tags.Count > 0 ? data.tags[0].ToString() : "default";
     }
 
     public override bool Equals(object obj)

@@ -13,6 +13,8 @@ public class SkillExecutor : MonoBehaviour
 
     public bool UseSkill(SkillContext context)
     {
+        context.EnsureValues();
+
         SkillInstance skillInstance = context.skillInstance;
 
         if (skillInstance == null)
@@ -30,7 +32,7 @@ public class SkillExecutor : MonoBehaviour
 
         if (skillInstance is InstantSkillInstance instantSkillInstance)
         {
-            skillInstance.StartCooldown();
+            skillInstance.StartCooldown(context.values.cooldownMultiplier);
 
             if (!skillInstance.data.ignoreCastLock)
                 activeSkill = skillInstance;
@@ -41,7 +43,7 @@ public class SkillExecutor : MonoBehaviour
 
         if (skillInstance is CastingSkillInstance castingSkillInstance)
         {
-            skillInstance.StartCooldown();
+            skillInstance.StartCooldown(context.values.cooldownMultiplier);
 
             if (!skillInstance.data.ignoreCastLock)
                 activeSkill = skillInstance;

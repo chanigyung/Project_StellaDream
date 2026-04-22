@@ -32,6 +32,8 @@ public class UnitContext
     public virtual void UpdateContext()
     {
         isKnockbacked = instance != null && instance.IsKnockbackActive;
+        if (unitMovement != null)
+            isMoveSkillActive = unitMovement.IsMoveSkillRunning;
 
         if (target != null)
         {

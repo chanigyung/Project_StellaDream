@@ -22,7 +22,8 @@ public class WeaponData : ItemData
     [Header("특수 무기용 스킬 리스트")]
     public List<SkillData> extraSkillList = new List<SkillData>();
     //태그
-    public List<string> tags = new List<String>();
+    [Header("Weapon Tags")]
+    public List<SkillTag> tags = new();
 
     // public RuntimeAnimatorController animatorOverride;
     private void OnEnable()

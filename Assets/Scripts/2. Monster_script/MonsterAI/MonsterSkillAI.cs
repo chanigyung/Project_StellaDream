@@ -59,7 +59,14 @@ public class MonsterSkillAI : MonoBehaviour
         }
 
         Vector2 direction = GetCastDirection();
-        SkillContext skillContext = SkillUtils.CreateSkillContext(skill, gameObject, direction, context.target);
+        SkillContext skillContext = SkillUtils.CreateSkillContext(
+            skill,
+            gameObject,
+            direction,
+            context.target,
+            null,
+            SkillInputSlot.None,
+            SkillInputPhase.Pressed);
 
         StartCoroutine(CastSkillWithDelay(skill, skillContext));
         return true;

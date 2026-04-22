@@ -25,6 +25,8 @@ public class UnitMovement : MonoBehaviour
     private float moveSkillSpeed = 0f;
     private float moveSkillRemainingTime = 0f;
 
+    public bool IsMoveSkillRunning => isMoveSkillRunning;
+
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -204,7 +206,10 @@ public class UnitMovement : MonoBehaviour
     public void TickMoveSkill()
     {
         if (!isMoveSkillRunning)
+        {
+            ClearStaleMoveSkillContext();
             return;
+        }
 
         if (rigid == null || context == null)
         {
@@ -250,5 +255,14 @@ public class UnitMovement : MonoBehaviour
             return;
 
         EndMoveSkill();
+    }
+
+    private void ClearStaleMoveSkillContext()
+    {
+        if (context == null || !context.isMoveSkillActive)
+            return;
+
+        context.isMoveSkillActive = false;
+        context.UpdateContext();
     }
 }

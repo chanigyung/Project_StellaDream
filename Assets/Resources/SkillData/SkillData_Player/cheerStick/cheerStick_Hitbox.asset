@@ -27,3 +27,6 @@ MonoBehaviour:
     knockbackY: 5
     knockbackDuration: 0.3
     statusEffects: []
+  references:
+    version: 2
+    RefIds: []

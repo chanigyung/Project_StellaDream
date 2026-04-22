@@ -4,6 +4,22 @@ using UnityEngine;
 public enum SkillType { Melee, Projectile, Combo }
 public enum SkillSpawnPointType {Center, Left, Right, Ground}
 
+public enum SkillTag
+{
+    Damage,
+    Hitbox,
+    Area,
+    Projectile,
+    HomingProjectile,
+    Install,
+    Move,
+    Cast,
+    Combo,
+    Chain,
+    VFX,
+    Lock
+}
+
 public enum SkillUseType
 {
     Instant,
@@ -13,6 +29,9 @@ public enum SkillUseType
 [CreateAssetMenu(menuName = "Skill/SkillData")]
 public class SkillData : ScriptableObject
 {
+    [Header("Skill Tags")]
+    public List<SkillTag> tags = new();
+
     [Header("스킬 모듈")]
     public List<SkillModuleData> modules;
 

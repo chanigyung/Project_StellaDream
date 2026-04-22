@@ -55,6 +55,8 @@ public class ChainSkillModule : SkillModuleBase
         reactionContext.rotation = context.rotation;
         reactionContext.direction = GetHorizontalDirection(context.direction);
         reactionContext.hasDirection = true;
+        reactionContext.spawnPointType = reactionSkillInstance.SpawnPointType;
+        reactionContext.EnsureValues();
 
         return reactionContext;
     }

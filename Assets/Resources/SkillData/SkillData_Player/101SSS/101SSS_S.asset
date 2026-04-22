@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995b3dda6dc330f4583bf3fe572497bd, type: 3}
   m_Name: 101SSS_S
   m_EditorClassIdentifier: 
+  tags: 
   modules:
   - {fileID: 11400000, guid: 4b683ed881f7a674f9bd1a1f3035d273, type: 2}
   - {fileID: 11400000, guid: e520414df469a2d4ead53cc0227fe0b9, type: 2}
@@ -20,7 +21,6 @@ MonoBehaviour:
   cooldown: 0
   delay: 0.2
   postDelay: 0
-  activationType: 0
   spawnPointType: 0
   statusEffects: []
   rotateSkill: 1

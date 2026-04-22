@@ -56,7 +56,7 @@ public class WeaponControlBase
             return false;
 
         if (inputPhase == WeaponSkillInputPhase.Pressed)
-            return RequestSkillUse(skillInstance, direction);
+            return RequestSkillUse(skillInstance, skillSlot, inputPhase, direction);
 
         if (inputPhase == WeaponSkillInputPhase.Released)
             return CancelCastingSkill(skillInstance);
@@ -66,13 +66,18 @@ public class WeaponControlBase
 
     protected virtual bool RequestSkillUse(SkillInstance skillInstance, Vector2 direction)
     {
+        return RequestSkillUse(skillInstance, WeaponSkillSlot.Main, WeaponSkillInputPhase.Pressed, direction);
+    }
+
+    protected virtual bool RequestSkillUse(SkillInstance skillInstance, WeaponSkillSlot skillSlot, WeaponSkillInputPhase inputPhase, Vector2 direction)
+    {
         if (skillInstance == null)
             return false;
 
         if (skillExecutor == null)
             return false;
 
-        SkillContext context = CreateSkillContext(skillInstance, direction);
+        SkillContext context = CreateSkillContext(skillInstance, skillSlot, inputPhase, direction);
         return skillExecutor.UseSkill(context);
     }
 
@@ -94,7 +99,39 @@ public class WeaponControlBase
 
     protected virtual SkillContext CreateSkillContext(SkillInstance skillInstance, Vector2 direction)
     {
-        return SkillUtils.CreateSkillContext(skillInstance, skillExecutor.gameObject, direction);
+        return CreateSkillContext(skillInstance, WeaponSkillSlot.Main, WeaponSkillInputPhase.Pressed, direction);
+    }
+
+    protected virtual SkillContext CreateSkillContext(SkillInstance skillInstance, WeaponSkillSlot skillSlot, WeaponSkillInputPhase inputPhase, Vector2 direction)
+    {
+        return SkillUtils.CreateSkillContext(
+            skillInstance,
+            skillExecutor.gameObject,
+            direction,
+            null,
+            weaponInstance,
+            ToSkillInputSlot(skillSlot),
+            ToSkillInputPhase(inputPhase));
+    }
+
+    private static SkillInputSlot ToSkillInputSlot(WeaponSkillSlot skillSlot)
+    {
+        return skillSlot switch
+        {
+            WeaponSkillSlot.Main => SkillInputSlot.Main,
+            WeaponSkillSlot.Sub => SkillInputSlot.Sub,
+            _ => SkillInputSlot.None
+        };
+    }
+
+    private static SkillInputPhase ToSkillInputPhase(WeaponSkillInputPhase inputPhase)
+    {
+        return inputPhase switch
+        {
+            WeaponSkillInputPhase.Pressed => SkillInputPhase.Pressed,
+            WeaponSkillInputPhase.Released => SkillInputPhase.Released,
+            _ => SkillInputPhase.None
+        };
     }
 
     private static SkillExecutor ResolveSkillExecutor(GameObject owner, MonoBehaviour runner)

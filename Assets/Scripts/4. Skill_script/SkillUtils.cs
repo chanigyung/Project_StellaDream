@@ -166,18 +166,29 @@ public static class SkillUtils
     }
 
     // 실행시 스킬 컨텍스트 생성
-    public static SkillContext CreateSkillContext(SkillInstance skillInstance, GameObject attacker, Vector2 direction, GameObject targetObject = null)
+    public static SkillContext CreateSkillContext(
+        SkillInstance skillInstance,
+        GameObject attacker,
+        Vector2 direction,
+        GameObject targetObject = null,
+        WeaponInstance weaponInstance = null,
+        SkillInputSlot inputSlot = SkillInputSlot.None,
+        SkillInputPhase inputPhase = SkillInputPhase.None)
     {
         SkillContext context = new SkillContext
         {
             skillInstance = skillInstance,
+            weaponInstance = weaponInstance,
+            inputSlot = inputSlot,
+            inputPhase = inputPhase,
             attacker = attacker,
             contextOwner = attacker,
             sourceObject = attacker,
             targetObject = targetObject,
             position = attacker != null ? attacker.transform.position : Vector3.zero,
             rotation = attacker != null ? attacker.transform.rotation : Quaternion.identity,
-            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center
+            spawnPointType = skillInstance != null ? skillInstance.SpawnPointType : SkillSpawnPointType.Center,
+            values = new SkillRuntimeValues()
         };
 
         if (direction.sqrMagnitude > 0.0001f)
