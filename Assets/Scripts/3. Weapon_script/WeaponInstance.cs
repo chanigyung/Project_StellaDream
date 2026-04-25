@@ -15,7 +15,9 @@ public class WeaponInstance
     public SkillInstance mainSkillInstance;
     public SkillInstance subSkillInstance;
     public readonly List<SkillInstance> extraSkillInstances = new();
+    public readonly List<SkillInstance> modeSkillInstances = new();
     public CoreInstance coreInstance;
+    public int currentModeIndex;
 
     public WeaponInstance(WeaponData data)
     {
@@ -34,6 +36,7 @@ public class WeaponInstance
             return;
 
         extraSkillInstances.Clear();
+        modeSkillInstances.Clear();
 
         if (data.mainSkill != null)
         {
@@ -47,19 +50,22 @@ public class WeaponInstance
             subSkillInstance.ApplyUpgrade(upgradeInfo);
         }
 
-        if (data.extraSkillList == null)
-            return;
-
-        for (int i = 0; i < data.extraSkillList.Count; i++)
+        if (data.extraSkillList != null)
         {
-            SkillData extraSkillData = data.extraSkillList[i];
-            if (extraSkillData == null)
-                continue;
+            for (int i = 0; i < data.extraSkillList.Count; i++)
+            {
+                SkillData extraSkillData = data.extraSkillList[i];
+                if (extraSkillData == null)
+                    continue;
 
-            SkillInstance extraSkillInstance = extraSkillData.CreateInstance();
-            extraSkillInstance.ApplyUpgrade(upgradeInfo);
-            extraSkillInstances.Add(extraSkillInstance);
+                SkillInstance extraSkillInstance = extraSkillData.CreateInstance();
+                extraSkillInstance.ApplyUpgrade(upgradeInfo);
+                extraSkillInstances.Add(extraSkillInstance);
+            }
         }
+
+        data.controlData?.InitializeWeaponInstance(this);
+        ClampCurrentModeIndex();
     }
 
     public void ApplyUpgrade(WeaponUpgradeInfo newInfo)
@@ -80,6 +86,17 @@ public class WeaponInstance
 
             extraSkillInstance.ApplyUpgrade(upgradeInfo);
         }
+
+        for (int i = 0; i < modeSkillInstances.Count; i++)
+        {
+            SkillInstance modeSkillInstance = modeSkillInstances[i];
+            if (modeSkillInstance == null)
+                continue;
+
+            modeSkillInstance.ApplyUpgrade(upgradeInfo);
+        }
+
+        data?.controlData?.ApplyUpgrade(this, upgradeInfo);
     }
 
     public int GetMainComboSkillCount()
@@ -102,6 +119,30 @@ public class WeaponInstance
             return null;
 
         return extraSkillInstances[extraSkillIndex];
+    }
+
+    public int GetModeSkillCount()
+    {
+        return modeSkillInstances.Count;
+    }
+
+    public SkillInstance GetModeSkillAt(int modeIndex)
+    {
+        if (modeIndex < 0 || modeIndex >= modeSkillInstances.Count)
+            return null;
+
+        return modeSkillInstances[modeIndex];
+    }
+
+    public void ClampCurrentModeIndex()
+    {
+        if (modeSkillInstances.Count <= 0)
+        {
+            currentModeIndex = 0;
+            return;
+        }
+
+        currentModeIndex = Mathf.Clamp(currentModeIndex, 0, modeSkillInstances.Count - 1);
     }
 
     public string GetPrimaryTag()

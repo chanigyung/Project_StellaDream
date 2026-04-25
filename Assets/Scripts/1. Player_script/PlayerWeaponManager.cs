@@ -163,20 +163,11 @@ public class PlayerWeaponManager : MonoBehaviour
         if (weaponInstance == null || weaponInstance.weaponData == null)
             return null;
 
-        WeaponData weaponData = weaponInstance.weaponData;
-        WeaponControlData controlData = weaponData.controlData;
-        WeaponControlType controlType = controlData != null
-            ? controlData.ControlType
-            : WeaponControlType.Default;
+        WeaponControlData controlData = weaponInstance.weaponData.controlData;
+        if (controlData != null)
+            return controlData.CreateControl(weaponInstance, skillExecutor);
 
-        switch (controlType)
-        {
-            case WeaponControlType.Combo:
-                return new ComboWeaponControl(weaponInstance, skillExecutor, controlData as ComboWeaponControlData);
-            case WeaponControlType.Default:
-            default:
-                return new WeaponControlBase(weaponInstance, skillExecutor);
-        }
+        return new WeaponControlBase(weaponInstance, skillExecutor);
     }
 
     private void ShowWeapon(SpriteRenderer renderer, Sprite sprite)

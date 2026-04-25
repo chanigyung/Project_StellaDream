@@ -27,7 +27,7 @@ public class CoreData : ScriptableObject
         return new CoreInstance(this);
     }
 
-    public void ApplyValues(ref SkillContext context)
+    public virtual void ApplyValues(ref SkillContext context)
     {
         context.EnsureValues();
 

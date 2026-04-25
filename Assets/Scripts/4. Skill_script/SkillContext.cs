@@ -28,9 +28,11 @@ public class SkillRuntimeValues
     public float hitboxSizeMultiplier = 1f;
     public float projectileSpeedMultiplier = 1f;
     public float lifetimeMultiplier = 1f;
+    public float projectileSpreadAngle = 0f;
 
     public int additionalHitCount = 0;
     public int pierceCount = 0;
+    public int additionalProjectileCount = 0;
 
     public SkillRuntimeValues Clone()
     {
@@ -41,8 +43,10 @@ public class SkillRuntimeValues
             hitboxSizeMultiplier = hitboxSizeMultiplier,
             projectileSpeedMultiplier = projectileSpeedMultiplier,
             lifetimeMultiplier = lifetimeMultiplier,
+            projectileSpreadAngle = projectileSpreadAngle,
             additionalHitCount = additionalHitCount,
-            pierceCount = pierceCount
+            pierceCount = pierceCount,
+            additionalProjectileCount = additionalProjectileCount
         };
     }
 }

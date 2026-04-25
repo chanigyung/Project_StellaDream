@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8366e98e60d0dc74db26acd77550db75, type: 3}
-  m_Name: 101SSS
+  m_Name: ModeSwitchTest
   m_EditorClassIdentifier: 
-  itemName: Bburu
-  icon: {fileID: 21300000, guid: 1790ce9edcb0c0749abe9c8e9b6a95f0, type: 3}
+  itemName: ModeSwitchTest
+  icon: {fileID: 21300000, guid: 92d9d8f28326d624f87a80c8fbe58a70, type: 3}
   itemType: 2
   rarity: 0
-  description: 
-  weaponType: 1
+  description: "\uC6B0\uD074\uB9AD\uC73C\uB85C \uBAA8\uB4DC\uB97C \uC21C\uD658\uD558\uACE0 \uC88C\uD074\uB9AD\uC73C\uB85C \uD604\uC7AC \uBAA8\uB4DC \uC2A4\uD0AC\uC744 \uBC1C\uB3D9\uD558\uB294 \uD14C\uC2A4\uD2B8 \uBB34\uAE30"
+  weaponType: 0
   controlData: {fileID: 11400000, guid: 1029384756abcdef1029384756abcdef, type: 2}
-  weaponSprite: {fileID: 21300000, guid: 124126f4034bd4e43986eebde7f16b4c, type: 3}
+  weaponSprite: {fileID: 21300000, guid: 4e5f41ab94c70e84db3a92ca41027d6c, type: 3}
   mainSkill: {fileID: 0}
   subSkill: {fileID: 0}
   extraSkillList: []
-  tags: 0000000003000000
+  tags:
+  - 0
+  - 3
