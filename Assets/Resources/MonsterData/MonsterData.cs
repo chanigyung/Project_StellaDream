@@ -21,6 +21,15 @@ public class MonsterData : ScriptableObject
     [Header("패턴")]
     public List<MonsterActionType> actionTypes = new();
 
+    [Header("Flying")]
+    public bool isFlying = false; // 비행 가능 여부
+    public float flyingMoveSpeedMultiplier = 1f; // 비행 이동 배율
+    public float flyingWanderRadius = 2.5f; // 배회 반경
+    public float flyingWanderInterval = 2f; // 배회 갱신 주기
+    [Range(0f, 1f)] public float flyingIdleChance = 0.2f; // 정지 확률
+    public float flyingTraceStopDistance = 0.3f; // 추적 정지 거리
+    public Vector2 flyingHeightOffsetRange = new Vector2(-1f, 1f); // 배회 높이 범위
+
     public List<MonsterSkillList> skillList;
 
     public RuntimeAnimatorController deathAnimator;

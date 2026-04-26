@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc16b9fdf38c854bbb27124e581e323, type: 3}
   m_Name: 202Mob_T01
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 8636453946240967842, guid: 289e58d7d433f9a49bffdef356884a33, type: 3}
+  monsterPrefab: {fileID: 8636453946240967842, guid: ab21f96387ee40c9b9931671d7148360, type: 3}
   animatorController: {fileID: 9100000, guid: 130fa4a1aa780f0408b558b9780cd2d9, type: 2}
   monsterName: "\uB9C8\uB85C"
   grade: 0
@@ -21,7 +21,14 @@ MonoBehaviour:
   jumpPower: 13
   knockbackImmune: 0
   knockbackResistance: 0
-  actionTypes: 000000000100000002000000
+  actionTypes: 000000000400000005000000
+  isFlying: 1
+  flyingMoveSpeedMultiplier: 1
+  flyingWanderRadius: 2.5
+  flyingWanderInterval: 2
+  flyingIdleChance: 0.2
+  flyingTraceStopDistance: 0.3
+  flyingHeightOffsetRange: {x: -1, y: 1}
   skillList:
   - maxRange: 3
     skillData: {fileID: 11400000, guid: a49deb426e81bee4fb60d952d19f41cc, type: 2}

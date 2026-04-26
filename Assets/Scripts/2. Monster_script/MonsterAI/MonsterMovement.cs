@@ -5,6 +5,12 @@ public class MonsterMovement : MonoBehaviour
 {
     private MonsterContext context;
     private BaseUnitInstance instance => context?.instance;
+    private Rigidbody2D rigid;
+
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
 
     public void Initialize(MonsterContext ctx)
     {
@@ -12,6 +18,11 @@ public class MonsterMovement : MonoBehaviour
     }
 
     public void Move(Vector3 direction)
+    {
+        MoveGround(direction);
+    }
+
+    public void MoveGround(Vector3 direction)
     {
         if (context == null || context.unitMovement == null || !context.canMove || !context.unitMovement.CanMoveNow())
         {
@@ -43,13 +54,43 @@ public class MonsterMovement : MonoBehaviour
             context.animator?.PlayTracing(false);
     }
 
+    public void MoveFlying(Vector2 direction, float speedMultiplier = 1f)
+    {
+        if (context == null || !context.canMove)
+        {
+            context?.animator?.PlayMoving(false);
+            return;
+        }
+
+        if (rigid == null || instance == null)
+            return;
+
+        if (direction.sqrMagnitude <= 0.0001f)
+        {
+            StopFlying();
+            return;
+        }
+
+        Vector2 normalized = direction.normalized;
+        float moveSpeed = instance.GetCurrentMoveSpeed() * Mathf.Max(0f, speedMultiplier);
+        rigid.velocity = normalized * moveSpeed;
+
+        if (Mathf.Abs(normalized.x) > 0.01f)
+        {
+            float desiredDirX = Mathf.Sign(normalized.x);
+            context.facingDirectionX = desiredDirX;
+            context.selfTransform.localScale = (desiredDirX < 0f) ? new Vector3(1, 1, 1) : new Vector3(-1, 1, 1);
+        }
+
+        context.animator?.PlayMoving(true);
+        context.animator?.PlayTracing(speedMultiplier > 1.2f);
+    }
+
     //실제 이동
     private void FixedUpdate()
     {
         if (context == null || context.unitMovement == null)
             return;
-
-        context.unitMovement.SetGrounded(context.isGrounded);
 
         if (context.isMoveSkillActive)
         {
@@ -57,12 +98,21 @@ public class MonsterMovement : MonoBehaviour
             return;
         }
 
+        if (context.isFlyingMonster)
+            return;
+
         context.unitMovement.SetGrounded(context.isGrounded);
         context.unitMovement.TickMove();
     }
 
     public void ClearMove()
     {
+        if (context != null && context.isFlyingMonster)
+        {
+            StopFlying();
+            return;
+        }
+
         context.unitMovement?.ClearMoveInput();
         context.animator?.PlayMoving(false);
     }
@@ -91,7 +141,22 @@ public class MonsterMovement : MonoBehaviour
 
     public void Stop()
     {
+        if (context != null && context.isFlyingMonster)
+        {
+            StopFlying();
+            return;
+        }
+
         context.unitMovement?.Stop();
         context.animator?.PlayMoving(false);
+    }
+
+    public void StopFlying()
+    {
+        if (rigid != null)
+            rigid.velocity = Vector2.zero;
+
+        context?.animator?.PlayMoving(false);
+        context?.animator?.PlayTracing(false);
     }
 }

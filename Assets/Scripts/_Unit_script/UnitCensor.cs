@@ -38,7 +38,7 @@ public class UnitCensor : MonoBehaviour
         if (groundCheckPoint == null)
             return;
 
-        bool grounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, groundLayer);
+        bool grounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, GetEffectiveGroundLayer());
         context.isGrounded = grounded;
         unitMovement?.SetGrounded(grounded);
     }
@@ -48,7 +48,7 @@ public class UnitCensor : MonoBehaviour
         if (wallCheckPoint == null)
             return;
 
-        bool hasWall = Physics2D.OverlapCircle(wallCheckPoint.position, wallCheckRadius, groundLayer);
+        bool hasWall = Physics2D.OverlapCircle(wallCheckPoint.position, wallCheckRadius, GetEffectiveGroundLayer());
         context.hasWallAhead = hasWall;
     }
 
@@ -64,8 +64,22 @@ public class UnitCensor : MonoBehaviour
     private bool CheckGroundInDirection(float dirX)
     {
         Vector2 origin = (Vector2)groundCheckPoint.position + Vector2.right * (dirX * ledgeCheckForwardDistance);
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, maxDropDistance, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, maxDropDistance, GetEffectiveGroundLayer());
         return hit.collider != null;
+    }
+
+    private LayerMask GetEffectiveGroundLayer()
+    {
+        MonsterContext monsterContext = context as MonsterContext;
+        if (monsterContext == null || !monsterContext.isFlyingMonster)
+            return groundLayer;
+
+        int platformLayer = LayerMask.NameToLayer("Platform");
+        if (platformLayer < 0)
+            return groundLayer;
+
+        int maskBits = groundLayer.value & ~(1 << platformLayer);
+        return maskBits;
     }
 
     private void OnDrawGizmosSelected()

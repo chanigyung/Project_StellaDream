@@ -9,6 +9,10 @@ public class MonsterContext : UnitContext
     public MonsterSkillAI skillAI;
 
     public MonsterInstance monsterInstance => instance as MonsterInstance;
+    public bool isFlyingMonster = false;
+    public Vector2 flyingAnchorPosition;
+    public Vector2 flyingWanderTarget;
+    public bool hasFlyingWanderTarget = false;
 
     // === 추적 상태 판단용 변수 ===
     public bool isTracing = false;                 

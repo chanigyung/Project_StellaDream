@@ -4,4 +4,12 @@ public interface IMonsterAction
     void Execute(MonsterContext context);
 }
 
-public enum MonsterActionType { Attack, Trace, Wander, WanderSkill,}
+public enum MonsterActionType
+{
+    Attack,
+    Trace,
+    Wander,
+    WanderSkill,
+    FlyingTrace,
+    FlyingWander,
+}

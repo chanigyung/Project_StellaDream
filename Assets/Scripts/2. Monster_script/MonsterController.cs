@@ -31,6 +31,10 @@ public class MonsterController : UnitController
         context.movement = GetComponent<MonsterMovement>();
         context.animator = GetComponent<MonsterAnimator>();
         context.selfGroundPoint = unit != null ? unit.GroundPoint : transform;
+        context.isFlyingMonster = context.monsterInstance != null && context.monsterInstance.data != null && context.monsterInstance.data.isFlying;
+        context.flyingAnchorPosition = transform.position;
+        context.flyingWanderTarget = transform.position;
+        context.hasFlyingWanderTarget = false;
 
         context.movement.Initialize(context);
         context.unitMovement?.Initialize(context);
@@ -111,6 +115,8 @@ public class MonsterController : UnitController
         {
             MonsterActionType.Trace => new TraceAction(),
             MonsterActionType.Wander => new WanderAction(),
+            MonsterActionType.FlyingTrace => new FlyingTraceAction(),
+            MonsterActionType.FlyingWander => new FlyingWanderAction(),
             MonsterActionType.Attack => new AttackAction(), // AttackAction 단계에서 연결 예정
             MonsterActionType.WanderSkill => new WanderSkillAction(),
             _ => null,
