@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 비행 몬스터의 추적 상태를 관리하고 Navigator에 비행 이동 명령을 요청하는 액션입니다.
 public class FlyingTraceAction : IMonsterAction
 {
     public bool CanExecute(MonsterContext context)
@@ -72,17 +73,23 @@ public class FlyingTraceAction : IMonsterAction
         if (context.target == null) return;
         if (!context.canMove) return;
 
-        Vector2 toTarget = context.target.transform.position - context.selfTransform.position;
         float stopDistance = Mathf.Max(0f, data.flyingTraceStopDistance);
+        float speedMultiplier = Mathf.Max(0f, data.flyingMoveSpeedMultiplier);
 
-        if (toTarget.sqrMagnitude <= stopDistance * stopDistance)
+        MonsterMoveCommand command = context.navigator != null
+            ? context.navigator.GetFlyingTraceCommand(stopDistance, speedMultiplier)
+            : MonsterMoveCommand.Flying(context.target.transform.position - context.selfTransform.position, speedMultiplier);
+
+        if (context.navigator != null)
         {
-            context.movement?.StopFlying();
+            context.navigator.ApplyCommand(command);
             return;
         }
 
-        float speedMultiplier = Mathf.Max(0f, data.flyingMoveSpeedMultiplier);
-        context.movement?.MoveFlying(toTarget, speedMultiplier);
+        if (command.shouldStop)
+            context.movement?.StopFlying();
+        else
+            context.movement?.MoveFlying(command.flyingDirection, command.speedMultiplier);
     }
 
     private void BeginTrace(MonsterContext context, GameObject targetObj)

@@ -738,6 +738,7 @@ GameObject:
   - component: {fileID: 1818312823878908297}
   - component: {fileID: 7359253294164213039}
   - component: {fileID: 7358252084151330119}
+  - component: {fileID: 3301000000000000002}
   - component: {fileID: 1915722454801272030}
   - component: {fileID: 6331774709657921994}
   - component: {fileID: 6632916101516864826}
@@ -752,6 +753,7 @@ GameObject:
   - component: {fileID: 5694127208388331815}
   - component: {fileID: 2000835822463926287}
   - component: {fileID: 6638874892228506039}
+  - component: {fileID: 3301000000000000001}
   m_Layer: 12
   m_Name: _monster_base
   m_TagString: Monster
@@ -832,6 +834,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cba22d926452a74397328bef566190b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3301000000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e0119ce4e74b4bbc57d4df4b78b9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 192
+  sampleSpacing: 0.35
+  groundProbeHeight: 0.5
+  groundProbeDistance: 3
+  maxStepHeight: 0.35
+  waypointReachDistance: 0.2
+  maxPlanDistance: 12
+  allowDropPath: 1
+  ledgeSearchDistance: 1.2
+  dropForwardOffset: 0.25
+  minDropHeight: 0.45
+  maxDropHeight: 4
+  dropDestinationHeightTolerance: 1
+  drawDebugGizmos: 1
+  drawProbeGizmos: 1
 --- !u!114 &1915722454801272030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -930,8 +961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropFilters:
   - rarity: 0
-    requiredTags:
-    - test
+    requiredTags: 00000000
   dropItemPrefab: {fileID: 5353300409739423069, guid: 12259ea11a009c240a542974b201f420, type: 3}
 --- !u!114 &8084018932126541268
 MonoBehaviour:
@@ -1093,3 +1123,15 @@ MonoBehaviour:
   pushSpeed: 2
   maxSepDeltaXPerFrame: 1.5
   rigid: {fileID: 7985708820985115783}
+--- !u!114 &3301000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8636453946240967842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61aaa91f0ab0401092835974dedaea40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -29,6 +29,7 @@ public class MonsterController : UnitController
         context.instance = instance as MonsterInstance;
         context.unitMovement = GetComponent<UnitMovement>();
         context.movement = GetComponent<MonsterMovement>();
+        context.navigator = GetComponent<MonsterNavigator>();
         context.animator = GetComponent<MonsterAnimator>();
         context.selfGroundPoint = unit != null ? unit.GroundPoint : transform;
         context.isFlyingMonster = context.monsterInstance != null && context.monsterInstance.data != null && context.monsterInstance.data.isFlying;
@@ -37,6 +38,7 @@ public class MonsterController : UnitController
         context.hasFlyingWanderTarget = false;
 
         context.movement.Initialize(context);
+        context.navigator?.Initialize(context);
         context.unitMovement?.Initialize(context);
 
         //censor 생성과 캐싱
