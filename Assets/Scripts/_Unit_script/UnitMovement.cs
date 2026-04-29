@@ -16,7 +16,9 @@ public class UnitMovement : MonoBehaviour
 
     [SerializeField] private bool useInstantGroundMove = false;
     [SerializeField] private float accel = 30f;
-    [SerializeField] private float airLerpFactor = 0.1f;
+    [Min(0f)]
+    [Tooltip("공중에서 좌우 입력이 들어왔을 때 수평 속도가 목표 속도까지 따라가는 정도입니다. 값이 클수록 점프 중 방향 제어가 빠르게 반응합니다.")]
+    [SerializeField] private float airControlAccel = 12f;
 
     private UnitContext context;
 
@@ -106,9 +108,20 @@ public class UnitMovement : MonoBehaviour
         }
         else
         {
-            float newVelX = Mathf.Lerp(rigid.velocity.x, targetVelX, airLerpFactor);
+            if (IsAirInputPushingIntoWall())
+                targetVelX = 0f;
+
+            float newVelX = Mathf.MoveTowards(rigid.velocity.x, targetVelX, airControlAccel * Time.fixedDeltaTime);
             rigid.velocity = new Vector2(newVelX, rigid.velocity.y);
         }
+    }
+
+    private bool IsAirInputPushingIntoWall()
+    {
+        if (context == null || !context.hasWallAhead || !hasMoveInput)
+            return false;
+
+        return Mathf.Sign(desiredDirX) == Mathf.Sign(context.facingDirectionX);
     }
 
     public bool TryJump()

@@ -2,25 +2,37 @@ using UnityEngine;
 
 public class UnitCensor : MonoBehaviour
 {
-    [Header("바닥 체크")]
-    [SerializeField] private Transform groundCheckPoint;
-    [SerializeField] private float groundCheckRadius = 0.15f;
+    [Header("Ground Check")]
+    [Tooltip("Collider used as the unit body. If empty, the first Collider2D found in the parent hierarchy is used.")]
+    [SerializeField] private Collider2D bodyCollider;
+    [Range(0.1f, 1f)]
+    [Tooltip("Ground check box width as a ratio of the body collider width. Lower values ignore more of the left and right edges.")]
+    [SerializeField] private float groundBoxWidthRatio = 0.85f;
+    [Range(0.01f, 0.3f)]
+    [Tooltip("Ground check box height as a ratio of the body collider height. Higher values detect ground earlier, but can catch nearby side geometry.")]
+    [SerializeField] private float groundBoxHeightRatio = 0.08f;
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("벽 체크")]
+    [Header("Wall Check")]
     [SerializeField] private Transform wallCheckPoint;
     [SerializeField] private float wallCheckRadius = 0.12f;
 
-    [Header("낙하 체크")]
-    [SerializeField] private float ledgeCheckForwardDistance = 0.35f; // 발 전방 거리
-    [SerializeField] private float maxDropDistance = 0.8f; // 아래 거리
+    [Header("Ledge Check")]
+    [SerializeField] private float ledgeCheckForwardDistance = 0.35f;
+    [SerializeField] private float maxDropDistance = 0.8f;
 
     [SerializeField] private UnitMovement unitMovement;
-    private UnitContext context; // 1단계에서는 MonsterContext 그대로 사용
+    private UnitContext context;
 
-    public void Initialize(UnitContext ctx) // 1단계에서는 MonsterContext 그대로 사용
+    private void Awake()
+    {
+        ResolveBodyCollider();
+    }
+
+    public void Initialize(UnitContext ctx)
     {
         context = ctx;
+        ResolveBodyCollider();
     }
 
     private void FixedUpdate()
@@ -35,10 +47,14 @@ public class UnitCensor : MonoBehaviour
 
     private void UpdateGrounded()
     {
-        if (groundCheckPoint == null)
+        if (!TryGetGroundBox(out Vector2 center, out Vector2 size))
+        {
+            context.isGrounded = false;
+            unitMovement?.SetGrounded(false);
             return;
+        }
 
-        bool grounded = Physics2D.OverlapCircle(groundCheckPoint.position, groundCheckRadius, GetEffectiveGroundLayer());
+        bool grounded = Physics2D.OverlapBox(center, size, 0f, GetEffectiveGroundLayer());
         context.isGrounded = grounded;
         unitMovement?.SetGrounded(grounded);
     }
@@ -54,8 +70,15 @@ public class UnitCensor : MonoBehaviour
 
     private void UpdateGroundAhead()
     {
-        if (groundCheckPoint == null)
+        if (bodyCollider == null)
+            ResolveBodyCollider();
+
+        if (bodyCollider == null)
+        {
+            context.hasGroundLeft = false;
+            context.hasGroundRight = false;
             return;
+        }
 
         context.hasGroundLeft = CheckGroundInDirection(-1f);
         context.hasGroundRight = CheckGroundInDirection(1f);
@@ -63,9 +86,38 @@ public class UnitCensor : MonoBehaviour
 
     private bool CheckGroundInDirection(float dirX)
     {
-        Vector2 origin = (Vector2)groundCheckPoint.position + Vector2.right * (dirX * ledgeCheckForwardDistance);
+        Bounds bounds = bodyCollider.bounds;
+        Vector2 origin = new Vector2(bounds.center.x + dirX * ledgeCheckForwardDistance, bounds.min.y);
         RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, maxDropDistance, GetEffectiveGroundLayer());
         return hit.collider != null;
+    }
+
+    private void ResolveBodyCollider()
+    {
+        if (bodyCollider != null)
+            return;
+
+        bodyCollider = GetComponentInParent<Collider2D>();
+    }
+
+    private bool TryGetGroundBox(out Vector2 center, out Vector2 size)
+    {
+        center = Vector2.zero;
+        size = Vector2.zero;
+
+        if (bodyCollider == null)
+            ResolveBodyCollider();
+
+        if (bodyCollider == null)
+            return false;
+
+        Bounds bounds = bodyCollider.bounds;
+        float width = bounds.size.x * groundBoxWidthRatio;
+        float height = bounds.size.y * groundBoxHeightRatio;
+
+        size = new Vector2(width, height);
+        center = new Vector2(bounds.center.x, bounds.min.y - height * 0.5f);
+        return width > 0f && height > 0f;
     }
 
     private LayerMask GetEffectiveGroundLayer()
@@ -84,16 +136,19 @@ public class UnitCensor : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (groundCheckPoint != null)
-            Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
+        ResolveBodyCollider();
+
+        if (TryGetGroundBox(out Vector2 center, out Vector2 size))
+            Gizmos.DrawWireCube(center, size);
 
         if (wallCheckPoint != null)
             Gizmos.DrawWireSphere(wallCheckPoint.position, wallCheckRadius);
 
-        if (groundCheckPoint != null)
+        if (bodyCollider != null)
         {
-            Vector3 leftOrigin = groundCheckPoint.position + Vector3.right * (-ledgeCheckForwardDistance);
-            Vector3 rightOrigin = groundCheckPoint.position + Vector3.right * (ledgeCheckForwardDistance);
+            Bounds bounds = bodyCollider.bounds;
+            Vector3 leftOrigin = new Vector3(bounds.center.x - ledgeCheckForwardDistance, bounds.min.y, 0f);
+            Vector3 rightOrigin = new Vector3(bounds.center.x + ledgeCheckForwardDistance, bounds.min.y, 0f);
             Gizmos.DrawLine(leftOrigin, leftOrigin + Vector3.down * maxDropDistance);
             Gizmos.DrawLine(rightOrigin, rightOrigin + Vector3.down * maxDropDistance);
         }

@@ -63,8 +63,8 @@ public class PlayerMovement : MonoBehaviour
         if (!CanProcess())
             return;
 
-        Move();        // 이동
         Jump();        // 점프 실행
+        Move();        // 이동
         HandleAnimation();   // 애니메이션
 
         SyncLegacyStateFromContext();

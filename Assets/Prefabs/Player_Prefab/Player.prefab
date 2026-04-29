@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useInstantGroundMove: 1
   accel: 30
-  airLerpFactor: 0.1
+  airControlAccel: 20
 --- !u!114 &4814346733939116900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1362,6 +1362,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   subWeaponInstance:
     weaponData: {fileID: 0}
     uniqueID: 
@@ -1369,6 +1370,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   mainWeaponRenderer: {fileID: 866653807976311393}
   subWeaponRenderer: {fileID: 353026102612638639}
   skillExecutor: {fileID: 5384227653380469411}
