@@ -752,10 +752,8 @@ GameObject:
   - component: {fileID: 5694127208388331815}
   - component: {fileID: 2000835822463926287}
   - component: {fileID: 6638874892228506039}
-  - component: {fileID: 3302000000000000001}
-  - component: {fileID: 3302000000000000002}
   m_Layer: 12
-  m_Name: flyingMonster_base
+  m_Name: 202Mob_T01_Flying
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1095,27 +1093,3 @@ MonoBehaviour:
   pushSpeed: 2
   maxSepDeltaXPerFrame: 1.5
   rigid: {fileID: 7985708820985115783}
---- !u!114 &3302000000000000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8636453946240967842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61aaa91f0ab0401092835974dedaea40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3302000000000000002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8636453946240967842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd539250726e45e781cf0bb97dda82b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -4,7 +4,6 @@ public class MonsterContext : UnitContext
 {
     // === 몬스터 전용 참조 ===
     public MonsterMovement movement;
-    public MonsterNavigator navigator;
     public MonsterAnimator animator;
     public MonsterTraceHandler traceHandler;
     public MonsterSkillAI skillAI;

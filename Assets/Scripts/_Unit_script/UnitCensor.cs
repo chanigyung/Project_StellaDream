@@ -82,20 +82,20 @@ public class UnitCensor : MonoBehaviour
         return maskBits;
     }
 
-    // private void OnDrawGizmosSelected()
-    // {
-    //     if (groundCheckPoint != null)
-    //         Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
+    private void OnDrawGizmosSelected()
+    {
+        if (groundCheckPoint != null)
+            Gizmos.DrawWireSphere(groundCheckPoint.position, groundCheckRadius);
 
-    //     if (wallCheckPoint != null)
-    //         Gizmos.DrawWireSphere(wallCheckPoint.position, wallCheckRadius);
+        if (wallCheckPoint != null)
+            Gizmos.DrawWireSphere(wallCheckPoint.position, wallCheckRadius);
 
-    //     if (groundCheckPoint != null)
-    //     {
-    //         Vector3 leftOrigin = groundCheckPoint.position + Vector3.right * (-ledgeCheckForwardDistance);
-    //         Vector3 rightOrigin = groundCheckPoint.position + Vector3.right * (ledgeCheckForwardDistance);
-    //         Gizmos.DrawLine(leftOrigin, leftOrigin + Vector3.down * maxDropDistance);
-    //         Gizmos.DrawLine(rightOrigin, rightOrigin + Vector3.down * maxDropDistance);
-    //     }
-    // }
+        if (groundCheckPoint != null)
+        {
+            Vector3 leftOrigin = groundCheckPoint.position + Vector3.right * (-ledgeCheckForwardDistance);
+            Vector3 rightOrigin = groundCheckPoint.position + Vector3.right * (ledgeCheckForwardDistance);
+            Gizmos.DrawLine(leftOrigin, leftOrigin + Vector3.down * maxDropDistance);
+            Gizmos.DrawLine(rightOrigin, rightOrigin + Vector3.down * maxDropDistance);
+        }
+    }
 }

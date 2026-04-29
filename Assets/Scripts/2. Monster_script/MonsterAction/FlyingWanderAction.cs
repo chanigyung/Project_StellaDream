@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// 비행 몬스터의 배회 목적지를 정하고 Navigator에 비행 이동 명령을 요청하는 액션입니다.
 public class FlyingWanderAction : IMonsterAction
 {
     private const float ArriveDistance = 0.1f;
@@ -28,28 +27,18 @@ public class FlyingWanderAction : IMonsterAction
             retargetTimer = Mathf.Max(0.2f, data.flyingWanderInterval);
         }
 
-        float speedMultiplier = Mathf.Max(0f, data.flyingMoveSpeedMultiplier);
-        MonsterMoveCommand command = context.navigator != null
-            ? context.navigator.GetFlyingWanderCommand(context.flyingWanderTarget, ArriveDistance, speedMultiplier)
-            : MonsterMoveCommand.Flying(context.flyingWanderTarget - (Vector2)context.selfTransform.position, speedMultiplier);
+        Vector2 currentPosition = context.selfTransform.position;
+        Vector2 toTarget = context.flyingWanderTarget - currentPosition;
 
-        if (command.reachedDestination)
+        if (toTarget.sqrMagnitude <= ArriveDistance * ArriveDistance)
         {
-            if (context.navigator != null)
-                context.navigator.ApplyCommand(command);
-            else
-                context.movement?.StopFlying();
-
+            context.movement?.StopFlying();
             context.hasFlyingWanderTarget = false;
             return;
         }
 
         context.instance.selfSpeedMultiplier = 1f;
-
-        if (context.navigator != null)
-            context.navigator.ApplyCommand(command);
-        else
-            context.movement?.MoveFlying(command.flyingDirection, command.speedMultiplier);
+        context.movement?.MoveFlying(toTarget, Mathf.Max(0f, data.flyingMoveSpeedMultiplier));
     }
 
     private void PickNextTarget(MonsterContext context, MonsterData data)

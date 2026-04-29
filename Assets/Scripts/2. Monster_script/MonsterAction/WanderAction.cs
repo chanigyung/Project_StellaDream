@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// 지상 몬스터의 배회 방향을 정하고 Navigator에 이동 명령을 요청하는 액션입니다.
 public class WanderAction : IMonsterAction
 {
     private Vector3 moveDirection = Vector3.zero;
@@ -27,29 +26,30 @@ public class WanderAction : IMonsterAction
             directionChangeTimer = 3f;
         }
 
-        MonsterMoveCommand command = context.navigator != null
-            ? context.navigator.GetWanderCommand(moveDirection)
-            : MonsterMoveCommand.Ground(moveDirection.x);
+        Vector3 finalDirection = moveDirection;
 
-        moveDirection = command.shouldStop
-            ? Vector3.zero
-            : (command.groundDirectionX < 0f ? Vector3.left : Vector3.right);
-
-        if (command.shouldStop)
+        if (context.isGrounded && finalDirection != Vector3.zero)
         {
-            if (context.navigator != null)
-                context.navigator.ApplyCommand(command);
-            else
-                context.movement?.Stop();
+            if (finalDirection == Vector3.left && !context.hasGroundLeft)
+            {
+                finalDirection = context.hasGroundRight ? Vector3.right : Vector3.zero;
+            }
+            else if (finalDirection == Vector3.right && !context.hasGroundRight)
+            {
+                finalDirection = context.hasGroundLeft ? Vector3.left : Vector3.zero;
+            }
+        }
 
+        // 절벽 체크로 방향이 바뀐 경우, 다음 프레임도 유지되도록 갱신
+        moveDirection = finalDirection;
+
+        if (finalDirection == Vector3.zero)
+        {
+            context.movement?.Stop();
             return;
         }
 
         context.instance.selfSpeedMultiplier = 1f;
-
-        if (context.navigator != null)
-            context.navigator.ApplyCommand(command);
-        else
-            context.movement?.Move(moveDirection);
+        context.movement?.Move(finalDirection);
     }
 }
