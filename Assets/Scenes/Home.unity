@@ -337,6 +337,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 0
@@ -951,6 +952,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 0
@@ -1115,6 +1117,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 0
@@ -1289,6 +1292,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 10
@@ -1346,6 +1350,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 0
@@ -1403,6 +1408,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 0
@@ -1605,6 +1611,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 0
@@ -4157,6 +4164,7 @@ MonoBehaviour:
       baseUpgradeLevel: 0
       efficiencyUpgradeLevel: 0
       masteryUpgradeLevel: 0
+    currentModeIndex: 0
   player: {fileID: 1835570657}
   testUpgradeInfo:
     baseUpgradeLevel: 0
