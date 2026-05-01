@@ -4,46 +4,50 @@ using UnityEngine;
 public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 {
     [Header("Legacy Jump")]
+    [Tooltip("벽 앞 점프를 시도할 목표와의 최소 높이 차이입니다. 값이 클수록 목표가 더 높을 때만 점프합니다.")]
     [SerializeField]
-    [Tooltip("Wall jump trigger height. Larger values make monsters jump only when the target is much higher.")]
     private float jumpTriggerHeight = 0.8f;
 
     [Header("Landing Candidate Search")]
+    [Tooltip("몬스터가 착지 가능한 지형/플랫폼으로 취급할 레이어입니다.")]
     [SerializeField]
-    [Tooltip("Layers treated as landable ground or platforms.")]
     private LayerMask landingLayer;
 
+    [Tooltip("몬스터 기준 좌우 착지 후보 탐색 거리입니다. 값이 클수록 더 먼 발판까지 찾습니다.")]
     [SerializeField]
-    [Tooltip("Horizontal search range from the monster. Larger values find farther landing candidates.")]
     private float horizontalSearchDistance = 4f;
 
+    [Tooltip("몬스터 발밑 기준 위쪽 착지 후보 탐색 거리입니다. 값이 클수록 더 높은 발판까지 찾습니다.")]
     [SerializeField]
-    [Tooltip("Upward search range from the monster ground point. Larger values find higher platforms.")]
     private float verticalSearchUpDistance = 3f;
 
+    [Tooltip("몬스터 발밑 기준 아래쪽 착지 후보 탐색 거리입니다. 값이 클수록 더 낮은 발판까지 찾습니다.")]
     [SerializeField]
-    [Tooltip("Downward search range from the monster ground point. Larger values find lower landing points.")]
     private float verticalSearchDownDistance = 1.5f;
 
+    [Tooltip("착지 후보를 검사하는 가로 샘플 간격입니다. 값이 작을수록 촘촘하지만 검사량이 늘어납니다.")]
     [SerializeField]
-    [Tooltip("Spacing between landing search samples. Smaller values are more accurate but more expensive.")]
     private float landingSampleSpacing = 0.35f;
 
+    [Tooltip("같은 높이로 간주할 높이 차이입니다. 값이 클수록 더 많은 발판을 같은 높이로 봅니다.")]
     [SerializeField]
-    [Tooltip("Height difference considered same-level. Larger values classify more candidates as same-level.")]
     private float levelHeightTolerance = 0.45f;
 
+    [Tooltip("낮은 발판 점프를 허용할 최대 하강 높이입니다. 값이 클수록 더 낮은 발판으로도 점프합니다.")]
     [SerializeField]
-    [Tooltip("Extra allowance for speed/jump reach checks. Larger values accept farther or higher candidates.")]
+    private float lowerJumpHeightTolerance = 2f;
+
+    [Tooltip("속도/점프력 기반 도달 판정 여유 배율입니다. 값이 클수록 더 멀거나 높은 후보를 허용합니다.")]
+    [SerializeField]
     private float jumpReachPadding = 1.15f;
 
     [Header("Debug")]
+    [Tooltip("몬스터 선택 시 착지 후보 탐색 Gizmo를 표시합니다.")]
     [SerializeField]
-    [Tooltip("Draws landing candidate search gizmos when this monster is selected.")]
     private bool drawDebugGizmos = true;
 
+    [Tooltip("모든 착지 후보 검사선을 표시합니다. 끄면 선택 후보 중심으로만 확인하기 쉽습니다.")]
     [SerializeField]
-    [Tooltip("Draws every landing search probe. Turning this off leaves only the selected candidate.")]
     private bool drawProbeGizmos = true;
 
     private readonly List<LandingProbeDebugInfo> probeDebugInfos = new();
@@ -120,7 +124,7 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     {
         plan = default;
 
-        if (!hasSelectedCandidate || selectedCandidate.type != LandingCandidateType.SameLevel)
+        if (!hasSelectedCandidate || !CanUseForGapJump(selectedCandidate))
             return false;
 
         float candidateDirX = selectedCandidate.position.x - context.selfGroundPoint.position.x;
@@ -133,6 +137,17 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         Vector3 jumpMoveDirection = candidateDirX < 0f ? Vector3.left : Vector3.right;
         plan = MonsterTraceMovePlan.Move(jumpMoveDirection, true);
         return true;
+    }
+
+    private bool CanUseForGapJump(LandingCandidate candidate)
+    {
+        if (candidate.type == LandingCandidateType.SameLevel)
+            return true;
+
+        if (candidate.type != LandingCandidateType.Lower)
+            return false;
+
+        return Mathf.Abs(candidate.heightDelta) <= lowerJumpHeightTolerance;
     }
 
     private bool TryFindBestLandingCandidate(MonsterContext context, out LandingCandidate candidate)
@@ -249,7 +264,7 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         if (context.instance == null)
             return false;
 
-        if (candidate.type == LandingCandidateType.Lower)
+        if (candidate.type == LandingCandidateType.Lower && Mathf.Abs(candidate.heightDelta) > lowerJumpHeightTolerance)
             return false;
 
         float jumpPower = context.instance.GetCurrentJumpPower();
@@ -282,12 +297,32 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
             bool isIntermediateHeight = candidate.heightDelta < targetHeightDelta - levelHeightTolerance;
             score += isIntermediateHeight ? 200f + candidate.heightDelta : 50f;
         }
+        else if (targetHeightDelta < -levelHeightTolerance && candidate.type == LandingCandidateType.Lower)
+        {
+            float heightMatch = -Mathf.Abs(candidate.heightDelta - targetHeightDelta);
+            score += 200f + heightMatch;
+        }
         else if (candidate.type == LandingCandidateType.SameLevel)
         {
             score += 10f;
         }
+        else if (candidate.type == LandingCandidateType.Lower)
+        {
+            score += 5f;
+        }
 
         return score;
+    }
+
+    private Color GetCandidateColor(LandingCandidateType type)
+    {
+        return type switch
+        {
+            LandingCandidateType.Upper => Color.cyan,
+            LandingCandidateType.SameLevel => Color.magenta,
+            LandingCandidateType.Lower => Color.blue,
+            _ => Color.white
+        };
     }
 
     private void OnDrawGizmosSelected()
@@ -321,13 +356,13 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 
         foreach (LandingCandidate candidate in acceptedCandidateDebugInfos)
         {
-            Gizmos.color = candidate.type == LandingCandidateType.Upper ? Color.cyan : Color.magenta;
+            Gizmos.color = GetCandidateColor(candidate.type);
             Gizmos.DrawWireSphere(candidate.position, 0.1f);
         }
 
         if (hasSelectedCandidate)
         {
-            Gizmos.color = selectedCandidate.type == LandingCandidateType.Upper ? Color.cyan : Color.magenta;
+            Gizmos.color = GetCandidateColor(selectedCandidate.type);
             Gizmos.DrawSphere(selectedCandidate.position, 0.12f);
             Gizmos.DrawWireSphere(selectedCandidate.position, 0.2f);
         }

@@ -843,6 +843,7 @@ MonoBehaviour:
   verticalSearchDownDistance: 1.5
   landingSampleSpacing: 0.35
   levelHeightTolerance: 0.45
+  lowerJumpHeightTolerance: 2
   jumpReachPadding: 1.15
   drawDebugGizmos: 1
   drawProbeGizmos: 1
