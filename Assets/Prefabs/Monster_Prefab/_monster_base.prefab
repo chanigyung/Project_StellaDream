@@ -811,14 +811,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fa3703349665c47be1a40d1c7d7e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckPoint: {fileID: 2388118274120476319}
-  groundCheckRadius: 0.25
+  bodyCollider: {fileID: 5694127208388331815}
+  groundBoxWidthRatio: 0.85
+  groundBoxHeightRatio: 0.08
   groundLayer:
     serializedVersion: 2
     m_Bits: 192
   wallCheckPoint: {fileID: 4892033715618190658}
   wallCheckRadius: 0.15
-  ledgeCheckForwardDistance: 0.35
+  ledgeCheckForwardDistance: 0.3
   maxDropDistance: 3
   unitMovement: {fileID: 1680953618033819593}
 --- !u!114 &4057168329027643180
@@ -940,7 +941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useInstantGroundMove: 0
   accel: 30
-  airLerpFactor: 0.1
+  airControlAccel: 12
 --- !u!114 &6303476861000532347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,8 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropFilters:
   - rarity: 0
-    requiredTags:
-    - test
+    requiredTags: 00000000
   dropItemPrefab: {fileID: 5353300409739423069, guid: 12259ea11a009c240a542974b201f420, type: 3}
 --- !u!114 &8084018932126541268
 MonoBehaviour:
