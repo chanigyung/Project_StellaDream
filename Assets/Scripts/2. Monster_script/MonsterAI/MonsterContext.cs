@@ -6,6 +6,7 @@ public class MonsterContext : UnitContext
     public MonsterMovement movement;
     public MonsterAnimator animator;
     public MonsterTraceHandler traceHandler;
+    public IMonsterTraceNavigator traceNavigator;
     public MonsterSkillAI skillAI;
 
     public MonsterInstance monsterInstance => instance as MonsterInstance;

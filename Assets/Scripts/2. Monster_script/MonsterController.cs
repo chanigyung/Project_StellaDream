@@ -61,6 +61,9 @@ public class MonsterController : UnitController
         context.traceHandler = traceHandler;
         traceHandler?.Initialize(context);
 
+        context.traceNavigator = ResolveTraceNavigator();
+        context.traceNavigator?.Initialize(context);
+
         BuildActions(decisionMaker);
 
         deathHandler?.InitFromData(context.monsterInstance.data);
@@ -121,6 +124,18 @@ public class MonsterController : UnitController
             MonsterActionType.WanderSkill => new WanderSkillAction(),
             _ => null,
         };
+    }
+
+    private IMonsterTraceNavigator ResolveTraceNavigator()
+    {
+        MonoBehaviour[] components = GetComponents<MonoBehaviour>();
+        foreach (MonoBehaviour component in components)
+        {
+            if (component is IMonsterTraceNavigator navigator)
+                return navigator;
+        }
+
+        return null;
     }
 
     public override void TakeDamage(float damage)
