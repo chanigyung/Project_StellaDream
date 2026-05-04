@@ -1289,6 +1289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 982595045}
   - component: {fileID: 982595046}
+  - component: {fileID: 982595047}
   m_Layer: 0
   m_Name: InGameInitializer
   m_TagString: Untagged
@@ -1326,6 +1327,25 @@ MonoBehaviour:
   spawnPoint: {fileID: 704438288}
   cameraOffset: {x: 0, y: 0, z: -10}
   inGameUIPrefab: {fileID: 8778927862396764980, guid: 0f832d748aff20a4d9bcfe3bf0735566, type: 3}
+--- !u!114 &982595047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982595044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8696a13889e44d1e9b02c9318d088560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  landingLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  buildOnAwake: 1
+  surfaceHeightTolerance: 0.08
+  mergeGapTolerance: 0.08
+  drawSegmentGizmos: 1
 --- !u!1 &1033256678
 GameObject:
   m_ObjectHideFlags: 0

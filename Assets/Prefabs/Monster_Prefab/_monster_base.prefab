@@ -834,19 +834,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8478a3e68b26406b9d89605bbabc4cdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpTriggerHeight: 0.8
-  landingLayer:
-    serializedVersion: 2
-    m_Bits: 192
-  horizontalSearchDistance: 4
+  mapSegment: {fileID: 0}
+  horizontalSearchDistance: 6
   verticalSearchUpDistance: 3
-  verticalSearchDownDistance: 1.5
-  landingSampleSpacing: 0.35
+  verticalSearchDownDistance: 3
   levelHeightTolerance: 0.45
   lowerJumpHeightTolerance: 2
   jumpReachPadding: 1.15
   drawDebugGizmos: 1
-  drawProbeGizmos: 1
+  drawSearchBoundsGizmos: 1
+  drawCandidateGizmos: 1
+  drawSegmentGizmos: 1
 --- !u!114 &7358252084151330119
 MonoBehaviour:
   m_ObjectHideFlags: 0
