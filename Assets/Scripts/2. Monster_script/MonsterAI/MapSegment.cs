@@ -101,6 +101,31 @@ public class MapSegment : MonoBehaviour
         return result != null;
     }
 
+    public bool TryFindHighestSegmentBelowPoint(Vector2 point, float maxDownDistance, float heightTolerance, out Segment result)
+    {
+        result = null;
+        float bestY = float.NegativeInfinity;
+        float maxY = point.y + heightTolerance;
+        float minY = point.y - maxDownDistance;
+
+        foreach (Segment segment in segments)
+        {
+            if (!segment.ContainsX(point.x))
+                continue;
+
+            if (segment.y > maxY || segment.y < minY)
+                continue;
+
+            if (segment.y > bestY)
+            {
+                bestY = segment.y;
+                result = segment;
+            }
+        }
+
+        return result != null;
+    }
+
     private void ExtractSegments(Tilemap tilemap, List<Segment> results)
     {
         BoundsInt bounds = tilemap.cellBounds;

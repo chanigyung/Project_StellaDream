@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   landingLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   buildOnAwake: 1
   surfaceHeightTolerance: 0.08
   mergeGapTolerance: 0.08

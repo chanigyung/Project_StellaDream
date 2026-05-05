@@ -838,6 +838,7 @@ MonoBehaviour:
   horizontalSearchDistance: 6
   verticalSearchUpDistance: 3
   verticalSearchDownDistance: 3
+  targetGroundSearchDownDistance: 8
   levelHeightTolerance: 0.45
   lowerJumpHeightTolerance: 2
   jumpReachPadding: 1.15
@@ -845,6 +846,7 @@ MonoBehaviour:
   drawSearchBoundsGizmos: 1
   drawCandidateGizmos: 1
   drawSegmentGizmos: 1
+  drawPathGizmos: 1
 --- !u!114 &7358252084151330119
 MonoBehaviour:
   m_ObjectHideFlags: 0

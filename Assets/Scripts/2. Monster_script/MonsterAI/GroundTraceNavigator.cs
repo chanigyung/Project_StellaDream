@@ -8,22 +8,25 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     [SerializeField] private MapSegment mapSegment;
 
     [Header("Local Query")]
-    [Tooltip("몬스터/타겟 기준 좌우 발판 조회 거리입니다. 값이 클수록 더 넓은 지역의 발판 구간을 조회합니다.")]
+    [Tooltip("몬스터와 타겟을 감싸는 탐색 범위의 좌우 여유 거리입니다. 값이 클수록 더 먼 중간 발판까지 경로 후보에 포함합니다.")]
     [SerializeField] private float horizontalSearchDistance = 4f;
 
-    [Tooltip("기준 발밑 위치에서 위쪽으로 발판을 조회하는 거리입니다. 값이 클수록 더 높은 플랫폼까지 조회합니다.")]
+    [Tooltip("몬스터와 타겟보다 위쪽으로 발판을 더 조회하는 거리입니다. 값이 클수록 더 높은 플랫폼까지 경로 후보에 포함합니다.")]
     [SerializeField] private float verticalSearchUpDistance = 3f;
 
-    [Tooltip("기준 발밑 위치에서 아래쪽으로 발판을 조회하는 거리입니다. 값이 클수록 더 낮은 플랫폼까지 조회합니다.")]
+    [Tooltip("몬스터와 타겟보다 아래쪽으로 발판을 더 조회하는 거리입니다. 값이 클수록 더 낮은 플랫폼까지 경로 후보에 포함합니다.")]
     [SerializeField] private float verticalSearchDownDistance = 3f;
 
-    [Tooltip("같은 발판 구간으로 판단할 높이 차이입니다. 값이 클수록 약간 다른 높이도 같은 구간으로 봅니다.")]
+    [Tooltip("타겟이 공중에 있을 때 아래쪽 착지 발판을 찾는 거리입니다. 값이 클수록 더 아래의 발판까지 타겟 발판으로 찾습니다.")]
+    [SerializeField] private float targetGroundSearchDownDistance = 8f;
+
+    [Tooltip("같은 발판 구간으로 판단할 높이 차이입니다. 값이 클수록 약간 다른 높이도 같은 높이로 봅니다.")]
     [SerializeField] private float levelHeightTolerance = 0.45f;
 
-    [Tooltip("낮은 발판 점프 후보를 허용할 최대 하강 높이입니다. 값이 클수록 더 낮은 발판도 후보가 됩니다.")]
+    [Tooltip("아래 발판으로 점프 후보를 허용할 최대 하강 높이입니다. 값이 클수록 더 낮은 발판까지 경로로 연결합니다.")]
     [SerializeField] private float lowerJumpHeightTolerance = 2f;
 
-    [Tooltip("속도/점프력 기반 도달 판정 여유 배율입니다. 값이 클수록 더 멀거나 높은 후보를 허용합니다.")]
+    [Tooltip("속도/점프력 기반 도달 판정 여유 배율입니다. 값이 클수록 더 멀거나 높은 발판을 연결합니다.")]
     [SerializeField] private float jumpReachPadding = 1.15f;
 
     [Header("Debug")]
@@ -33,24 +36,40 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     [Tooltip("몬스터가 경로 탐색에 사용하는 통합 조회 범위 박스를 표시합니다.")]
     [SerializeField] private bool drawSearchBoundsGizmos = true;
 
-    [Tooltip("점 단위 착지 후보를 표시합니다. 끄면 발판 구간만 보기 쉽습니다.")]
+    [Tooltip("현재 발판에서 직접 도달 가능한 착지 후보 지점을 표시합니다.")]
     [SerializeField] private bool drawCandidateGizmos = true;
 
     [Tooltip("조회된 발판 구간을 표시합니다. current는 초록, target은 파란색으로 표시됩니다.")]
     [SerializeField] private bool drawSegmentGizmos = true;
 
-    private readonly List<LandingCandidate> acceptedCandidateDebugInfos = new();
+    [Tooltip("계산된 발판 경로를 노란색 선과 점으로 표시합니다.")]
+    [SerializeField] private bool drawPathGizmos = true;
+
+    private readonly List<LandingCandidate> directReachCandidateDebugInfos = new();
     private readonly List<MapSegment.Segment> platformSegments = new();
+    private readonly List<MapSegment.Segment> pathSegments = new();
+    private readonly List<MapSegment.Segment> openSegments = new();
+    private readonly HashSet<MapSegment.Segment> visitedSegments = new();
+    private readonly HashSet<MapSegment.Segment> settledSegments = new();
+    private readonly Dictionary<MapSegment.Segment, MapSegment.Segment> previousSegments = new();
+    private readonly Dictionary<MapSegment.Segment, float> segmentCosts = new();
+
+    private const float SegmentTraversalBaseCost = 10f;
+    private const float HeightChangeCostMultiplier = 1.5f;
+    private const float DownwardDetourPenalty = 5f;
+    private const float FallbackApproachTieTolerance = 0.5f;
 
     private MonsterContext context;
-    private LandingCandidate selectedCandidate;
-    private bool hasSelectedCandidate;
+    private Rigidbody2D rigid;
     private MapSegment.Segment currentSegment;
     private MapSegment.Segment targetSegment;
+    private MapSegment.Segment nextSegment;
+    private bool hasNextSegment;
 
     public void Initialize(MonsterContext context)
     {
         this.context = context;
+        rigid = GetComponent<Rigidbody2D>();
     }
 
     public MonsterTraceMovePlan CalculateMove(MonsterContext context)
@@ -65,19 +84,25 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
             return MonsterTraceMovePlan.Stop();
 
         BuildLocalPlatformSegments(activeContext);
-        TryFindBestLandingCandidate(activeContext, out selectedCandidate);
+        BuildSegmentPath(activeContext);
 
         return MonsterTraceMovePlan.Stop();
     }
 
     private void ClearDebugState()
     {
-        acceptedCandidateDebugInfos.Clear();
+        directReachCandidateDebugInfos.Clear();
         platformSegments.Clear();
-        hasSelectedCandidate = false;
-        selectedCandidate = default;
+        pathSegments.Clear();
+        openSegments.Clear();
+        visitedSegments.Clear();
+        settledSegments.Clear();
+        previousSegments.Clear();
+        segmentCosts.Clear();
         currentSegment = null;
         targetSegment = null;
+        nextSegment = null;
+        hasNextSegment = false;
     }
 
     private void BuildLocalPlatformSegments(MonsterContext context)
@@ -92,7 +117,10 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         mapSegment.GetSegmentsInBounds(BuildSearchBounds(selfPoint, targetPoint), platformSegments);
 
         mapSegment.TryFindSegmentAtPoint(selfPoint, levelHeightTolerance, out currentSegment);
-        mapSegment.TryFindSegmentAtPoint(targetPoint, levelHeightTolerance, out targetSegment);
+        TryFindTargetSegment(targetPoint, out targetSegment);
+
+        AddSegmentIfMissing(currentSegment);
+        AddSegmentIfMissing(targetSegment);
     }
 
     private void ResolveMapSegment()
@@ -101,6 +129,25 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
             return;
 
         mapSegment = MapSegment.Instance != null ? MapSegment.Instance : FindObjectOfType<MapSegment>();
+    }
+
+    private void AddSegmentIfMissing(MapSegment.Segment segment)
+    {
+        if (segment != null && !platformSegments.Contains(segment))
+            platformSegments.Add(segment);
+    }
+
+    private bool TryFindTargetSegment(Vector2 targetPoint, out MapSegment.Segment result)
+    {
+        if (mapSegment.TryFindSegmentAtPoint(targetPoint, levelHeightTolerance, out result))
+            return true;
+
+        return mapSegment.TryFindHighestSegmentBelowPoint(
+            targetPoint,
+            targetGroundSearchDownDistance,
+            levelHeightTolerance,
+            out result
+        );
     }
 
     private Bounds BuildSearchBounds(Vector2 selfPoint, Vector2 targetPoint)
@@ -115,48 +162,158 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         return new Bounds(boxCenter, size);
     }
 
-    private bool TryFindBestLandingCandidate(MonsterContext context, out LandingCandidate candidate)
+    private bool BuildSegmentPath(MonsterContext context)
     {
-        candidate = default;
-
-        if (context.selfGroundPoint == null || context.target == null)
+        if (currentSegment == null || targetSegment == null)
             return false;
 
-        Vector2 originPoint = context.selfGroundPoint.position;
+        if (currentSegment == targetSegment)
+        {
+            pathSegments.Add(currentSegment);
+            return true;
+        }
+
         Vector2 targetPoint = GetTargetGroundPoint(context);
-        float targetHeightDelta = targetPoint.y - originPoint.y;
+        BuildReachabilityGraph(context, targetPoint);
 
-        bool found = false;
-        LandingCandidate bestCandidate = default;
-        float bestScore = float.NegativeInfinity;
+        if (visitedSegments.Contains(targetSegment))
+        {
+            ReconstructPath(targetSegment);
+            SelectNextSegment();
+            return true;
+        }
 
-        foreach (MapSegment.Segment segment in platformSegments)
+        MapSegment.Segment bestReachableSegment = FindBestReachableSegment(targetSegment);
+        if (bestReachableSegment == null)
+            return false;
+
+        ReconstructPath(bestReachableSegment);
+        SelectNextSegment();
+        return pathSegments.Count > 0;
+    }
+
+    private void BuildReachabilityGraph(MonsterContext context, Vector2 targetPoint)
+    {
+        openSegments.Add(currentSegment);
+        visitedSegments.Add(currentSegment);
+        segmentCosts[currentSegment] = 0f;
+
+        while (openSegments.Count > 0)
+        {
+            MapSegment.Segment from = PopLowestCostOpenSegment();
+            settledSegments.Add(from);
+
+            foreach (MapSegment.Segment to in platformSegments)
+            {
+                if (to == null || to == from || settledSegments.Contains(to))
+                    continue;
+
+                if (!CanTraverseSegment(context, from, to))
+                    continue;
+
+                if (from == currentSegment)
+                    directReachCandidateDebugInfos.Add(BuildLandingCandidate(from, to));
+
+                float newCost = segmentCosts[from] + CalculateTraversalCost(from, to, targetPoint);
+                if (segmentCosts.TryGetValue(to, out float previousCost) && newCost >= previousCost)
+                    continue;
+
+                visitedSegments.Add(to);
+                previousSegments[to] = from;
+                segmentCosts[to] = newCost;
+
+                if (!openSegments.Contains(to))
+                    openSegments.Add(to);
+            }
+        }
+    }
+
+    private MapSegment.Segment PopLowestCostOpenSegment()
+    {
+        int bestIndex = 0;
+        float bestCost = segmentCosts[openSegments[0]];
+
+        for (int i = 1; i < openSegments.Count; i++)
+        {
+            float cost = segmentCosts[openSegments[i]];
+            if (cost >= bestCost)
+                continue;
+
+            bestIndex = i;
+            bestCost = cost;
+        }
+
+        MapSegment.Segment result = openSegments[bestIndex];
+        openSegments.RemoveAt(bestIndex);
+        return result;
+    }
+
+    private MapSegment.Segment FindBestReachableSegment(MapSegment.Segment goalSegment)
+    {
+        MapSegment.Segment bestSegment = null;
+        float bestApproachCost = float.MaxValue;
+        float bestPathCost = float.MaxValue;
+
+        foreach (MapSegment.Segment segment in visitedSegments)
         {
             if (segment == currentSegment)
                 continue;
 
-            LandingCandidate current = BuildLandingCandidate(originPoint, segment);
-            if (!CanReachCandidate(context, current))
-                continue;
-
-            acceptedCandidateDebugInfos.Add(current);
-
-            float score = ScoreCandidate(current, targetPoint, targetHeightDelta);
-            if (!found || score > bestScore)
+            float pathCost = segmentCosts.TryGetValue(segment, out float cost) ? cost : 0f;
+            float approachCost = GetSegmentApproachCost(segment, goalSegment);
+            if (IsBetterFallbackCandidate(approachCost, pathCost, bestApproachCost, bestPathCost))
             {
-                found = true;
-                bestScore = score;
-                bestCandidate = current;
+                bestApproachCost = approachCost;
+                bestPathCost = pathCost;
+                bestSegment = segment;
             }
         }
 
-        if (!found)
+        return bestSegment;
+    }
+
+    private bool IsBetterFallbackCandidate(float approachCost, float pathCost, float bestApproachCost, float bestPathCost)
+    {
+        if (approachCost < bestApproachCost - FallbackApproachTieTolerance)
+            return true;
+
+        if (approachCost > bestApproachCost + FallbackApproachTieTolerance)
             return false;
 
-        candidate = bestCandidate;
-        selectedCandidate = candidate;
-        hasSelectedCandidate = true;
-        return true;
+        return pathCost < bestPathCost;
+    }
+
+    private float GetSegmentApproachCost(MapSegment.Segment from, MapSegment.Segment to)
+    {
+        return GetHorizontalGap(from, to) + (Mathf.Abs(to.y - from.y) * HeightChangeCostMultiplier);
+    }
+
+    private void ReconstructPath(MapSegment.Segment goal)
+    {
+        pathSegments.Clear();
+
+        MapSegment.Segment current = goal;
+        while (current != null)
+        {
+            pathSegments.Add(current);
+
+            if (current == currentSegment)
+                break;
+
+            if (!previousSegments.TryGetValue(current, out current))
+                break;
+        }
+
+        pathSegments.Reverse();
+    }
+
+    private void SelectNextSegment()
+    {
+        if (pathSegments.Count <= 1)
+            return;
+
+        nextSegment = pathSegments[1];
+        hasNextSegment = nextSegment != null;
     }
 
     private Vector2 GetTargetGroundPoint(MonsterContext context)
@@ -168,10 +325,10 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         return context.target.transform.position;
     }
 
-    private LandingCandidate BuildLandingCandidate(Vector2 originPoint, MapSegment.Segment segment)
+    private LandingCandidate BuildLandingCandidate(MapSegment.Segment from, MapSegment.Segment to)
     {
-        Vector2 landingPoint = new Vector2(Mathf.Clamp(originPoint.x, segment.leftX, segment.rightX), segment.y);
-        float heightDelta = segment.y - originPoint.y;
+        Vector2 landingPoint = GetLandingPoint(from, to);
+        float heightDelta = to.y - from.y;
         LandingCandidateType type = Mathf.Abs(heightDelta) <= levelHeightTolerance
             ? LandingCandidateType.SameLevel
             : heightDelta > 0f
@@ -181,65 +338,95 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         return new LandingCandidate
         {
             position = landingPoint,
-            type = type,
-            horizontalDistance = Mathf.Abs(landingPoint.x - originPoint.x),
-            heightDelta = heightDelta
+            type = type
         };
     }
 
-    private bool CanReachCandidate(MonsterContext context, LandingCandidate candidate)
+    private bool CanTraverseSegment(MonsterContext context, MapSegment.Segment from, MapSegment.Segment to)
     {
         if (context.instance == null)
             return false;
 
-        if (candidate.type == LandingCandidateType.Lower && Mathf.Abs(candidate.heightDelta) > lowerJumpHeightTolerance)
+        float heightDelta = to.y - from.y;
+        if (heightDelta < -lowerJumpHeightTolerance)
             return false;
+
+        ResolveRigidbody();
 
         float jumpPower = context.instance.GetCurrentJumpPower();
         float moveSpeed = context.instance.GetCurrentMoveSpeed();
-        float gravity = Mathf.Abs(Physics2D.gravity.y);
+        float mass = rigid != null ? Mathf.Max(0.0001f, rigid.mass) : 1f;
+        float gravityScale = rigid != null ? Mathf.Max(0.0001f, rigid.gravityScale) : 1f;
+        float gravity = Mathf.Abs(Physics2D.gravity.y * gravityScale);
+        float initialJumpVelocity = jumpPower / mass;
 
         if (jumpPower <= 0f || moveSpeed <= 0f || gravity <= 0f)
             return false;
 
-        float maxJumpHeight = (jumpPower * jumpPower) / (2f * gravity);
-        if (candidate.heightDelta > maxJumpHeight * jumpReachPadding)
+        float maxJumpHeight = (initialJumpVelocity * initialJumpVelocity) / (2f * gravity);
+        if (heightDelta > maxJumpHeight * jumpReachPadding)
             return false;
 
-        float fallHeight = Mathf.Max(0f, maxJumpHeight - candidate.heightDelta);
-        float timeUp = jumpPower / gravity;
+        float fallHeight = Mathf.Max(0f, maxJumpHeight - heightDelta);
+        float timeUp = initialJumpVelocity / gravity;
         float timeDown = Mathf.Sqrt((2f * fallHeight) / gravity);
         float airTime = timeUp + timeDown;
         float maxHorizontalDistance = moveSpeed * airTime * jumpReachPadding;
 
-        return candidate.horizontalDistance <= maxHorizontalDistance;
+        return GetHorizontalGap(from, to) <= maxHorizontalDistance;
     }
 
-    private float ScoreCandidate(LandingCandidate candidate, Vector2 targetPoint, float targetHeightDelta)
+    private float CalculateTraversalCost(MapSegment.Segment from, MapSegment.Segment to, Vector2 targetPoint)
     {
-        float distanceToTarget = Vector2.Distance(candidate.position, targetPoint);
-        float score = -distanceToTarget;
+        float heightDelta = to.y - from.y;
+        float cost = SegmentTraversalBaseCost
+            + GetHorizontalGap(from, to)
+            + (Mathf.Abs(heightDelta) * HeightChangeCostMultiplier);
 
-        if (targetHeightDelta > levelHeightTolerance && candidate.type == LandingCandidateType.Upper)
+        bool targetIsAbove = targetPoint.y > from.y + levelHeightTolerance;
+        bool movingDown = to.y < from.y - levelHeightTolerance;
+        if (targetIsAbove && movingDown)
+            cost += DownwardDetourPenalty;
+
+        return cost;
+    }
+
+    private void ResolveRigidbody()
+    {
+        if (rigid == null)
+            rigid = GetComponent<Rigidbody2D>();
+    }
+
+    private float GetHorizontalGap(MapSegment.Segment from, MapSegment.Segment to)
+    {
+        if (from.rightX >= to.leftX && to.rightX >= from.leftX)
+            return 0f;
+
+        if (from.rightX < to.leftX)
+            return to.leftX - from.rightX;
+
+        return from.leftX - to.rightX;
+    }
+
+    private float GetDistanceFromSegmentToPoint(MapSegment.Segment segment, Vector2 point)
+    {
+        float x = Mathf.Clamp(point.x, segment.leftX, segment.rightX);
+        return Vector2.Distance(new Vector2(x, segment.y), point);
+    }
+
+    private Vector2 GetLandingPoint(MapSegment.Segment from, MapSegment.Segment to)
+    {
+        if (from.rightX >= to.leftX && to.rightX >= from.leftX)
         {
-            bool isIntermediateHeight = candidate.heightDelta < targetHeightDelta - levelHeightTolerance;
-            score += isIntermediateHeight ? 200f + candidate.heightDelta : 50f;
-        }
-        else if (targetHeightDelta < -levelHeightTolerance && candidate.type == LandingCandidateType.Lower)
-        {
-            float heightMatch = -Mathf.Abs(candidate.heightDelta - targetHeightDelta);
-            score += 200f + heightMatch;
-        }
-        else if (candidate.type == LandingCandidateType.SameLevel)
-        {
-            score += 10f;
-        }
-        else if (candidate.type == LandingCandidateType.Lower)
-        {
-            score += 5f;
+            float overlapLeft = Mathf.Max(from.leftX, to.leftX);
+            float overlapRight = Mathf.Min(from.rightX, to.rightX);
+            return new Vector2((overlapLeft + overlapRight) * 0.5f, to.y);
         }
 
-        return score;
+        if (from.rightX < to.leftX)
+            return new Vector2(to.leftX, to.y);
+
+        return new Vector2(to.rightX, to.y);
     }
 
     private Color GetCandidateColor(LandingCandidateType type)
@@ -262,7 +449,13 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
             DrawSearchBounds();
 
         if (drawSegmentGizmos)
-            DrawPlatformSegments();
+            DrawQueriedSegments();
+
+        if (drawPathGizmos)
+            DrawPath();
+
+        if (drawSegmentGizmos)
+            DrawCurrentAndTargetSegments();
 
         if (drawCandidateGizmos)
             DrawCandidatePoints();
@@ -270,30 +463,78 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 
     private void DrawSearchBounds()
     {
-        if (context == null || context.selfGroundPoint == null)
+        if (context == null || context.selfGroundPoint == null || context.target == null)
             return;
 
-        if (context.target != null)
-            DrawSearchBoundsAt(context.selfGroundPoint.position, GetTargetGroundPoint(context), Color.yellow);
-    }
-
-    private void DrawSearchBoundsAt(Vector2 selfPoint, Vector2 targetPoint, Color color)
-    {
-        Bounds bounds = BuildSearchBounds(selfPoint, targetPoint);
-        Gizmos.color = color;
+        Bounds bounds = BuildSearchBounds(context.selfGroundPoint.position, GetTargetGroundPoint(context));
+        Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(bounds.center, bounds.size);
     }
 
-    private void DrawPlatformSegments()
+    private void DrawQueriedSegments()
     {
         foreach (MapSegment.Segment segment in platformSegments)
             DrawSegment(segment, Color.gray, 0.05f);
+    }
 
+    private void DrawCurrentAndTargetSegments()
+    {
         if (currentSegment != null)
             DrawSegment(currentSegment, Color.green, 0.08f);
 
         if (targetSegment != null)
             DrawSegment(targetSegment, Color.blue, 0.08f);
+    }
+
+    private void DrawPath()
+    {
+        if (pathSegments.Count == 0)
+            return;
+
+        Color pathColor = new Color(1f, 0.82f, 0f);
+        for (int i = 0; i < pathSegments.Count; i++)
+        {
+            DrawSegment(pathSegments[i], pathColor, 0.07f);
+
+            if (i >= pathSegments.Count - 1)
+                continue;
+
+            GetConnectionPoints(pathSegments[i], pathSegments[i + 1], out Vector2 from, out Vector2 to);
+            Gizmos.color = pathColor;
+            Gizmos.DrawLine(from, to);
+            Gizmos.DrawWireSphere(from, 0.08f);
+            Gizmos.DrawWireSphere(to, 0.08f);
+        }
+
+        if (hasNextSegment)
+        {
+            DrawSegment(nextSegment, pathColor, 0.12f);
+            Gizmos.color = pathColor;
+            Gizmos.DrawSphere(GetLandingPoint(currentSegment, nextSegment), 0.14f);
+        }
+    }
+
+    private void GetConnectionPoints(MapSegment.Segment fromSegment, MapSegment.Segment toSegment, out Vector2 from, out Vector2 to)
+    {
+        if (fromSegment.rightX >= toSegment.leftX && toSegment.rightX >= fromSegment.leftX)
+        {
+            float overlapLeft = Mathf.Max(fromSegment.leftX, toSegment.leftX);
+            float overlapRight = Mathf.Min(fromSegment.rightX, toSegment.rightX);
+            float x = (overlapLeft + overlapRight) * 0.5f;
+            from = new Vector2(x, fromSegment.y);
+            to = new Vector2(x, toSegment.y);
+            return;
+        }
+
+        if (fromSegment.rightX < toSegment.leftX)
+        {
+            from = new Vector2(fromSegment.rightX, fromSegment.y);
+            to = new Vector2(toSegment.leftX, toSegment.y);
+            return;
+        }
+
+        from = new Vector2(fromSegment.leftX, fromSegment.y);
+        to = new Vector2(toSegment.rightX, toSegment.y);
     }
 
     private void DrawSegment(MapSegment.Segment segment, Color color, float sphereRadius)
@@ -310,17 +551,10 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 
     private void DrawCandidatePoints()
     {
-        foreach (LandingCandidate candidate in acceptedCandidateDebugInfos)
+        foreach (LandingCandidate candidate in directReachCandidateDebugInfos)
         {
             Gizmos.color = GetCandidateColor(candidate.type);
             Gizmos.DrawWireSphere(candidate.position, 0.1f);
-        }
-
-        if (hasSelectedCandidate)
-        {
-            Gizmos.color = GetCandidateColor(selectedCandidate.type);
-            Gizmos.DrawSphere(selectedCandidate.position, 0.12f);
-            Gizmos.DrawWireSphere(selectedCandidate.position, 0.2f);
         }
     }
 
@@ -335,7 +569,5 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     {
         public Vector2 position;
         public LandingCandidateType type;
-        public float horizontalDistance;
-        public float heightDelta;
     }
 }
