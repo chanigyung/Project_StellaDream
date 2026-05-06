@@ -101,6 +101,36 @@ public class MapSegment : MonoBehaviour
         return result != null;
     }
 
+    public bool TryFindSegmentOverlappingFootprint(
+        float leftX,
+        float rightX,
+        float y,
+        float heightTolerance,
+        out Segment result
+    )
+    {
+        result = null;
+        float bestHeightDiff = float.MaxValue;
+
+        foreach (Segment segment in segments)
+        {
+            if (!segment.OverlapsX(leftX, rightX))
+                continue;
+
+            float heightDiff = Mathf.Abs(y - segment.y);
+            if (heightDiff > heightTolerance)
+                continue;
+
+            if (heightDiff < bestHeightDiff)
+            {
+                bestHeightDiff = heightDiff;
+                result = segment;
+            }
+        }
+
+        return result != null;
+    }
+
     public bool TryFindHighestSegmentBelowPoint(Vector2 point, float maxDownDistance, float heightTolerance, out Segment result)
     {
         result = null;
@@ -218,6 +248,11 @@ public class MapSegment : MonoBehaviour
         public bool ContainsX(float x)
         {
             return x >= leftX && x <= rightX;
+        }
+
+        public bool OverlapsX(float left, float right)
+        {
+            return rightX >= left && leftX <= right;
         }
 
         public bool Overlaps(Bounds bounds)

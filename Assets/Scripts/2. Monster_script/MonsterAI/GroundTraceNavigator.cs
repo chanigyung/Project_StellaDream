@@ -58,9 +58,13 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     private const float HeightChangeCostMultiplier = 1.5f;
     private const float DownwardDetourPenalty = 5f;
     private const float FallbackApproachTieTolerance = 0.5f;
+    private const float SameSegmentArriveTolerance = 0.05f;
+    private const float WalkConnectionTolerance = 0.18f;
+    private const float FootprintEdgePadding = 0.03f;
 
     private MonsterContext context;
     private Rigidbody2D rigid;
+    private Collider2D bodyCollider;
     private MapSegment.Segment currentSegment;
     private MapSegment.Segment targetSegment;
     private MapSegment.Segment nextSegment;
@@ -70,6 +74,7 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     {
         this.context = context;
         rigid = GetComponent<Rigidbody2D>();
+        ResolveBodyCollider();
     }
 
     public MonsterTraceMovePlan CalculateMove(MonsterContext context)
@@ -86,7 +91,45 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         BuildLocalPlatformSegments(activeContext);
         BuildSegmentPath(activeContext);
 
-        return MonsterTraceMovePlan.Stop();
+        return BuildTraceMovePlan(activeContext);
+    }
+
+    private MonsterTraceMovePlan BuildTraceMovePlan(MonsterContext context)
+    {
+        if (currentSegment == null || targetSegment == null || context.selfGroundPoint == null)
+            return MonsterTraceMovePlan.Stop();
+
+        if (currentSegment == targetSegment)
+            return BuildMovePlanToX(context, GetTargetGroundPoint(context).x);
+
+        if (!hasNextSegment)
+            return MonsterTraceMovePlan.Stop();
+
+        SegmentTransition transition = BuildSegmentTransition(context, currentSegment, nextSegment);
+        if (transition.type == SegmentTransitionType.SameLevelWalk || transition.type == SegmentTransitionType.WalkDown)
+            return MonsterTraceMovePlan.Move(transition.moveDirection);
+
+        GetConnectionPoints(
+            currentSegment,
+            nextSegment,
+            context,
+            context.selfGroundPoint.position.x,
+            out Vector2 currentConnectionPoint,
+            out _
+        );
+        return BuildMovePlanToX(context, currentConnectionPoint.x);
+    }
+
+    private MonsterTraceMovePlan BuildMovePlanToX(MonsterContext context, float targetX)
+    {
+        Vector2 selfPoint = context.selfGroundPoint.position;
+        float clampedTargetX = Mathf.Clamp(targetX, currentSegment.leftX, currentSegment.rightX);
+        float deltaX = clampedTargetX - selfPoint.x;
+
+        if (Mathf.Abs(deltaX) <= SameSegmentArriveTolerance)
+            return MonsterTraceMovePlan.Stop();
+
+        return MonsterTraceMovePlan.Move(deltaX > 0f ? Vector3.right : Vector3.left);
     }
 
     private void ClearDebugState()
@@ -116,7 +159,7 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 
         mapSegment.GetSegmentsInBounds(BuildSearchBounds(selfPoint, targetPoint), platformSegments);
 
-        mapSegment.TryFindSegmentAtPoint(selfPoint, levelHeightTolerance, out currentSegment);
+        TryFindCurrentSegment(context, selfPoint, out currentSegment);
         TryFindTargetSegment(targetPoint, out targetSegment);
 
         AddSegmentIfMissing(currentSegment);
@@ -351,6 +394,28 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         if (heightDelta < -lowerJumpHeightTolerance)
             return false;
 
+        if (!TryCalculateJumpHorizontalDistance(context, from, to, out float maxHorizontalDistance))
+            return false;
+
+        return GetHorizontalGap(from, to) <= maxHorizontalDistance;
+    }
+
+    private bool TryCalculateJumpHorizontalDistance(
+        MonsterContext context,
+        MapSegment.Segment from,
+        MapSegment.Segment to,
+        out float maxHorizontalDistance
+    )
+    {
+        maxHorizontalDistance = 0f;
+
+        if (context.instance == null)
+            return false;
+
+        float heightDelta = to.y - from.y;
+        if (heightDelta < -lowerJumpHeightTolerance)
+            return false;
+
         ResolveRigidbody();
 
         float jumpPower = context.instance.GetCurrentJumpPower();
@@ -371,9 +436,8 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         float timeUp = initialJumpVelocity / gravity;
         float timeDown = Mathf.Sqrt((2f * fallHeight) / gravity);
         float airTime = timeUp + timeDown;
-        float maxHorizontalDistance = moveSpeed * airTime * jumpReachPadding;
-
-        return GetHorizontalGap(from, to) <= maxHorizontalDistance;
+        maxHorizontalDistance = moveSpeed * airTime * jumpReachPadding;
+        return true;
     }
 
     private float CalculateTraversalCost(MapSegment.Segment from, MapSegment.Segment to, Vector2 targetPoint)
@@ -395,6 +459,42 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     {
         if (rigid == null)
             rigid = GetComponent<Rigidbody2D>();
+    }
+
+    private void ResolveBodyCollider()
+    {
+        if (bodyCollider != null)
+            return;
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D candidate in colliders)
+        {
+            if (candidate == null || candidate.isTrigger)
+                continue;
+
+            bodyCollider = candidate;
+            return;
+        }
+
+        bodyCollider = GetComponent<Collider2D>();
+    }
+
+    private bool TryFindCurrentSegment(MonsterContext activeContext, Vector2 selfPoint, out MapSegment.Segment result)
+    {
+        ResolveBodyCollider();
+
+        if (bodyCollider == null)
+            return mapSegment.TryFindSegmentAtPoint(selfPoint, levelHeightTolerance, out result);
+
+        Bounds bounds = bodyCollider.bounds;
+        float leftX = Mathf.Min(bounds.min.x, bounds.max.x) - FootprintEdgePadding;
+        float rightX = Mathf.Max(bounds.min.x, bounds.max.x) + FootprintEdgePadding;
+        float y = activeContext.selfGroundPoint != null ? activeContext.selfGroundPoint.position.y : selfPoint.y;
+
+        if (mapSegment.TryFindSegmentOverlappingFootprint(leftX, rightX, y, levelHeightTolerance, out result))
+            return true;
+
+        return mapSegment.TryFindSegmentAtPoint(selfPoint, levelHeightTolerance, out result);
     }
 
     private float GetHorizontalGap(MapSegment.Segment from, MapSegment.Segment to)
@@ -499,7 +599,11 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
             if (i >= pathSegments.Count - 1)
                 continue;
 
-            GetConnectionPoints(pathSegments[i], pathSegments[i + 1], out Vector2 from, out Vector2 to);
+            float referenceX = i == 0 && context != null && context.selfGroundPoint != null
+                ? context.selfGroundPoint.position.x
+                : GetSegmentCenterX(pathSegments[i]);
+
+            GetConnectionPoints(pathSegments[i], pathSegments[i + 1], context, referenceX, out Vector2 from, out Vector2 to);
             Gizmos.color = pathColor;
             Gizmos.DrawLine(from, to);
             Gizmos.DrawWireSphere(from, 0.08f);
@@ -514,8 +618,19 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         }
     }
 
-    private void GetConnectionPoints(MapSegment.Segment fromSegment, MapSegment.Segment toSegment, out Vector2 from, out Vector2 to)
+    private void GetConnectionPoints(
+        MapSegment.Segment fromSegment,
+        MapSegment.Segment toSegment,
+        MonsterContext context,
+        float referenceX,
+        out Vector2 from,
+        out Vector2 to
+    )
     {
+        if (IsJumpTransition(fromSegment, toSegment)
+            && TryGetJumpTransitionPoints(fromSegment, toSegment, context, referenceX, out from, out to))
+            return;
+
         if (fromSegment.rightX >= toSegment.leftX && toSegment.rightX >= fromSegment.leftX)
         {
             float overlapLeft = Mathf.Max(fromSegment.leftX, toSegment.leftX);
@@ -535,6 +650,162 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 
         from = new Vector2(fromSegment.leftX, fromSegment.y);
         to = new Vector2(toSegment.rightX, toSegment.y);
+    }
+
+    private bool IsJumpTransition(MapSegment.Segment fromSegment, MapSegment.Segment toSegment)
+    {
+        SegmentTransitionType type = GetSegmentTransitionType(fromSegment, toSegment);
+        return type == SegmentTransitionType.SameLevelGapJump || type == SegmentTransitionType.UpperJump;
+    }
+
+    private SegmentTransition BuildSegmentTransition(
+        MonsterContext context,
+        MapSegment.Segment fromSegment,
+        MapSegment.Segment toSegment
+    )
+    {
+        SegmentTransitionType type = GetSegmentTransitionType(fromSegment, toSegment);
+        return new SegmentTransition
+        {
+            type = type,
+            moveDirection = type switch
+            {
+                SegmentTransitionType.SameLevelWalk => GetHorizontalTransitionDirection(context, fromSegment, toSegment),
+                SegmentTransitionType.WalkDown => GetWalkDownDirection(context, fromSegment, toSegment),
+                _ => Vector3.zero
+            }
+        };
+    }
+
+    private SegmentTransitionType GetSegmentTransitionType(MapSegment.Segment fromSegment, MapSegment.Segment toSegment)
+    {
+        float heightDelta = toSegment.y - fromSegment.y;
+
+        if (Mathf.Abs(heightDelta) <= levelHeightTolerance)
+        {
+            return GetHorizontalGap(fromSegment, toSegment) <= WalkConnectionTolerance
+                ? SegmentTransitionType.SameLevelWalk
+                : SegmentTransitionType.SameLevelGapJump;
+        }
+
+        if (heightDelta > levelHeightTolerance)
+            return SegmentTransitionType.UpperJump;
+
+        return IsWalkDownTransition(fromSegment, toSegment)
+            ? SegmentTransitionType.WalkDown
+            : SegmentTransitionType.LowerJumpOrDrop;
+    }
+
+    private bool IsWalkDownTransition(MapSegment.Segment fromSegment, MapSegment.Segment toSegment)
+    {
+        if (GetHorizontalGap(fromSegment, toSegment) > WalkConnectionTolerance)
+            return false;
+
+        return IsWalkDownExitSupported(fromSegment.leftX, toSegment)
+            || IsWalkDownExitSupported(fromSegment.rightX, toSegment)
+            || SegmentsOverlapHorizontally(fromSegment, toSegment);
+    }
+
+    private bool IsWalkDownExitSupported(float exitX, MapSegment.Segment landingSegment)
+    {
+        return exitX >= landingSegment.leftX - WalkConnectionTolerance
+            && exitX <= landingSegment.rightX + WalkConnectionTolerance;
+    }
+
+    private bool SegmentsOverlapHorizontally(MapSegment.Segment a, MapSegment.Segment b)
+    {
+        return a.rightX >= b.leftX && b.rightX >= a.leftX;
+    }
+
+    private Vector3 GetHorizontalTransitionDirection(
+        MonsterContext context,
+        MapSegment.Segment fromSegment,
+        MapSegment.Segment toSegment
+    )
+    {
+        if (fromSegment.rightX < toSegment.leftX)
+            return Vector3.right;
+
+        if (fromSegment.leftX > toSegment.rightX)
+            return Vector3.left;
+
+        return GetDirectionTowardRouteReference(context, fromSegment);
+    }
+
+    private Vector3 GetWalkDownDirection(
+        MonsterContext context,
+        MapSegment.Segment fromSegment,
+        MapSegment.Segment toSegment
+    )
+    {
+        bool canExitLeft = IsWalkDownExitSupported(fromSegment.leftX, toSegment);
+        bool canExitRight = IsWalkDownExitSupported(fromSegment.rightX, toSegment);
+
+        if (canExitLeft && !canExitRight)
+            return Vector3.left;
+
+        if (canExitRight && !canExitLeft)
+            return Vector3.right;
+
+        if (fromSegment.rightX < toSegment.leftX)
+            return Vector3.right;
+
+        if (fromSegment.leftX > toSegment.rightX)
+            return Vector3.left;
+
+        return GetDirectionTowardRouteReference(context, fromSegment);
+    }
+
+    private Vector3 GetDirectionTowardRouteReference(MonsterContext context, MapSegment.Segment current)
+    {
+        float selfX = context != null && context.selfGroundPoint != null
+            ? context.selfGroundPoint.position.x
+            : GetSegmentCenterX(current);
+
+        float referenceX = context != null && context.target != null
+            ? GetTargetGroundPoint(context).x
+            : GetSegmentCenterX(current);
+
+        float deltaX = referenceX - selfX;
+        if (Mathf.Abs(deltaX) > SameSegmentArriveTolerance)
+            return deltaX > 0f ? Vector3.right : Vector3.left;
+
+        float leftDistance = Mathf.Abs(selfX - current.leftX);
+        float rightDistance = Mathf.Abs(current.rightX - selfX);
+        return leftDistance <= rightDistance ? Vector3.left : Vector3.right;
+    }
+
+    private bool TryGetJumpTransitionPoints(
+        MapSegment.Segment fromSegment,
+        MapSegment.Segment toSegment,
+        MonsterContext context,
+        float referenceX,
+        out Vector2 from,
+        out Vector2 to
+    )
+    {
+        from = default;
+        to = default;
+
+        if (context == null || !TryCalculateJumpHorizontalDistance(context, fromSegment, toSegment, out float maxHorizontalDistance))
+            return false;
+
+        float takeoffLeft = Mathf.Max(fromSegment.leftX, toSegment.leftX - maxHorizontalDistance);
+        float takeoffRight = Mathf.Min(fromSegment.rightX, toSegment.rightX + maxHorizontalDistance);
+        if (takeoffLeft > takeoffRight)
+            return false;
+
+        float takeoffX = Mathf.Clamp(referenceX, takeoffLeft, takeoffRight);
+        float landingX = Mathf.Clamp(takeoffX, toSegment.leftX, toSegment.rightX);
+
+        from = new Vector2(takeoffX, fromSegment.y);
+        to = new Vector2(landingX, toSegment.y);
+        return true;
+    }
+
+    private float GetSegmentCenterX(MapSegment.Segment segment)
+    {
+        return (segment.leftX + segment.rightX) * 0.5f;
     }
 
     private void DrawSegment(MapSegment.Segment segment, Color color, float sphereRadius)
@@ -565,9 +836,24 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         Lower
     }
 
+    private enum SegmentTransitionType
+    {
+        SameLevelWalk,
+        WalkDown,
+        SameLevelGapJump,
+        UpperJump,
+        LowerJumpOrDrop
+    }
+
     private struct LandingCandidate
     {
         public Vector2 position;
         public LandingCandidateType type;
+    }
+
+    private struct SegmentTransition
+    {
+        public SegmentTransitionType type;
+        public Vector3 moveDirection;
     }
 }
