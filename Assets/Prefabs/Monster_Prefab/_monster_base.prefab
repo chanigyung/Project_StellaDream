@@ -841,7 +841,7 @@ MonoBehaviour:
   targetGroundSearchDownDistance: 8
   levelHeightTolerance: 0.45
   lowerJumpHeightTolerance: 2
-  jumpReachPadding: 1.15
+  jumpReachPadding: 1
   drawDebugGizmos: 1
   drawSearchBoundsGizmos: 1
   drawCandidateGizmos: 1
@@ -1106,7 +1106,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8636453946240967842}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78a134397a1d08540bfa4df85b88422a, type: 3}
   m_Name: 

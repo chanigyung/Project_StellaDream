@@ -54,10 +54,16 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     private readonly Dictionary<MapSegment.Segment, MapSegment.Segment> previousSegments = new();
     private readonly Dictionary<MapSegment.Segment, float> segmentCosts = new();
 
+    private bool isFollowingJumpTransition;
+    private Vector3 jumpAirMoveDirection;
+    private bool hasJumpTransitionDebug;
+    private Vector2 jumpTakeoffDebugPoint;
+    private Vector2 jumpLandingDebugPoint;
+
     private const float SegmentTraversalBaseCost = 10f;
     private const float HeightChangeCostMultiplier = 1.5f;
     private const float DownwardDetourPenalty = 5f;
-    private const float FallbackApproachTieTolerance = 0.5f;
+    private const float ApproachTieTolerance = 0.05f;
     private const float SameSegmentArriveTolerance = 0.05f;
     private const float WalkConnectionTolerance = 0.18f;
     private const float FootprintEdgePadding = 0.03f;
@@ -69,6 +75,8 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     private MapSegment.Segment targetSegment;
     private MapSegment.Segment nextSegment;
     private bool hasNextSegment;
+    private Vector2 traceGoalPoint;
+    private bool hasTraceGoalPoint;
 
     public void Initialize(MonsterContext context)
     {
@@ -88,6 +96,14 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         if (activeContext.target == null || !activeContext.canMove)
             return MonsterTraceMovePlan.Stop();
 
+        if (isFollowingJumpTransition)
+        {
+            if (IsFollowingJumpInAir(activeContext))
+                return MonsterTraceMovePlan.Move(jumpAirMoveDirection);
+
+            ClearJumpTransitionState();
+        }
+
         BuildLocalPlatformSegments(activeContext);
         BuildSegmentPath(activeContext);
 
@@ -100,14 +116,24 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
             return MonsterTraceMovePlan.Stop();
 
         if (currentSegment == targetSegment)
-            return BuildMovePlanToX(context, GetTargetGroundPoint(context).x);
+            return BuildMovePlanToX(context, GetTraceGoalX(context));
 
         if (!hasNextSegment)
+        {
+            if (hasTraceGoalPoint)
+                return BuildMovePlanToX(context, traceGoalPoint.x);
+
             return MonsterTraceMovePlan.Stop();
+        }
 
         SegmentTransition transition = BuildSegmentTransition(context, currentSegment, nextSegment);
         if (transition.type == SegmentTransitionType.SameLevelWalk || transition.type == SegmentTransitionType.WalkDown)
             return MonsterTraceMovePlan.Move(transition.moveDirection);
+
+        if (IsJumpTransition(transition.type))
+        {
+            return BuildJumpTransitionMovePlan(context, currentSegment, nextSegment);
+        }
 
         GetConnectionPoints(
             currentSegment,
@@ -142,10 +168,28 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         settledSegments.Clear();
         previousSegments.Clear();
         segmentCosts.Clear();
+        hasJumpTransitionDebug = false;
         currentSegment = null;
         targetSegment = null;
         nextSegment = null;
         hasNextSegment = false;
+        traceGoalPoint = Vector2.zero;
+        hasTraceGoalPoint = false;
+    }
+
+    private void ClearJumpTransitionState()
+    {
+        isFollowingJumpTransition = false;
+        jumpAirMoveDirection = Vector3.zero;
+    }
+
+    private bool IsFollowingJumpInAir(MonsterContext activeContext)
+    {
+        if (!activeContext.isGrounded)
+            return true;
+
+        ResolveRigidbody();
+        return rigid != null && rigid.velocity.y > 0.05f;
     }
 
     private void BuildLocalPlatformSegments(MonsterContext context)
@@ -210,28 +254,30 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         if (currentSegment == null || targetSegment == null)
             return false;
 
+        Vector2 targetPoint = GetTargetGroundPoint(context);
         if (currentSegment == targetSegment)
         {
             pathSegments.Add(currentSegment);
+            SetTraceGoal(targetPoint);
             return true;
         }
 
-        Vector2 targetPoint = GetTargetGroundPoint(context);
         BuildReachabilityGraph(context, targetPoint);
 
         if (visitedSegments.Contains(targetSegment))
         {
             ReconstructPath(targetSegment);
             SelectNextSegment();
+            SetTraceGoal(targetPoint);
             return true;
         }
 
-        MapSegment.Segment bestReachableSegment = FindBestReachableSegment(targetSegment);
-        if (bestReachableSegment == null)
+        if (!TryFindBestReachableApproach(targetPoint, out TraceApproachGoal approachGoal))
             return false;
 
-        ReconstructPath(bestReachableSegment);
+        ReconstructPath(approachGoal.segment);
         SelectNextSegment();
+        SetTraceGoal(approachGoal.point);
         return pathSegments.Count > 0;
     }
 
@@ -291,44 +337,88 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         return result;
     }
 
-    private MapSegment.Segment FindBestReachableSegment(MapSegment.Segment goalSegment)
+    private bool TryFindBestReachableApproach(Vector2 targetPoint, out TraceApproachGoal result)
     {
+        result = default;
         MapSegment.Segment bestSegment = null;
-        float bestApproachCost = float.MaxValue;
+        Vector2 bestPoint = Vector2.zero;
+        float bestHeightDistance = float.MaxValue;
+        float bestSegmentGap = float.MaxValue;
+        float bestTargetDistance = float.MaxValue;
         float bestPathCost = float.MaxValue;
 
         foreach (MapSegment.Segment segment in visitedSegments)
         {
-            if (segment == currentSegment)
-                continue;
-
             float pathCost = segmentCosts.TryGetValue(segment, out float cost) ? cost : 0f;
-            float approachCost = GetSegmentApproachCost(segment, goalSegment);
-            if (IsBetterFallbackCandidate(approachCost, pathCost, bestApproachCost, bestPathCost))
+            Vector2 approachPoint = GetClosestPointOnSegmentToPoint(segment, targetPoint);
+            float heightDistance = GetHeightDistanceToTargetSegment(segment);
+            float segmentGap = GetHorizontalGap(segment, targetSegment);
+            float targetDistance = Vector2.Distance(approachPoint, targetPoint);
+            if (IsBetterApproachCandidate(
+                    heightDistance,
+                    segmentGap,
+                    targetDistance,
+                    pathCost,
+                    bestHeightDistance,
+                    bestSegmentGap,
+                    bestTargetDistance,
+                    bestPathCost))
             {
-                bestApproachCost = approachCost;
+                bestHeightDistance = heightDistance;
+                bestSegmentGap = segmentGap;
+                bestTargetDistance = targetDistance;
                 bestPathCost = pathCost;
                 bestSegment = segment;
+                bestPoint = approachPoint;
             }
         }
 
-        return bestSegment;
+        if (bestSegment == null)
+            return false;
+
+        result = new TraceApproachGoal
+        {
+            segment = bestSegment,
+            point = bestPoint
+        };
+        return true;
     }
 
-    private bool IsBetterFallbackCandidate(float approachCost, float pathCost, float bestApproachCost, float bestPathCost)
+    private bool IsBetterApproachCandidate(
+        float heightDistance,
+        float segmentGap,
+        float targetDistance,
+        float pathCost,
+        float bestHeightDistance,
+        float bestSegmentGap,
+        float bestTargetDistance,
+        float bestPathCost
+    )
     {
-        if (approachCost < bestApproachCost - FallbackApproachTieTolerance)
+        if (heightDistance < bestHeightDistance - ApproachTieTolerance)
             return true;
 
-        if (approachCost > bestApproachCost + FallbackApproachTieTolerance)
+        if (heightDistance > bestHeightDistance + ApproachTieTolerance)
+            return false;
+
+        if (segmentGap < bestSegmentGap - ApproachTieTolerance)
+            return true;
+
+        if (segmentGap > bestSegmentGap + ApproachTieTolerance)
+            return false;
+
+        if (targetDistance < bestTargetDistance - ApproachTieTolerance)
+            return true;
+
+        if (targetDistance > bestTargetDistance + ApproachTieTolerance)
             return false;
 
         return pathCost < bestPathCost;
     }
 
-    private float GetSegmentApproachCost(MapSegment.Segment from, MapSegment.Segment to)
+    private float GetHeightDistanceToTargetSegment(MapSegment.Segment segment)
     {
-        return GetHorizontalGap(from, to) + (Mathf.Abs(to.y - from.y) * HeightChangeCostMultiplier);
+        return targetSegment != null ? Mathf.Abs(segment.y - targetSegment.y) : 0f;
     }
 
     private void ReconstructPath(MapSegment.Segment goal)
@@ -357,6 +447,17 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 
         nextSegment = pathSegments[1];
         hasNextSegment = nextSegment != null;
+    }
+
+    private void SetTraceGoal(Vector2 point)
+    {
+        traceGoalPoint = point;
+        hasTraceGoalPoint = true;
+    }
+
+    private float GetTraceGoalX(MonsterContext context)
+    {
+        return hasTraceGoalPoint ? traceGoalPoint.x : GetTargetGroundPoint(context).x;
     }
 
     private Vector2 GetTargetGroundPoint(MonsterContext context)
@@ -508,10 +609,10 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         return from.leftX - to.rightX;
     }
 
-    private float GetDistanceFromSegmentToPoint(MapSegment.Segment segment, Vector2 point)
+    private Vector2 GetClosestPointOnSegmentToPoint(MapSegment.Segment segment, Vector2 point)
     {
         float x = Mathf.Clamp(point.x, segment.leftX, segment.rightX);
-        return Vector2.Distance(new Vector2(x, segment.y), point);
+        return new Vector2(x, segment.y);
     }
 
     private Vector2 GetLandingPoint(MapSegment.Segment from, MapSegment.Segment to)
@@ -553,6 +654,9 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
 
         if (drawPathGizmos)
             DrawPath();
+
+        if (drawPathGizmos)
+            DrawJumpTransitionDebug();
 
         if (drawSegmentGizmos)
             DrawCurrentAndTargetSegments();
@@ -618,6 +722,18 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         }
     }
 
+    private void DrawJumpTransitionDebug()
+    {
+        if (!hasJumpTransitionDebug)
+            return;
+
+        Color jumpColor = new Color(1f, 0.45f, 0f);
+        Gizmos.color = jumpColor;
+        Gizmos.DrawWireSphere(jumpTakeoffDebugPoint, 0.16f);
+        Gizmos.DrawWireSphere(jumpLandingDebugPoint, 0.16f);
+        Gizmos.DrawLine(jumpTakeoffDebugPoint, jumpLandingDebugPoint);
+    }
+
     private void GetConnectionPoints(
         MapSegment.Segment fromSegment,
         MapSegment.Segment toSegment,
@@ -655,7 +771,67 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
     private bool IsJumpTransition(MapSegment.Segment fromSegment, MapSegment.Segment toSegment)
     {
         SegmentTransitionType type = GetSegmentTransitionType(fromSegment, toSegment);
-        return type == SegmentTransitionType.SameLevelGapJump || type == SegmentTransitionType.UpperJump;
+        return IsJumpTransition(type);
+    }
+
+    private bool IsJumpTransition(SegmentTransitionType type)
+    {
+        return type == SegmentTransitionType.SameLevelGapJump
+            || type == SegmentTransitionType.UpperJump
+            || type == SegmentTransitionType.LowerJumpOrDrop;
+    }
+
+    private MonsterTraceMovePlan BuildJumpTransitionMovePlan(
+        MonsterContext context,
+        MapSegment.Segment fromSegment,
+        MapSegment.Segment toSegment
+    )
+    {
+        if (!TryGetJumpTransitionPoints(
+                fromSegment,
+                toSegment,
+                context,
+                context.selfGroundPoint.position.x,
+                out Vector2 takeoffPoint,
+                out Vector2 landingPoint))
+        {
+            return MonsterTraceMovePlan.Stop();
+        }
+
+        hasJumpTransitionDebug = true;
+        jumpTakeoffDebugPoint = takeoffPoint;
+        jumpLandingDebugPoint = landingPoint;
+
+        Vector2 selfPoint = context.selfGroundPoint.position;
+        float deltaToTakeoff = takeoffPoint.x - selfPoint.x;
+        if (Mathf.Abs(deltaToTakeoff) > SameSegmentArriveTolerance)
+            return MonsterTraceMovePlan.Move(deltaToTakeoff > 0f ? Vector3.right : Vector3.left);
+
+        Vector3 landingDirection = GetJumpLandingDirection(selfPoint, landingPoint, fromSegment, toSegment);
+        isFollowingJumpTransition = true;
+        jumpAirMoveDirection = landingDirection;
+
+        return MonsterTraceMovePlan.Move(landingDirection, jump: true);
+    }
+
+    private Vector3 GetJumpLandingDirection(
+        Vector2 selfPoint,
+        Vector2 landingPoint,
+        MapSegment.Segment fromSegment,
+        MapSegment.Segment toSegment
+    )
+    {
+        float deltaToLanding = landingPoint.x - selfPoint.x;
+        if (Mathf.Abs(deltaToLanding) > SameSegmentArriveTolerance)
+            return deltaToLanding > 0f ? Vector3.right : Vector3.left;
+
+        if (fromSegment.rightX < toSegment.leftX)
+            return Vector3.right;
+
+        if (fromSegment.leftX > toSegment.rightX)
+            return Vector3.left;
+
+        return Vector3.zero;
     }
 
     private SegmentTransition BuildSegmentTransition(
@@ -856,4 +1032,11 @@ public class GroundTraceNavigator : MonoBehaviour, IMonsterTraceNavigator
         public SegmentTransitionType type;
         public Vector3 moveDirection;
     }
+
+    private struct TraceApproachGoal
+    {
+        public MapSegment.Segment segment;
+        public Vector2 point;
+    }
+
 }

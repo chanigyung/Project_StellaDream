@@ -22,6 +22,13 @@ MonoBehaviour:
   knockbackImmune: 0
   knockbackResistance: 0
   actionTypes: 000000000100000002000000
+  isFlying: 0
+  flyingMoveSpeedMultiplier: 1
+  flyingWanderRadius: 2.5
+  flyingWanderInterval: 2
+  flyingIdleChance: 0.2
+  flyingTraceStopDistance: 0.3
+  flyingHeightOffsetRange: {x: -1, y: 1}
   skillList:
   - maxRange: 2
     skillData: {fileID: 11400000, guid: 3e2c5ec8ffee3d14ba30807bb748fa97, type: 2}
